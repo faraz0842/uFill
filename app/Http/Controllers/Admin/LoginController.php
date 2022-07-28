@@ -73,7 +73,8 @@ class LoginController extends Controller
                             $message->from('ufillsolutions@gmail.com','UFILL ECOM SOLUTION');
                         });
 
-                        return view('admin.two_step')->with('admin_id',encrypt($is_exists->admin_id))->with('email',$is_exists->email)->with('error','');
+                        //return view('admin.two_step')->with('admin_id',encrypt($is_exists->admin_id))->with('email',$is_exists->email)->with('error','');
+                        return redirect()->Route('admin.check.2step',[$is_exists->admin_id,$is_exists->email]);
 
                         //return view two factore
 
@@ -116,6 +117,11 @@ class LoginController extends Controller
         return redirect()->Route('admin.login');
     }
 
+
+    public function twoStepVerification($admin_id , $email )
+    {
+        return view('admin.two_step')->with('admin_id',encrypt($admin_id))->with('email',$email)->with('error','');
+    }
 
 
 

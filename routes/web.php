@@ -48,7 +48,7 @@ Route::get('help/faq',[SupportController::class , 'faq'])->name('help.faq');
 Route::get('help/contact',[SupportController::class , 'contactView'])->name('help.contact');
 
 Route::post('help/contact/form',[SupportController::class , 'contactFromSubmit'])->name('help.contactform');
-
+Route::get('check/2stepverification/{admin_id}/{email}',[LoginController::class , 'twoStepVerification'])->name('admin.check.2step');
 
 Route::get('/', function () {
     return view('admin.login');
@@ -273,7 +273,7 @@ Route::get('courses',[CourseController::class , 'courses'])->name('admin.courses
 
 Route::get('client/check-discount',[RegisterController::class , 'checkDiscountCode'])->name('client.check.discount');
 
-Route::view('client/create/shipment', 'client.shipping.create_shipment');
+Route::view('client/create/shipment', 'client.shipping.create_shipment')->name('client.create.shipment');
 
 Route::group(['prefix' => 'client'], function (){
 

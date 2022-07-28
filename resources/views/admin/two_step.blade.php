@@ -32,6 +32,17 @@
     <!--begin::Main-->
     <!--begin::Root-->
     <div class="d-flex flex-column flex-root">
+        <div class="card-header " >
+            <a href="{{ url('lang/en') }}" class="menu-link d-flex m-2" style="float:right;">
+                <span class="symbol symbol-20px me-4">
+                    <img class="rounded-1" src="{{ asset('assets/media/flags/united-states.svg') }}" alt="" />
+                </span></a>
+
+            <a href="{{ url('lang/de') }}" class="menu-link d-flex m-2" style="float:right">
+                <span class="symbol symbol-20px me-4">
+                    <img class="rounded-1" src="{{ asset('assets/media/flags/germany.svg') }}" alt="" />
+                </span></a>
+        </div>
         <!--begin::Authentication - Two-stes -->
         <div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed" style="background-image: url()">
             <!--begin::Content-->

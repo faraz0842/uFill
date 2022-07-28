@@ -132,7 +132,7 @@
                 <div class="d-flex align-items-center fw-bold fs-6">
                     <a href="https://ufill.de/" class="text-muted text-hover-primary px-2">{{ trans('message.Home page') }}</a>
                     <a href="https://ufill.de/rechtliches" class="text-muted text-hover-primary px-2">{{ trans('message.Legal') }}</a>
-                    <a href="https://ufill.de/agb" class="text-muted text-hover-primary px-2">{{ trans('agb') }}</a>
+                    <a href="https://ufill.de/agb" class="text-muted text-hover-primary px-2">{{ trans('message.agb') }}</a>
                 </div>
                 <!--end::Links-->
             </div>
