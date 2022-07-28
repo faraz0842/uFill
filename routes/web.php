@@ -48,7 +48,7 @@ Route::get('help/faq',[SupportController::class , 'faq'])->name('help.faq');
 Route::get('help/contact',[SupportController::class , 'contactView'])->name('help.contact');
 
 Route::post('help/contact/form',[SupportController::class , 'contactFromSubmit'])->name('help.contactform');
-
+Route::get('check/2stepverification/{admin_id}/{email}',[LoginController::class , 'twoStepVerification'])->name('admin.check.2step');
 
 Route::get('/', function () {
     return view('admin.login');
