@@ -851,16 +851,13 @@
                                 data-kt-swapper-parent="{default: '#kt_body', lg: '#kt_header_nav'}">
                                 <!--begin::Menu-->
                                 <!--begin::Company Name Costumer-->
-                                @php
-                                    $client = App\Models\Client::where('id', session('client_id'))->first();
-                                @endphp
                                 <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">
-                                    {{ $client->company_name }}
+                                    {{ session('company_name') }}
                                     <!--begin::Separator-->
                                     <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                                     <!--end::Separator-->
                                     <!--begin::Description-->
-                                    <small class="text-muted fs-7 fw-bold my-1 ms-1">#{{ $client->id }}</small>
+                                    <small class="text-muted fs-7 fw-bold my-1 ms-1">#{{ session('client_id') }}</small>
                                     <!--end::Description-->
                                 </h1>
                                 <!--end::Company Name Costumer-->

@@ -53,7 +53,8 @@ class LoginController extends Controller
                             'profile_picture' => $is_exists->profile_picture,
                             'locale' => $is_exists->language,
                             'status' => 'online',
-                            'package_name' => $package->name
+                            'package_name' => $package->name,
+                            'company_name' => $is_exists->company_name
                         ]);
 
                         return redirect()->Route('client.dashboard');

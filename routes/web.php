@@ -37,15 +37,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::view('client/upgrade_plan','admin.client.upgrade_plan')->name('upgrade_plan');
-// Route::view('help/overview','admin.help.overview')->name('help.overview');
-// Route::view('help/list','admin.help.list')->name('help.list');
-// Route::view('help/faq','admin.help.faq')->name('help.faq');
-// Route::view('help/contact','admin.help.contact')->name('help.contact');
 
 Route::get('help/overview',[SupportController::class , 'overview'])->name('help.overview');
 Route::get('help/list',[SupportController::class , 'list'])->name('help.list');
 Route::get('help/faq',[SupportController::class , 'faq'])->name('help.faq');
 Route::get('help/contact',[SupportController::class , 'contactView'])->name('help.contact');
+
+
 
 Route::post('help/contact/form',[SupportController::class , 'contactFromSubmit'])->name('help.contactform');
 Route::get('check/2stepverification/{admin_id}/{email}',[LoginController::class , 'twoStepVerification'])->name('admin.check.2step');
@@ -54,10 +52,6 @@ Route::get('/', function () {
     return view('admin.login');
 });
 
-// if ( file_exists( app_path( 'Http/Controllers/Admin/LocalizationController.php') ) )
-// {
-
-// }
 Route::get('lang/{locale}', [LocalizationController::class , 'lang'] );
 
 
@@ -273,7 +267,7 @@ Route::get('courses',[CourseController::class , 'courses'])->name('admin.courses
 
 Route::get('client/check-discount',[RegisterController::class , 'checkDiscountCode'])->name('client.check.discount');
 
-Route::view('client/create/shipment', 'client.shipping.create_shipment')->name('client.create.shipment');
+// Route::view('client/create/shipment', 'client.shipping.create_shipment')->name('client.create.shipment');
 
 Route::group(['prefix' => 'client'], function (){
 
@@ -284,6 +278,7 @@ Route::get('login',[ClientLoginController::class , 'login'])->name('client.login
 Route::post('login/check',[ClientLoginController::class , 'checkLogin'])->name('client.login.check');
 Route::get('logout',[ClientLoginController::class , 'logout'])->name('client.logout');
 
+
 /*
 |*******************
 | Password  Routes
@@ -293,6 +288,10 @@ Route::get('create/password',[RegisterController::class , 'createPasswordForm'])
 Route::post('password/store',[RegisterController::class , 'storePassword'])->name('client.store.password');
 
 
+});
+
+Route::group(['prefix' => 'client', 'middleware' => ['client']], function (){
+
 /*
 |****************
 | Dashboard
@@ -300,7 +299,7 @@ Route::post('password/store',[RegisterController::class , 'storePassword'])->nam
 */
 Route::get('dashboard',[ClientLoginController::class , 'dashboard'])->name('client.dashboard');
 
-
+Route::view('create/shipment', 'client.shipping.create_shipment')->name('client.create.shipment');
 /*
 |****************
 | User Routes
