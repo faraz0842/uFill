@@ -449,8 +449,9 @@
 
                                         </div>
                                         <br>
-                                        <h5 class="text-success" id="valid" style="margin-top: 12px; margin-left:8px">Discount successfully applied. You will receive a one-time discount of 10€</h5>
-                                        <h5 class="text-danger" id="not_valid" style="margin-top: 12px; margin-left:8px">Error! Please try a different discount code!</h5>
+                                        <div id="check_code_message">
+
+                                        </div>
                                     </div>
                                     <!--end::Input group-->
                                     <!--begin::Input group-->
@@ -1395,8 +1396,8 @@
 <script>
 
     //hiding the success text
-    $('#valid').hide();
-    $('#not_valid').hide();
+
+
 
         function checkDiscountCode() {
 
@@ -1414,10 +1415,24 @@
                     success: function(result) {
                         if (result != "") {
                             console.log(result);
-                            $('#valid').show();
+                            if(result.percent == null){
+                                $("#check_code_message").append(
+                                    '<h5 class="text-success" id="valid" style="margin-top: 12px; margin-left:8px">Discount successfully applied. You will receive a one-time discount of '+ result.price +'€</h5>'
+                                );
+                            }else{
+                                $("#check_code_message").append(
+                                    '<h5 class="text-success" id="valid" style="margin-top: 12px; margin-left:8px">Discount successfully applied. You will receive a one-time discount of '+ result.percent +'%</h5>'
+                                );
+                            }
+
                             $('#not_valid').hide();
+
                         } else {
-                            $('#not_valid').show();
+
+                            $("#check_code_message").append(
+                                '<h5 class="text-danger" id="not_valid" style="margin-top: 12px; margin-left:8px">Error! Please try a different discount code!</h5>'
+                            );
+
                             $('#valid').hide();
                         }
 

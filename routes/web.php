@@ -273,7 +273,7 @@ Route::get('courses',[CourseController::class , 'courses'])->name('admin.courses
 
 Route::get('client/check-discount',[RegisterController::class , 'checkDiscountCode'])->name('client.check.discount');
 
-Route::view('client/create/shipment', 'client.shipping.create_shipment');
+Route::view('client/create/shipment', 'client.shipping.create_shipment')->name('client.create.shipment');
 
 Route::group(['prefix' => 'client'], function (){
 

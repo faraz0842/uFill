@@ -132,7 +132,7 @@
                                         </span>
                                         <div class="menu-sub menu-sub-accordion">
                                             <div class="menu-item">
-                                                <a class="menu-link" href="#">
+                                                <a class="menu-link" href="{{Route('client.create.shipment')}}">
                                                     <span class="menu-bullet">
                                                         <span class="bullet bullet-dot"></span>
                                                     </span>
