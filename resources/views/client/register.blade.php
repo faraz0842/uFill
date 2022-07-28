@@ -1417,11 +1417,11 @@
                             console.log(result);
                             if(result.percent == null){
                                 $("#check_code_message").append(
-                                    '<h5 class="text-success" id="valid" style="margin-top: 12px; margin-left:8px">Discount successfully applied. You will receive a one-time discount of '+ result.price +'€</h5>'
+                                    '<h5 class="text-success" id="valid" style="margin-top: 12px; margin-left:8px">{{trans("message.Discount successfully applied. You will receive a one-time discount of")}} '+ result.price +'€</h5>'
                                 );
                             }else{
                                 $("#check_code_message").append(
-                                    '<h5 class="text-success" id="valid" style="margin-top: 12px; margin-left:8px">Discount successfully applied. You will receive a one-time discount of '+ result.percent +'%</h5>'
+                                    '<h5 class="text-success" id="valid" style="margin-top: 12px; margin-left:8px">{{trans("message.Discount successfully applied. You will receive a one-time discount of")}} '+ result.percent +'%</h5>'
                                 );
                             }
 
@@ -1430,7 +1430,7 @@
                         } else {
 
                             $("#check_code_message").append(
-                                '<h5 class="text-danger" id="not_valid" style="margin-top: 12px; margin-left:8px">Error! Please try a different discount code!</h5>'
+                                '<h5 class="text-danger" id="not_valid" style="margin-top: 12px; margin-left:8px">{{trans("message.Error! Please try a different discount code!")}}</h5>'
                             );
 
                             $('#valid').hide();

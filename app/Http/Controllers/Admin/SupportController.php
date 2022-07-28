@@ -32,7 +32,7 @@ class SupportController extends Controller
     {
         $company_data = AdminCompany::where('company_id',1)->first();
 
-        if (session('admin_id')) {
+        if (!empty(session('id'))) {
 
             return view('admin.help.contact')->with('company_data',$company_data);
 
@@ -47,7 +47,7 @@ class SupportController extends Controller
     public function faq()
     {
         $company_data = AdminCompany::where('company_id',1)->first();
-        if (session('admin_id')) {
+        if (!empty(session('id'))) {
 
             return view('admin.help.faq')->with('company_data',$company_data);
 
@@ -62,7 +62,7 @@ class SupportController extends Controller
     {
         $company_data = AdminCompany::where('company_id',1)->first();
 
-        if (session('admin_id')) {
+        if (!empty(session('id'))) {
 
             return view('admin.help.list')->with('company_data',$company_data);
 
@@ -77,7 +77,7 @@ class SupportController extends Controller
     public function overview()
     {
         $company_data = AdminCompany::where('company_id',1)->first();
-        if (session('admin_id')) {
+        if (!empty(session('id'))) {
 
             return view('admin.help.overview')->with('company_data',$company_data);
 

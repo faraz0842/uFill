@@ -303,14 +303,14 @@
                             <!--begin::Card body-->
                             <div class="card-body border-top p-9">
 
-                            <div class="form-group m-3">
-                                @if (session('error'))
-                                    <div class="alert alert-danger">{{ session('error') }}</div>
-                                @endif
-                                @if (session('message'))
-                                    <div class="alert alert-success">{{ session('message') }}</div>
-                                @endif
-                            </div>
+                                <div class="form-group m-3">
+                                    @if (session('error'))
+                                        <div class="alert alert-danger">{{ session('error') }}</div>
+                                    @endif
+                                    @if (session('message'))
+                                        <div class="alert alert-success">{{ session('message') }}</div>
+                                    @endif
+                                </div>
                                 <!--begin::Input group-->
                                 <div class="row mb-6">
                                     <!--begin::Label-->
@@ -321,11 +321,20 @@
                                     <div class="col-lg-8">
                                         <!--begin::Image input-->
                                         <div class="image-input image-input-outline" data-kt-image-input="true"
-                                            style="background-image: url('{{ URL::asset($client_info->profile_picture) }})">
+                                            style="background-image: url('{{ asset('assets/media/svg/avatars/blank.svg') }}')">
                                             <!--begin::Preview existing avatar-->
-                                            <div class="image-input-wrapper w-125px h-125px"
+                                            @if (isset($client_info->profile_picture))
+                                                <div class="image-input-wrapper w-125px h-125px"
+                                                    style="background-image: url({{ URL::asset($client_info->profile_picture) }})">
+                                                </div>
+                                            @else
+                                                <div class="image-input-wrapper w-125px h-125px"
+                                                    style="background-image: url({{ asset('assets/media/svg/avatars/blank.svg') }})">
+                                                </div>
+                                            @endif
+                                            {{-- <div class="image-input-wrapper w-125px h-125px"
                                                 style="background-image: url('{{ URL::asset($client_info->profile_picture) }}')">
-                                            </div>
+                                            </div> --}}
                                             <!--end::Preview existing avatar-->
                                             <!--begin::Label-->
                                             <label
@@ -336,9 +345,10 @@
                                                 <!--begin::Inputs-->
                                                 <input type="hidden" name="previous_profile"
                                                     value="{{ $client_info->profile_picture }}">
+                                                <input type="hidden" name="avatar_remove" />
                                                 <input type="file" name="profile_picture"
                                                     accept=".png, .jpg, .jpeg" />
-                                                <input type="hidden" name="avatar_remove" />
+
                                                 <!--end::Inputs-->
                                             </label>
                                             <!--end::Label-->
@@ -1078,8 +1088,9 @@
                                     <!--begin::Col-->
                                     <div class="col-lg-8 fv-row">
                                         <input type="tel" name="telephone"
-                                            class="form-control form-control-lg form-control-solid" placeholder="021 111 111 111"
-                                            value="{{ $client_info->telephone }}" required />
+                                            class="form-control form-control-lg form-control-solid"
+                                            placeholder="021 111 111 111" value="{{ $client_info->telephone }}"
+                                            required />
                                     </div>
                                     <!--end::Col-->
                                 </div>
@@ -1482,7 +1493,8 @@
                             <div class="card-footer d-flex justify-content-end py-6 px-9">
                                 <button type="reset"
                                     class="btn btn-light btn-active-light-primary me-2">{{ trans('message.Discard') }}</button>
-                                <button type="submit" class="btn btn-primary">{{ trans('message.Save Changes') }}</button>
+                                <button type="submit"
+                                    class="btn btn-primary">{{ trans('message.Save Changes') }}</button>
                             </div>
                             <!--end::Actions-->
                         </form>

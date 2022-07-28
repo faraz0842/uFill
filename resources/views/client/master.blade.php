@@ -780,7 +780,7 @@
                 <!--end::Aside menu-->
                 <!--begin::Footer-->
                 <div class="aside-footer flex-column-auto pt-5 pb-7 px-5" id="kt_aside_footer">
-                    <a href="#" class="btn btn-custom btn-primary w-100" data-bs-toggle="tooltip"
+                    <a href="{{ Route('help.overview') }}" class="btn btn-custom btn-primary w-100" data-bs-toggle="tooltip"
                         data-bs-trigger="hover" data-bs-dismiss-="click"
                         title="Sie benötigen Hilfe? Werfen Sie einen Blick in unser Wiki oder kontaktieren Sie unseren Kundensupport.">
                         <span class="btn-label">uFill Hilfe-Center</span>
@@ -957,7 +957,7 @@
                                     data-kt-menu-placement="bottom-end">
                                     @if (session('profile_picture'))
                                         <img src="{{ asset(URL::asset(session('profile_picture'))) }}"
-                                            alt="user" />
+                                            alt="{{session('profile_picture')}}" />
                                     @else
                                         <img src="{{ asset('assets/media/svg/avatars/blank.svg') }}"
                                             alt="user" />

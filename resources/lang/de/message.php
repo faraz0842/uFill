@@ -1246,9 +1246,16 @@ return [
 
     "Website" => "Startseite",
 
-    '' => '',
-    '' => '',
-    '' => '',
+
+    "Discount successfully applied. You will receive a one-time discount of" => "Rabatt erfolgreich angewendet. Sie erhalten einen einmaligen Rabatt von",
+
+    "Error! Please try a different discount code!" => "Fehler! Bitte versuchen Sie es mit einem anderen Rabattcode!",
+
+
+
+    'resend_code' => 'Erneut senden',
+    'or' => 'oder',
+    'contact customer support' => 'Kundensupport kontaktieren',
     '' => '',
     '' => '',
     '' => '',

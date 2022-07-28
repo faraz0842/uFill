@@ -39,6 +39,7 @@ class SettingController extends Controller
     {
 
 
+
         try {
              $image = $request->file('profile_picture');
                 if (isset($image)) {
@@ -47,10 +48,15 @@ class SettingController extends Controller
                     $image_path = 'upload/CompanyProfile/';
                     $image->move($image_path, $image_name);
                     $profile_picture = $image_path.$image_name;
-                } else {
+                }else if($request->avatar_remove){
+                    $profile_picture = null;
+                }else {
                     $profile_picture = $request->previous_profile;
+                    return $profile_picture;
                 }
 
+
+                //return $profile_picture;
             Client::where('id',session('client_id'))->update([
                 'profile_picture' => $profile_picture,
                 'company_name' => $request->company_name,
@@ -65,6 +71,10 @@ class SettingController extends Controller
                 'website' => $request->website,
                 'vat_id' => $request->vat,
                 'registration_number' => $request->registration_number,
+            ]);
+
+            session([
+                'profile_picture' => $profile_picture,
             ]);
 
             return redirect()->Route('client.overview');
