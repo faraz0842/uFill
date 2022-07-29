@@ -371,8 +371,7 @@
                                         </div>
                                         <!--end::Image input-->
                                         <!--begin::Hint-->
-                                        <div class="form-text">Note: A square logo is recommended. Allowed file types: png,
-                                            jpg, jpeg.</div>
+                                        <div class="form-text">{{ $client_info->profile_picture }}.</div>
                                         <!--end::Hint-->
                                     </div>
                                     <!--end::Col-->

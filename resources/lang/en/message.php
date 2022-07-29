@@ -684,9 +684,9 @@ return [
     "Website" => "Website",
 
 
-    "Discount successfully applied. You will receive a one-time discount of" => "Rabatt erfolgreich angewendet. Sie erhalten einen einmaligen Rabatt von",
+    "Discount successfully applied. You will receive a one-time discount of" => "Discount successfully applied. You will receive a one-time discount of",
 
-    "Error! Please try a different discount code!" => "Fehler! Bitte versuchen Sie es mit einem anderen Rabattcode!",
+    "Error! Please try a different discount code!" => "Error! Please try a different discount code!",
 
 
     'resend_code' => 'Resend code',

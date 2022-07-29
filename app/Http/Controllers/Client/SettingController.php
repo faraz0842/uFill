@@ -40,7 +40,10 @@ class SettingController extends Controller
 
 
 
+
         try {
+
+            //return $request->previous_profile;
              $image = $request->file('profile_picture');
                 if (isset($image)) {
                     $image_name = $image->getClientOriginalName();
@@ -48,11 +51,10 @@ class SettingController extends Controller
                     $image_path = 'upload/CompanyProfile/';
                     $image->move($image_path, $image_name);
                     $profile_picture = $image_path.$image_name;
-                }else if($request->avatar_remove){
+                }else if($request->previous_profile == 1){
                     $profile_picture = null;
                 }else {
                     $profile_picture = $request->previous_profile;
-                    return $profile_picture;
                 }
 
 
