@@ -692,7 +692,9 @@ return [
     'resend_code' => 'Resend code',
     'or' => 'or',
     'contact customer support' => 'contact customer support',
-    '' => '',
+
+
+    'total customers' => 'Total Customer',
     '' => '',
     '' => '',
     '' => '',

@@ -1256,6 +1256,9 @@ return [
     'resend_code' => 'Erneut senden',
     'or' => 'oder',
     'contact customer support' => 'Kundensupport kontaktieren',
+
+
+    'total customers' => 'Kunden gesamt',
     '' => '',
     '' => '',
     '' => '',

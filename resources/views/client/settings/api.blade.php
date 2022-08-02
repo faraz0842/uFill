@@ -249,7 +249,7 @@
                                                 <!--end::Number-->
                                                 <!--begin::Label-->
                                                 <div class="fw-bold fs-6 text-gray-400">
-                                                    {{ trans('message.Total Clients') }}</div>
+                                                    {{ trans('message.total customers') }}</div>
                                                 <!--end::Label-->
                                             </div>
                                             <!--end::Stat-->
