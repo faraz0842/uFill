@@ -271,14 +271,16 @@
                             </li>
                             <!--end::Nav item-->
                             <!--begin::Nav item-->
-                            <li class="nav-item mt-2">
-                                <a class="nav-link text-active-primary ms-0 me-10 py-5 "
-                                    href="{{ Route('client.api') }}">{{ trans('message.apis/integration') }}</a>
-                            </li>
+                            @if (session('package_name') != 'shipment')
+                                <li class="nav-item mt-2">
+                                    <a class="nav-link text-active-primary ms-0 me-10 py-5 "
+                                        href="{{ Route('client.api') }}">{{ trans('message.apis/integration') }}</a>
+                                </li>
+                            @endif
                             <!--end::Nav item-->
                             <li class="nav-item mt-2">
                                 <a class="nav-link text-active-primary ms-0 me-10 py-5 "
-                                    href="{{ Route('client.profile',session('client_id')) }}">{{ trans('message.security') }}</a>
+                                    href="{{ Route('client.profile', session('client_id')) }}">{{ trans('message.security') }}</a>
                             </li>
                         </ul>
                         <!--begin::Navs-->
@@ -325,72 +327,71 @@
                 </div>
                 <!--end::Referral program-->
                 <div class="card card-flush pt-3 mb-5 mb-xl-10">
-                            <!--begin::Card header-->
-                            <div class="card-header pt-7">
-                                <!--begin::Title-->
-                                <h3 class="card-title align-items-start flex-column mb-5">
-                                    <span
-                                        class="card-label fw-bolder text-dark">{{ trans('message.Referral Clients') }}</span>
-                                </h3>
-                                <!--end::Title-->
-                                <!--begin::Actions-->
-                                <!--end::Actions-->
-                            </div>
-                            <!--end::Card header-->
-                            <!--begin::Card body-->
-                            <div class="card-body pt-2">
-                                <!--begin::Table-->
-                                <table class="table align-middle table-row-dashed fs-6 gy-3" id="kt_table_widget_5_table">
-                                    <!--begin::Table head-->
-                                    <thead>
-                                        <!--begin::Table row-->
-                                        <tr class="text-center text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                            <th class="text-center pe-3 min-w-25px">{{ trans('message.id') }}</th>
-                                            <th class="text-center pe-3 min-w-50px">{{ trans('message.Company Name') }}
-                                            </th>
-                                            {{-- <th class="text-center pe-3 min-w-150px">{{trans('message.Status')}}</th> --}}
-                                            <th class="text-center pe-3 min-w-50px">
-                                                {{ trans('message.Registered At') }}
-                                            </th>
-                                            <th class="text-center pe-3 min-w-50px">
-                                                {{ trans('message.Advertised By') }}
-                                            </th>
+                    <!--begin::Card header-->
+                    <div class="card-header pt-7">
+                        <!--begin::Title-->
+                        <h3 class="card-title align-items-start flex-column mb-5">
+                            <span class="card-label fw-bolder text-dark">{{ trans('message.Referral Clients') }}</span>
+                        </h3>
+                        <!--end::Title-->
+                        <!--begin::Actions-->
+                        <!--end::Actions-->
+                    </div>
+                    <!--end::Card header-->
+                    <!--begin::Card body-->
+                    <div class="card-body pt-2">
+                        <!--begin::Table-->
+                        <table class="table align-middle table-row-dashed fs-6 gy-3" id="kt_table_widget_5_table">
+                            <!--begin::Table head-->
+                            <thead>
+                                <!--begin::Table row-->
+                                <tr class="text-center text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                    <th class="text-center pe-3 min-w-25px">{{ trans('message.id') }}</th>
+                                    <th class="text-center pe-3 min-w-50px">{{ trans('message.Company Name') }}
+                                    </th>
+                                    <th class="text-center pe-3 min-w-150px">{{trans('message.Status')}}</th>
+                                    <th class="text-center pe-3 min-w-50px">
+                                        {{ trans('message.Registered At') }}
+                                    </th>
+                                    <th class="text-center pe-3 min-w-50px">
+                                        {{ trans('message.Advertised By') }}
+                                    </th>
 
-                                        </tr>
-                                        <!--end::Table row-->
-                                    </thead>
-                                    <!--end::Table head-->
-                                    <!--begin::Table body-->
-                                    <tbody class="fw-bolder text-gray-600">
-                                        @foreach ($affiliated_at as $affiliated)
-                                            <tr>
-                                                <!--begin::Shipment ID-->
-                                                <td class="text-center">{{ $affiliated->id }}</td>
-                                                <!--end::Shipment ID-->
-                                                <!--begin::Transport-->
-                                                <td class="text-center">{{ $affiliated->company_name }}</td>
-                                                <!--end::Transport-->
-                                                <!--begin::Type-->
-                                                {{-- <td class="text-center">{{$affiliated->status}}</td> --}}
-                                                <!--end::Type-->
-                                                <!--begin::Weight-->
-                                                <td class="text-center">
-                                                    {{ date('d-m-Y', strtotime($affiliated->created_at)) }}</td>
-                                                <!--end::Weight-->
-                                                <!--begin::Size-->
-                                                <td class="text-center">
-                                                    {{ $affiliated->first_name . ' ' . $affiliated->last_name }}</td>
-                                                <!--end::price-->
+                                </tr>
+                                <!--end::Table row-->
+                            </thead>
+                            <!--end::Table head-->
+                            <!--begin::Table body-->
+                            <tbody class="fw-bolder text-gray-600">
+                                @foreach ($affiliated_at as $affiliated)
+                                    <tr>
+                                        <!--begin::Shipment ID-->
+                                        <td class="text-center">{{ $affiliated->id }}</td>
+                                        <!--end::Shipment ID-->
+                                        <!--begin::Transport-->
+                                        <td class="text-center">{{ $affiliated->company_name }}</td>
+                                        <!--end::Transport-->
+                                        <!--begin::Type-->
+                                        <td class="text-center">{{$affiliated->status}}</td>
+                                        <!--end::Type-->
+                                        <!--begin::Weight-->
+                                        <td class="text-center">
+                                            {{ date('d-m-Y', strtotime($affiliated->created_at)) }}</td>
+                                        <!--end::Weight-->
+                                        <!--begin::Size-->
+                                        <td class="text-center">
+                                            {{ $affiliated->first_name . ' ' . $affiliated->last_name }}</td>
+                                        <!--end::price-->
 
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                    <!--end::Table body-->
-                                </table>
-                                <!--end::Table-->
-                            </div>
-                            <!--end::Card body-->
-                        </div>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            <!--end::Table body-->
+                        </table>
+                        <!--end::Table-->
+                    </div>
+                    <!--end::Card body-->
+                </div>
             </div>
             <!--end::Container-->
         </div>

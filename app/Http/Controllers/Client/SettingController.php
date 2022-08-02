@@ -60,6 +60,8 @@ class SettingController extends Controller
 
                 //return $profile_picture;
             Client::where('id',session('client_id'))->update([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
                 'profile_picture' => $profile_picture,
                 'company_name' => $request->company_name,
                 'house_number' => $request->house_number,
