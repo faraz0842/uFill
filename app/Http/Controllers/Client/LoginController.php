@@ -46,7 +46,8 @@ class LoginController extends Controller
             if ($is_exists) {
 
                 if (Hash::check($request->password, $is_exists->password)) {
-                        session([
+
+                    session([
                             'client_id' => $is_exists->id,
                             'email' => $is_exists->email,
                             'name' => $is_exists->first_name . ' ' . $is_exists->last_name,
@@ -54,10 +55,16 @@ class LoginController extends Controller
                             'locale' => $is_exists->language,
                             'status' => 'online',
                             'package_name' => $package->name,
-                            'company_name' => $is_exists->company_name
+                            'company_name' => $is_exists->company_name,
+                            'stripe_id' => $is_exists->stripe_id
                         ]);
 
+                    if ($package->name == 'shipment') {
+                        return redirect()->Route('client.shipment.delivery');
+                    } else {
                         return redirect()->Route('client.dashboard');
+                    }
+
                 } else {
                     return back()->withError('Oops ! you have entered invalid credentials..')->withInput();
                 }

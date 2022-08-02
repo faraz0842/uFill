@@ -12,7 +12,7 @@
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                     <!--begin::Description-->
-                    <small class="text-muted fs-7 fw-bold my-1 ms-1">{{ trans('message.admin') }} >
+                    <small class="text-muted fs-7 fw-bold my-1 ms-1">{{ trans('message.clients') }} >
                         {{ trans('message.settings') }} > {{ trans('message.apis/integration') }}</small>
                     <!--end::Description-->
                 </div>
@@ -89,7 +89,7 @@
                                         <!--end::Name-->
                                         <!--begin::Info-->
                                         <div class="d-flex flex-wrap fw-bold fs-6 mb-4 pe-2">
-                                            {{-- <div class="d-flex align-items-center text-gray-400 me-5 mb-2">
+                                            <div class="d-flex align-items-center text-gray-400 me-5 mb-2">
                                                 <!--begin::Svg Icon | path: icons/duotune/communication/com006.svg-->
                                                 <span class="svg-icon svg-icon-4 me-1">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -102,8 +102,8 @@
                                                             fill="currentColor" />
                                                     </svg>
                                                 </span>
-                                                <!--end::Svg Icon-->{{ $client_info->manager_director }}
-                                            </div> --}}
+                                                <!--end::Svg Icon-->{{ $client_info->first_name . ' ' . $client_info->last_name }}
+                                            </div>
                                             <div class="d-flex align-items-center text-gray-400 me-5 mb-2">
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen018.svg-->
                                                 <span class="svg-icon svg-icon-4 me-1">
@@ -117,9 +117,9 @@
                                                             fill="currentColor" />
                                                     </svg>
                                                 </span>
-                                                <!--end::Svg Icon-->{{ $client_info->house_number }}
-                                                {{ $client_info->street }} {{ $client_info->plz }}
-                                                {{ $client_info->state }}
+                                                <!--end::Svg Icon-->{{ $client_info->street }}
+                                                {{ $client_info->house_number }} , {{ $client_info->plz }}
+                                                {{ $client_info->state }} {{ $client_info->country }}
                                             </div>
                                             <div class="d-flex align-items-center text-gray-400 mb-2">
                                                 <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
@@ -167,7 +167,7 @@
                                                     </span>
                                                     <!--end::Svg Icon-->
                                                     @if ($client_info->name == 'shipment')
-                                                        <div class="fs-2 fw-bolder" data-kt-countup="true"
+                                                        <div class="fs-2 fw-bolder" data-kt-countup="false"
                                                             data-kt-countup-value="0" data-kt-countup-suffix="€">
                                                             N/A
                                                         </div>
@@ -289,6 +289,10 @@
                                     href="{{ Route('client.api') }}">{{ trans('message.apis/integration') }}</a>
                             </li>
                             <!--end::Nav item-->
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5 "
+                                    href="{{ Route('client.profile',session('client_id')) }}">{{ trans('message.security') }}</a>
+                            </li>
                         </ul>
                         <!--begin::Navs-->
                     </div>
@@ -524,7 +528,7 @@
                                                                         <option value="1">
                                                                             {{ trans('message.Active') }}</option>
                                                                         <option value="0">
-                                                                            {{ trans('message.Deactive') }}</option>
+                                                                            {{ trans('message.DeActive') }}</option>
                                                                     </select>
                                                                     <!--end::Select-->
                                                                     @if ($errors->has('status'))
@@ -594,7 +598,7 @@
                                                         class="badge badge-light-success fs-7 fw-bold">{{ trans('message.Active') }}</span>
                                                 @else
                                                     <span
-                                                        class="badge badge-light-danger fs-7 fw-bold">{{ trans('message.Deactive') }}</span></span>
+                                                        class="badge badge-light-danger fs-7 fw-bold">{{ trans('message.DeActive') }}</span></span>
                                                 @endif
 
                                             </td>
@@ -836,7 +840,7 @@
                                                                             {{ trans('message.Active') }}</option>
                                                                         <option value="0"
                                                                             {{ $item->status == '0' ? 'selected' : '' }}>
-                                                                            {{ trans('message.Deactive') }}</option>
+                                                                            {{ trans('message.DeActive') }}</option>
                                                                     </select>
                                                                     <!--end::Select-->
                                                                 </div>

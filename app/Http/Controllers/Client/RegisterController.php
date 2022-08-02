@@ -133,7 +133,7 @@ class RegisterController extends Controller
 
 
              Client::where('id',$client->id)->update([
-                'referral_link' => 'ufill.swamenterprises.com/client/register/ufill-'.$client->id,
+                'referral_link' => 'ufill.swamenterprises.com/client/register/'.$client->company_name. '-' .$client->id,
             ]);
 
 

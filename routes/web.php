@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Client\ChangeLogController as ClientChangeLogController;
 use App\Http\Controllers\Client\LoginController as ClientLoginController;
 use App\Http\Controllers\Client\NewsController as CLientNewsController;
+use App\Http\Controllers\Client\ProfileController as ClientProfileController;
 use App\Http\Controllers\Client\UserController;
 use App\Http\Controllers\Client\RegisterController;
 use App\Http\Controllers\Client\SettingController as ClientSettingController;
@@ -35,6 +36,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+//+++++ theme changing routes ++++++++
+Route::get('change/theme/dark', [ProfileController::class , 'changeThemeToDark'])->name('change.theme.dark');
+Route::get('change/theme/light', [ProfileController::class , 'changeThemeToLight'])->name('change.theme.light');
+
+
 
 Route::view('client/upgrade_plan','admin.client.upgrade_plan')->name('upgrade_plan');
 
@@ -199,8 +206,7 @@ Route::post('/update/profile/{id}',[ProfileController::class , 'updateProfile'])
 */
 Route::post('/update/password/{id}',[ProfileController::class , 'updatePassword'])->name('admin.update.password');
 Route::post('/update/email/{id}',[ProfileController::class , 'updateEmail'])->name('admin.update.email');
-Route::get('change/theme/dark', [ProfileController::class , 'changeThemeToDark'])->name('change.theme.dark');
-Route::get('change/theme/light', [ProfileController::class , 'changeThemeToLight'])->name('change.theme.light');
+
 
 
 
@@ -300,6 +306,8 @@ Route::group(['prefix' => 'client', 'middleware' => ['client']], function (){
 Route::get('dashboard',[ClientLoginController::class , 'dashboard'])->name('client.dashboard');
 
 Route::view('create/shipment', 'client.shipping.create_shipment')->name('client.create.shipment');
+Route::view('shipment/delivery', 'client.shipping.delivery')->name('client.shipment.delivery');
+Route::view('shipment/status/check', 'client.shipping.status_check')->name('client.shipment.status_check');
 /*
 |****************
 | User Routes
@@ -335,6 +343,32 @@ Route::post('settings/update-info',[ClientSettingController::class , 'updateInfo
 Route::get('overview',[ClientSettingController::class , 'overview'])->name('client.overview');
 Route::get('api-integration',[ClientSettingController::class , 'api'])->name('client.api');
 Route::get('referral',[ClientSettingController::class , 'referral'])->name('client.referral');
+
+/*
+|**********************
+| Client Profile Routes
+|**********************
+*/
+Route::get('profile/{id}',[ClientProfileController::class , 'profileView'])->name('client.profile');
+Route::post('/update/profile/{id}',[ClientProfileController::class , 'updateProfile'])->name('client.profile.update');
+Route::get('billing/{id}/{stripe_id}',[ClientProfileController::class , 'showBilling'])->name('client.billing');
+
+/*
+|*******************************
+| Client Profile Password Update
+|*******************************
+*/
+Route::post('/update/password/{id}',[ClientProfileController::class , 'updatePassword'])->name('client.update.password');
+Route::post('/update/email/{id}',[ClientProfileController::class , 'updateEmail'])->name('client.update.email');
+
+/*
+|******************************
+| Client profile Forget Password
+|******************************
+*/
+Route::get('forget/password/link/{email}',[ClientProfileController::class , 'forgetPassword'])->name('client.forget.password.link');
+Route::get('setup2FA',[ClientProfileController::class , 'setUp2FA'])->name('client.setup2fa');
+Route::get('deactivate2FA/{email}',[ClientProfileController::class , 'deActivateUp2FA'])->name('client.deactivate2fa');
 
 });
 

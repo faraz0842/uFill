@@ -124,8 +124,8 @@ class DashboardController extends Controller
         ]);
 
 
-        $amount_paid = 0;
-        $total_amount = 0;
+        $amount_paid = 1;
+        $total_amount = 1;
         $open_invoice_amount = 0;
         foreach ($search_invoice->data as $key => $value) {
             if($value->status == 'unpaid'){
@@ -133,13 +133,15 @@ class DashboardController extends Controller
             }elseif($value->status == 'paid') {
                 $amount_paid += $value->amount_paid;
             }
+
+
             $total_amount += $value->total;
         }
 
         // $amount_paid_sum = array_sum($amount_paid);
         // $total_amount_sum = array_sum($total_amount);
 
-       // return response()->json($total_amount);
+        //return response()->json($amount_paid);
         $unpaid_invoices = 0;
         $paid_invoices = 0;
         $unpaid_invoices_count = 0;
