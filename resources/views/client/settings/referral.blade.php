@@ -282,6 +282,10 @@
                                 <a class="nav-link text-active-primary ms-0 me-10 py-5 "
                                     href="{{ Route('client.profile', session('client_id')) }}">{{ trans('message.security') }}</a>
                             </li>
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5 "
+                                    href="{{ Route('client.package.shipment') }}">{{ trans('message.package_shipment') }}</a>
+                            </li>
                         </ul>
                         <!--begin::Navs-->
                     </div>
@@ -349,13 +353,14 @@
                                     <th class="text-center pe-3 min-w-25px">{{ trans('message.id') }}</th>
                                     <th class="text-center pe-3 min-w-50px">{{ trans('message.Company Name') }}
                                     </th>
-                                    <th class="text-center pe-3 min-w-150px">{{trans('message.Status')}}</th>
+
                                     <th class="text-center pe-3 min-w-50px">
                                         {{ trans('message.Registered At') }}
                                     </th>
                                     <th class="text-center pe-3 min-w-50px">
                                         {{ trans('message.Advertised By') }}
                                     </th>
+                                    <th class="text-center pe-3 min-w-150px">{{trans('message.Status')}}</th>
 
                                 </tr>
                                 <!--end::Table row-->
@@ -372,7 +377,7 @@
                                         <td class="text-center">{{ $affiliated->company_name }}</td>
                                         <!--end::Transport-->
                                         <!--begin::Type-->
-                                        <td class="text-center">{{$affiliated->status}}</td>
+
                                         <!--end::Type-->
                                         <!--begin::Weight-->
                                         <td class="text-center">
@@ -382,6 +387,7 @@
                                         <td class="text-center">
                                             {{ $affiliated->first_name . ' ' . $affiliated->last_name }}</td>
                                         <!--end::price-->
+                                        <td class="text-center">{{$affiliated->status}}</td>
 
                                     </tr>
                                 @endforeach

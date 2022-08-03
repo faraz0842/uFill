@@ -350,7 +350,7 @@ return [
     'Youtube Link' => 'Youtube Link',
     'Shipment Package Fee' => 'Shipment Package Fee',
     'Add Shipment Package Fee' => 'Add Shipment Package Fee',
-    'Monthly Package Amount' => 'Monthly Package Amount',
+    'Monthly Package Amount' => 'Package Amount',
     'uFill Package Fee' => 'uFill Package Fee',
     'Edit Shipment Package Fee' => 'Edit Shipment Package Fee',
 
@@ -695,7 +695,7 @@ return [
 
 
     'total customers' => 'Total Customer',
-    '' => '',
+    'package_shipment' => 'Package Shipment',
     '' => '',
     '' => '',
     '' => '',

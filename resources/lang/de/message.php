@@ -907,7 +907,7 @@ return [
     'Youtube Link' => 'Youtube Link',
     'Shipment Package Fee' => 'Versandkostengebühr',
     'Add Shipment Package Fee' => 'Versandkostengebühr hinzufügen',
-    'Monthly Package Amount' => 'Monatliche Paketanzahl',
+    'Monthly Package Amount' => 'Paketbetrag',
     'uFill Package Fee' => 'uFill Versandkostengebühr',
     'Edit Shipment Package Fee' => 'Versandkostengebühr bearbeiten',
 
@@ -1259,6 +1259,7 @@ return [
 
 
     'total customers' => 'Kunden gesamt',
+    'package_shipment' => 'Paketversand',
     '' => '',
     '' => '',
     '' => '',

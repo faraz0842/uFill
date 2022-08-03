@@ -282,6 +282,10 @@
                                 <a class="nav-link text-active-primary ms-0 me-10 py-5 active"
                                     href="{{ Route('client.profile', session('client_id')) }}">{{ trans('message.security') }}</a>
                             </li>
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5 "
+                                    href="{{ Route('client.package.shipment') }}">{{ trans('message.package_shipment') }}</a>
+                            </li>
                         </ul>
                         <!--begin::Navs-->
                     </div>

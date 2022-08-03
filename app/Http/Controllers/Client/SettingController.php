@@ -8,6 +8,7 @@ use App\Models\AdminCompany;
 use App\Models\AffiliateLink;
 use App\Models\ApiIntegration;
 use App\Models\Client;
+use App\Models\ShippingDetail;
 use App\Models\Transaction;
 use Exception;
 use Illuminate\Http\Request;
@@ -163,4 +164,30 @@ class SettingController extends Controller
                                                ->with('total_revenue',$total_revenue)->with('referred_clients_count',$referred_clients_count)
                                                ->with('total_clients',$total_clients);
     }
+
+
+    public function packageShipment()
+    {
+        $referred_clients = AffiliateLink::where('affiliate_from',session('client_id'))->pluck('affiliate_to');
+        $total_revenue = Transaction::select(DB::raw('sum(amount - discount_price) as total'))->where('client_id',session('client_id'))->first();
+
+        //return response()->json($total_revenue);
+        $referred_clients_count = AffiliateLink::where('affiliate_from',session('client_id'))->count();
+
+        $total_clients = Client::count();
+
+        $shipping_details = ShippingDetail::all();
+
+        $client_info = Client::where('id',session('client_id'))->join('variants','variants.variant_id','clients.account_type')->first();
+
+        $affiliated_at = AffiliateLink::where('affiliate_from',session('client_id'))->join('clients','clients.id','affiliate_link.affiliate_from')->get();
+
+        $total_clients = Client::count();
+        return view('client.settings.package_shipment')->with('client_info',$client_info)->with('referred_clients',$referred_clients)
+                                               ->with('shipping_details',$shipping_details)->with('affiliated_at',$affiliated_at)
+                                               ->with('total_revenue',$total_revenue)->with('referred_clients_count',$referred_clients_count)
+                                               ->with('total_clients',$total_clients);
+    }
+
+
 }

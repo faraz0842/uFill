@@ -343,6 +343,7 @@ Route::post('settings/update-info',[ClientSettingController::class , 'updateInfo
 Route::get('overview',[ClientSettingController::class , 'overview'])->name('client.overview');
 Route::get('api-integration',[ClientSettingController::class , 'api'])->name('client.api');
 Route::get('referral',[ClientSettingController::class , 'referral'])->name('client.referral');
+Route::get('shipment/package',[ClientSettingController::class , 'packageShipment'])->name('client.package.shipment');
 
 /*
 |**********************

@@ -282,6 +282,10 @@
                                 <a class="nav-link text-active-primary ms-0 me-10 py-5 "
                                     href="{{ Route('client.profile',session('client_id')) }}">{{ trans('message.security') }}</a>
                             </li>
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5 "
+                                    href="{{ Route('client.package.shipment') }}">{{ trans('message.package_shipment') }}</a>
+                            </li>
                         </ul>
                         <!--begin::Navs-->
                     </div>
@@ -379,36 +383,6 @@
                                         <!--begin::Hint-->
                                         <div class="form-text">{{ $client_info->profile_picture }}.</div>
                                         <!--end::Hint-->
-                                    </div>
-                                    <!--end::Col-->
-                                </div>
-                                <!--end::Input group-->
-                                <!--begin::Input group-->
-                                <div class="row mb-6">
-                                    <!--begin::Label-->
-                                    <label
-                                        class="col-lg-4 col-form-label required fw-bold fs-6">{{ trans('message.Managing Director') }}</label>
-                                    <!--end::Label-->
-                                    <!--begin::Col-->
-                                    <div class="col-lg-8">
-                                        <!--begin::Row-->
-                                        <div class="row">
-                                            <!--begin::Col-->
-                                            <div class="col-lg-12 fv-row">
-                                                <input type="text" name="manager_director"
-                                                    class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                                    placeholder="firstname"
-                                                    value="{{ $client_info->first_name }} {{ $client_info->last_name }}"
-                                                    required />
-                                            </div>
-                                            <!--end::Col-->
-                                            <!--begin::Col-->
-                                            {{-- <div class="col-lg-6 fv-row">
-                                                            <input type="text" name="settings_name" class="form-control form-control-lg form-control-solid" placeholder="surname" value="Hiebenga" required/>
-                                                        </div> --}}
-                                            <!--end::Col-->
-                                        </div>
-                                        <!--end::Row-->
                                     </div>
                                     <!--end::Col-->
                                 </div>

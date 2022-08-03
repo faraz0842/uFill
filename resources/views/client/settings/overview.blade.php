@@ -286,6 +286,10 @@
                                 <a class="nav-link text-active-primary ms-0 me-10 py-5 "
                                     href="{{ Route('client.profile',session('client_id')) }}">{{ trans('message.security') }}</a>
                             </li>
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5 "
+                                    href="{{ Route('client.package.shipment') }}">{{ trans('message.package_shipment') }}</a>
+                            </li>
                         </ul>
                         <!--begin::Navs-->
                     </div>
@@ -340,9 +344,9 @@
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8 fv-row">
-                                <span class="fw-bold text-gray-800 fs-6">{{ $client_info->house_number }}
-                                    {{ $client_info->street }} {{ $client_info->plz }}
-                                    {{ $client_info->state }}</span>
+                                <span class="fw-bold text-gray-800 fs-6">{{ $client_info->street }}
+                                                {{ $client_info->house_number }} , {{ $client_info->plz }}
+                                                {{ $client_info->state }} {{ $client_info->country }}</span>
                             </div>
                             <!--end::Col-->
                         </div>
