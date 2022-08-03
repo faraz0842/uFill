@@ -277,10 +277,7 @@
                                         href="{{ Route('client.api') }}">{{ trans('message.apis/integration') }}</a>
                                 </li>
                             @endif
-                            <li class="nav-item mt-2">
-                                <a class="nav-link text-active-primary ms-0 me-10 py-5 "
-                                    href="{{ Route('client.api') }}">{{ trans('message.apis/integration') }}</a>
-                            </li>
+
                             <!--end::Nav item-->
                             <li class="nav-item mt-2">
                                 <a class="nav-link text-active-primary ms-0 me-10 py-5 "

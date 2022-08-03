@@ -91,6 +91,7 @@ class ProfileController extends Controller
             }
 
 
+
             return  redirect()->Route('admin.profile',$id);
 
 

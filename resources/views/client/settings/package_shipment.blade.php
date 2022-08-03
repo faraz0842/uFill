@@ -297,211 +297,155 @@
                     <div class="card-header pt-7">
                         <!--begin::Title-->
                         <h3 class="card-title align-items-start flex-column mb-5">
-                            <span class="card-label fw-bolder text-dark">{{ trans('message.Shipment Detail') }}</span>
+                            <span class="card-label fw-bolder text-dark">{{ trans('message.package_shipment') }}</span>
 
                         </h3>
                         <!--end::Title-->
                         <!--begin::Actions-->
                         <div class="card-toolbar">
                             <!--begin::Search-->
-                            {{-- <button type="button" class="btn btn-light-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#addshippingdetail">{{ trans('message.Add Shipment') }}</button> --}}
+                            <button type="button" class="btn btn-light-primary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#kt_modal_update_package_amount">{{ trans('message.change_package_amount') }}</button>
                             <!-- Button trigger modal -->
 
                             <!--begin::Modal - Add cost overview -->
-                            <div class="modal fade" id="addshippingdetail" tabindex="-1" aria-hidden="true">
+                            <!--begin::Modal - Update Package Amount-->
+                            <div class="modal fade" id="kt_modal_update_package_amount" tabindex="-1"
+                                aria-hidden="true">
                                 <!--begin::Modal dialog-->
                                 <div class="modal-dialog modal-dialog-centered mw-650px">
                                     <!--begin::Modal content-->
                                     <div class="modal-content">
-                                        <!--begin::Modal header-->
-                                        <div class="modal-header">
-                                            <!--begin::Modal title-->
-                                            <h2 class="fw-bolder">{{ trans('message.Add Shipping Detail') }}
-                                            </h2>
-                                            <!--end::Modal title-->
-                                            <!--begin::Close-->
-                                            <div class="btn btn-icon btn-sm btn-active-icon-primary"
-                                                data-bs-dismiss="modal">
-                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                                                <span class="svg-icon svg-icon-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.5" x="6" y="17.3137"
-                                                            width="16" height="2" rx="1"
-                                                            transform="rotate(-45 6 17.3137)" fill="currentColor" />
-                                                        <rect x="7.41422" y="6" width="16"
-                                                            height="2" rx="1"
-                                                            transform="rotate(45 7.41422 6)" fill="currentColor" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Close-->
-                                        </div>
-                                        <!--end::Modal header-->
-                                        <!--begin::Modal body-->
-                                        <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
-                                            <!--begin::Form-->
-                                            <form class="form" action="{{ Route('admin.shipping_detail.store') }}"
-                                                method="post">
-                                                @csrf
-                                                <!--begin::Input group-->
-                                                <div class="fv-row mb-7">
-                                                    <!--begin::Label-->
-                                                    <label
-                                                        class="required fs-6 fw-bold form-label mb-2">{{ trans('message.Carrier') }}</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <select class="form-control" name="carrier">
-                                                        <option value=""> Select </option>
-                                                        <option value="dhl">DHL</option>
-                                                        <option value="dpd">DPD</option>
-                                                        <option value="ups">UPS</option>
-
-                                                    </select>
-                                                    <!--end::Input-->
-                                                    @if ($errors->has('carrier'))
-                                                        <div class="text-danger">
-                                                            {{ $errors->first('carrier') }}</div>
-                                                    @endif
+                                        <!--begin::Form-->
+                                        <form class="form"
+                                            action="{{ Route('update.shipping_quantity', $client_info->id) }}"
+                                            method="GET">
+                                            <!--begin::Modal header-->
+                                            <div class="modal-header" id="kt_modal_package_amount_header">
+                                                <!--begin::Modal title-->
+                                                <h2 class="fw-bolder">{{ trans('message.Change package pricing model') }}
+                                                </h2>
+                                                <!--end::Modal title-->
+                                                <!--begin::Close-->
+                                                <div class="btn btn-icon btn-sm btn-active-icon-primary"
+                                                    data-bs-dismiss="modal">
+                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                                                    <span class="svg-icon svg-icon-1">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                            height="24" viewBox="0 0 24 24" fill="none">
+                                                            <rect opacity="0.5" x="6" y="17.3137"
+                                                                width="16" height="2" rx="1"
+                                                                transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                                            <rect x="7.41422" y="6" width="16"
+                                                                height="2" rx="1"
+                                                                transform="rotate(45 7.41422 6)" fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                    <!--end::Svg Icon-->
                                                 </div>
-                                                <!--end::Input group-->
-                                                <!--begin::Input group-->
-                                                {{-- <div class="fv-row mb-7">
+                                                <!--end::Close-->
+                                            </div>
+                                            <!--end::Modal header-->
+                                            <!--begin::Modal body-->
+                                            <div class="modal-body py-10 px-lg-17">
+                                                <!--begin::Scroll-->
+                                                <div class="d-flex flex-column scroll-y me-n7 pe-7"
+                                                    id="kt_modal_package_amount_scroll" data-kt-scroll="true"
+                                                    data-kt-scroll-activate="{default: false, lg: true}"
+                                                    data-kt-scroll-max-height="auto"
+                                                    data-kt-scroll-dependencies="#kt_modal_package_amount_header"
+                                                    data-kt-scroll-wrappers="#kt_modal_package_amount_scroll"
+                                                    data-kt-scroll-offset="300px">
+                                                    <!--begin::Package toggle-->
+                                                    <div class="fw-boldest fs-3 rotate collapsible mb-7"
+                                                        data-bs-toggle="collapse"
+                                                        href="#kt_modal_package_amount_user_info" role="button"
+                                                        aria-expanded="false"
+                                                        aria-controls="kt_modal_package_amount_user_info">
+                                                        {{ trans('message.Details') }}
+                                                        <span class="ms-2 rotate-180">
+                                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
+                                                            <span class="svg-icon svg-icon-3">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none">
+                                                                    <path
+                                                                        d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
+                                                                        fill="currentColor" />
+                                                                </svg>
+                                                            </span>
+                                                            <!--end::Svg Icon-->
+                                                        </span>
+                                                    </div>
+                                                    <!--end::Package toggle-->
+                                                    <!--begin::Package form-->
+                                                    <div id="kt_modal_package_amount_user_info" class="collapse show">
+                                                        <!--begin::Input group-->
+                                                        <div class="fv-row mb-7">
                                                             <!--begin::Label-->
-                                                            <label class="required fs-6 fw-bold form-label mb-2">{{trans('message.Shipping Method')}}</label>
+                                                            <label
+                                                                class="fs-6 fw-bold mb-2">{{ trans('message.Current monthly package amount') }}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7"
+                                                                data-bs-toggle="tooltip"
+                                                                title="{{ trans('message.Your currently specified monthly package amount') }}"></i>
                                                             <!--end::Label-->
                                                             <!--begin::Input-->
-                                                            <select class="form-control" name="shipping_method">
-                                                                <option value=""> Select </option>
-                                                                <option value="2 kg">2 Kg</option>
-                                                                <option value="5 kg">5 Kg</option>
-                                                                <option value="10 kg">10 Kg</option>
-
+                                                            <input type="text" readonly
+                                                                class="form-control form-control-solid" placeholder=""
+                                                                name="package_amount_old"
+                                                                value="{{ $client_info->shipping_quantity }}" />
+                                                            <!--end::Input-->
+                                                        </div>
+                                                        <!--end::Input group-->
+                                                        <!--begin::Input group-->
+                                                        <div class="fv-row mb-15">
+                                                            <!--begin::Label-->
+                                                            <label
+                                                                class="fs-6 fw-bold mb-2">{{ trans('message.new monthly package amount') }}</label>
+                                                            <!--end::Label-->
+                                                            <!--begin::Input-->
+                                                            <select name="shipping_quantity" aria-label="Bitte wählen..."
+                                                                data-control="select2" data-placeholder="Bitte wählen..."
+                                                                class="form-select form-select-solid"
+                                                                data-dropdown-parent="#kt_modal_update_package_amount">
+                                                                <option value="">
+                                                                    {{ trans('message.Please choose') }}...
+                                                                </option>
+                                                                <option value="0-50">0 - 50pcs. / monthly</option>
+                                                                <option value="50-500">50 - 500pcs. / monthly</option>
+                                                                <option value="500-2000">500 - 2000pcs. / monthly</option>
+                                                                <option value="ab-2000">ab 2000pcs. / monthly</option>
                                                             </select>
                                                             <!--end::Input-->
-                                                            @if ($errors->has('shipping_method'))
-                                                                        <div class="text-danger">{{ $errors->first('shipping_method') }}</div>
-                                                                        @endif
-                                                        </div> --}}
-                                                <!--end::Input group-->
-                                                <!--begin::Input group-->
-                                                <div class="fv-row mb-7">
-                                                    <!--begin::Label-->
-                                                    <label
-                                                        class="required fs-6 fw-bold form-label mb-2">{{ trans('message.WEIGHT') }}
-                                                        (KG)</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input type="text" class="form-control form-control-solid"
-                                                        name="weight" value="" />
-                                                    <!--end::Input-->
-                                                    @if ($errors->has('weight'))
-                                                        <div class="text-danger">
-                                                            {{ $errors->first('weight') }}</div>
-                                                    @endif
+                                                        </div>
+                                                        <!--end::Input group-->
+                                                    </div>
+                                                    <!--end::Package form-->
                                                 </div>
-                                                <!--end::Input group-->
-                                                <!--begin::Input group-->
-                                                <div class="fv-row mb-7">
-                                                    <!--begin::Label-->
-                                                    <label
-                                                        class="required fs-6 fw-bold form-label mb-2">{{ trans('message.MAX WIDTH') }}
-                                                        (CM)</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input type="text" class="form-control form-control-solid"
-                                                        name="max_width" value="" />
-                                                    <!--end::Input-->
-                                                    @if ($errors->has('max_width'))
-                                                        <div class="text-danger">
-                                                            {{ $errors->first('max_width') }}</div>
-                                                    @endif
-                                                </div>
-
-                                                <!--begin::Input group-->
-                                                <div class="fv-row mb-7">
-                                                    <!--begin::Label-->
-                                                    <label
-                                                        class="required fs-6 fw-bold form-label mb-2">{{ trans('message.MAX Height') }}
-                                                        (CM)</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input type="text" class="form-control form-control-solid"
-                                                        name="max_height" value="" />
-                                                    <!--end::Input-->
-                                                    @if ($errors->has('max_height'))
-                                                        <div class="text-danger">
-                                                            {{ $errors->first('max_height') }}</div>
-                                                    @endif
-                                                </div>
-
-                                                <div class="fv-row mb-7">
-                                                    <!--begin::Label-->
-                                                    <label
-                                                        class="required fs-6 fw-bold form-label mb-2">{{ trans('message.MAX Length') }}
-                                                        (CM)</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input type="text" class="form-control form-control-solid"
-                                                        name="max_length" value="" />
-                                                    <!--end::Input-->
-                                                    @if ($errors->has('max_length'))
-                                                        <div class="text-danger">
-                                                            {{ $errors->first('max_length') }}</div>
-                                                    @endif
-                                                </div>
-
-                                                <div class="fv-row mb-7">
-                                                    <!--begin::Label-->
-                                                    <label
-                                                        class="required fs-6 fw-bold form-label mb-2">{{ trans('message.COST') }}</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input type="text" class="form-control form-control-solid"
-                                                        name="cost" value="" />
-                                                    <!--end::Input-->
-                                                    @if ($errors->has('cost'))
-                                                        <div class="text-danger">
-                                                            {{ $errors->first('cost') }}</div>
-                                                    @endif
-                                                </div>
-                                                <!--end::Input group-->
-                                                {{-- <div class="fv-row mb-7">
-                                                            <!--begin::Label-->
-                                                            <label class="required fs-6 fw-bold form-label mb-2">{{trans('message.Fee')}}</label>
-                                                            <!--end::Label-->
-                                                            <!--begin::Input-->
-                                                            <input type="text" class="form-control form-control-solid" name="fee"
-                                                                value="" />
-                                                            <!--end::Input-->
-                                                            @if ($errors->has('fee'))
-                                                                        <div class="text-danger">{{ $errors->first('fee') }}</div>
-                                                                        @endif
-                                                        </div> --}}
-                                                <!--begin::Actions-->
-                                                <div class="text-center pt-15">
-                                                    <button type="reset" class="btn btn-light me-3"
-                                                        data-bs-dismiss="modal">{{ trans('message.cancel') }}</button>
-                                                    <button type="submit" class="btn btn-primary"
-                                                        data-kt-users-modal-action="submit">
-                                                        <span class="indicator-label">{{ trans('message.save') }}</span>
-                                                        <span class="indicator-progress">Please wait...
-                                                            <span
-                                                                class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                                    </button>
-                                                </div>
-                                                <!--end::Actions-->
-                                            </form>
-                                            <!--end::Form-->
-                                        </div>
-                                        <!--end::Modal body-->
+                                                <!--end::Scroll-->
+                                            </div>
+                                            <!--end::Modal body-->
+                                            <!--begin::Modal footer-->
+                                            <div class="modal-footer flex-center">
+                                                <!--begin::Button-->
+                                                <button type="reset" class="btn btn-light me-3"
+                                                    data-kt-users-modal-action="cancel">{{ trans('message.cancel') }}</button>
+                                                <!--end::Button-->
+                                                <!--begin::Button-->
+                                                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
+                                                    <span class="indicator-label">{{ trans('message.save') }}</span>
+                                                    <span class="indicator-progress">Bitte warten...
+                                                        <span
+                                                            class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                </button>
+                                                <!--end::Button-->
+                                            </div>
+                                            <!--end::Modal footer-->
+                                        </form>
+                                        <!--end::Form-->
                                     </div>
-                                    <!--end::Modal content-->
                                 </div>
-                                <!--end::Modal dialog-->
                             </div>
+                            <!--end::Modal - Update Package Amount-->
                             <!--end::Modal - Add cost overview -->
                         </div>
                         <!--end::Actions-->
@@ -529,7 +473,7 @@
                                     <th class="text-center pe-3 min-w-50px">{{ trans('message.COST') }}</th>
                                     {{-- <th class="text-center pe-3 min-w-50px">{{trans('message.Fee')}}</th> --}}
                                     {{-- <th class="text-center pe-3 min-w-50px">{{trans('message.Total Cost')}}</th> --}}
-                                    <th class="text-center pe-3 min-w-50px">{{ trans('message.Option') }}</th>
+                                    {{-- <th class="text-center pe-3 min-w-50px">{{ trans('message.Option') }}</th> --}}
                                 </tr>
                                 <!--end::Table row-->
                             </thead>
@@ -565,7 +509,7 @@
                                         {{-- <td class="text-center">{{$shipping_detail->fees}}</td> --}}
 
                                         {{-- <td class="text-center">{{$shipping_detail->cost + $shipping_detail->fees}}</td> --}}
-                                        <td class="text-center d-flex">
+                                        {{-- <td class="text-center">
                                             <a data-bs-toggle="modal"
                                                 data-bs-target="#editshippingdetail{{ $shipping_detail->shipping_id }}"
                                                 class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
@@ -575,7 +519,7 @@
                                                 class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                 <i class="fa fa-trash"></i>
                                             </a>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                     <!--begin::Modal - Add cost overview -->
                                     <div class="modal fade" id="editshippingdetail{{ $shipping_detail->shipping_id }}"

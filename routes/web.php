@@ -371,6 +371,11 @@ Route::get('forget/password/link/{email}',[ClientProfileController::class , 'for
 Route::get('setup2FA',[ClientProfileController::class , 'setUp2FA'])->name('client.setup2fa');
 Route::get('deactivate2FA/{email}',[ClientProfileController::class , 'deActivateUp2FA'])->name('client.deactivate2fa');
 
+
+// ====== update shipping quantity client
+Route::get('shiping-quantity/update/{id}',[ClientSettingController::class , 'updateShippingQuantity'])->name('update.shipping_quantity');
+
+
 });
 
 

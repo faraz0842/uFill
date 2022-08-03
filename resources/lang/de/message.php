@@ -1251,15 +1251,15 @@ return [
 
     "Error! Please try a different discount code!" => "Fehler! Bitte versuchen Sie es mit einem anderen Rabattcode!",
 
-
-
     'resend_code' => 'Erneut senden',
     'or' => 'oder',
     'contact customer support' => 'Kundensupport kontaktieren',
 
 
     'total customers' => 'Kunden gesamt',
-    'package_shipment' => 'Paketversand',
+    'package_shipment' => 'Paketbetrag',
+
+    'change_package_amount' => 'Paketbetrag ändern',
     '' => '',
     '' => '',
     '' => '',

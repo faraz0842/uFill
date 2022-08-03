@@ -82,6 +82,27 @@ class SettingController extends Controller
                 'profile_picture' => $profile_picture,
             ]);
 
+            $client = Client::where('id',session('client_id'))->first();
+            //updating customer in stripe
+            $stripe = new \Stripe\StripeClient(
+                'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
+            );
+            $stripe->customers->update(
+                $client->stripe_id,
+                [
+                    'address' => [
+                        'country' => $request->country,
+                        'line1' => $request->street,
+                        'line2' => $request->house_number,
+                        'postal_code' => $request->plz,
+                        'state' => $request->state
+                    ],
+                    'email' => $request->email,
+                    'name' => $request->first_name . ' ' . $request->last_name,
+                    'phone' => $request->mobile_number,
+                ]
+            );
+
             return redirect()->Route('client.overview');
         } catch (Exception $th) {
             return back()->withError($th->getMessage())->withInput();
@@ -187,6 +208,17 @@ class SettingController extends Controller
                                                ->with('shipping_details',$shipping_details)->with('affiliated_at',$affiliated_at)
                                                ->with('total_revenue',$total_revenue)->with('referred_clients_count',$referred_clients_count)
                                                ->with('total_clients',$total_clients);
+    }
+
+    public function updateShippingQuantity(Request $request ,$id)
+    {
+        Client::where('id',$id)->update([
+
+            'shipping_quantity' => $request->shipping_quantity
+
+        ]);
+
+        return back()->with('message','Shipping Quantity have been updated');
     }
 
 
