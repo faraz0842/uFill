@@ -8,6 +8,7 @@ use App\Models\AdminCompany;
 use App\Models\AffiliateLink;
 use App\Models\ApiIntegration;
 use App\Models\Client;
+use App\Models\ShipmentpackageFee;
 use App\Models\ShippingDetail;
 use App\Models\Transaction;
 use Exception;
@@ -197,9 +198,12 @@ class SettingController extends Controller
 
         $total_clients = Client::count();
 
-        $shipping_details = ShippingDetail::all();
-
         $client_info = Client::where('id',session('client_id'))->join('variants','variants.variant_id','clients.account_type')->first();
+
+        $shipping_details = ShippingDetail::all();
+        $shipment_package_fee = ShipmentpackageFee::where('package',$client_info->shipping_quantity)->first();
+
+
 
         $affiliated_at = AffiliateLink::where('affiliate_from',session('client_id'))->join('clients','clients.id','affiliate_link.affiliate_from')->get();
 
@@ -207,7 +211,7 @@ class SettingController extends Controller
         return view('client.settings.package_shipment')->with('client_info',$client_info)->with('referred_clients',$referred_clients)
                                                ->with('shipping_details',$shipping_details)->with('affiliated_at',$affiliated_at)
                                                ->with('total_revenue',$total_revenue)->with('referred_clients_count',$referred_clients_count)
-                                               ->with('total_clients',$total_clients);
+                                               ->with('total_clients',$total_clients)->with('shipment_package_fee',$shipment_package_fee);
     }
 
     public function updateShippingQuantity(Request $request ,$id)

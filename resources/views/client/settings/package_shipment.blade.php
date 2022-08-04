@@ -501,10 +501,13 @@
                                         <td class="text-center">{{ $shipping_detail->max_height }}</td>
                                         <!--end::Size-->
                                         <!--begin::Size-->
+                                        @php
+                                            $cost = $shipment_package_fee->package_fee + $shipping_detail->cost;
+                                        @endphp
                                         <td class="text-center">{{ $shipping_detail->max_length }}</td>
                                         <!--end::Size-->
                                         <!--begin::price-->
-                                        <td class="text-center">{{ $shipping_detail->cost }}</td>
+                                        <td class="text-center">{{ Helper::money_format('EUR','de_DE',$cost) }} €</td>
                                         <!--end::price-->
                                         {{-- <td class="text-center">{{$shipping_detail->fees}}</td> --}}
 

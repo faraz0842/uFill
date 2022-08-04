@@ -2099,7 +2099,7 @@
                                                 <td class="text-center">{{ $shipping_detail->max_length }}</td>
                                                 <!--end::Size-->
                                                 <!--begin::price-->
-                                                <td class="text-center">{{ $shipping_detail->cost }}</td>
+                                                <td class="text-center">{{ Helper::money_format('EUR','de_DE',$shipping_detail->cost) }}</td>
                                                 <!--end::price-->
                                                 {{-- <td class="text-center">{{$shipping_detail->fees}}</td> --}}
 
@@ -2392,7 +2392,7 @@
                                                 <td class="text-center">{{ $shipping_package->package }}</td>
                                                 <!--end::Transport-->
                                                 <!--begin::Type-->
-                                                <td class="text-center">{{ $shipping_package->package_fee }}€</td>
+                                                <td class="text-center">{{ Helper::money_format('EUR','de_DE',$shipping_package->package_fee) }}€</td>
                                                 <!--end::Type-->
 
                                                 <td class="text-center">

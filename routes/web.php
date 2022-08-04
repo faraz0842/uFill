@@ -23,6 +23,7 @@ use App\Http\Controllers\Client\ProfileController as ClientProfileController;
 use App\Http\Controllers\Client\UserController;
 use App\Http\Controllers\Client\RegisterController;
 use App\Http\Controllers\Client\SettingController as ClientSettingController;
+use App\Http\Controllers\Client\ShipmentController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -305,7 +306,8 @@ Route::group(['prefix' => 'client', 'middleware' => ['client']], function (){
 */
 Route::get('dashboard',[ClientLoginController::class , 'dashboard'])->name('client.dashboard');
 
-Route::view('create/shipment', 'client.shipping.create_shipment')->name('client.create.shipment');
+//Route::view('create/shipment', 'client.shipping.create_shipment')->name('client.create.shipment');
+Route::get('create/shipment',[ShipmentController::class , 'createShipmentView'])->name('client.create.shipment');
 Route::view('shipment/delivery', 'client.shipping.delivery')->name('client.shipment.delivery');
 Route::view('shipment/status/check', 'client.shipping.status_check')->name('client.shipment.status_check');
 /*
