@@ -25,7 +25,18 @@ class RegisterController extends Controller
 {
     public function register($is_affiliate = null)
     {
-        //return response()->json(Carbon::parse(1487663764));
+
+        $stripe = new \Stripe\StripeClient(
+            'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
+        );
+        $subscription_retrieve = $stripe->subscriptions->retrieve(
+            'sub_1LI4qpLRABgW92OXFPNViJ0H',
+            []
+        );
+
+        //return response()->json($subscription_retrieve);
+
+        //return response()->json(Carbon::parse(1688536991));
         $variants = VariantPlan::join('variants','variants.variant_id','variants_plan.variant_id')->orderBy('variants.name' , 'ASC')
                                ->where('variants_plan.plan','month')->get();
 
@@ -101,6 +112,8 @@ class RegisterController extends Controller
             }
 
 
+            $variant_plan = VariantPlan::where('variant_id', $request->account_type)->where('plan', $request->account_plan)->first();
+
 
         $client = new Client();
         $client->account_type = $request->account_type;
@@ -124,16 +137,16 @@ class RegisterController extends Controller
         $client->website  = $request->website ;
         $client->company_size  = $request->company_size ;
         $client->company_description  = $request->company_description ;
-
         $client->hear_about_us  = $request->hear_about_us ;
         $client->profile_picture  = $logo ;
+        $client->package_price = $variant_plan->price;
         if($client->save()){
 
 
 
 
              Client::where('id',$client->id)->update([
-                'referral_link' => 'ufill.swamenterprises.com/client/register/'.$client->company_name. '-' .$client->id,
+                'referral_link' => 'ufill.devatease.com/client/register/'.$client->company_name. '-' .$client->id,
             ]);
 
 

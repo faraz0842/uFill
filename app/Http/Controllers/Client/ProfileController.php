@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\AdminCompany;
 use App\Models\AdminSchedule;
 use App\Models\AdminTask;
 use App\Models\Client;
@@ -262,6 +263,29 @@ class ProfileController extends Controller
                                         ->with('this_week_shipments',$this_week_shipments)->with('last_week_shipments',$last_week_shipments)->with('this_month_shipments',$this_month_shipments)
                                         ->with('last_month_shipments',$last_month_shipments)->with('this_year_shipments',$this_year_shipments)->with('last_year_shipments',$last_year_shipments)
                                         ->with('current_date',$current_date);
+    }
+
+    public function invoiceView($invoice_id)
+    {
+        $stripe = new \Stripe\StripeClient(
+            'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
+        );
+
+        $invoice = $stripe->invoices->retrieve(
+            $invoice_id,
+            []
+        );
+
+        $created_date = Carbon::parse($invoice->created);
+        $period_end = Carbon::parse($invoice->period_end);
+
+        $company_detail = AdminCompany::where('company_id', 1)->first();
+        $client = Client::where('stripe_id', $invoice->customer)->first();
+
+        //return response()->json($invoice);
+
+        return view('client.invoice')->with('invoice', $invoice)->with('created_date', $created_date)->with('client', $client)
+            ->with('period_end', $period_end)->with('company_detail', $company_detail);
     }
 
 

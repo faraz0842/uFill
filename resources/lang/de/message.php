@@ -1260,6 +1260,7 @@ return [
     'package_shipment' => 'Paketbetrag',
 
     'change_package_amount' => 'Paketbetrag ändern',
+    'billing' => 'Abrechnung',
     '' => '',
     '' => '',
     '' => '',

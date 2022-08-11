@@ -697,7 +697,7 @@ return [
     'total customers' => 'Total Customer',
     'package_shipment' => 'Package Amount',
     'change_package_amount' => 'Change package amount',
-    '' => '',
+    'billing' => 'Billing',
     '' => '',
     '' => '',
     '' => '',

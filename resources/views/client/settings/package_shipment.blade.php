@@ -298,6 +298,9 @@
                         <!--begin::Title-->
                         <h3 class="card-title align-items-start flex-column mb-5">
                             <span class="card-label fw-bolder text-dark">{{ trans('message.package_shipment') }}</span>
+                            <span class="text-gray-400 mt-1 fw-bold fs-6">{{ trans('message.Currently') }}:
+                                {{ $client_info->shipping_quantity }}
+                                {{ trans('message.packages / monthly') }}</span>
 
                         </h3>
                         <!--end::Title-->
@@ -507,7 +510,7 @@
                                         <td class="text-center">{{ $shipping_detail->max_length }}</td>
                                         <!--end::Size-->
                                         <!--begin::price-->
-                                        <td class="text-center">{{ Helper::money_format('EUR','de_DE',$cost) }} €</td>
+                                        <td class="text-center">{{ Helper::money_format('EUR', 'de_DE', $cost) }} €</td>
                                         <!--end::price-->
                                         {{-- <td class="text-center">{{$shipping_detail->fees}}</td> --}}
 
@@ -746,6 +749,682 @@
                     <!--end::Card body-->
                 </div>
                 <!--end::Basic info-->
+
+                <!-- begin::Shipment Detail Tabs-->
+                <div class="card mb-5 mb-xl-10">
+                    <!--begin::Card header-->
+                    <div class="card-header">
+                        <!--begin::Card title-->
+                        <div class="card-title align-items-start flex-column mb-5">
+                            <h2>{{ trans('message.Shipment Detail') }}</h2>
+                            {{-- <span class="text-gray-400 mt-1 fw-bold fs-6">{{ trans('message.Currently') }}:
+                                {{ $client_info->shipping_quantity }}
+                                {{ trans('message.packages / monthly') }}</span> --}}
+                        </div>
+                        <!--end::Card title-->
+                        <!--begin::Toolbar-->
+                        <div class="card-toolbar">
+                            <!--begin::Tab nav-->
+                            {{-- <ul class="nav nav-stretch fs-5 fw-bold nav-line-tabs nav-line-tabs-2x border-transparent"
+                                        role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <a id="kt_referrals_year_tab" class="nav-link text-active-primary active"
+                                                data-bs-toggle="tab" role="tab"
+                                                href="#today">{{ trans('message.Today') }}</a>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <a id="kt_referrals_2019_tab" class="nav-link text-active-primary ms-3"
+                                                data-bs-toggle="tab" role="tab"
+                                                href="#this_week">{{ trans('message.This Week') }}</a>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <a id="kt_referrals_2018_tab" class="nav-link text-active-primary ms-3"
+                                                data-bs-toggle="tab" role="tab"
+                                                href="#last_week">{{ trans('message.Last Week') }}</a>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <a id="kt_referrals_2017_tab" class="nav-link text-active-primary ms-3"
+                                                data-bs-toggle="tab" role="tab"
+                                                href="#this_month">{{ trans('message.This Month') }}</a>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <a id="kt_referrals_2019_tab" class="nav-link text-active-primary ms-3"
+                                                data-bs-toggle="tab" role="tab"
+                                                href="#last_month">{{ trans('message.Last Month') }}</a>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <a id="kt_referrals_2018_tab" class="nav-link text-active-primary ms-3"
+                                                data-bs-toggle="tab" role="tab"
+                                                href="#this_year">{{ trans('message.This Year') }}</a>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <a id="kt_referrals_2017_tab" class="nav-link text-active-primary ms-3"
+                                                data-bs-toggle="tab" role="tab"
+                                                href="#last_year">{{ trans('message.Last Year') }}</a>
+                                        </li>
+                                        <a href="#" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#kt_modal_update_package_amount">Preismodell ändern</a>
+                                    </ul> --}}
+                            <!--end::Tab nav-->
+                            <div class="btn-group">
+                                <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="triggerId"
+                                    data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">{{ trans('filter by') }}</button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
+                                    <ul class="nav nav-stretch fs-5 fw-bold nav-line-tabs nav-line-tabs-2x border-transparent"
+                                        role="tablist">
+                                        <li class="dropdown-item" role="presentation">
+                                            <a id="kt_referrals_year_tab" class="nav-link text-active-primary"
+                                                data-bs-toggle="tab" role="tab"
+                                                href="#today">{{ trans('message.Today') }}</a>
+                                        </li>
+                                        <li class="dropdown-item" role="presentation">
+                                            <a id="kt_referrals_2019_tab" class="nav-link text-active-primary ms-3"
+                                                data-bs-toggle="tab" role="tab"
+                                                href="#this_week">{{ trans('message.This Week') }}</a>
+                                        </li>
+                                        <li class="dropdown-item" role="presentation">
+                                            <a id="kt_referrals_2018_tab" class="nav-link text-active-primary ms-3"
+                                                data-bs-toggle="tab" role="tab"
+                                                href="#last_week">{{ trans('message.Last Week') }}</a>
+                                        </li>
+                                        <li class="dropdown-item" role="presentation">
+                                            <a id="kt_referrals_2017_tab" class="nav-link text-active-primary ms-3"
+                                                data-bs-toggle="tab" role="tab"
+                                                href="#this_month">{{ trans('message.This Month') }}</a>
+                                        </li>
+                                        <li class="dropdown-item" role="presentation">
+                                            <a id="kt_referrals_2019_tab" class="nav-link text-active-primary ms-3"
+                                                data-bs-toggle="tab" role="tab"
+                                                href="#last_month">{{ trans('message.Last Month') }}</a>
+                                        </li>
+                                        <li class="dropdown-item" role="presentation">
+                                            <a id="kt_referrals_2018_tab" class="nav-link text-active-primary ms-3"
+                                                data-bs-toggle="tab" role="tab"
+                                                href="#this_year">{{ trans('message.This Year') }}</a>
+                                        </li>
+                                        <li class="dropdown-item" role="presentation">
+                                            <a id="kt_referrals_2017_tab" class="nav-link text-active-primary ms-3"
+                                                data-bs-toggle="tab" role="tab"
+                                                href="#last_year">{{ trans('message.Last Year') }}</a>
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+                            </div>
+                            {{-- <div class="btn">
+                                <a href="#" class="btn btn-light btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#kt_modal_update_package_amount">{{ trans('message.Change pricing model') }}</a>
+                            </div> --}}
+
+                        </div>
+                        <!--end::Toolbar-->
+                    </div>
+                    <!--end::Card header-->
+                    <!--begin::Card body-->
+                    <div class="card-body pt-2">
+                        <!--begin::Tab Content-->
+                        <div id="kt_referred_users_tab_content" class="tab-content">
+                            <!--begin::Tab panel-->
+                            <div id="today" class="tab-pane fade show active" role="tabpanel">
+                                <!--begin::Table wrapper-->
+                                <div class="table-responsive">
+                                    <!--begin::Table-->
+                                    <table id="kt_customer_details_invoices_table_1"
+                                        class="table align-middle table-row-dashed fs-6 fw-bolder gs-0 gy-4 p-0 m-0">
+                                        <!--begin::Thead-->
+                                        <thead class="border-bottom border-gray-200 fs-7 text-uppercase fw-bolder">
+                                            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                                <th class="min-w-25px">{{ trans('message.id') }}</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.Carrier') }}</th>
+                                                <th class="text-center pe-3 min-w-150px">
+                                                    {{ trans('message.Package Amount') }}</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.WEIGHT') }} (kg)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.MAX WIDTH') }} (cm)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.MAX Height') }} (cm)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.MAX Length') }} (cm)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.COST') }}</th>
+                                                {{-- <th class="text-end pe-3 min-w-50px">{{trans('message.Option')}}</th> --}}
+                                            </tr>
+                                        </thead>
+                                        <!--end::Thead-->
+                                        <!--begin::Tbody-->
+                                        <tbody class="fs-6 fw-bold text-gray-600">
+                                            @foreach ($today_shipments as $today_shipment)
+                                                <tr>
+                                                    <!--begin::Shipment ID-->
+                                                    <td class="text-center">
+                                                        {{ $today_shipment->shipping_id }}</td>
+                                                    <!--end::Shipment ID-->
+                                                    <!--begin::Transport-->
+                                                    <td class="text-center">{{ $today_shipment->carrier }}
+                                                    </td>
+                                                    <!--end::Transport-->
+                                                    <!--begin::Type-->
+                                                    <td class="text-center">232</td>
+                                                    <!--end::Type-->
+                                                    <!--begin::Weight-->
+                                                    <td class="text-center">{{ $today_shipment->weight }}
+                                                    </td>
+                                                    <!--end::Weight-->
+                                                    <!--begin::Size-->
+                                                    <td class="text-center">{{ $today_shipment->max_width }}
+                                                    </td>
+                                                    <!--end::Size-->
+                                                    <!--begin::Size-->
+                                                    <td class="text-center">{{ $today_shipment->max_height }}
+                                                    </td>
+                                                    <!--end::Size-->
+                                                    <!--begin::Size-->
+                                                    <td class="text-center">{{ $today_shipment->max_length }}
+                                                    </td>
+                                                    <!--end::Size-->
+                                                    <!--begin::price-->
+                                                    <td class="text-center">{{ $today_shipment->cost }}</td>
+                                                    <!--end::price-->
+
+                                                </tr>
+                                            @endforeach
+
+                                        </tbody>
+                                        <!--end::Tbody-->
+                                    </table>
+                                    <!--end::Table-->
+                                </div>
+                                <!--end::Table wrapper-->
+                            </div>
+                            <!--end::Tab panel-->
+                            <!--begin::Tab panel-->
+                            <div id="this_week" class="tab-pane fade show " role="tabpanel">
+                                <!--begin::Table wrapper-->
+                                <div class="table-responsive">
+                                    <!--begin::Table-->
+                                    <table id="kt_customer_details_invoices_table_1"
+                                        class="table align-middle table-row-dashed fs-6 fw-bolder gs-0 gy-4 p-0 m-0">
+                                        <!--begin::Thead-->
+                                        <thead class="border-bottom border-gray-200 fs-7 text-uppercase fw-bolder">
+                                            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                                <th class="min-w-25px">{{ trans('message.id') }}</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.Carrier') }}</th>
+                                                <th class="text-center pe-3 min-w-150px">
+                                                    {{ trans('message.Package Amount') }}</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.WEIGHT') }} (kg)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.MAX WIDTH') }} (cm)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.MAX Height') }} (cm)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.MAX Length') }} (cm)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.COST') }}</th>
+                                                {{-- <th class="text-end pe-3 min-w-50px">{{trans('message.Option')}}</th> --}}
+                                            </tr>
+                                        </thead>
+                                        <!--end::Thead-->
+                                        <!--begin::Tbody-->
+                                        <tbody class="fs-6 fw-bold text-gray-600">
+                                            @foreach ($this_week_shipments as $this_week_shipment)
+                                                <tr>
+                                                    <!--begin::Shipment ID-->
+                                                    <td class="text-center">
+                                                        {{ $this_week_shipment->shipping_id }}</td>
+                                                    <!--end::Shipment ID-->
+                                                    <!--begin::Transport-->
+                                                    <td class="text-center">{{ $this_week_shipment->carrier }}
+                                                    </td>
+                                                    <!--end::Transport-->
+                                                    <!--begin::Type-->
+                                                    <td class="text-center">232</td>
+                                                    <!--end::Type-->
+                                                    <!--begin::Weight-->
+                                                    <td class="text-center">{{ $this_week_shipment->weight }}
+                                                    </td>
+                                                    <!--end::Weight-->
+                                                    <!--begin::Size-->
+                                                    <td class="text-center">
+                                                        {{ $this_week_shipment->max_width }}
+                                                    </td>
+                                                    <!--end::Size-->
+                                                    <!--begin::Size-->
+                                                    <td class="text-center">
+                                                        {{ $this_week_shipment->max_height }}
+                                                    </td>
+                                                    <!--end::Size-->
+                                                    <!--begin::Size-->
+                                                    <td class="text-center">
+                                                        {{ $this_week_shipment->max_length }}
+                                                    </td>
+                                                    <!--end::Size-->
+                                                    <!--begin::price-->
+                                                    <td class="text-center">{{ $this_week_shipment->cost }}
+                                                    </td>
+                                                    <!--end::price-->
+
+                                                </tr>
+                                            @endforeach
+
+                                        </tbody>
+                                        <!--end::Tbody-->
+                                    </table>
+                                    <!--end::Table-->
+                                </div>
+                                <!--end::Table wrapper-->
+                            </div>
+                            <!--end::Tab panel-->
+
+                            <!--begin::Tab panel-->
+                            <div id="last_week" class="tab-pane fade show " role="tabpanel">
+                                <!--begin::Table wrapper-->
+                                <div class="table-responsive">
+                                    <!--begin::Table-->
+                                    <table id="kt_customer_details_invoices_table_1"
+                                        class="table align-middle table-row-dashed fs-6 fw-bolder gs-0 gy-4 p-0 m-0">
+                                        <!--begin::Thead-->
+                                        <thead class="border-bottom border-gray-200 fs-7 text-uppercase fw-bolder">
+                                            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                                <th class="min-w-25px">{{ trans('message.id') }}</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.Carrier') }}</th>
+                                                <th class="text-center pe-3 min-w-150px">
+                                                    {{ trans('message.Package Amount') }}</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.WEIGHT') }} (kg)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.MAX WIDTH') }} (cm)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.MAX Height') }} (cm)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.MAX Length') }} (cm)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.COST') }}</th>
+                                                {{-- <th class="text-end pe-3 min-w-50px">{{trans('message.Option')}}</th> --}}
+                                            </tr>
+                                        </thead>
+                                        <!--end::Thead-->
+                                        <!--begin::Tbody-->
+                                        <tbody class="fs-6 fw-bold text-gray-600">
+                                            @foreach ($last_week_shipments as $last_week_shipment)
+                                                <tr>
+                                                    <!--begin::Shipment ID-->
+                                                    <td class="text-center">
+                                                        {{ $last_week_shipment->shipping_id }}</td>
+                                                    <!--end::Shipment ID-->
+                                                    <!--begin::Transport-->
+                                                    <td class="text-center">{{ $last_week_shipment->carrier }}
+                                                    </td>
+                                                    <!--end::Transport-->
+                                                    <!--begin::Type-->
+                                                    <td class="text-center">232</td>
+                                                    <!--end::Type-->
+                                                    <!--begin::Weight-->
+                                                    <td class="text-center">{{ $last_week_shipment->weight }}
+                                                    </td>
+                                                    <!--end::Weight-->
+                                                    <!--begin::Size-->
+                                                    <td class="text-center">
+                                                        {{ $last_week_shipment->max_width }}
+                                                    </td>
+                                                    <!--end::Size-->
+                                                    <!--begin::Size-->
+                                                    <td class="text-center">
+                                                        {{ $last_week_shipment->max_height }}
+                                                    </td>
+                                                    <!--end::Size-->
+                                                    <!--begin::Size-->
+                                                    <td class="text-center">
+                                                        {{ $last_week_shipment->max_length }}
+                                                    </td>
+                                                    <!--end::Size-->
+                                                    <!--begin::price-->
+                                                    <td class="text-center">{{ $last_week_shipment->cost }}
+                                                    </td>
+                                                    <!--end::price-->
+
+                                                </tr>
+                                            @endforeach
+
+                                        </tbody>
+                                        <!--end::Tbody-->
+                                    </table>
+                                    <!--end::Table-->
+                                </div>
+                                <!--end::Table wrapper-->
+                            </div>
+                            <!--end::Tab panel-->
+
+                            <!--begin::Tab panel-->
+                            <div id="this_month" class="tab-pane fade show " role="tabpanel">
+                                <!--begin::Table wrapper-->
+                                <div class="table-responsive">
+                                    <!--begin::Table-->
+                                    <table id="kt_customer_details_invoices_table_1"
+                                        class="table align-middle table-row-dashed fs-6 fw-bolder gs-0 gy-4 p-0 m-0">
+                                        <!--begin::Thead-->
+                                        <thead class="border-bottom border-gray-200 fs-7 text-uppercase fw-bolder">
+                                            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                                <th class="min-w-25px">{{ trans('message.id') }}</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.Carrier') }}</th>
+                                                <th class="text-center pe-3 min-w-150px">
+                                                    {{ trans('message.Package Amount') }}</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.WEIGHT') }} (kg)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.MAX WIDTH') }} (cm)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.MAX Height') }} (cm)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.MAX Length') }} (cm)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.COST') }}</th>
+                                                {{-- <th class="text-end pe-3 min-w-50px">{{trans('message.Option')}}</th> --}}
+                                            </tr>
+                                        </thead>
+                                        <!--end::Thead-->
+                                        <!--begin::Tbody-->
+                                        <tbody class="fs-6 fw-bold text-gray-600">
+                                            @foreach ($this_month_shipments as $this_month_shipment)
+                                                <tr>
+                                                    <!--begin::Shipment ID-->
+                                                    <td class="text-center">
+                                                        {{ $this_month_shipment->shipping_id }}</td>
+                                                    <!--end::Shipment ID-->
+                                                    <!--begin::Transport-->
+                                                    <td class="text-center">{{ $this_month_shipment->carrier }}
+                                                    </td>
+                                                    <!--end::Transport-->
+                                                    <!--begin::Type-->
+                                                    <td class="text-center">232</td>
+                                                    <!--end::Type-->
+                                                    <!--begin::Weight-->
+                                                    <td class="text-center">{{ $this_month_shipment->weight }}
+                                                    </td>
+                                                    <!--end::Weight-->
+                                                    <!--begin::Size-->
+                                                    <td class="text-center">
+                                                        {{ $this_month_shipment->max_width }}
+                                                    </td>
+                                                    <!--end::Size-->
+                                                    <!--begin::Size-->
+                                                    <td class="text-center">
+                                                        {{ $this_month_shipment->max_height }}
+                                                    </td>
+                                                    <!--end::Size-->
+                                                    <!--begin::Size-->
+                                                    <td class="text-center">
+                                                        {{ $this_month_shipment->max_length }}
+                                                    </td>
+                                                    <!--end::Size-->
+                                                    <!--begin::price-->
+                                                    <td class="text-center">{{ $this_month_shipment->cost }}
+                                                    </td>
+                                                    <!--end::price-->
+
+                                                </tr>
+                                            @endforeach
+
+                                        </tbody>
+                                        <!--end::Tbody-->
+                                    </table>
+                                    <!--end::Table-->
+                                </div>
+                                <!--end::Table wrapper-->
+                            </div>
+                            <!--end::Tab panel-->
+
+                            <!--begin::Tab panel-->
+                            <div id="last_month" class="tab-pane fade show " role="tabpanel">
+                                <!--begin::Table wrapper-->
+                                <div class="table-responsive">
+                                    <!--begin::Table-->
+                                    <table id="kt_customer_details_invoices_table_1"
+                                        class="table align-middle table-row-dashed fs-6 fw-bolder gs-0 gy-4 p-0 m-0">
+                                        <!--begin::Thead-->
+                                        <thead class="border-bottom border-gray-200 fs-7 text-uppercase fw-bolder">
+                                            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                                <th class="min-w-25px">{{ trans('message.id') }}</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.Carrier') }}</th>
+                                                <th class="text-center pe-3 min-w-150px">
+                                                    {{ trans('message.Package Amount') }}</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.WEIGHT') }} (kg)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.MAX WIDTH') }} (cm)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.MAX Height') }} (cm)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.MAX Length') }} (cm)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.COST') }}</th>
+                                                {{-- <th class="text-end pe-3 min-w-50px">{{trans('message.Option')}}</th> --}}
+                                            </tr>
+                                        </thead>
+                                        <!--end::Thead-->
+                                        <!--begin::Tbody-->
+                                        <tbody class="fs-6 fw-bold text-gray-600">
+                                            @foreach ($last_month_shipments as $last_month_shipment)
+                                                <tr>
+                                                    <!--begin::Shipment ID-->
+                                                    <td class="text-center">
+                                                        {{ $last_month_shipment->shipping_id }}</td>
+                                                    <!--end::Shipment ID-->
+                                                    <!--begin::Transport-->
+                                                    <td class="text-center">{{ $last_month_shipment->carrier }}
+                                                    </td>
+                                                    <!--end::Transport-->
+                                                    <!--begin::Type-->
+                                                    <td class="text-center">232</td>
+                                                    <!--end::Type-->
+                                                    <!--begin::Weight-->
+                                                    <td class="text-center">{{ $last_month_shipment->weight }}
+                                                    </td>
+                                                    <!--end::Weight-->
+                                                    <!--begin::Size-->
+                                                    <td class="text-center">
+                                                        {{ $last_month_shipment->max_width }}
+                                                    </td>
+                                                    <!--end::Size-->
+                                                    <!--begin::Size-->
+                                                    <td class="text-center">
+                                                        {{ $last_month_shipment->max_height }}
+                                                    </td>
+                                                    <!--end::Size-->
+                                                    <!--begin::Size-->
+                                                    <td class="text-center">
+                                                        {{ $last_month_shipment->max_length }}
+                                                    </td>
+                                                    <!--end::Size-->
+                                                    <!--begin::price-->
+                                                    <td class="text-center">{{ $last_month_shipment->cost }}
+                                                    </td>
+                                                    <!--end::price-->
+
+                                                </tr>
+                                            @endforeach
+
+                                        </tbody>
+                                        <!--end::Tbody-->
+                                    </table>
+                                    <!--end::Table-->
+                                </div>
+                                <!--end::Table wrapper-->
+                            </div>
+                            <!--end::Tab panel-->
+
+                            <!--begin::Tab panel-->
+                            <div id="this_year" class="tab-pane fade show " role="tabpanel">
+                                <!--begin::Table wrapper-->
+                                <div class="table-responsive">
+                                    <!--begin::Table-->
+                                    <table id="kt_customer_details_invoices_table_1"
+                                        class="table align-middle table-row-dashed fs-6 fw-bolder gs-0 gy-4 p-0 m-0">
+                                        <!--begin::Thead-->
+                                        <thead class="border-bottom border-gray-200 fs-7 text-uppercase fw-bolder">
+                                            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                                <th class="min-w-25px">{{ trans('message.id') }}</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.Carrier') }}</th>
+                                                <th class="text-center pe-3 min-w-150px">
+                                                    {{ trans('message.Package Amount') }}</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.WEIGHT') }} (kg)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.MAX WIDTH') }} (cm)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.MAX Height') }} (cm)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.MAX Length') }} (cm)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.COST') }}</th>
+                                                {{-- <th class="text-end pe-3 min-w-50px">{{trans('message.Option')}}</th> --}}
+                                            </tr>
+                                        </thead>
+                                        <!--end::Thead-->
+                                        <!--begin::Tbody-->
+                                        <tbody class="fs-6 fw-bold text-gray-600">
+                                            @foreach ($this_year_shipments as $this_year_shipment)
+                                                <tr>
+                                                    <!--begin::Shipment ID-->
+                                                    <td class="text-center">
+                                                        {{ $this_year_shipment->shipping_id }}</td>
+                                                    <!--end::Shipment ID-->
+                                                    <!--begin::Transport-->
+                                                    <td class="text-center">{{ $this_year_shipment->carrier }}
+                                                    </td>
+                                                    <!--end::Transport-->
+                                                    <!--begin::Type-->
+                                                    <td class="text-center">232</td>
+                                                    <!--end::Type-->
+                                                    <!--begin::Weight-->
+                                                    <td class="text-center">{{ $this_year_shipment->weight }}
+                                                    </td>
+                                                    <!--end::Weight-->
+                                                    <!--begin::Size-->
+                                                    <td class="text-center">
+                                                        {{ $this_year_shipment->max_width }}
+                                                    </td>
+                                                    <!--end::Size-->
+                                                    <!--begin::Size-->
+                                                    <td class="text-center">
+                                                        {{ $this_year_shipment->max_height }}
+                                                    </td>
+                                                    <!--end::Size-->
+                                                    <!--begin::Size-->
+                                                    <td class="text-center">
+                                                        {{ $this_year_shipment->max_length }}
+                                                    </td>
+                                                    <!--end::Size-->
+                                                    <!--begin::price-->
+                                                    <td class="text-center">{{ $this_year_shipment->cost }}
+                                                    </td>
+                                                    <!--end::price-->
+
+                                                </tr>
+                                            @endforeach
+
+                                        </tbody>
+                                        <!--end::Tbody-->
+                                    </table>
+                                    <!--end::Table-->
+                                </div>
+                                <!--end::Table wrapper-->
+                            </div>
+                            <!--end::Tab panel-->
+
+                            <!--begin::Tab panel-->
+                            <div id="last_year" class="tab-pane fade show " role="tabpanel">
+                                <!--begin::Table wrapper-->
+                                <div class="table-responsive">
+                                    <!--begin::Table-->
+                                    <table id="kt_customer_details_invoices_table_1"
+                                        class="table align-middle table-row-dashed fs-6 fw-bolder gs-0 gy-4 p-0 m-0">
+                                        <!--begin::Thead-->
+                                        <thead class="border-bottom border-gray-200 fs-7 text-uppercase fw-bolder">
+                                            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                                <th class="min-w-25px">{{ trans('message.id') }}</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.Carrier') }}</th>
+                                                <th class="text-center pe-3 min-w-150px">
+                                                    {{ trans('message.Package Amount') }}</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.WEIGHT') }} (kg)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.MAX WIDTH') }} (cm)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.MAX Height') }} (cm)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.MAX Length') }} (cm)</th>
+                                                <th class="text-center pe-3 min-w-50px">
+                                                    {{ trans('message.COST') }}</th>
+                                                {{-- <th class="text-end pe-3 min-w-50px">{{trans('message.Option')}}</th> --}}
+                                            </tr>
+                                        </thead>
+                                        <!--end::Thead-->
+                                        <!--begin::Tbody-->
+                                        <tbody class="fs-6 fw-bold text-gray-600">
+                                            @foreach ($last_year_shipments as $last_year_shipment)
+                                                <tr>
+                                                    <!--begin::Shipment ID-->
+                                                    <td class="text-center">
+                                                        {{ $last_year_shipment->shipping_id }}</td>
+                                                    <!--end::Shipment ID-->
+                                                    <!--begin::Transport-->
+                                                    <td class="text-center">{{ $last_year_shipment->carrier }}
+                                                    </td>
+                                                    <!--end::Transport-->
+                                                    <!--begin::Type-->
+                                                    <td class="text-center">232</td>
+                                                    <!--end::Type-->
+                                                    <!--begin::Weight-->
+                                                    <td class="text-center">{{ $last_year_shipment->weight }}
+                                                    </td>
+                                                    <!--end::Weight-->
+                                                    <!--begin::Size-->
+                                                    <td class="text-center">
+                                                        {{ $last_year_shipment->max_width }}
+                                                    </td>
+                                                    <!--end::Size-->
+                                                    <!--begin::Size-->
+                                                    <td class="text-center">
+                                                        {{ $last_year_shipment->max_height }}
+                                                    </td>
+                                                    <!--end::Size-->
+                                                    <!--begin::Size-->
+                                                    <td class="text-center">
+                                                        {{ $last_year_shipment->max_length }}
+                                                    </td>
+                                                    <!--end::Size-->
+                                                    <!--begin::price-->
+                                                    <td class="text-center">{{ $last_year_shipment->cost }}
+                                                    </td>
+                                                    <!--end::price-->
+
+                                                </tr>
+                                            @endforeach
+
+                                        </tbody>
+                                        <!--end::Tbody-->
+                                    </table>
+                                    <!--end::Table-->
+                                </div>
+                                <!--end::Table wrapper-->
+                            </div>
+                            <!--end::Tab panel-->
+
+                        </div>
+                        <!--end::Tab Content-->
+                    </div>
+                    <!--end::Card body-->
+                </div>
             </div>
             <!--end::Container-->
         </div>

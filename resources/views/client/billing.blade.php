@@ -14,8 +14,8 @@
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                     <!--begin::Description-->
-                    <small class="text-muted fs-7 fw-bold my-1 ms-1">{{ trans('message.admin') }} >
-                        {{ trans('message.client') }} > {{ trans('message.View') }}</small>
+                    <small class="text-muted fs-7 fw-bold my-1 ms-1">{{ trans('message.client') }} >
+                        {{ trans('message.billing') }} > {{ trans('message.View') }}</small>
                     <!--end::Description-->
                 </div>
                 <!--end::Page title-->
@@ -566,7 +566,7 @@
                                                     @foreach ($invoices as $invoice)
                                                         <tr>
                                                             <td>
-                                                                <a href="{{ Route('client.view.invoice', $invoice->id) }}"
+                                                                <a href="{{ Route('view.invoice', $invoice->id) }}"
                                                                     class="text-gray-600 text-hover-primary">{{ $invoice->id }}</a>
                                                             </td>
                                                             <td class="text-success">{{ $invoice->total }}€</td>
@@ -577,7 +577,7 @@
                                                             <td>{{ date('m-d-y', strtotime(\Carbon\Carbon::parse($invoice->created))) }}
                                                             </td>
                                                             <td class="text-center">
-                                                                <a href="{{ Route('client.view.invoice', $invoice->id) }}"
+                                                                <a href="{{ Route('view.invoice', $invoice->id) }}"
                                                                     class="btn btn-sm btn-light btn-active-light-primary">{{ trans('message.Preview Invoice') }}</a>
                                                             </td>
                                                         </tr>
@@ -1097,7 +1097,7 @@
 
 
                         <!-- begin::Shipment Detail Tabs-->
-                        <div class="card card-flush pt-3 mb-5 mb-xl-10">
+                        {{-- <div class="card card-flush pt-3 mb-5 mb-xl-10">
                             <!--begin::Card header-->
                             <div class="card-header">
                                 <!--begin::Card title-->
@@ -1110,47 +1110,6 @@
                                 <!--end::Card title-->
                                 <!--begin::Toolbar-->
                                 <div class="card-toolbar">
-                                    <!--begin::Tab nav-->
-                                    {{-- <ul class="nav nav-stretch fs-5 fw-bold nav-line-tabs nav-line-tabs-2x border-transparent"
-                                        role="tablist">
-                                        <li class="nav-item" role="presentation">
-                                            <a id="kt_referrals_year_tab" class="nav-link text-active-primary active"
-                                                data-bs-toggle="tab" role="tab"
-                                                href="#today">{{ trans('message.Today') }}</a>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <a id="kt_referrals_2019_tab" class="nav-link text-active-primary ms-3"
-                                                data-bs-toggle="tab" role="tab"
-                                                href="#this_week">{{ trans('message.This Week') }}</a>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <a id="kt_referrals_2018_tab" class="nav-link text-active-primary ms-3"
-                                                data-bs-toggle="tab" role="tab"
-                                                href="#last_week">{{ trans('message.Last Week') }}</a>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <a id="kt_referrals_2017_tab" class="nav-link text-active-primary ms-3"
-                                                data-bs-toggle="tab" role="tab"
-                                                href="#this_month">{{ trans('message.This Month') }}</a>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <a id="kt_referrals_2019_tab" class="nav-link text-active-primary ms-3"
-                                                data-bs-toggle="tab" role="tab"
-                                                href="#last_month">{{ trans('message.Last Month') }}</a>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <a id="kt_referrals_2018_tab" class="nav-link text-active-primary ms-3"
-                                                data-bs-toggle="tab" role="tab"
-                                                href="#this_year">{{ trans('message.This Year') }}</a>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <a id="kt_referrals_2017_tab" class="nav-link text-active-primary ms-3"
-                                                data-bs-toggle="tab" role="tab"
-                                                href="#last_year">{{ trans('message.Last Year') }}</a>
-                                        </li>
-                                        <a href="#" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#kt_modal_update_package_amount">Preismodell ändern</a>
-                                    </ul> --}}
-                                    <!--end::Tab nav-->
                                     <div class="btn-group">
                                         <button class="btn btn-light btn-sm dropdown-toggle" type="button"
                                             id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
@@ -1243,7 +1202,6 @@
                                                             {{ trans('message.MAX Length') }} (cm)</th>
                                                         <th class="text-center pe-3 min-w-50px">
                                                             {{ trans('message.COST') }}</th>
-                                                        {{-- <th class="text-end pe-3 min-w-50px">{{trans('message.Option')}}</th> --}}
                                                     </tr>
                                                 </thead>
                                                 <!--end::Thead-->
@@ -1319,7 +1277,7 @@
                                                             {{ trans('message.MAX Length') }} (cm)</th>
                                                         <th class="text-center pe-3 min-w-50px">
                                                             {{ trans('message.COST') }}</th>
-                                                        {{-- <th class="text-end pe-3 min-w-50px">{{trans('message.Option')}}</th> --}}
+
                                                     </tr>
                                                 </thead>
                                                 <!--end::Thead-->
@@ -1400,7 +1358,7 @@
                                                             {{ trans('message.MAX Length') }} (cm)</th>
                                                         <th class="text-center pe-3 min-w-50px">
                                                             {{ trans('message.COST') }}</th>
-                                                        {{-- <th class="text-end pe-3 min-w-50px">{{trans('message.Option')}}</th> --}}
+
                                                     </tr>
                                                 </thead>
                                                 <!--end::Thead-->
@@ -1481,7 +1439,7 @@
                                                             {{ trans('message.MAX Length') }} (cm)</th>
                                                         <th class="text-center pe-3 min-w-50px">
                                                             {{ trans('message.COST') }}</th>
-                                                        {{-- <th class="text-end pe-3 min-w-50px">{{trans('message.Option')}}</th> --}}
+
                                                     </tr>
                                                 </thead>
                                                 <!--end::Thead-->
@@ -1562,7 +1520,7 @@
                                                             {{ trans('message.MAX Length') }} (cm)</th>
                                                         <th class="text-center pe-3 min-w-50px">
                                                             {{ trans('message.COST') }}</th>
-                                                        {{-- <th class="text-end pe-3 min-w-50px">{{trans('message.Option')}}</th> --}}
+
                                                     </tr>
                                                 </thead>
                                                 <!--end::Thead-->
@@ -1643,7 +1601,7 @@
                                                             {{ trans('message.MAX Length') }} (cm)</th>
                                                         <th class="text-center pe-3 min-w-50px">
                                                             {{ trans('message.COST') }}</th>
-                                                        {{-- <th class="text-end pe-3 min-w-50px">{{trans('message.Option')}}</th> --}}
+
                                                     </tr>
                                                 </thead>
                                                 <!--end::Thead-->
@@ -1724,7 +1682,7 @@
                                                             {{ trans('message.MAX Length') }} (cm)</th>
                                                         <th class="text-center pe-3 min-w-50px">
                                                             {{ trans('message.COST') }}</th>
-                                                        {{-- <th class="text-end pe-3 min-w-50px">{{trans('message.Option')}}</th> --}}
+
                                                     </tr>
                                                 </thead>
                                                 <!--end::Thead-->
@@ -1783,10 +1741,10 @@
                                 <!--end::Tab Content-->
                             </div>
                             <!--end::Card body-->
-                        </div>
+                        </div> --}}
 
                         <!-- Referred Clients -->
-                        <div class="card card-flush pt-3 mb-5 mb-xl-10">
+                        {{-- <div class="card card-flush pt-3 mb-5 mb-xl-10">
                             <!--begin::Card header-->
                             <div class="card-header pt-7">
                                 <!--begin::Title-->
@@ -1810,7 +1768,6 @@
                                             <th class="text-center pe-3 min-w-25px">{{ trans('message.id') }}</th>
                                             <th class="text-center pe-3 min-w-50px">{{ trans('message.Company Name') }}
                                             </th>
-                                            {{-- <th class="text-center pe-3 min-w-150px">{{trans('message.Status')}}</th> --}}
                                             <th class="text-center pe-3 min-w-50px">
                                                 {{ trans('message.Registered At') }}
                                             </th>
@@ -1833,7 +1790,6 @@
                                                 <td class="text-center">{{ $affiliated->company_name }}</td>
                                                 <!--end::Transport-->
                                                 <!--begin::Type-->
-                                                {{-- <td class="text-center">{{$affiliated->status}}</td> --}}
                                                 <!--end::Type-->
                                                 <!--begin::Weight-->
                                                 <td class="text-center">
@@ -1852,7 +1808,7 @@
                                 <!--end::Table-->
                             </div>
                             <!--end::Card body-->
-                        </div>
+                        </div> --}}
                     </div>
                     <!--end::Content-->
                 </div>
@@ -1865,7 +1821,7 @@
                         <!--begin::Modal content-->
                         <div class="modal-content">
                             <!--begin::Form-->
-                            <form class="form" action="{{ Route('client.update.shipping_quantity', $client->id) }}"
+                            <form class="form" action="{{ Route('update.shipping_quantity', $client->id) }}"
                                 method="GET">
                                 <!--begin::Modal header-->
                                 <div class="modal-header" id="kt_modal_package_amount_header">
@@ -2389,467 +2345,7 @@
                                         </div>
                                         <!--end::Col-->
                                         <!--begin::Col-->
-                                        {{-- <div class="col-lg-6">
-                                <!--begin::Tab content-->
-                                <div class="tab-content rounded h-100 bg-light p-10">
-                                    <!--begin::Tab Pane-->
-                                    <div class="tab-pane fade show active" id="kt_upgrade_plan_startup">
-                                        <!--begin::Heading-->
-                                        <div class="pb-5">
-                                            <h2 class="fw-bolder text-dark">What’s in Startup Plan?</h2>
-                                            <div class="text-muted fw-bold">Optimal for 10+ team size and new startup
-                                            </div>
-                                        </div>
-                                        <!--end::Heading-->
-                                        <!--begin::Body-->
-                                        <div class="pt-1">
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Up to 10 Active
-                                                    Users</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Up to 30 Project
-                                                    Integrations</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Analytics
-                                                    Module</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-muted flex-grow-1">Finance Module</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen040.svg-->
-                                                <span class="svg-icon svg-icon-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <rect x="7" y="15.3137" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(-45 7 15.3137)" fill="black" />
-                                                        <rect x="8.41422" y="7" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(45 8.41422 7)" fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-muted flex-grow-1">Accounting Module</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen040.svg-->
-                                                <span class="svg-icon svg-icon-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <rect x="7" y="15.3137" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(-45 7 15.3137)" fill="black" />
-                                                        <rect x="8.41422" y="7" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(45 8.41422 7)" fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-muted flex-grow-1">Network Platform</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen040.svg-->
-                                                <span class="svg-icon svg-icon-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <rect x="7" y="15.3137" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(-45 7 15.3137)" fill="black" />
-                                                        <rect x="8.41422" y="7" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(45 8.41422 7)" fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center">
-                                                <span class="fw-bold fs-5 text-muted flex-grow-1">Unlimited Cloud
-                                                    Space</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen040.svg-->
-                                                <span class="svg-icon svg-icon-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <rect x="7" y="15.3137" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(-45 7 15.3137)" fill="black" />
-                                                        <rect x="8.41422" y="7" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(45 8.41422 7)" fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                        </div>
-                                        <!--end::Body-->
-                                    </div>
-                                    <!--end::Tab Pane-->
-                                    <!--begin::Tab Pane-->
-                                    <div class="tab-pane fade" id="kt_upgrade_plan_advanced">
-                                        <!--begin::Heading-->
-                                        <div class="pb-5">
-                                            <h2 class="fw-bolder text-dark">What’s in Startup Plan?</h2>
-                                            <div class="text-muted fw-bold">Optimal for 100+ team size and grown company
-                                            </div>
-                                        </div>
-                                        <!--end::Heading-->
-                                        <!--begin::Body-->
-                                        <div class="pt-1">
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Up to 10 Active
-                                                    Users</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Up to 30 Project
-                                                    Integrations</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Analytics
-                                                    Module</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Finance Module</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Accounting
-                                                    Module</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-muted flex-grow-1">Network Platform</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen040.svg-->
-                                                <span class="svg-icon svg-icon-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <rect x="7" y="15.3137" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(-45 7 15.3137)" fill="black" />
-                                                        <rect x="8.41422" y="7" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(45 8.41422 7)" fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center">
-                                                <span class="fw-bold fs-5 text-muted flex-grow-1">Unlimited Cloud
-                                                    Space</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen040.svg-->
-                                                <span class="svg-icon svg-icon-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <rect x="7" y="15.3137" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(-45 7 15.3137)" fill="black" />
-                                                        <rect x="8.41422" y="7" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(45 8.41422 7)" fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                        </div>
-                                        <!--end::Body-->
-                                    </div>
-                                    <!--end::Tab Pane-->
-                                    <!--begin::Tab Pane-->
-                                    <div class="tab-pane fade" id="kt_upgrade_plan_enterprise">
-                                        <!--begin::Heading-->
-                                        <div class="pb-5">
-                                            <h2 class="fw-bolder text-dark">What’s in Startup Plan?</h2>
-                                            <div class="text-muted fw-bold">Optimal for 1000+ team and enterpise</div>
-                                        </div>
-                                        <!--end::Heading-->
-                                        <!--begin::Body-->
-                                        <div class="pt-1">
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Up to 10 Active
-                                                    Users</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Up to 30 Project
-                                                    Integrations</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Analytics
-                                                    Module</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Finance Module</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Accounting
-                                                    Module</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Network
-                                                    Platform</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Unlimited Cloud
-                                                    Space</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                        </div>
-                                        <!--end::Body-->
-                                    </div>
-                                    <!--end::Tab Pane-->
-                                </div>
-                                <!--end::Tab content-->
-                            </div> --}}
+
                                         <!--end::Col-->
                                     </div>
                                     <!--end::Row-->

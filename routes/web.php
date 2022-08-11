@@ -38,6 +38,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Client And Admin View Routes
+Route::get('card-detail/delete/{id}', [ClientCardController::class, 'destroy'])->name('admin.card-detail.delete');
+Route::get('admin/client/invoice/{stripe_id}', [ClientController::class, 'invoiceView'])->name('client.view.invoice');
+Route::post('card-detail/store/{id}', [ClientCardController::class, 'store'])->name('admin.card-detail.store');
+Route::post('card-detail/update/{id}/{client_id}', [ClientCardController::class, 'update'])->name('admin.card-detail.update');
+Route::get('admin/client/shiping-quantity/update/{id}', [ClientController::class, 'updateShippingQuantity'])->name('client.update.shipping_quantity');
+Route::post('client/update/variant/{client_id}', [ClientController::class, 'updateVariant'])->name('client.update.variant');
+Route::post('client/cancel/subscription/{client_id}', [ClientController::class, 'cancelSubscription'])->name('client.cancel.subscription');
+Route::get('client/invoice/print/{stripe_id}', [ClientController::class, 'invoicePrint'])->name('client.print.invoice');
+Route::get('download/invoice/{id}', [ClientController::class, 'downloadInvoice'])->name('client.invoice.download');
+Route::post('client/update/{id}', [ClientController::class, 'update'])->name('admin.client.update');
+
 //+++++ theme changing routes ++++++++
 Route::get('change/theme/dark', [ProfileController::class , 'changeThemeToDark'])->name('change.theme.dark');
 Route::get('change/theme/light', [ProfileController::class , 'changeThemeToLight'])->name('change.theme.light');
@@ -144,9 +156,9 @@ Route::post('affiliateprogram/update/{id}',[DashboardController::class , 'addAff
 | Admin Card Detail Code Routes
 |******************************
 */
-Route::post('card-detail/store/{id}',[ClientCardController::class , 'store'])->name('admin.card-detail.store');
-Route::post('card-detail/update/{id}/{client_id}',[ClientCardController::class , 'update'])->name('admin.card-detail.update');
-Route::get('card-detail/delete/{id}',[ClientCardController::class , 'destroy'])->name('admin.card-detail.delete');
+//Route::post('card-detail/store/{id}',[ClientCardController::class , 'store'])->name('admin.card-detail.store');
+//Route::post('card-detail/update/{id}/{client_id}',[ClientCardController::class , 'update'])->name('admin.card-detail.update');
+//Route::get('card-detail/delete/{id}',[ClientCardController::class , 'destroy'])->name('admin.card-detail.delete');
 
 
 /*
@@ -177,18 +189,18 @@ Route::get('/changeStatus/{status}',[CreateAdminController::class , 'changeStatu
 */
 Route::get('clients',[ClientController::class , 'index'])->name('admin.clients');
 Route::get('client/view/{id}/{stripe_id}',[ClientController::class , 'show'])->name('admin.client.view');
-Route::post('client/update/{id}',[ClientController::class , 'update'])->name('admin.client.update');
-Route::get('client/destroy/{id}',[ClientController::class , 'destroy'])->name('admin.client.delete');
-Route::post('client/update/variant/{client_id}',[ClientController::class , 'updateVariant'])->name('client.update.variant');
-Route::post('client/cancel/subscription/{client_id}',[ClientController::class , 'cancelSubscription'])->name('client.cancel.subscription');
-Route::get('client/invoice/{stripe_id}',[ClientController::class , 'invoiceView'])->name('client.view.invoice');
-Route::get('client/invoice/print/{stripe_id}',[ClientController::class , 'invoicePrint'])->name('client.print.invoice');
-Route::get('download/invoice/{id}',[ClientController::class , 'downloadInvoice'])->name('client.invoice.download');
+//Route::post('client/update/{id}',[ClientController::class , 'update'])->name('admin.client.update');
+//Route::get('client/destroy/{id}',[ClientController::class , 'destroy'])->name('admin.client.delete');
+//Route::post('client/update/variant/{client_id}',[ClientController::class , 'updateVariant'])->name('client.update.variant');
+//Route::post('client/cancel/subscription/{client_id}',[ClientController::class , 'cancelSubscription'])->name('client.cancel.subscription');
+//Route::get('client/invoice/{stripe_id}',[ClientController::class , 'invoiceView'])->name('client.view.invoice');
+//Route::get('client/invoice/print/{stripe_id}',[ClientController::class , 'invoicePrint'])->name('client.print.invoice');
+//Route::get('download/invoice/{id}',[ClientController::class , 'downloadInvoice'])->name('client.invoice.download');
 
 
 
 // ====== update shipping quantity client
-Route::get('client/shiping-quantity/update/{id}',[ClientController::class , 'updateShippingQuantity'])->name('client.update.shipping_quantity');
+//Route::get('client/shiping-quantity/update/{id}',[ClientController::class , 'updateShippingQuantity'])->name('client.update.shipping_quantity');
 
 
 
@@ -308,6 +320,7 @@ Route::get('dashboard',[ClientLoginController::class , 'dashboard'])->name('clie
 
 //Route::view('create/shipment', 'client.shipping.create_shipment')->name('client.create.shipment');
 Route::get('create/shipment',[ShipmentController::class , 'createShipmentView'])->name('client.create.shipment');
+Route::get('store/shipment',[ShipmentController::class , 'storeShipment'])->name('client.store.shipment');
 Route::view('shipment/delivery', 'client.shipping.delivery')->name('client.shipment.delivery');
 Route::view('shipment/status/check', 'client.shipping.status_check')->name('client.shipment.status_check');
 /*
@@ -377,6 +390,9 @@ Route::get('deactivate2FA/{email}',[ClientProfileController::class , 'deActivate
 // ====== update shipping quantity client
 Route::get('shiping-quantity/update/{id}',[ClientSettingController::class , 'updateShippingQuantity'])->name('update.shipping_quantity');
 
+
+    //invoice-route
+    Route::get('invoice/{stripe_id}', [ClientProfileController::class, 'invoiceView'])->name('view.invoice');
 
 });
 
