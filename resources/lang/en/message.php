@@ -695,10 +695,10 @@ return [
 
 
     'total customers' => 'Total Customer',
-    'package_shipment' => 'Package Amount',
+    'package_shipment' => 'Package Prices',
     'change_package_amount' => 'Change package amount',
     'billing' => 'Billing',
-    '' => '',
+    'shipment_overview' => 'Shipment Overview',
     '' => '',
     '' => '',
     '' => '',

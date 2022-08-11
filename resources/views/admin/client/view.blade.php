@@ -103,7 +103,7 @@
                                     <div class="mb-0">
                                         <!--begin::Price-->
                                         <span class="fw-bold text-gray-600">{{ trans('Open costs') }}:
-                                            {{ $client->open_costs }}€</span>
+                                            €{{Helper::money_format('EUR','de_DE', $client->open_costs) }}</span>
                                         <!--end::Price-->
                                     </div>
                                     <!--end::Details-->
@@ -442,7 +442,7 @@
 
                                                     @endphp
                                                     <td class="text-centre text-danger">
-                                                        {{ Helper::money_format('EUR', 'de_DE', $next_payment->price) }}€
+                                                        € {{ Helper::money_format('EUR', 'de_DE', $next_payment->price) }}
                                                     </td>
                                                 </tr>
 
@@ -569,7 +569,7 @@
                                                                 <a href="{{ Route('client.view.invoice', $invoice->id) }}"
                                                                     class="text-gray-600 text-hover-primary">{{ $invoice->id }}</a>
                                                             </td>
-                                                            <td class="text-success">{{ $invoice->total }}€</td>
+                                                            <td class="text-success">€ {{Helper::money_format('EUR','de_DE',$invoice->total)  }}</td>
                                                             <td>
                                                                 <span
                                                                     class="badge badge-light-success">{{ $invoice->status }}</span>

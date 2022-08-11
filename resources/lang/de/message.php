@@ -1257,10 +1257,11 @@ return [
 
 
     'total customers' => 'Kunden gesamt',
-    'package_shipment' => 'Paketbetrag',
+    'package_shipment' => 'Paketpreise',
 
     'change_package_amount' => 'Paketbetrag ändern',
     'billing' => 'Abrechnung',
+    'shipment_overview' => 'Sendungsübersicht',
     '' => '',
     '' => '',
     '' => '',

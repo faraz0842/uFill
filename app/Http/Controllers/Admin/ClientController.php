@@ -225,7 +225,7 @@ class ClientController extends Controller
 
         $subscription = \Stripe\Subscription::retrieve($client_subcription_id->stripe_id);
         \Stripe\Subscription::update($client_subcription_id->stripe_id, [
-            'cancel_at_period_end' => false,
+            'cancel_at_period_end' => true,
             'proration_behavior' => 'create_prorations',
             'items' => [
                 [
@@ -243,8 +243,8 @@ class ClientController extends Controller
                 'package_price' => $price_id->price,
             ]);
 
-        $subscription_updated = \Stripe\Subscription::retrieve($client_subcription_id->stripe_id);
-        return response()->json($subscription_updated);
+        // $subscription_updated = \Stripe\Subscription::retrieve($client_subcription_id->stripe_id);
+        // return response()->json($subscription_updated);
 
 
 

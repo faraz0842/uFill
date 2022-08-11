@@ -852,10 +852,19 @@
                     </div>
                     <!--end::Aside mobile toggle-->
                     <!--begin::Mobile logo-->
+
                     <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-                        <a href="../../demo1/dist/index.html" class="d-lg-none">
-                            <img alt="Logo" src="assets/media/logos/logo-1.png" class="h-30px" />
+                        @if (session('package_name') == 'shipment')
+                        <a href="{{ Route('client.shipment.delivery') }}" class="d-lg-none">
+                            <img alt="Logo" src="{{asset('assets/media/logos/logo-1.png')}}" class="h-30px" />
                         </a>
+
+                        @else
+                        <a href="{{ Route('client.dashboard') }}" class="d-lg-none">
+                            <img alt="Logo" src="{{asset('assets/media/logos/logo-1.png')}}" class="h-30px" />
+                        </a>
+                        @endif
+
                     </div>
                     <!--end::Mobile logo-->
                     <!--begin::Wrapper-->

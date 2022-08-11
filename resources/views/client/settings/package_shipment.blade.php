@@ -756,7 +756,12 @@
                     <div class="card-header">
                         <!--begin::Card title-->
                         <div class="card-title align-items-start flex-column mb-5">
-                            <h2>{{ trans('message.Shipment Detail') }}</h2>
+                            <h3 class="card-title align-items-start flex-column mb-5">
+                            <span class="card-label fw-bolder text-dark">{{ trans('message.shipment_overview') }}</span>
+
+
+                        </h3>
+                            {{-- <h2>{{ trans('message.shipment_overview') }}</h2> --}}
                             {{-- <span class="text-gray-400 mt-1 fw-bold fs-6">{{ trans('message.Currently') }}:
                                 {{ $client_info->shipping_quantity }}
                                 {{ trans('message.packages / monthly') }}</span> --}}
