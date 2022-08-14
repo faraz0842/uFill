@@ -272,9 +272,9 @@ class DashboardController extends Controller
 
             foreach ($products->data as $key => $prod) {
 
-                $is_product_exists = Variant::where('variant_id',$prod->id)->where('name',$prod->name)->where('description',$prod->description)->first();
+                $is_product_exists = Variant::where('variant_id',$prod->id)->where('name',$prod->name)->first();
 
-                //return response()->json($prod->description);
+                //return response()->json($is_product_exists);
 
                 if(!$is_product_exists){
 
