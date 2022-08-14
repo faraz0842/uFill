@@ -1262,6 +1262,8 @@ return [
     'change_package_amount' => 'Paketbetrag ändern',
     'billing' => 'Abrechnung',
     'shipment_overview' => 'Sendungsübersicht',
+
+    'Necessary referred clients' => 'Notwendige geworbene Kunden',
     '' => '',
     '' => '',
     '' => '',

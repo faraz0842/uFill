@@ -765,6 +765,10 @@
                                                                         class="required fs-6 fw-bold form-label mb-2">{{ trans('message.price') }}</label>
                                                                     <!--end::Label-->
                                                                     <!--begin::Input-->
+                                                                    {{-- <div class="input-group mb-3">
+                                                                        <input type="text" class="form-control" placeholder="e.g . 500 cent" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                                                        <span class="input-group-text" id="basic-addon2">cent</span>
+                                                                    </div> --}}
                                                                     <input type="text"
                                                                         class="form-control form-control-solid"
                                                                         name="price"
@@ -2285,9 +2289,13 @@
                                                                         class="required fs-6 fw-bold form-label mb-2">{{ trans('message.COST') }}</label>
                                                                     <!--end::Label-->
                                                                     <!--begin::Input-->
-                                                                    <input type="text"
+                                                                    <div class="input-group mb-3">
+                                                                        <input type="text" class="form-control" placeholder="e.g . 500 cent" aria-label="Recipient's username" aria-describedby="basic-addon2" value="{{ $shipping_detail->cost }}">
+                                                                        <span class="input-group-text" id="basic-addon2">cent</span>
+                                                                    </div>
+                                                                    {{-- <input type="text"
                                                                         class="form-control form-control-solid" name="cost"
-                                                                        value="{{ $shipping_detail->cost }}" />
+                                                                        value="{{ $shipping_detail->cost }}" /> --}}
                                                                     <!--end::Input-->
                                                                     @if ($errors->has('cost'))
                                                                         <div class="text-danger">
@@ -2478,9 +2486,13 @@
                                                                         class="required fs-6 fw-bold form-label mb-2">{{ trans('message.Fee') }}</label>
                                                                     <!--end::Label-->
                                                                     <!--begin::Input-->
-                                                                    <input type="text"
+                                                                    <div class="input-group mb-3">
+                                                                        <input type="text" class="form-control" placeholder="e.g . 500 cent" aria-label="Recipient's username" aria-describedby="basic-addon2" value="{{ $shipping_package->package_fee }}">
+                                                                        <span class="input-group-text" id="basic-addon2">cent</span>
+                                                                    </div>
+                                                                    {{-- <input type="text"
                                                                         class="form-control form-control-solid" name="fee"
-                                                                        value="{{ $shipping_package->package_fee }}" />
+                                                                        value="{{ $shipping_package->package_fee }}" /> --}}
                                                                     <!--end::Input-->
                                                                     @if ($errors->has('fee'))
                                                                         <div class="text-danger">

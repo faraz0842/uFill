@@ -435,7 +435,7 @@
                                     <div class="mb-10 fv-row" >
                                         @csrf
                                         <input name="is_affiliate"
-                                            value="ufill.swamenterprises.com/client/register/{{ $is_affiliate }}"
+                                            value="ufill.devatease.com/client/register/{{ $is_affiliate }}"
                                             hidden />
                                         <!--begin::Label-->
                                         <label
@@ -1091,7 +1091,7 @@
                                                     </option>
                                                     <option value="Uzbekistan">
                                                         Uzbekistan</option>
-                                                    <option value="Vanuatu">Vanuatu
+                                                    <option value="Vanuatu">
                                                     </option>
                                                     <option value="Venezuela, Bolivarian Republic of">
                                                         Venezuela, Bolivarian Republic of</option>

@@ -699,6 +699,7 @@ return [
     'change_package_amount' => 'Change package amount',
     'billing' => 'Billing',
     'shipment_overview' => 'Shipment Overview',
+    'Necessary referred clients' => 'Necessary referred Clients',
     '' => '',
     '' => '',
     '' => '',
