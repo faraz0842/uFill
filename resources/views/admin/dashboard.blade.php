@@ -1763,6 +1763,8 @@
                                                 $total_client_revenue = App\Models\Transaction::select(DB::raw('sum(amount - discount_price) as total'))
                                                     ->where('client_id', $client->id)
                                                     ->first();
+
+
                                             @endphp
                                             <tr>
                                                 <!--begin::Client ID-->
@@ -1787,7 +1789,7 @@
                                                 <!--end::Client until-->
                                                 <!--begin::Total revenue-->
                                                 <td class="text-center">
-                                                    {{ $total_client_revenue->total != null ? $total_client_revenue->total : 0 }}€
+                                                    {{ Helper::money_format('EUR','de_DE',$total_client_revenue->total != null ? $total_client_revenue->total : 0)  }}€
                                                 </td>
                                                 <!--end::Total revenue-->
                                                 <!--begin::Open costs-->
