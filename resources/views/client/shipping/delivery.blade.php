@@ -12,7 +12,7 @@
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                     <!--begin::Description-->
-                    <small class="text-muted fs-7 fw-bold my-1 ms-1">Dashboards > eCommerce > Sendungen</small>
+                    <small class="text-muted fs-7 fw-bold my-1 ms-1">{{ trans('message.Dashboards > eCommerce > Shipments') }}</small>
                     <!--end::Description-->
                 </div>
                 <!--end::Page title-->
@@ -45,7 +45,7 @@
                     <!--begin::Secondary button-->
                     <!--end::Secondary button-->
                     <!--begin::Primary button-->
-                    <a href="#" class="btn btn-sm btn-primary">Anwenden</a>
+                    <a href="#" class="btn btn-sm btn-primary">{{ trans('message.Save') }}</a>
                     <!--end::Primary button-->
                 </div>
                 <!--end::Actions-->
@@ -98,7 +98,7 @@
                                             </div>
                                             <!--end::Info-->
                                             <!--begin::Description-->
-                                            <span class="fs-6 fw-bold text-gray-400">Versandkosten gesamt</span>
+                                            <span class="fs-6 fw-bold text-gray-400">{{ trans('message.Total shipping costs') }}</span>
                                             <!--end::Description-->
                                         </div>
                                         <!--end::Statistics-->
@@ -127,7 +127,7 @@
                                             </div>
                                             <!--end::Info-->
                                             <!--begin::Subtitle-->
-                                            <span class="text-gray-400 pt-1 fw-bold fs-6">offene Versandkosten</span>
+                                            <span class="text-gray-400 pt-1 fw-bold fs-6">{{ trans('message.open shipping costs') }}</span>
                                             <!--end::Subtitle-->
                                         </div>
                                         <!--end::Title-->
@@ -188,7 +188,7 @@
                                             </div>
                                             <!--end::Statistics-->
                                             <!--begin::Description-->
-                                            <span class="fs-6 fw-bold text-gray-400">Sendungen gesamt</span>
+                                            <span class="fs-6 fw-bold text-gray-400">{{ trans('message.Total shipments') }}</span>
                                             <!--end::Description-->
                                         </div>
                                         <!--end::Statistics-->
@@ -209,7 +209,7 @@
                                             <span class="fs-2hx fw-bolder text-dark me-2 lh-1">6.300</span>
                                             <!--end::Amount-->
                                             <!--begin::Subtitle-->
-                                            <span class="text-gray-400 pt-1 fw-bold fs-6">verschiedene Kunden</span>
+                                            <span class="text-gray-400 pt-1 fw-bold fs-6">{{ trans('message.various customers') }}</span>
                                             <!--end::Subtitle-->
                                         </div>
                                         <!--end::Title-->
@@ -218,7 +218,7 @@
                                     <!--begin::Card body-->
                                     <div class="card-body d-flex flex-column justify-content-end">
                                         <!--begin::Title-->
-                                        <span class="fs-6 fw-boldest text-gray-800 d-block mb-2">Kunden zuletzt...</span>
+                                        <span class="fs-6 fw-boldest text-gray-800 d-block mb-2">{{ trans('message.Last costumers...') }}</span>
                                         <!--end::Title-->
                                         <!--begin::Users group-->
                                         <div class="symbol-group symbol-hover">
@@ -271,8 +271,8 @@
                             <div class="card-header pt-7">
                                 <!--begin::Title-->
                                 <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label fw-bolder text-dark">Weltkarte</span>
-                                    <span class="text-gray-400 pt-2 fw-bold fs-6">Länder mit meisten Verkäufen</span>
+                                    <span class="card-label fw-bolder text-dark">{{ trans('message.Worldmap') }}</span>
+                                    <span class="text-gray-400 pt-2 fw-bold fs-6">{{ trans('message.Countries with the most sales') }}</span>
                                 </h3>
                                 <!--end::Title-->
                             </div>
@@ -300,8 +300,8 @@
                             <div class="card-header pt-7">
                                 <!--begin::Title-->
                                 <h3 class="card-title align-items-start flex-column mb-5">
-                                    <span class="card-label fw-bolder text-dark">Versandkosten</span>
-                                    <span class="text-gray-400 mt-1 fw-bold fs-6">Aktuell: 50 - 500 Pakete / mtl.</span>
+                                    <span class="card-label fw-bolder text-dark">{{ trans('message.Shipping costs') }}</span>
+                                    <span class="text-gray-400 mt-1 fw-bold fs-6">{{ trans('message.Current: 50 - 500 Packages / monthly.') }}.</span>
                                 </h3>
                                 <!--end::Title-->
                                 <!--begin::Actions-->
@@ -311,7 +311,7 @@
                                         <!--begin::Destination-->
                                         <div class="d-flex align-items-center fw-bolder">
                                             <!--begin::Label-->
-                                            <div class="text-muted fs-7 me-2">Transporteur</div>
+                                            <div class="text-muted fs-7 me-2">{{ trans('message.Carrier') }}</div>
                                             <!--end::Label-->
                                             <!--begin::Select-->
                                             <select
@@ -319,7 +319,7 @@
                                                 data-control="select2" data-hide-search="true"
                                                 data-dropdown-css-class="w-150px" data-placeholder="Select an option">
                                                 <option></option>
-                                                <option value="Show All" selected="selected">Alle</option>
+                                                <option value="Show All" selected="selected">{{ trans('message.All') }}</option>
                                                 <option value="a">DHL</option>
                                                 <option value="b">DPD</option>
                                             </select>
@@ -327,8 +327,7 @@
                                         </div>
                                         <!--end::Destination-->
                                         <!--begin::Search-->
-                                        <a href="#" class="btn btn-light btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#kt_modal_update_package_amount">Preismodell ändern</a>
+                                        <a href="{{Route('client.package.shipment')}}" class="btn btn-light btn-sm" >{{ trans('message.Change package amount') }}</a>
                                         <!--end::Search-->
                                     </div>
                                     <!--begin::Filters-->
@@ -346,12 +345,12 @@
                                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                                             <th class="min-w-25px">ID</th>
                                             <th class="text-center pe-3 min-w-50px">Transporteur</th>
-                                            <th class="text-center pe-3 min-w-150px">Versandart</th>
-                                            <th class="text-center pe-3 min-w-50px">Gewicht (kg)</th>
-                                            <th class="text-center pe-3 min-w-50px">max. Breite (cm)</th>
-                                            <th class="text-center pe-3 min-w-50px">max. Höhe (cm)</th>
-                                            <th class="text-center pe-3 min-w-50px">max. Länge (cm)</th>
-                                            <th class="text-end pe-3 min-w-50px">Kosten</th>
+                                            <th class="text-center pe-3 min-w-150px">{{ trans('message.Shipping') }}</th>
+                                            <th class="text-center pe-3 min-w-50px">{{ trans('message.Weight (kg)') }}</th>
+                                            <th class="text-center pe-3 min-w-50px">{{ trans('message.Max. Width (cm)') }}</th>
+                                            <th class="text-center pe-3 min-w-50px">{{ trans('message.Max. Height (cm)') }}</th>
+                                            <th class="text-center pe-3 min-w-50px">{{ trans('message.Max. Lenght (cm)') }}</th>
+                                            <th class="text-end pe-3 min-w-50px">{{ trans('message.Costs') }}</th>
                                         </tr>
                                         <!--end::Table row-->
                                     </thead>
@@ -454,9 +453,8 @@
                             <div class="card-header pt-7 mb-5">
                                 <!--begin::Title-->
                                 <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label fw-bolder text-gray-800">Zielländer</span>
-                                    <span class="text-gray-400 mt-1 fw-bold fs-6">In diese Länder gingen 95% Ihrer
-                                        Sendungen.</span>
+                                    <span class="card-label fw-bolder text-gray-800">{{ trans('message.Destination') }}</span>
+                                    <span class="text-gray-400 mt-1 fw-bold fs-6">{{ trans('message.Most of your shipments went to these countries.') }}</span>
                                 </h3>
                                 <!--end::Title-->
                             </div>
@@ -774,9 +772,8 @@
                             <div class="card-header pt-7 mb-5">
                                 <!--begin::Title-->
                                 <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label fw-bolder text-gray-800">Versandarten</span>
-                                    <span class="text-gray-400 mt-1 fw-bold fs-6">Dies waren Ihre meist genutzen
-                                        Versandarten.</span>
+                                    <span class="card-label fw-bolder text-gray-800">{{ trans('message.Shipping Methods') }}</span>
+                                    <span class="text-gray-400 mt-1 fw-bold fs-6">{{ trans('message.These were your most used shipping methods.') }}</span>
                                 </h3>
                                 <!--end::Title-->
                             </div>
@@ -1122,8 +1119,8 @@
                             <div class="card-header pt-7">
                                 <!--begin::Title-->
                                 <h3 class="card-title align-items-start flex-column mb-5">
-                                    <span class="card-label fw-bolder text-dark">Sendungsübersicht</span>
-                                    <span class="text-gray-400 mt-1 fw-bold fs-6">gesamt 125 Sendungen</span>
+                                    <span class="card-label fw-bolder text-dark">{{ trans('message.Shipment overview') }}</span>
+                                    <span class="text-gray-400 mt-1 fw-bold fs-6">{{ trans('message.a total of 125 shipments') }}</span>
                                 </h3>
                                 <!--end::Title-->
                                 <!--begin::Actions-->
@@ -1133,7 +1130,7 @@
                                         <!--begin::Destination-->
                                         <div class="d-flex align-items-center fw-bolder">
                                             <!--begin::Label-->
-                                            <div class="text-muted fs-7 me-2">Anzeige</div>
+                                            <div class="text-muted fs-7 me-2">{{ trans('message.Display') }}</div>
                                             <!--end::Label-->
                                             <!--begin::Select-->
                                             <select
@@ -1141,7 +1138,7 @@
                                                 data-control="select2" data-hide-search="true"
                                                 data-dropdown-css-class="w-150px" data-placeholder="Select an option">
                                                 <option></option>
-                                                <option value="1" selected="selected">Alle</option>
+                                                <option value="1" selected="selected">{{ trans('message.All') }}</option>
                                                 <option value="2">10</option>
                                                 <option value="3">50</option>
                                                 <option value="4">100</option>
@@ -1152,7 +1149,7 @@
                                         <!--begin::Destination-->
                                         <div class="d-flex align-items-center fw-bolder">
                                             <!--begin::Label-->
-                                            <div class="text-muted fs-7 me-2">Transporteur</div>
+                                            <div class="text-muted fs-7 me-2">{{ trans('message.Carrier') }}</div>
                                             <!--end::Label-->
                                             <!--begin::Select-->
                                             <select
@@ -1160,7 +1157,7 @@
                                                 data-control="select2" data-hide-search="true"
                                                 data-dropdown-css-class="w-150px" data-placeholder="Select an option">
                                                 <option></option>
-                                                <option value="Show All" selected="selected">Alle</option>
+                                                <option value="Show All" selected="selected">{{ trans('message.All') }}</option>
                                                 <option value="a">DHL</option>
                                                 <option value="b">DPD</option>
                                             </select>
@@ -1179,12 +1176,12 @@
                                                 data-dropdown-css-class="w-150px" data-placeholder="Select an option"
                                                 data-kt-table-widget-5="filter_status">
                                                 <option></option>
-                                                <option value="Show All" selected="selected">Alle</option>
-                                                <option value="created">Sendung erstellt</option>
-                                                <option value="handover">Übergeben</option>
-                                                <option value="in transit">In Zustellung</option>
-                                                <option value="delivered">Zugestellt</option>
-                                                <option value="error">Fehlerhaft</option>
+                                                <option value="Show All" selected="selected">{{ trans('message.All') }}</option>
+                                                <option value="created">{{ trans('message.Shipment created') }}</option>
+                                                <option value="handover">{{ trans('message.Hand over') }}</option>
+                                                <option value="in transit">{{ trans('message.In delivery') }}</option>
+                                                <option value="delivered">{{ trans('message.Delivered') }}</option>
+                                                <option value="error">{{ trans('message.Error') }}</option>
                                             </select>
                                             <!--end::Select-->
                                         </div>
@@ -1192,7 +1189,7 @@
                                         <!--begin::Status-->
                                         <div class="d-flex align-items-center fw-bolder">
                                             <!--begin::Label-->
-                                            <div class="text-muted fs-7 me-2">Abrechnung</div>
+                                            <div class="text-muted fs-7 me-2">{{ trans('message.Billing') }}</div>
                                             <!--end::Label-->
                                             <!--begin::Select-->
                                             <select
@@ -1201,18 +1198,18 @@
                                                 data-dropdown-css-class="w-150px" data-placeholder="Select an option"
                                                 data-kt-table-widget-5="filter_status">
                                                 <option></option>
-                                                <option value="Show All" selected="selected">Alle</option>
-                                                <option value="not payed">Offen</option>
-                                                <option value="payed">Bezahlt</option>
-                                                <option value="error">Fehler</option>
-                                                <option value="canceled">Storniert</option>
+                                                <option value="Show All" selected="selected">{{ trans('message.All') }}</option>
+                                                <option value="not payed">{{ trans('message.Unpaid') }}</option>
+                                                <option value="payed">{{ trans('message.Paid') }}</option>
+                                                <option value="error">{{ trans('message.Error') }}</option>
+                                                <option value="canceled">{{ trans('message.Cancelled') }}</option>
                                             </select>
                                             <!--end::Select-->
                                         </div>
                                         <!--end::Status-->
                                         <!--begin::Search-->
                                         <a href="#" class="btn btn-light btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#kt_modal_update_create_shipment">Sendung erstellen</a>
+                                            data-bs-target="#kt_modal_update_create_shipment">{{ trans('message.Create Shipment') }}</a>
                                         <!--end::Search-->
                                     </div>
                                     <!--begin::Filters-->
@@ -1229,16 +1226,16 @@
                                     <thead>
                                         <!--begin::Table row-->
                                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                            <th class="min-w-100px">ID</th>
-                                            <th class="text-center pe-3 min-w-100px">Verküpfung</th>
-                                            <th class="text-center pe-3 min-w-100px">Transporteur</th>
-                                            <th class="text-center pe-3 min-w-150px">Versandart</th>
-                                            <th class="text-center pe-3 min-w-150px">Sendungsnummer</th>
-                                            <th class="text-center pe-3 min-w-150px">Erstellt am</th>
-                                            <th class="text-center pe-3 min-w-150px">Zugestellt am</th>
+                                            <th class="min-w-100px">{{ trans('message.ID') }}</th>
+                                            <th class="text-center pe-3 min-w-100px">{{ trans('message.Link') }}</th>
+                                            <th class="text-center pe-3 min-w-100px">{{ trans('message.Carrier') }}</th>
+                                            <th class="text-center pe-3 min-w-150px">{{ trans('message.Shipping method') }}</th>
+                                            <th class="text-center pe-3 min-w-150px">{{ trans('message.Tracking number') }}</th>
+                                            <th class="text-center pe-3 min-w-150px">{{ trans('message.Created at') }}</th>
+                                            <th class="text-center pe-3 min-w-150px">{{ trans('message.Delivered at') }}</th>
                                             <th class="text-center pe-3 min-w-100px">Status</th>
-                                            <th class="text-center pe-3 min-w-100px">Abrechnung</th>
-                                            <th class="text-end pe-3 min-w-50px">Kosten</th>
+                                            <th class="text-center pe-3 min-w-100px">{{ trans('message.Billing') }}</th>
+                                            <th class="text-end pe-3 min-w-50px">{{ trans('message.Costs') }}</th>
                                         </tr>
                                         <!--end::Table row-->
                                     </thead>

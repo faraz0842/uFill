@@ -11,7 +11,7 @@
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                     <!--begin::Description-->
-                    <small class="text-muted fs-7 fw-bold my-1 ms-1">Dashboards > eCommerce > Statusprüfer</small>
+                    <small class="text-muted fs-7 fw-bold my-1 ms-1">{{ trans('message.Dashboards > eCommerce > Status check') }}</small>
                     <!--end::Description-->
                 </div>
                 <!--end::Page title-->
@@ -33,9 +33,9 @@
                             <div class="card-header mt-5">
                                 <!--begin::Card title-->
                                 <div class="card-title">
-                                    <h2>Statusprüfer</h2>
+                                    <h2>{{ trans('message.Status check') }}</h2>
                                     <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
-                                        title="Geben Sie eine #INV, #RFD, #ORD, #RTN oder #SHP Nummer ein, um die Suche zu starten."></i>
+                                        title="{{trans('message.Enter a #INV, #RFD, #ORD, #RTN, or #SHP number to start the search.')}}"></i>
                                 </div>
                                 <!--end::Card title-->
                                 <!--begin::Search-->
@@ -57,7 +57,7 @@
                                         class="d-block form-control form-control-solid w-175px ps-14 me-2"
                                         placeholder="Suchen..." />
                                     <!--begin::Actions-->
-                                    <a href="#" class="btn btn-primary" id="kt_subscriptions_create_button">Suchen</a>
+                                    <a href="#" class="btn btn-primary" id="kt_subscriptions_create_button">{{ trans('message.Search') }}</a>
                                     <!--end::Actions-->
                                 </div>
                                 <!--end::Search-->
@@ -104,13 +104,13 @@
                                     <!--begin::Details-->
                                     <div class="mb-0">
                                         <!--begin::info-->
-                                        <div class="fw-bold d-block text-gray-600">Bestelldatum: 18.02.2022 / 04:56 Uhr
+                                        <div class="fw-bold d-block text-gray-600">{{ trans('message.Orderdate') }}: 18.02.2022 / 04:56 {{ trans('message.o`clock') }}
                                         </div>
-                                        <div class="fw-bold d-block text-gray-600">Warenwert: 150€</div>
-                                        <div class="fw-bold d-block text-gray-600">Versandart: DPD 5kg Paket</div>
-                                        <div class="fw-bold d-block text-gray-600">Sendungsnummer: 5412547845</div>
-                                        <div class="fw-bold d-block text-gray-600">Versand: 19.02.2022 / 08:45 Uhr</div>
-                                        <div class="fw-bold d-block text-gray-600">Zustellung: 20.02.2022 / 15:01 Uhr</div>
+                                        <div class="fw-bold d-block text-gray-600">{{ trans('message.Value of goods') }}: 150€</div>
+                                        <div class="fw-bold d-block text-gray-600">{{ trans('message.Shipping method') }}: DPD 5kg Paket</div>
+                                        <div class="fw-bold d-block text-gray-600">{{ trans('message.Tracking number') }}: 5412547845</div>
+                                        <div class="fw-bold d-block text-gray-600">{{ trans('message.Shipping on') }}: 19.02.2022 / 08:45 Uhr</div>
+                                        <div class="fw-bold d-block text-gray-600">{{ trans('message.Delivery on') }}: 20.02.2022 / 15:01 Uhr</div>
                                         <!--end::info-->
                                     </div>
                                     <!--end::Details-->
@@ -122,23 +122,23 @@
                                 <!--begin::Section-->
                                 <div class="mb-7">
                                     <!--begin::Title-->
-                                    <h5 class="mb-4">Verknüpfungen</h5>
+                                    <h5 class="mb-4">{{ trans('message.Links') }}</h5>
                                     <!--end::Title-->
                                     <!--begin::Details-->
                                     <div class="mb-0">
                                         <!--begin::info-->
                                         <a href="../../demo1/dist/apps/invoices/view/preview-invoice.html"
-                                            class="fw-bold d-block text-gray-600 text-hover-primary">Rechnung: #INV-1234</a>
+                                            class="fw-bold d-block text-gray-600 text-hover-primary">{{ trans('message.Invoice') }}: #INV-1234</a>
                                         <a href="../../demo1/dist/apps/ecommerce/sales/details.html"
-                                            class="fw-bold d-block text-gray-600 text-hover-primary">Bestellung:
+                                            class="fw-bold d-block text-gray-600 text-hover-primary">{{ trans('message.Order') }}:
                                             #ORD-1234</a>
                                         <a href="../../demo1/dist/apps/invoices/view/preview-refund.html"
-                                            class="fw-bold d-block text-gray-600 text-hover-primary">Gutschrift:
+                                            class="fw-bold d-block text-gray-600 text-hover-primary">{{ trans('message.Credit') }}:
                                             #RFD-1234</a>
                                         <a href="../../demo1/dist/apps/ecommerce/sales/return-details.html"
-                                            class="fw-bold d-block text-gray-600 text-hover-primary">Rückgabe: #RTN-1234</a>
-                                        <div class="fw-bold d-block text-gray-600">Versandetikett: #SHP-1234</div>
-                                        <div class="fw-bold d-block text-gray-600">Rücksendeetikett: #SHP-1257</div>
+                                            class="fw-bold d-block text-gray-600 text-hover-primary">{{ trans('message.Return') }}: #RTN-1234</a>
+                                        <div class="fw-bold d-block text-gray-600">{{ trans('message.Shipment label') }}: #SHP-1234</div>
+                                        <div class="fw-bold d-block text-gray-600">{{ trans('message.Return label') }}: #SHP-1257</div>
                                         <!--end::info-->
                                     </div>
                                     <!--end::Details-->
@@ -150,7 +150,7 @@
                                 <!--begin::Section-->
                                 <div class="mb-10">
                                     <!--begin::Title-->
-                                    <h5 class="mb-4">Dokumente</h5>
+                                    <h5 class="mb-4">{{ trans('message.Documents') }}</h5>
                                     <!--end::Title-->
                                     <!--begin::Details-->
                                     <div class="mb-0">
@@ -165,7 +165,7 @@
                                             <div class="fw-bold">
                                                 <a class="d-block fs-6 fw-bolder text-dark text-hover-primary"
                                                     href="../../demo1/dist/apps/invoices/view/preview-invoice.html">#INV-1234</a>
-                                                <span class="badge badge-light-warning">Zahlung offen</span>
+                                                <span class="badge badge-light-warning">{{ trans('message.Payment open') }}</span>
                                             </div>
                                             <!--end::Details-->
                                         </div>
@@ -212,7 +212,7 @@
                                 <!--begin::Section-->
                                 <div class="mb-10">
                                     <!--begin::Title-->
-                                    <h5 class="mb-4">Produkte</h5>
+                                    <h5 class="mb-4">{{ trans('message.Products') }}</h5>
                                     <!--end::Title-->
                                     <div class="overflow-auto h-100px">
                                         <div class="d-flex align-items-center mb-2">
@@ -264,15 +264,14 @@
                             <div class="card-header pt-7">
                                 <!--begin::Title-->
                                 <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label fw-bolder text-gray-800">Sendungsverfolgung</span>
-                                    <span class="text-gray-400 mt-1 fw-bold fs-6">4x Statuseinträge zu Ihrer Sendung
-                                        gefunden.</span>
+                                    <span class="card-label fw-bolder text-gray-800">{{ trans('message.Tracking') }}</span>
+                                    <span class="text-gray-400 mt-1 fw-bold fs-6">{{ trans('message.4x status entries for your shipment found.') }}</span>
                                 </h3>
                                 <!--end::Title-->
                                 <!--begin::Toolbar-->
                                 <div class="card-toolbar">
                                     <a href="#" class="btn btn-sm btn-light" data-bs-toggle='tooltip'
-                                        title="Status erneut abfragen...">Aktualisieren</a>
+                                        title="Status erneut abfragen...">{{ trans('message.Update') }}</a>
                                 </div>
                                 <!--end::Toolbar-->
                             </div>
@@ -315,7 +314,7 @@
                                                 <div class="timeline-content m-0">
                                                     <!--begin::Label-->
                                                     <span
-                                                        class="fs-8 fw-boldest text-primary text-uppercase">Absender</span>
+                                                        class="fs-8 fw-boldest text-primary text-uppercase">{{ trans('message.Sender') }}</span>
                                                     <!--begin::Label-->
                                                     <!--begin::Title-->
                                                     <div class="fs-6 text-gray-800 fw-bolder d-block">Mustermann GmbH</div>
@@ -355,8 +354,7 @@
                                                 <!--begin::Timeline content-->
                                                 <div class="timeline-content m-0">
                                                     <!--begin::Label-->
-                                                    <span class="fs-8 fw-boldest text-gray-800 text-uppercase">Sendung
-                                                        erstellt</span>
+                                                    <span class="fs-8 fw-boldest text-gray-800 text-uppercase">{{ trans('message.Shipment created') }}</span>
                                                     <!--begin::Label-->
                                                     <!--begin::Title-->
                                                     <div class="fs-6 text-gray-800 fw-bolder d-block">19.02.2022 / 08:45
@@ -394,15 +392,14 @@
                                                 <!--begin::Timeline content-->
                                                 <div class="timeline-content m-0">
                                                     <!--begin::Label-->
-                                                    <span class="fs-8 fw-boldest text-gray-800 text-uppercase">Sendung
-                                                        übergeben</span>
+                                                    <span class="fs-8 fw-boldest text-gray-800 text-uppercase">{{ trans('message.Shipment handed over') }}</span>
                                                     <!--begin::Label-->
                                                     <!--begin::Title-->
                                                     <div class="fs-6 text-gray-800 fw-bolder d-block">19.02.2022 / 15:50
                                                         Uhr</div>
                                                     <!--end::Title-->
                                                     <!--begin::Title-->
-                                                    <span class="fw-bold text-gray-400">Ortsangabe</span>
+                                                    <span class="fw-bold text-gray-400">{{ trans('message.Location') }}</span>
                                                     <!--end::Title-->
                                                 </div>
                                                 <!--end::Timeline content-->
@@ -433,15 +430,14 @@
                                                 <!--begin::Timeline content-->
                                                 <div class="timeline-content m-0">
                                                     <!--begin::Label-->
-                                                    <span class="fs-8 fw-boldest text-gray-800 text-uppercase">Auf dem Weg
-                                                        ins Paketzentrum</span>
+                                                    <span class="fs-8 fw-boldest text-gray-800 text-uppercase">{{ trans('message.On the way to the parcel centre') }}</span>
                                                     <!--begin::Label-->
                                                     <!--begin::Title-->
                                                     <div class="fs-6 text-gray-800 fw-bolder d-block">19.02.2022 / 21:02
                                                         Uhr</div>
                                                     <!--end::Title-->
                                                     <!--begin::Title-->
-                                                    <span class="fw-bold text-gray-400">Ortsangabe</span>
+                                                    <span class="fw-bold text-gray-400">{{ trans('message.Location') }}</span>
                                                     <!--end::Title-->
                                                 </div>
                                                 <!--end::Timeline content-->
@@ -472,15 +468,14 @@
                                                 <!--begin::Timeline content-->
                                                 <div class="timeline-content m-0">
                                                     <!--begin::Label-->
-                                                    <span class="fs-8 fw-boldest text-gray-800 text-uppercase">Im
-                                                        Paketzentrum</span>
+                                                    <span class="fs-8 fw-boldest text-gray-800 text-uppercase">{{ trans('message.In the parcel centre') }}</span>
                                                     <!--begin::Label-->
                                                     <!--begin::Title-->
                                                     <div class="fs-6 text-gray-800 fw-bolder d-block">20.02.2022 / 02:24
                                                         Uhr</div>
                                                     <!--end::Title-->
                                                     <!--begin::Title-->
-                                                    <span class="fw-bold text-gray-400">Ortsangabe</span>
+                                                    <span class="fw-bold text-gray-400">{{ trans('message.Location') }}</span>
                                                     <!--end::Title-->
                                                 </div>
                                                 <!--end::Timeline content-->
@@ -511,15 +506,14 @@
                                                 <!--begin::Timeline content-->
                                                 <div class="timeline-content m-0">
                                                     <!--begin::Label-->
-                                                    <span class="fs-8 fw-boldest text-gray-800 text-uppercase">Im
-                                                        Zustellfahrzeug</span>
+                                                    <span class="fs-8 fw-boldest text-gray-800 text-uppercase">{{ trans('message.In the delivery vehicle') }}</span>
                                                     <!--begin::Label-->
                                                     <!--begin::Title-->
                                                     <div class="fs-6 text-gray-800 fw-bolder d-block">20.02.2022 / 06:54
                                                         Uhr</div>
                                                     <!--end::Title-->
                                                     <!--begin::Title-->
-                                                    <span class="fw-bold text-gray-400">Ortsangabe</span>
+                                                    <span class="fw-bold text-gray-400">{{ trans('message.Location') }}</span>
                                                     <!--end::Title-->
                                                 </div>
                                                 <!--end::Timeline content-->
@@ -550,15 +544,14 @@
                                                 <!--begin::Timeline content-->
                                                 <div class="timeline-content m-0">
                                                     <!--begin::Label-->
-                                                    <span class="fs-8 fw-boldest text-gray-800 text-uppercase">In
-                                                        Zustellung</span>
+                                                    <span class="fs-8 fw-boldest text-gray-800 text-uppercase">{{ trans('message.In delivery') }}</span>
                                                     <!--begin::Label-->
                                                     <!--begin::Title-->
                                                     <div class="fs-6 text-gray-800 fw-bolder d-block">20.02.2022 / 10:01
                                                         Uhr</div>
                                                     <!--end::Title-->
                                                     <!--begin::Title-->
-                                                    <span class="fw-bold text-gray-400">Ortsangabe</span>
+                                                    <span class="fw-bold text-gray-400">{{ trans('message.Location') }}</span>
                                                     <!--end::Title-->
                                                 </div>
                                                 <!--end::Timeline content-->
@@ -590,14 +583,14 @@
                                                 <div class="timeline-content m-0">
                                                     <!--begin::Label-->
                                                     <span
-                                                        class="fs-8 fw-boldest text-success text-uppercase">Zugestellt</span>
+                                                        class="fs-8 fw-boldest text-success text-uppercase">{{ trans('message.Delivered') }}</span>
                                                     <!--begin::Label-->
                                                     <!--begin::Title-->
                                                     <div class="fs-6 text-gray-800 fw-bolder d-block">20.02.2022 / 15:01
                                                         Uhr</div>
                                                     <!--end::Title-->
                                                     <!--begin::Title-->
-                                                    <span class="fw-bold text-gray-400">Ortsangabe</span>
+                                                    <span class="fw-bold text-gray-400">{{ trans('message.Location') }}</span>
                                                     <!--end::Title-->
                                                 </div>
                                                 <!--end::Timeline content-->
@@ -631,7 +624,7 @@
                                                 <div class="timeline-content m-0">
                                                     <!--begin::Label-->
                                                     <span
-                                                        class="fs-8 fw-boldest text-success text-uppercase">Empfänger</span>
+                                                        class="fs-8 fw-boldest text-success text-uppercase">{{ trans('message.Receiver') }}</span>
                                                     <!--begin::Label-->
                                                     <!--begin::Title-->
                                                     <div class="fs-6 text-gray-800 fw-bolder d-block">Ralph Edwards</div>
