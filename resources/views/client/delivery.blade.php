@@ -287,7 +287,7 @@
                                                     </div>
                                                     <!--end::Destination-->
                                                     <!--begin::Search-->
-                                                    <a href="#" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#kt_modal_update_package_amount">Preismodell ändern</a>
+                                                    <a href="{{Route('client.package.shipment')}}" class="btn btn-light btn-sm" >Preismodell ändern</a>
                                                     <!--end::Search-->
                                                 </div>
                                                 <!--begin::Filters-->
@@ -1076,7 +1076,7 @@
                                                     </div>
                                                     <!--end::Status-->
                                                     <!--begin::Search-->
-                                                    <a href="#" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#kt_modal_update_create_shipment">Sendung erstellen</a>
+                                                    <a href="{{Route('client.create.shipment')}}" class="btn btn-light btn-sm">Sendung erstellen</a>
                                                     <!--end::Search-->
                                                 </div>
                                                 <!--begin::Filters-->

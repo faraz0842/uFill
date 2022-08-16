@@ -1187,7 +1187,7 @@
                                         <label class="form-label">{{ trans('message.Website') }}</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input type="text" name="url"
+                                        <input type="text" name="website"
                                             class="form-control form-control-lg form-control-solid"
                                             placeholder="www.mustermann-gmbh.de" />
                                         <!--end::Input-->

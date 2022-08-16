@@ -2292,7 +2292,7 @@
                                                                     <!--end::Label-->
                                                                     <!--begin::Input-->
                                                                     <div class="input-group mb-3">
-                                                                        <input type="text" class="form-control" placeholder="e.g . 500 cent" aria-label="Recipient's username" aria-describedby="basic-addon2" value="{{ $shipping_detail->cost }}">
+                                                                        <input type="text" class="form-control" placeholder="e.g . 500 cent" aria-label="Recipient's username" name="cost" aria-describedby="basic-addon2" value="{{ $shipping_detail->cost }}">
                                                                         <span class="input-group-text" id="basic-addon2">cent</span>
                                                                     </div>
                                                                     {{-- <input type="text"
@@ -2402,9 +2402,9 @@
                                                 <td class="text-center">{{ $shipping_package->package }}</td>
                                                 <!--end::Transport-->
                                                 <!--begin::Type-->
-                                                <td class="text-center">{{ Helper::money_format('EUR','de_DE',$shipping_package->package_fee) }}€</td>
+                                                <td class="text-center">{{Helper::money_format('EUR','de_DE',$shipping_package->package_fee)}}€</td>
                                                 <!--end::Type-->
-
+                                                {{-- {{ Helper::money_format('EUR','de_DE',$shipping_package->package_fee) }} --}}
                                                 <td class="text-center">
                                                     <a data-bs-toggle="modal"
                                                         data-bs-target="#editpackagefee{{ $shipping_package->fee_id }}"
@@ -2489,7 +2489,7 @@
                                                                     <!--end::Label-->
                                                                     <!--begin::Input-->
                                                                     <div class="input-group mb-3">
-                                                                        <input type="text" class="form-control" placeholder="e.g . 500 cent" aria-label="Recipient's username" aria-describedby="basic-addon2" value="{{ $shipping_package->package_fee }}">
+                                                                        <input type="text" class="form-control" placeholder="e.g . 500 cent" name="fee" aria-label="Recipient's username" aria-describedby="basic-addon2" value="{{ $shipping_package->package_fee }}">
                                                                         <span class="input-group-text" id="basic-addon2">cent</span>
                                                                     </div>
                                                                     {{-- <input type="text"

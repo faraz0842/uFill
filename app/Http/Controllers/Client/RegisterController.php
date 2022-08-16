@@ -49,14 +49,14 @@ class RegisterController extends Controller
     public function registerClient(Request $request)
     {
 
-        // $request->validate([
-        //     'first_name' => 'required|unique:clients,first_name',
-        //     'last_name' => 'required|unique:clients,last_name',
-        //     'email' => 'required|unique:clients,email',
-        //     'company_name' => 'required|unique:clients,company_name',
-        //     'telephone' => 'required|unique:clients,telephone',
-        //     'mobile_number' => 'required|unique:clients,mobile_number',
-        // ]);
+        $request->validate([
+            'first_name' => 'required|unique:clients,first_name',
+            'last_name' => 'required|unique:clients,last_name',
+            'email' => 'required|unique:clients,email',
+            'company_name' => 'required|unique:clients,company_name',
+            'telephone' => 'required|unique:clients,telephone',
+            'mobile_number' => 'required|unique:clients,mobile_number',
+        ]);
 
         try {
 
