@@ -1037,7 +1037,7 @@
                                                                             <!--begin::Input wrapper-->
                                                                             <div class="position-relative">
                                                                                 <!--begin::Input-->
-                                                                                <input type="text"
+                                                                                <input type="password"
                                                                                     class="form-control form-control-solid"
                                                                                     minlength="3" maxlength="4"
                                                                                     placeholder="CVV" name="card_cvv"
@@ -3047,7 +3047,7 @@
                                             <!--begin::Input wrapper-->
                                             <div class="position-relative">
                                                 <!--begin::Input-->
-                                                <input type="text" class="form-control form-control-solid"
+                                                <input type="password" class="form-control form-control-solid"
                                                     minlength="3" maxlength="4" placeholder="CVV"
                                                     name="card_cvv" />
                                                 <!--end::Input-->

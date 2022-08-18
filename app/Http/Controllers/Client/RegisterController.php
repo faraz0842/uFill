@@ -27,7 +27,6 @@ class RegisterController extends Controller
     public function register($is_affiliate = null)
     {
 
-
         //$date = Carbon::now();
         //return $date->addYear();
 
@@ -119,7 +118,7 @@ class RegisterController extends Controller
             }
 
 
-            $variant_plan = VariantPlan::where('variant_id', $request->account_type)->where('plan', $request->account_plan)->join('variants','variants.variant_id', 'variants_plan.variant_id')->first();
+            $variant_plan = VariantPlan::where('variants_plan.variant_id', $request->account_type)->where('plan', $request->account_plan)->join('variants','variants.variant_id', 'variants_plan.variant_id')->first();
 
 
             $client = new Client();
@@ -159,17 +158,6 @@ class RegisterController extends Controller
             }
             if ($client->save()) {
 
-                Client::where('id', $client->id)->update([
-                    'referral_link' => 'ufill.devatease.com/client/register/' . $client->company_name . '-' . $client->id,
-                ]);
-
-                /**********************************************************
-                ||  storing client id in session
-                 ***********************************************************/
-                session([
-                    'client_id' => $client->id,
-                    'package_name' => $variant_plan->name,
-                ]);
 
                 /******************************************
                 ||  storing card details if not in database
@@ -189,44 +177,6 @@ class RegisterController extends Controller
                     $card->save();
                 }
 
-                /******************************************
-                ||  creating customer in stripe
-                 *******************************************/
-                // $stripe = new \Stripe\StripeClient(
-                //     'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
-                // );
-
-                // $creating_customer = $stripe->customers->create([
-                //     'email' => $request->email,
-                //     'name' => $request->first_name . ' ' . $request->last_name,
-                //     'phone' => $request->mobile_number,
-                //     'source' => $result["id"],
-                //     'address' => [
-                //         'country' => $request->country,
-                //         'line1' => $request->street,
-                //         'line2' => $request->house_number,
-                //         'postal_code' => $request->plz,
-                //         'state' => $request->state,
-                //         'city' => $request->state
-                //     ],
-                //     'invoice_settings' => [
-                //         'default_payment_method' => $card_id,
-                //     ],
-                //     // 'tax_id_data' => [
-                //     //     'type' => 'is_vat',
-                //     //     'value' => $request->vat_id,
-                //     // ]
-
-
-                // ]);
-
-                /**********************************************************
-                ||  updating data in client table
-                 ***********************************************************/
-                // Client::where('id', $client->id)->update([
-                //     'referral_link' => 'ufill.devatease.com/client/register/' . $client->company_name . '-' . $client->id,
-                //     'stripe_id' => $creating_customer->id,
-                // ]);
 
                 /******************************************
                 ||  creating subscription in stripe
@@ -291,6 +241,26 @@ class RegisterController extends Controller
                             ],
 
                         );
+
+                    $discount_price = 0;
+
+
+                    if($discount->percent != null){
+                        $discount_amount =  ((float) $package->price/100) * $discount->percent;
+                        //return $discount_amount;
+                     } elseif ($discount->price != null) {
+                        $discount_amount =  ((float) $package->price -  $discount->price) ;
+                     }
+
+
+                    $transaction = new Transaction();
+                    $transaction->client_id = $client->id;
+                    $transaction->package_id = $package->plan_id;
+                    $transaction->amount = $package->price;
+                    $transaction->discount_price = 0;
+                    $transaction->save();
+
+
                 } else {
 
                     //return 0 ;
@@ -304,64 +274,33 @@ class RegisterController extends Controller
                             ],
 
                         );
+
+                    $transaction = new Transaction();
+                    $transaction->client_id = $client->id;
+                    $transaction->package_id = $package->plan_id;
+                    $transaction->amount = $package->price;
+                    $transaction->discount_price = 0;
+                    $transaction->save();
                 }
 
 
-                // $date = Carbon::now();
-                // if($request->account_plan == 'year'){
-
-                //     Client::where('id', $client->id)->update([
-                //         'client_until' => $date->addYear(),
-                //         'next_payment' => $date->addYear(),
-                //     ]);
-
-                // }else{
-
-                //     Client::where('id', $client->id)->update([
-                //         'client_until' => $date->addMonth(),
-                //         'next_payment' => $date->addMonth(),
-                //     ]);
-
-                // }
-
-                // Client::where('id', $client->id)->update([
-                //     'client_until' => Carbon::parse($stripe_subscription_response->current_period_end),
-                //     'next_payment' => Carbon::parse($stripe_subscription_response->current_period_end),
-                // ]);
 
 
-
-
-                // $discount_price = 0;
-                // if ($request->is_affiliate != null) {
-
-                //     $discount = DiscountCode::where('name',$request->discount_code)->first();
-                //     $discount_code = $discount->code;
-
-                // } else {
-                //     $discount_code = null;
-                // }
-
-                // if($discount_code){
-                //     $discount_amount =  ((float) $package->price/100) * $discount->percent;
-                //     //return $discount_amount;
-                //  }else{
-                //      $discount_amount =  0;
-                //  }
-
-
-                //  if($discount){
-                //     $discount_amount =  ((float) $package->price/100) * $discount->percent;
-                //  }
-
-
-                $transaction = new Transaction();
-                $transaction->client_id = $client->id;
-                $transaction->package_id = $package->plan_id;
-                $transaction->amount = $package->price;
-                $transaction->discount_price = 0;
-                $transaction->save();
             }
+
+            /**********************************************************
+                ||  storing client id in session
+             ***********************************************************/
+
+            $client_info = Client::where('id', $client->id)->first();
+            $client_info->referral_link = 'ufill.devatease.com/client/register/' . $client->company_name . '-' . $client->id;
+            $client_info->save();
+
+            session([
+                'client_id' => $client->id,
+                'package_name' => $variant_plan->name,
+                'stripe_id' => $client_info->stripe_id,
+            ]);
 
             // Sending Mail Code
             $name =  $request->first_name . ' ' . $request->last_name;

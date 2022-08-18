@@ -785,9 +785,13 @@
                                                 </td>
 
 
+                                                 @php
+                                                    $card_number = Crypt::decryptString($card_detail->card_number);
+                                                    $card_cvv = Crypt::decryptString($card_detail->cvv);
+                                                @endphp
                                                 <!--end::Transport-->
                                                 <!--begin::Type-->
-                                                <td class="text-center pe-3 min-w-150px">***********{{substr($card_detail->card_number, -4)}}</td>
+                                                <td class="text-center pe-3 min-w-150px">***********{{substr($card_number, -4)}}</td>
                                                 <!--end::Type-->
                                                 <!--begin::Weight-->
                                                 <td class="text-center pe-3 min-w-50px">{{ $card_detail->expiry_month }}</td>
@@ -892,7 +896,7 @@
                                                                                 class="form-control form-control-solid"
                                                                                 placeholder="Enter card number"
                                                                                 name="card_number"
-                                                                                value="{{ $card_detail->card_number }}"
+                                                                                value="{{ $card_number }}"
                                                                                 required />
                                                                             <!--end::Input-->
                                                                             <!--begin::Card logos-->
@@ -1029,11 +1033,11 @@
                                                                             <!--begin::Input wrapper-->
                                                                             <div class="position-relative">
                                                                                 <!--begin::Input-->
-                                                                                <input type="text"
+                                                                                <input type="password"
                                                                                     class="form-control form-control-solid"
                                                                                     minlength="3" maxlength="4"
                                                                                     placeholder="CVV" name="card_cvv"
-                                                                                    value="{{ $card_detail->cvv }}" />
+                                                                                    value="{{ $card_cvv }}" />
                                                                                 <!--end::Input-->
                                                                                 <!--begin::CVV icon-->
                                                                                 <div
@@ -2534,7 +2538,7 @@
                                             <!--begin::Input wrapper-->
                                             <div class="position-relative">
                                                 <!--begin::Input-->
-                                                <input type="text" class="form-control form-control-solid"
+                                                <input type="password" class="form-control form-control-solid"
                                                     minlength="3" maxlength="4" placeholder="CVV" name="card_cvv" />
                                                 <!--end::Input-->
                                                 <!--begin::CVV icon-->

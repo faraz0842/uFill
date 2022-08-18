@@ -229,7 +229,7 @@ class DashboardController extends Controller
 
 
         }
-        //return $total_clients;
+        //return $client_month;
 
         //return response()->json($countries);
 
