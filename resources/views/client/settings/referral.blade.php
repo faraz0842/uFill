@@ -320,7 +320,7 @@
                                         class="fs-4 fw-bold text-primary pb-1 px-2">{{ trans('message.referred clients') }}</span>
                                     <span class="fs-lg-2tx fw-bolder d-flex justify-content-center">
                                         <span data-kt-countup="true"
-                                            data-kt-countup-value="{{ $referred_clients }}">{{ $referred_clients }}</span></span>
+                                            data-kt-countup-value="{{ $referred_clients_count }}">{{ $referred_clients_count }}</span></span>
                                 </div>
                             </div>
                             <!--end::Col-->
@@ -385,9 +385,17 @@
                                         <!--end::Weight-->
                                         <!--begin::Size-->
                                         <td class="text-center">
-                                            {{ $affiliated->first_name . ' ' . $affiliated->last_name }}</td>
+                                            {{ session('name') }}</td>
                                         <!--end::price-->
-                                        <td class="text-center">{{$affiliated->status}}</td>
+                                        <td class="text-center">
+                                            @if ($affiliated->stripe_status == 'active')
+                                                    <span
+                                                        class="badge badge-light-success">{{ $affiliated->stripe_status }}</span>
+                                                @else
+                                                    <span
+                                                        class="badge badge-light-danger">{{ $affiliated->stripe_status }}</span>
+                                                @endif
+                                        </td>
 
                                     </tr>
                                 @endforeach
