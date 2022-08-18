@@ -106,7 +106,7 @@ class SettingController extends Controller
                     ],
                     'email' => $request->email,
                     'name' => $request->first_name . ' ' . $request->last_name,
-                    'phone' => $request->mobile_number,
+                    'phone' => $request->telephone,
                 ]
             );
 

@@ -896,7 +896,7 @@
                                                                                 class="form-control form-control-solid"
                                                                                 placeholder="Enter card number"
                                                                                 name="card_number"
-                                                                                value="{{ $card_number }}"
+                                                                                value="{{ ***********{{substr($card_number, -4)}} }}"
                                                                                 required />
                                                                             <!--end::Input-->
                                                                             <!--begin::Card logos-->
@@ -1037,7 +1037,7 @@
                                                                                     class="form-control form-control-solid"
                                                                                     minlength="3" maxlength="4"
                                                                                     placeholder="CVV" name="card_cvv"
-                                                                                    value="{{ $card_cvv }}" />
+                                                                                    value="***" />
                                                                                 <!--end::Input-->
                                                                                 <!--begin::CVV icon-->
                                                                                 <div

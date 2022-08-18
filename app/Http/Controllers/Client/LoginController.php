@@ -40,7 +40,7 @@ class LoginController extends Controller
 
         try {
 
-            $is_exists = Client::where('email',$request->email)->first();
+            $is_exists = Client::where('email', $request->email)->first();
 
 
             if ($is_exists) {
@@ -50,35 +50,31 @@ class LoginController extends Controller
                 if (Hash::check($request->password, $is_exists->password)) {
 
                     session([
-                            'client_id' => $is_exists->id,
-                            'email' => $is_exists->email,
-                            'name' => $is_exists->first_name . ' ' . $is_exists->last_name,
-                            'profile_picture' => $is_exists->profile_picture,
-                            'locale' => $is_exists->language,
-                            'status' => 'online',
-                            'package_name' => $package->name,
-                            'company_name' => $is_exists->company_name,
-                            'stripe_id' => $is_exists->stripe_id
-                        ]);
+                        'client_id' => $is_exists->id,
+                        'email' => $is_exists->email,
+                        'name' => $is_exists->first_name . ' ' . $is_exists->last_name,
+                        'profile_picture' => $is_exists->profile_picture,
+                        'locale' => $is_exists->language,
+                        'status' => 'online',
+                        'package_name' => $package->name,
+                        'company_name' => $is_exists->company_name,
+                        'stripe_id' => $is_exists->stripe_id
+                    ]);
 
                     if ($package->name == 'shipment') {
                         return redirect()->Route('client.shipment.delivery');
                     } else {
                         return redirect()->Route('client.dashboard');
                     }
-
                 } else {
                     return back()->withError('Oops ! you have entered invalid credentials..')->withInput();
                 }
-
             } else {
                 return back()->withError('Oops ! you have entered invalid credentials..')->withInput();
             }
-
-
-        }catch (QueryException $th) {
-           return back()->withError($th->getMessage())->withInput();
-        }catch(Exception $th){
+        } catch (QueryException $th) {
+            return back()->withError($th->getMessage())->withInput();
+        } catch (Exception $th) {
             return back()->withError($th->getMessage())->withInput();
         }
     }
@@ -104,5 +100,4 @@ class LoginController extends Controller
     {
         return view('client.dashboard');
     }
-
 }

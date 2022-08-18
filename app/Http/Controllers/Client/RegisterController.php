@@ -190,7 +190,7 @@ class RegisterController extends Controller
                 $options = ([
                     'email' => $request->email,
                     'name' => $request->first_name . ' ' . $request->last_name,
-                    'phone' => $request->mobile_number,
+                    'phone' => $request->telephone,
                     //'source' => $result["id"],
                     'address' => [
                         'country' => $request->country,
@@ -296,10 +296,22 @@ class RegisterController extends Controller
             $client_info->referral_link = 'ufill.devatease.com/client/register/' . $client->company_name . '-' . $client->id;
             $client_info->save();
 
+            // session([
+            //     'client_id' => $client->id,
+            //     'package_name' => $variant_plan->name,
+            //     'stripe_id' => $client_info->stripe_id,
+            // ]);
+
             session([
                 'client_id' => $client->id,
+                'email' => $client->email,
+                'name' => $client->first_name . ' ' . $client->last_name,
+                'profile_picture' => $client_info->profile_picture,
+                'locale' => $client_info->language,
+                'status' => 'online',
                 'package_name' => $variant_plan->name,
-                'stripe_id' => $client_info->stripe_id,
+                'company_name' => $client_info->company_name,
+                'stripe_id' => $client_info->stripe_id
             ]);
 
             // Sending Mail Code
@@ -346,7 +358,11 @@ class RegisterController extends Controller
             }
 
 
-            return redirect()->Route('client.dashboard');
+            if ($variant_plan->name == 'shipment') {
+                return redirect()->Route('client.shipment.delivery');
+            } else {
+                return redirect()->Route('client.dashboard');
+            }
         } catch (\Exception $th) {
             return back()->withError($th->getMessage())->withInput();
         }
