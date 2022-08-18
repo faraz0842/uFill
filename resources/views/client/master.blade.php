@@ -117,7 +117,7 @@
                             id="#kt_aside_menu" data-kt-menu="true">
                             <div class="menu-item">
                                 <div class="menu-content pb-2">
-                                    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Menu</span>
+                                    <span class="menu-section text-muted text-uppercase fs-8 ls-1">{{ trans('message.menu') }}</span>
                                 </div>
                             </div>
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
@@ -139,7 +139,7 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">Dashboards</span>
+                                    <span class="menu-title">{{ trans('message.dashboards') }}</span>
                                     <span class="menu-arrow"></span>
                                 </span>
                                 <div class="menu-sub menu-sub-accordion menu-active-bg">
@@ -148,7 +148,7 @@
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">eCommerce</span>
+                                            <span class="menu-title">{{ trans('message.ecommerce') }}</span>
                                             <span class="menu-arrow"></span>
                                         </span>
                                         <div class="menu-sub menu-sub-accordion">
@@ -157,7 +157,7 @@
                                                     <span class="menu-bullet">
                                                         <span class="bullet bullet-dot"></span>
                                                     </span>
-                                                    <span class="menu-title">Create Shipment</span>
+                                                    <span class="menu-title">{{ trans('message.create shipment') }}</span>
                                                 </a>
                                             </div>
                                             <div class="menu-item">
@@ -165,7 +165,7 @@
                                                     <span class="menu-bullet">
                                                         <span class="bullet bullet-dot"></span>
                                                     </span>
-                                                    <span class="menu-title">Shipments / Delivery</span>
+                                                    <span class="menu-title">{{ trans('message.shipments') }}</span>
                                                 </a>
                                             </div>
                                             <div class="menu-item">
@@ -173,7 +173,7 @@
                                                     <span class="menu-bullet">
                                                         <span class="bullet bullet-dot"></span>
                                                     </span>
-                                                    <span class="menu-title">Status Check</span>
+                                                    <span class="menu-title">{{ trans('message.status check') }}</span>
                                                 </a>
                                             </div>
 
@@ -184,7 +184,7 @@
                             </div>
                             <div class="menu-item">
                                 <div class="menu-content pb-2">
-                                    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Setting</span>
+                                    <span class="menu-section text-muted text-uppercase fs-8 ls-1">{{ trans('message.settings') }}</span>
                                 </div>
                             </div>
                             <div class="menu-item">
@@ -205,7 +205,7 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">Billing</span>
+                                    <span class="menu-title">{{ trans('message.Billing') }}</span>
                                 </a>
                             </div>
 
@@ -232,7 +232,7 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">Settings</span>
+                                    <span class="menu-title">{{ trans('message.settings') }}</span>
                                     <span class="menu-arrow"></span>
                                 </span>
                                 <div class="menu-sub menu-sub-accordion">
@@ -241,7 +241,7 @@
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Overview</span>
+                                            <span class="menu-title">{{ trans('message.Overview') }}</span>
                                         </a>
                                     </div>
                                     <div class="menu-item">
@@ -249,7 +249,7 @@
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Affiliate Program</span>
+                                            <span class="menu-title">{{ trans('message.Affiliate Program') }}</span>
                                         </a>
                                     </div>
                                     <div class="menu-item">
@@ -257,7 +257,7 @@
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Security</span>
+                                            <span class="menu-title">{{ trans('message.Security') }}</span>
                                         </a>
                                     </div>
                                     <div class="menu-item">
@@ -265,7 +265,7 @@
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Shipment Configuration</span>
+                                            <span class="menu-title">{{ trans('message.Shipment Configuration') }}</span>
                                         </a>
                                     </div>
                                 </div>
@@ -292,7 +292,7 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">News</span>
+                                    <span class="menu-title">{{ trans('message.news') }}</span>
                                 </a>
                             </div>
                             @php
@@ -336,7 +336,7 @@
                             id="#kt_aside_menu" data-kt-menu="true">
                             <div class="menu-item">
                                 <div class="menu-content pb-2">
-                                    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Menu</span>
+                                    <span class="menu-section text-muted text-uppercase fs-8 ls-1">{{ trans('message.menu') }}</span>
                                 </div>
                             </div>
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
@@ -358,7 +358,7 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">Dashboards</span>
+                                    <span class="menu-title">{{ trans('message.dashboards') }}</span>
                                     <span class="menu-arrow"></span>
                                 </span>
                                 <div class="menu-sub menu-sub-accordion menu-active-bg">
@@ -367,7 +367,7 @@
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Overview</span>
+                                            <span class="menu-title">{{ trans('message.Overview') }}</span>
                                         </a>
                                     </div>
                                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
@@ -375,7 +375,7 @@
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">eCommerce</span>
+                                            <span class="menu-title">{{ trans('message.ecommerce') }}</span>
                                             <span class="menu-arrow"></span>
                                         </span>
                                         <div class="menu-sub menu-sub-accordion">
@@ -384,7 +384,7 @@
                                                     <span class="menu-bullet">
                                                         <span class="bullet bullet-dot"></span>
                                                     </span>
-                                                    <span class="menu-title">Orders</span>
+                                                    <span class="menu-title">{{ trans('message.orders') }}</span>
                                                 </a>
                                             </div>
                                             <div class="menu-item">
@@ -392,7 +392,7 @@
                                                     <span class="menu-bullet">
                                                         <span class="bullet bullet-dot"></span>
                                                     </span>
-                                                    <span class="menu-title">Returns</span>
+                                                    <span class="menu-title">{{ trans('message.returns') }}</span>
                                                 </a>
                                             </div>
                                             <div class="menu-item">
@@ -400,7 +400,7 @@
                                                     <span class="menu-bullet">
                                                         <span class="bullet bullet-dot"></span>
                                                     </span>
-                                                    <span class="menu-title">BroadCasts</span>
+                                                    <span class="menu-title">{{ trans('message.shipments') }}</span>
                                                 </a>
                                             </div>
                                             <div class="menu-item">
@@ -408,7 +408,7 @@
                                                     <span class="menu-bullet">
                                                         <span class="bullet bullet-dot"></span>
                                                     </span>
-                                                    <span class="menu-title">StatusCheck</span>
+                                                    <span class="menu-title">{{ trans('message.status check') }}</span>
                                                 </a>
                                             </div>
                                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion mb-1">
@@ -416,7 +416,7 @@
                                                     <span class="menu-bullet">
                                                         <span class="bullet bullet-dot"></span>
                                                     </span>
-                                                    <span class="menu-title">Catalog</span>
+                                                    <span class="menu-title">{{ trans('message.catalog') }}</span>
                                                     <span class="menu-arrow"></span>
                                                 </span>
                                                 <div class="menu-sub menu-sub-accordion">
@@ -425,7 +425,7 @@
                                                             <span class="menu-bullet">
                                                                 <span class="bullet bullet-dot"></span>
                                                             </span>
-                                                            <span class="menu-title">Products</span>
+                                                            <span class="menu-title">{{ trans('message.products') }}</span>
                                                         </a>
                                                     </div>
                                                     <div class="menu-item">
@@ -433,7 +433,7 @@
                                                             <span class="menu-bullet">
                                                                 <span class="bullet bullet-dot"></span>
                                                             </span>
-                                                            <span class="menu-title">Categories</span>
+                                                            <span class="menu-title">{{ trans('message.categories') }}</span>
                                                         </a>
                                                     </div>
                                                 </div>
@@ -443,7 +443,7 @@
                                                     <span class="menu-bullet">
                                                         <span class="bullet bullet-dot"></span>
                                                     </span>
-                                                    <span class="menu-title">Customers</span>
+                                                    <span class="menu-title">{{ trans('message.customers') }}</span>
                                                 </a>
                                             </div>
                                             <div class="menu-item">
@@ -451,7 +451,7 @@
                                                     <span class="menu-bullet">
                                                         <span class="bullet bullet-dot"></span>
                                                     </span>
-                                                    <span class="menu-title">Store Analysis</span>
+                                                    <span class="menu-title">{{ trans('message.store analysis') }}</span>
                                                 </a>
                                             </div>
                                             <div class="menu-item">
@@ -459,7 +459,7 @@
                                                     <span class="menu-bullet">
                                                         <span class="bullet bullet-dot"></span>
                                                     </span>
-                                                    <span class="menu-title">Course</span>
+                                                    <span class="menu-title">{{ trans('message.course') }}</span>
                                                 </a>
                                             </div>
                                         </div>
@@ -469,7 +469,7 @@
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Social Media</span>
+                                            <span class="menu-title">{{ trans('message.social media') }}</span>
                                         </a>
                                     </div>
                                 </div>
@@ -491,7 +491,7 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">Functions</span>
+                                    <span class="menu-title">{{ trans('message.functions') }}</span>
                                     <span class="menu-arrow"></span>
                                 </span>
                                 <div class="menu-sub menu-sub-accordion">
@@ -804,7 +804,7 @@
                     <a href="{{ Route('help.overview') }}" class="btn btn-custom btn-primary w-100" data-bs-toggle="tooltip"
                         data-bs-trigger="hover" data-bs-dismiss-="click"
                         title="Sie benötigen Hilfe? Werfen Sie einen Blick in unser Wiki oder kontaktieren Sie unseren Kundensupport.">
-                        <span class="btn-label">uFill Hilfe-Center</span>
+                        <span class="btn-label">{{ trans('message.ufill support center') }}</span>
                         <!--begin::Svg Icon | path: icons/duotune/general/gen005.svg-->
                         <span class="svg-icon btn-icon svg-icon-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -1392,10 +1392,10 @@
                             </li>
                             <li class="menu-item">
                                 <a href="https://ufill.de/rechtliches" target="_blank"
-                                    class="menu-link px-2">Rechtliches</a>
+                                    class="menu-link px-2">{{ trans('message.legal') }}</a>
                             </li>
                             <li class="menu-item">
-                                <a href="https://ufill.de/agb" target="_blank" class="menu-link px-2">AGB</a>
+                                <a href="https://ufill.de/agb" target="_blank" class="menu-link px-2">{{ trans('message.terms and conditions') }}</a>
                             </li>
                         </ul>
                         <!--end::Menu-->

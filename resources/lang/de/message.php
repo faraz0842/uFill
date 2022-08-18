@@ -570,6 +570,17 @@ return [
     'courses' => 'Kurse',
     'news' => 'Neuigkeiten',
     'changelog' => 'Updateverlauf',
+    'menu' => 'Menu',
+    'dashboards' => 'Dashboards',
+    'ecommerce' => 'eCommerce',
+    'create shipment' => 'Sendung erstellen',
+    'shipments' => 'Sendungen',
+    'status check' => 'Statusprüfer',
+    'Billing' => 'Abrechnung',
+    'Overview' => 'Übersicht',
+    'Affiliate Program' => 'Partnerprogramm',
+    'Security' => 'Sicherheit',
+    'Shipment Configuration' => 'Versandkonfiguration',
     'my_profile' => 'Mein Profil',
     'my_tasks' => 'Meine Aufgaben',
     'language' => 'Sprache',
@@ -587,6 +598,17 @@ return [
     'Fee' => 'Gebühr',
     'Total Cost' => 'Gesamtkosten',
     'Edit Discount Codes' => 'Rabattcodes bearbeiten',
+    'orders' => 'Bestellungen',
+    'returns' => 'Rückgaben',
+    'catalog' => 'Katalog',
+    'products' => 'Produkte',
+    'categories' => 'Kategorien',
+    'customers' => 'Kunden',
+    'store analysis' => 'Shopanalyse',
+    'social media' => 'Soziale Medien',
+    'functions' => 'Funktionen',
+    'terms and conditions' => 'Rechtliches',
+    'ufill support center' => 'uFill Hilfe Center',
 
     // dashboard
     'admin' => 'Administrator',
@@ -674,7 +696,7 @@ return [
 
     // user management->admin
     'User Management' => 'Benutzerverwaltung',
-    'ADMIN USER' => 'Administrator-Benutzer',
+    'ADMIN USER' => 'Administratoren',
     'PERMISSIONS' => 'Berechtigungen',
     'LAST LOGGED IN' => 'Zuletzt eingeloggt',
     'CREATED AT' => 'Erstellt am',
@@ -721,7 +743,7 @@ return [
     // settings->overview
     'uFill' => 'uFill',
     'Total Revenue' => 'Umsatz insgesamt',
-    'Admin Users' => 'Administrator-Benutzer',
+    'Admin Users' => 'Administratoren',
     'Total Clients' => 'Kunden Insgesamt',
     'Overview' => 'Überblick',
     'Company Informations' => 'Informationen des Unternehmens',
@@ -761,6 +783,7 @@ return [
     'Edit platform' => 'Plattform bearbeiten',
     'Secret Key' => 'Geheimer Schlüssel',
     'Connect Platform' => 'Plattform verbinden',
+    'client' => 'Kunde',
 
 
     'user' => 'Benutzer',
@@ -1244,7 +1267,7 @@ return [
 
     "You have not received an e-mail? Resend or contact customer support." => "Sie haben keine E-Mail erhalten? Erneut senden oder Kundensupport kontaktieren.",
 
-    "Website" => "Startseite",
+    "Website" => "Webseite",
 
 
     "Discount successfully applied. You will receive a one-time discount of" => "Rabatt erfolgreich angewendet. Sie erhalten einen einmaligen Rabatt von",
@@ -1329,8 +1352,8 @@ return [
     'Total shipments' => 'Sendungen gesamt',
     'Worldmap' => 'Weltkarte',
     'Countries with the most sales' => 'Länder mit meisten Verkäufen',
-    'open shipping costs' => 'offene Versandkosten',
-    'various customers' => 'verschiedene Kunden',
+    'Open shipping costs' => 'Offene Versandkosten',
+    'Various customers' => 'Verschiedene Kunden',
     'from' => 'von',
     'Last costumers...' => 'Kunden zuletzt...',
     'Shipping costs' => 'Versandkosten',
@@ -1374,6 +1397,7 @@ return [
     'Status' => 'Status',
     'Billing' => 'Abrechnung',
     'Costs' => 'Kosten',
+    'ID' => 'ID',
 
     // https://ufill.devatease.com/client/shipment/status/check
     'Dashboards > eCommerce > Status check' => 'Dashboards > eCommerce > Statusprüfer',

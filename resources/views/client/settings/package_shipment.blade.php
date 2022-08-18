@@ -71,7 +71,7 @@
                                                 </span></label>
                                                 <!--end::Svg Icon-->
                                             </div>
-                                            <span class="badge badge-light-info fs-8 fw-bolder ">Client</span>
+                                            <span class="badge badge-light-info fs-8 fw-bolder ">{{ trans('message.client') }}</span>
                                         </div>
                                         <!--end::Name-->
                                         <!--begin::Info-->
@@ -813,7 +813,7 @@
                             <div class="btn-group">
                                 <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="triggerId"
                                     data-bs-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">{{ trans('filter by') }}</button>
+                                    aria-expanded="false">{{ trans('message.filter by') }}</button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
                                     <ul class="nav nav-stretch fs-5 fw-bold nav-line-tabs nav-line-tabs-2x border-transparent"
                                         role="tablist">

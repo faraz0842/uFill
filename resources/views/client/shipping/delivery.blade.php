@@ -127,7 +127,7 @@
                                             </div>
                                             <!--end::Info-->
                                             <!--begin::Subtitle-->
-                                            <span class="text-gray-400 pt-1 fw-bold fs-6">{{ trans('message.open shipping costs') }}</span>
+                                            <span class="text-gray-400 pt-1 fw-bold fs-6">{{ trans('message.Open shipping costs') }}</span>
                                             <!--end::Subtitle-->
                                         </div>
                                         <!--end::Title-->
@@ -209,7 +209,7 @@
                                             <span class="fs-2hx fw-bolder text-dark me-2 lh-1">6.300</span>
                                             <!--end::Amount-->
                                             <!--begin::Subtitle-->
-                                            <span class="text-gray-400 pt-1 fw-bold fs-6">{{ trans('message.various customers') }}</span>
+                                            <span class="text-gray-400 pt-1 fw-bold fs-6">{{ trans('message.Various customers') }}</span>
                                             <!--end::Subtitle-->
                                         </div>
                                         <!--end::Title-->

@@ -71,7 +71,7 @@
                                                 </span></label>
                                                 <!--end::Svg Icon-->
                                             </div>
-                                            <span class="badge badge-light-info fs-8 fw-bolder ">Client</span>
+                                            <span class="badge badge-light-info fs-8 fw-bolder ">{{ trans('message.client') }}</span>
                                         </div>
                                         <!--end::Name-->
                                         <!--begin::Info-->

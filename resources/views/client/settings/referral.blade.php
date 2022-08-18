@@ -71,7 +71,7 @@
                                                 </span></label>
                                                 <!--end::Svg Icon-->
                                             </div>
-                                            <span class="badge badge-light-info fs-8 fw-bolder ">Client</span>
+                                            <span class="badge badge-light-info fs-8 fw-bolder ">{{ trans('message.client') }}</span>
                                         </div>
                                         <!--end::Name-->
                                         <!--begin::Info-->
@@ -309,7 +309,7 @@
                                         value="{{ $client_info->referral_link }}" />
                                     <button id="kt_referral_program_link_copy_btn"
                                         class="btn btn-light btn-active-light-primary fw-bolder flex-shrink-0"
-                                        onclick="myFunction()">Copy Link</button>
+                                        onclick="myFunction()">{{ trans('message.Copy Link') }}</button>
                                 </div>
                             </div>
                             <!--end::Col-->
