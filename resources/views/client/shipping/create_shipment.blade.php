@@ -11,7 +11,7 @@
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                     <!--begin::Description-->
-                    <small class="text-muted fs-7 fw-bold my-1 ms-1">Dashboards > eCommerce > Create Shipment Label</small>
+                    <small class="text-muted fs-7 fw-bold my-1 ms-1">{{{{ trans('message.Dashboards > eCommerce > Create Shipment Label') }}}}</small>
                     <!--end::Description-->
                 </div>
                 <!--end::Page title-->
@@ -33,7 +33,7 @@
                             <div class="card-header">
                                 <!--begin::Card title-->
                                 <div class="card-title">
-                                    <h2>Summary</h2>
+                                    <h2>{{ trans('message.Summary') }}</h2>
                                 </div>
                                 <!--end::Card title-->
                             </div>
@@ -43,7 +43,7 @@
                                 <!--begin::Section-->
                                 <div class="mb-7">
                                     <!--begin::Title-->
-                                    <h5 class="mb-4">From address:</h5>
+                                    <h5 class="mb-4">{{ trans('message.From address') }}:</h5>
                                     <!--end::Title-->
                                     <!--begin::Details-->
                                     <div class="mb-0">
@@ -64,7 +64,7 @@
                                 <!--begin::Section-->
                                 <div class="mb-7">
                                     <!--begin::Title-->
-                                    <h5 class="mb-4">To address:</h5>
+                                    <h5 class="mb-4">{{ trans('message.To address') }}:</h5>
                                     <!--end::Title-->
                                     <!--begin::Details-->
                                     <div class="mb-0">
@@ -85,7 +85,7 @@
                                 <!--begin::Section-->
                                 <div class="mb-7">
                                     <!--begin::Title-->
-                                    <h5 class="mb-4">Shipping method:</h5>
+                                    <h5 class="mb-4">{{ trans('message.To address') }}:</h5>
                                     <!--end::Title-->
                                     <!--begin::Details-->
                                     <div class="mb-0">
@@ -100,7 +100,7 @@
                                 <!--begin::Section-->
                                 <div class="mb-7">
                                     <!--begin::Title-->
-                                    <h5 class="mb-4">Number of labels:</h5>
+                                    <h5 class="mb-4">{{ trans('message.Number of labels') }}:</h5>
                                     <!--end::Title-->
                                     <!--begin::Details-->
                                     <div class="mb-0">
@@ -115,7 +115,7 @@
                                 <!--begin::Section-->
                                 <div class="mb-7">
                                     <!--begin::Title-->
-                                    <h5 class="mb-4">Insurance cost:</h5>
+                                    <h5 class="mb-4">{{ trans('message.Insurance cost') }}:</h5>
                                     <!--end::Title-->
                                     <!--begin::Details-->
                                     <div class="mb-0">
@@ -130,19 +130,19 @@
                                 <!--begin::Section-->
                                 <div class="mb-2">
                                     <!--begin::Title-->
-                                    <h5 class="fs-3">Total price:<span class="mx-3">4,65€</span></h5>
+                                    <h5 class="fs-3">{{ trans('message.Total price') }}:<span class="mx-3">4,65€</span></h5>
                                     <!--end::Title-->
                                 </div>
                                 <!--end::Section-->
                                 <div class="form-check form-check-custom form-check-solid mb-7">
                                     <input class="form-check-input" type="checkbox" id="check_create_another_shipment"
                                         value="1">
-                                    <label class="form-check-label">Create another shipment</label>
+                                    <label class="form-check-label">{{ trans('message.Create another shipment') }}</label>
                                 </div>
                                 <!--begin::Actions-->
                                 <div class="mb-0">
-                                    <a href="#" class="btn btn-success d-block mb-2 ">Create label</a>
-                                    <a href="#" class="btn btn-light d-block">Cancel</a>
+                                    <a href="#" class="btn btn-success d-block mb-2 ">{{ trans('message.Create label') }}</a>
+                                    <a href="#" class="btn btn-light d-block">{{ trans('message.Cancel') }}</a>
                                 </div>
                                 <!--end::Actions-->
                             </div>
@@ -155,7 +155,7 @@
                             <div class="card-header">
                                 <!--begin::Card title-->
                                 <div class="card-title">
-                                    <h2>Open costs:<span class="mx-3">4,65€</span></h2>
+                                    <h2>{{ trans('message.Open costs') }}:<span class="mx-3">4,65€</span></h2>
                                 </div>
                                 <!--end::Card title-->
                             </div>
@@ -165,8 +165,8 @@
                                 <!--begin::Section-->
                                 <div class="mb-2">
                                     <!--begin::Title-->
-                                    <span class="fw-bold text-gray-600">Note: If you create multiple shipment labels, the
-                                        costs are added up and automatically debited upon completion.</span>
+                                    <span class="fw-bold text-gray-600">{{ trans('message.Note: If you create multiple shipment labels, the
+                                        costs are added up and automatically debited upon completion.') }}</span>
                                     <!--end::Title-->
                                 </div>
                                 <!--end::Section-->
@@ -184,7 +184,7 @@
                             <div class="card-header">
                                 <!--begin::Card title-->
                                 <div class="card-title">
-                                    <h2 class="fw-bolder">Create a new shipment</h2>
+                                    <h2 class="fw-bolder">{{ trans('message.Create a new shipment') }}</h2>
                                 </div>
                                 <!--begin::Card title-->
                             </div>
@@ -194,7 +194,7 @@
                                 <!--begin::Section-->
                                 <div class="mb-4">
                                     <!--begin::Title-->
-                                    <h5 class="mb-4">1. Sender address:</h5>
+                                    <h5 class="mb-4">1. {{ trans('message.Sender address') }}:</h5>
                                     <!--begin::Input-->
                                     <select name="sender_addresses" class="form-select form-select-lg form-select-solid"
                                         data-control="select2" data-placeholder="Select..." data-allow-clear="true"
@@ -227,7 +227,7 @@
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-4">
                                             <!--begin::Label-->
-                                            <label class="form-label">Company name</label>
+                                            <label class="form-label">{{ trans('message.Company name') }}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input name="sender_business_name"
@@ -242,7 +242,7 @@
                                                 <!--begin::Col-->
                                                 <div class="col-6">
                                                     <!--begin::Label-->
-                                                    <label class="form-label">First name</label>
+                                                    <label class="form-label">{{ trans('message.First name') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input name="sender_firstname"
@@ -254,7 +254,7 @@
                                                 <!--begin::Col-->
                                                 <div class="col-6">
                                                     <!--begin::Label-->
-                                                    <label class="form-label">Last name</label>
+                                                    <label class="form-label">{{ trans('message.Last name') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input name="sender_surname"
@@ -272,7 +272,7 @@
                                                 <!--begin::Col-->
                                                 <div class="col-8">
                                                     <!--begin::Label-->
-                                                    <label class="form-label">Street</label>
+                                                    <label class="form-label">{{ trans('message.Street') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input name="sender_street"
@@ -284,7 +284,7 @@
                                                 <!--begin::Col-->
                                                 <div class="col-4">
                                                     <!--begin::Label-->
-                                                    <label class="form-label">House number</label>
+                                                    <label class="form-label">{{ trans('message.House number') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input name="sender_number"
@@ -302,7 +302,7 @@
                                                 <!--begin::Col-->
                                                 <div class="col-4">
                                                     <!--begin::Label-->
-                                                    <label class="form-label">Zip code</label>
+                                                    <label class="form-label">{{ trans('message.Zip code') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input type="number" name="sender_code"
@@ -314,7 +314,7 @@
                                                 <!--begin::Col-->
                                                 <div class="col-8">
                                                     <!--begin::Label-->
-                                                    <label class="form-label">State</label>
+                                                    <label class="form-label">{{ trans('message.State') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input name="sender_city"
@@ -330,7 +330,7 @@
                                         <div class="fv-row mb-4">
                                             <!--begin::Label-->
                                             <label class="fs-6 fw-bold mb-2">
-                                                <span>Country</span>
+                                                <span>{{ trans('message.Country') }}</span>
                                             </label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
@@ -573,7 +573,7 @@
                                                 <!--begin::Col-->
                                                 <div class="col-6">
                                                     <!--begin::Label-->
-                                                    <label class="form-label">Telephone</label>
+                                                    <label class="form-label">{{ trans('message.Telephone') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input type="tel" name="sender_phone"
@@ -585,7 +585,7 @@
                                                 <!--begin::Col-->
                                                 <div class="col-6">
                                                     <!--begin::Label-->
-                                                    <label class="form-label">E-Mail</label>
+                                                    <label class="form-label">{{ trans('message.E-Mail') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input type="email" name="sender_email"
@@ -605,7 +605,7 @@
                                                     <div class="form-check form-check-custom form-check-solid mb-8">
                                                         <input class="form-check-input" type="checkbox"
                                                             id="check_use_new_sender_address" value="1">
-                                                        <label class="form-check-label">Use sender address</label>
+                                                        <label class="form-check-label">{{ trans('message.Use sender address') }}</label>
                                                     </div>
                                                 </div>
                                                 <!--end::Col-->
@@ -614,7 +614,7 @@
                                                     <div class="form-check form-check-custom form-check-solid mb-8">
                                                         <input class="form-check-input" type="checkbox"
                                                             id="check_save_new_sender_address" value="1">
-                                                        <label class="form-check-label">Save new sender address</label>
+                                                        <label class="form-check-label">{{ trans('message.Save new sender address') }}</label>
                                                     </div>
                                                 </div>
                                                 <!--end::Col-->
@@ -634,7 +634,7 @@
                                     <!--begin::User toggle-->
                                     <div class="fw-bolder fs-5 rotate collapsible mb-4" data-bs-toggle="collapse"
                                         href="#create_receiver_address" role="button" aria-expanded="false"
-                                        aria-controls="create_receiver_address">2. Receiver address
+                                        aria-controls="create_receiver_address">2. {{ trans('message.Receiver address') }}
                                         <span class="ms-2 rotate-180">
                                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                                             <span class="svg-icon svg-icon-3">
@@ -654,7 +654,7 @@
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-4">
                                             <!--begin::Label-->
-                                            <label class="form-label required">Company name</label>
+                                            <label class="form-label required">{{ trans('message.Company name') }}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input name="receiver_company_name"
@@ -669,7 +669,7 @@
                                                 <!--begin::Col-->
                                                 <div class="col-md-6 col-sm-12 mb-4">
                                                     <!--begin::Label-->
-                                                    <label class="form-label required">First name</label>
+                                                    <label class="form-label required">{{ trans('message.First name') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input name="receiver_firstname"
@@ -681,7 +681,7 @@
                                                 <!--begin::Col-->
                                                 <div class="col-md-6 col-sm-12">
                                                     <!--begin::Label-->
-                                                    <label class="form-label required">Last name</label>
+                                                    <label class="form-label required">{{ trans('message.Last name') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input name="receiver_surname"
@@ -699,7 +699,7 @@
                                                 <!--begin::Col-->
                                                 <div class="col-md-8 col-sm-12 mb-4">
                                                     <!--begin::Label-->
-                                                    <label class="form-label required">Street</label>
+                                                    <label class="form-label required">{{ trans('message.Street') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input name="receiver_street"
@@ -711,7 +711,7 @@
                                                 <!--begin::Col-->
                                                 <div class="col-md-4 col-sm-12">
                                                     <!--begin::Label-->
-                                                    <label class="form-label required">House number</label>
+                                                    <label class="form-label required">{{ trans('message.House number') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input name="receiver_number"
@@ -729,7 +729,7 @@
                                                 <!--begin::Col-->
                                                 <div class="col-4">
                                                     <!--begin::Label-->
-                                                    <label class="form-label required">Zip code</label>
+                                                    <label class="form-label required">{{ trans('messahe.Zip code') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input type="number" name="receiver_code"
@@ -741,7 +741,7 @@
                                                 <!--begin::Col-->
                                                 <div class="col-8">
                                                     <!--begin::Label-->
-                                                    <label class="form-label required">State</label>
+                                                    <label class="form-label required">{{ trans('message.Zip code') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input name="receiver_city"
@@ -757,7 +757,7 @@
                                         <div class="fv-row mb-4">
                                             <!--begin::Label-->
                                             <label class="fs-6 fw-bold mb-2 required">
-                                                <span>Country</span>
+                                                <span>{{ trans('message.Country') }}</span>
                                             </label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
@@ -1001,7 +1001,7 @@
                                                 <!--begin::Col-->
                                                 <div class="col-md-6 col-sm-12 mb-4">
                                                     <!--begin::Label-->
-                                                    <label class="form-label required">Telephone</label>
+                                                    <label class="form-label required">{{ trans('message.Telephone') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input type="tel" name="receiver_phone"
@@ -1013,7 +1013,7 @@
                                                 <!--begin::Col-->
                                                 <div class="col-md-6 col-sm-12">
                                                     <!--begin::Label-->
-                                                    <label class="form-label required">E-Mail</label>
+                                                    <label class="form-label required">{{ trans('message.E-Mail') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input type="email" name="receiver_email"
@@ -1038,7 +1038,7 @@
                                     <!--begin::User toggle-->
                                     <div class="fw-bolder fs-5 rotate collapsible mb-4" data-bs-toggle="collapse"
                                         href="#create_shipment_details" role="button" aria-expanded="false"
-                                        aria-controls="create_shipment_details">3. Shipment details
+                                        aria-controls="create_shipment_details">3. {{ trans('message.Shipment details') }}
                                         <span class="ms-2 rotate-180">
                                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                                             <span class="svg-icon svg-icon-3">
@@ -1061,7 +1061,7 @@
                                                 <!--begin::Col-->
                                                 <div class="col-md-4 col-sm-12 mb-8">
                                                     <!--begin::Label-->
-                                                    <label class="form-label required">Parcel weight (kg)</label>
+                                                    <label class="form-label required">{{ trans('message.Parcel weight (kg)') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input type="number" name="shipment_parcel_weight"
@@ -1073,7 +1073,7 @@
                                                 <!--begin::Col-->
                                                 <div class="col-md-8 col-sm-12 mb-4">
                                                     <!--begin::Label-->
-                                                    <label class="form-label">Order number (optional)</label>
+                                                    <label class="form-label">{{ trans('message.Order number (optional)') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input name="shipment_order_number"
@@ -1088,7 +1088,7 @@
                                         <!--begin::Row-->
                                         <div class="fv-row mb-4">
                                             <!--begin::Label-->
-                                            <label class="form-label required">Dimensions in L x W x H (cm)</label>
+                                            <label class="form-label required">{{ trans('message.Dimensions in L x W x H (cm)') }}</label>
                                             <!--end::Label-->
                                             <div class="row fv-row">
                                                 <!--begin::Col-->
@@ -1132,7 +1132,7 @@
                                     <!--begin::User toggle-->
                                     <div class="fw-bolder fs-5 rotate collapsible mb-4" data-bs-toggle="collapse"
                                         href="#create_shipment_items" role="button" aria-expanded="false"
-                                        aria-controls="create_shipment_items">4. Items
+                                        aria-controls="create_shipment_items">4. {{ trans('message.Items') }}
                                         <span class="ms-2 rotate-180">
                                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                                             <span class="svg-icon svg-icon-3">
@@ -1191,11 +1191,11 @@
                                                                     value="1" />
                                                             </div>
                                                         </th>
-                                                        <th class="min-w-200px">Product</th>
-                                                        <th class="text-center min-w-100px">SKU</th>
-                                                        <th class="text-center min-w-70px">Available quantity</th>
-                                                        <th class="text-center min-w-100px">Price</th>
-                                                        <th class="text-center min-w-100px">Status</th>
+                                                        <th class="min-w-200px">{{ trans('message.Product') }}</th>
+                                                        <th class="text-center min-w-100px">{{ trans('message.SKU') }}</th>
+                                                        <th class="text-center min-w-70px">{{ trans('message.Available quantity') }}</th>
+                                                        <th class="text-center min-w-100px">{{ trans('message.Price') }}</th>
+                                                        <th class="text-center min-w-100px">{{ trans('message.Status') }}</th>
                                                     </tr>
                                                     <!--end::Table row-->
                                                 </thead>
@@ -1227,7 +1227,7 @@
                                                                     <!--begin::Title-->
                                                                     <a href="../../demo1/dist/apps/ecommerce/catalog/edit-product.html"
                                                                         class="text-gray-800 text-hover-primary fs-5 fw-bolder"
-                                                                        data-kt-ecommerce-product-filter="product_name">Product
+                                                                        data-kt-ecommerce-product-filter="product_name">{{ trans('message.Product') }}
                                                                         1</a>
                                                                     <!--end::Title-->
                                                                 </div>
@@ -1253,7 +1253,7 @@
                                                         <!--begin::Status=-->
                                                         <td class="text-center pe-0" data-order="Inactive">
                                                             <!--begin::Badges-->
-                                                            <div class="badge badge-light-danger">Deaktiviert</div>
+                                                            <div class="badge badge-light-danger">{{ trans('message.Deactivated') }}</div>
                                                             <!--end::Badges-->
                                                         </td>
                                                         <!--end::Status=-->
@@ -1279,7 +1279,7 @@
                                     <!--begin::User toggle-->
                                     <div class="fw-bolder fs-5 rotate collapsible mb-4" data-bs-toggle="collapse"
                                         href="#create_shipment_method" role="button" aria-expanded="false"
-                                        aria-controls="create_shipment_method">5. Shipping method
+                                        aria-controls="create_shipment_method">5. {{ trans('message.Shipping method') }}
                                         <span class="ms-2 rotate-180">
                                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                                             <span class="svg-icon svg-icon-3">
@@ -1302,15 +1302,14 @@
                                                 <!--begin::Col-->
                                                 <div class="col-md-4 col-sm-12 mb-8">
                                                     <!--begin::Label-->
-                                                    <label class="form-label">Total item value</label>
+                                                    <label class="form-label">{{ trans('message.Shipping method') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input type="number" name="shipment_parcel_weight"
                                                         class="form-control form-control-lg form-control-solid"
                                                         value="" placeholder="145,95€" readonly />
                                                     <!--end::Input-->
-                                                    <span class="text-gray-400">Note: If the value of your package exceeds
-                                                        €520, we recommend additional transport insurance.</span>
+                                                    <span class="text-gray-400">{{ trans('message.Note: If the value of your package exceeds €520, we recommend additional transport insurance.') }}</span>
                                                 </div>
                                                 <!--end::Col-->
                                                 <!--begin::Col-->
@@ -1323,10 +1322,8 @@
                                                                 <!--begin::Description-->
                                                                 <span class="d-flex flex-column">
                                                                     <span
-                                                                        class="fw-bolder text-gray-800 text-hover-primary fs-5">No
-                                                                        Goods Insurance</span>
-                                                                    <span class="fs-6 fw-bold text-muted">Standard
-                                                                        transport insurance if applicable.</span>
+                                                                        class="fw-bolder text-gray-800 text-hover-primary fs-5">{{ trans('message.No Goods Insurance') }}</span>
+                                                                    <span class="fs-6 fw-bold text-muted">{{ trans('message.Standard transport insurance if applicable.') }}</span>
                                                                 </span>
                                                                 <!--end:Description-->
                                                             </span>
@@ -1345,10 +1342,8 @@
                                                                 <!--begin::Description-->
                                                                 <span class="d-flex flex-column">
                                                                     <span
-                                                                        class="fw-bolder text-gray-800 text-hover-primary fs-5">Goods
-                                                                        Insurance "S"</span>
-                                                                    <span class="fs-6 fw-bold text-muted">Transport
-                                                                        insurance up to 2500€ - from 6€</span>
+                                                                        class="fw-bolder text-gray-800 text-hover-primary fs-5">{{ trans('message.Goods Insurance "S"') }}</span>
+                                                                    <span class="fs-6 fw-bold text-muted">{{ trans('message.Transport insurance up to 2500€ - from 6€') }}</span>
                                                                 </span>
                                                                 <!--end:Description-->
                                                             </span>
@@ -1367,10 +1362,8 @@
                                                                 <!--begin::Description-->
                                                                 <span class="d-flex flex-column">
                                                                     <span
-                                                                        class="fw-bolder text-gray-800 text-hover-primary fs-5">Goods
-                                                                        Insurance "M"</span>
-                                                                    <span class="fs-6 fw-bold text-muted">Transport
-                                                                        insurance up to 25000€ - from 18€</span>
+                                                                        class="fw-bolder text-gray-800 text-hover-primary fs-5">{{ trans('message.Goods Insurance "M"') }}</span>
+                                                                    <span class="fs-6 fw-bold text-muted">{{ trans('message.Transport insurance up to 25000€ - from 18€') }}</span>
                                                                 </span>
                                                                 <!--end:Description-->
                                                             </span>
@@ -1392,7 +1385,7 @@
                                         <!--end::Row-->
                                         <div class="fv-row mb-4">
                                             <!--begin::Label-->
-                                            <label class="form-label required">Shipping method</label>
+                                            <label class="form-label required">{{ trans('message.Shipping method') }}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <select name="create_shipment_package_type"

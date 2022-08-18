@@ -163,6 +163,7 @@ class ClientController extends Controller
             $client->company_size  = $request->company_size ;
             $client->company_description  = $request->company_description ;
             $client->profile_picture = $logo;
+            $client->referral_link = 'ufill.devatease.com/client/register/' . $request->company_name . '-' . session('client_id');
             $client->save();
 
             //updating customer in stripe
@@ -212,14 +213,10 @@ class ClientController extends Controller
 
         try {
 
-
-        Client::where('id',$client_id)->update([
-            'account_type' => $request->account_type,
-            'account_plan' => $request->account_plan_selected,
-        ]);
-
         $client_subcription_id = Subscription::where('client_id',$client_id)->first();
-        $price_id = VariantPlan::where('variant_id',$request->account_type)->where('plan',$request->account_plan)->first();
+        $price_id = VariantPlan::where('variant_id',$request->account_type)->where('plan',$request->account_plan_selected)->first();
+
+        //return $price_id;
 
         // $stripe = new \Stripe\StripeClient(
         //     'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
@@ -228,7 +225,7 @@ class ClientController extends Controller
 
         $subscription = \Stripe\Subscription::retrieve($client_subcription_id->stripe_id);
         \Stripe\Subscription::update($client_subcription_id->stripe_id, [
-            'cancel_at_period_end' => false,
+            'cancel_at_period_end' => true,
             'proration_behavior' => 'create_prorations',
             'items' => [
                 [
@@ -237,6 +234,19 @@ class ClientController extends Controller
                 ],
             ],
         ]);
+
+            Client::where('id', $client_id)->update([
+                'account_type' => $request->account_type,
+                'account_plan' => $request->account_plan_selected,
+                'client_until' => Carbon::parse($subscription->current_period_end),
+                'next_payment' => Carbon::parse($subscription->current_period_end),
+                'package_price' => $price_id->price,
+            ]);
+
+        // $subscription_updated = \Stripe\Subscription::retrieve($client_subcription_id->stripe_id);
+        // return response()->json($subscription_updated);
+
+
 
 
         return back()->with('message' , 'Account Information Updated Succesfully')->withInput();

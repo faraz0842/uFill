@@ -116,9 +116,9 @@
                     <!--begin::Notice-->
                     <div class="text-center fw-bold fs-5">
                         <span class="text-muted me-1">{{ trans('message.You have not received an e-mail? Resend or contact customer support.') }}</span>
-                        <a href="#" class="link-primary fw-bolder fs-5 me-1">Erneut senden</a>
-                        <span class="text-muted me-1">oder</span>
-                        <a href="#" class="link-primary fw-bolder fs-5">Kundensupport kontaktieren</a>.
+                        <a href="#" class="link-primary fw-bolder fs-5 me-1">{{ trans('message.resend_code') }}</a>
+                        <span class="text-muted me-1">{{trans('message.or')}}</span>
+                        <a href="#" class="link-primary fw-bolder fs-5">{{trans('message.contact customer support')}}</</a>.
                     </div>
                     <!--end::Notice-->
                 </div>

@@ -12,7 +12,7 @@
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                     <!--begin::Description-->
-                    <small class="text-muted fs-7 fw-bold my-1 ms-1">{{ trans('message.admin') }} >
+                    <small class="text-muted fs-7 fw-bold my-1 ms-1">{{ trans('message.clients') }} >
                         {{ trans('message.settings') }} > {{ trans('message.overview') }}</small>
                     <!--end::Description-->
                 </div>
@@ -105,8 +105,8 @@
                                                     </svg>
                                                 </span>
                                                 <!--end::Svg Icon-->{{ $client_info->street }}
-                                                {{ $client_info->house_number }} {{ $client_info->plz }}
-                                                {{ $client_info->country }}
+                                                {{ $client_info->house_number }} , {{ $client_info->plz }}
+                                                {{ $client_info->state }} {{ $client_info->country }}
                                             </div>
                                             <div class="d-flex align-items-center text-gray-400 mb-2">
                                                 <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
@@ -154,8 +154,8 @@
                                                     </span>
                                                     <!--end::Svg Icon-->
                                                     @if ($client_info->name == 'shipment')
-                                                        <div class="fs-2 fw-bolder" data-kt-countup="true"
-                                                            data-kt-countup-value="0" data-kt-countup-suffix="€">
+                                                        <div class="fs-2 fw-bolder" data-kt-countup="false"
+                                                            data-kt-countup-value="N/A" >
                                                             N/A
                                                         </div>
                                                     @else
@@ -236,7 +236,7 @@
                                                 <!--end::Number-->
                                                 <!--begin::Label-->
                                                 <div class="fw-bold fs-6 text-gray-400">
-                                                    {{ trans('message.Total Clients') }}</div>
+                                                    {{ trans('message.total customers') }}</div>
                                                 <!--end::Label-->
                                             </div>
                                             <!--end::Stat-->
@@ -271,11 +271,22 @@
                             </li>
                             <!--end::Nav item-->
                             <!--begin::Nav item-->
+                            @if (session('package_name') != 'shipment')
+                                <li class="nav-item mt-2">
+                                    <a class="nav-link text-active-primary ms-0 me-10 py-5 "
+                                        href="{{ Route('client.api') }}">{{ trans('message.apis/integration') }}</a>
+                                </li>
+                            @endif
+
+                            <!--end::Nav item-->
                             <li class="nav-item mt-2">
                                 <a class="nav-link text-active-primary ms-0 me-10 py-5 "
-                                    href="{{ Route('client.api') }}">{{ trans('message.apis/integration') }}</a>
+                                    href="{{ Route('client.profile',session('client_id')) }}">{{ trans('message.security') }}</a>
                             </li>
-                            <!--end::Nav item-->
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5 "
+                                    href="{{ Route('client.package.shipment') }}">{{ trans('message.package_shipment') }}</a>
+                            </li>
                         </ul>
                         <!--begin::Navs-->
                     </div>
@@ -312,16 +323,16 @@
                             <!--end::Col-->
                         </div>
                         <!--end::Input group-->
-                        {{-- <div class="row mb-7">
+                        <div class="row mb-7">
                             <!--begin::Label-->
                             <label class="col-lg-4 fw-bold text-muted">{{ trans('message.Managing Director') }} </label>
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8">
-                                <span class="fw-bold fs-6 text-gray-800">{{ $client_info->manager_director }}</span>
+                                <span class="fw-bold fs-6 text-gray-800">{{ $client_info->first_name . ' ' . $client_info->last_name }}</span>
                             </div>
                             <!--end::Col-->
-                        </div> --}}
+                        </div>
                         <!--end::Row-->
                         <!--begin::Input group-->
                         <div class="row mb-7">
@@ -330,9 +341,9 @@
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8 fv-row">
-                                <span class="fw-bold text-gray-800 fs-6">{{ $client_info->house_number }}
-                                    {{ $client_info->street }} {{ $client_info->plz }}
-                                    {{ $client_info->state }}</span>
+                                <span class="fw-bold text-gray-800 fs-6">{{ $client_info->street }}
+                                                {{ $client_info->house_number }} , {{ $client_info->plz }}
+                                                {{ $client_info->state }} {{ $client_info->country }}</span>
                             </div>
                             <!--end::Col-->
                         </div>
@@ -370,12 +381,24 @@
                             <!--begin::Col-->
                             <div class="col-lg-8 d-flex align-items-center">
                                 <a href="tel:+495412365415"><span
-                                        class="fw-bold fs-6 text-gray-800 me-2 text-hover-primary">{{ $client_info->mobile_number }}</span></a>
+                                        class="fw-bold fs-6 text-gray-800 me-2 text-hover-primary">{{ $client_info->telephone }}</span></a>
 
                             </div>
                             <!--end::Col-->
                         </div>
                         <!--end::Input group-->
+                        <div class="row mb-7">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 fw-bold text-muted">{{ trans('message.Mobile number') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-lg-8 d-flex align-items-center">
+                                <a href="tel:+495412365415"><span
+                                        class="fw-bold fs-6 text-gray-800 me-2 text-hover-primary">{{ $client_info->mobile_number }}</span></a>
+
+                            </div>
+                            <!--end::Col-->
+                        </div>
                         <!--begin::Input group-->
                         <div class="row mb-7">
                             <!--begin::Label-->
@@ -481,11 +504,11 @@
                         <!--begin::Input group-->
                         <div class="row mb-7">
                             <!--begin::Label-->
-                            <label class="col-lg-4 fw-bold text-muted">{{ trans('message.Package Amount') }}</label>
+                            <label class="col-lg-4 fw-bold text-muted">{{ trans('message.Monthly Package Amount') }}</label>
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8">
-                                <div class="fw-bold fs-6 text-gray-800">{{ $client_info->price }}</div>
+                                <div class="fw-bold fs-6 text-gray-800">{{ Helper::money_format('EUR','de_DE',$client_info->price)}} €</div>
                             </div>
                             <!--end::Col-->
                         </div>

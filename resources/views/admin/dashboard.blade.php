@@ -765,6 +765,10 @@
                                                                         class="required fs-6 fw-bold form-label mb-2">{{ trans('message.price') }}</label>
                                                                     <!--end::Label-->
                                                                     <!--begin::Input-->
+                                                                    {{-- <div class="input-group mb-3">
+                                                                        <input type="text" class="form-control" placeholder="e.g . 500 cent" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                                                        <span class="input-group-text" id="basic-addon2">cent</span>
+                                                                    </div> --}}
                                                                     <input type="text"
                                                                         class="form-control form-control-solid"
                                                                         name="price"
@@ -1597,11 +1601,11 @@
                                             title="{{ $affiliated_clients_image->first_name . ' ' . $affiliated_clients_image->last_name }}">
                                             @if ($affiliated_clients_image->profile_picture)
                                             <a href="{{Route('admin.client.view',[$affiliated_clients_image->id,$affiliated_clients_image->stripe_id])}}"><img alt="Pic"
-                                                    src="{{ URL::asset($affiliated_clients_image->profile_picture) }}" /></a>
+                                                    src="{{ URL::asset($affiliated_clients_image->profile_picture) }}" height="50px" width="50px" class="img-rounded"/></a>
 
                                             @else
                                             <a href="{{Route('admin.client.view',[$affiliated_clients_image->id,$affiliated_clients_image->stripe_id])}}">
-                                                <img alt="Pic" src="{{ asset('assets/media/svg/avatars/blank.svg') }}" />
+                                                <img alt="Pic" src="{{ asset('assets/media/svg/avatars/blank.svg') }}"  height="50px" width="50px"/>
                                             </a>
 
                                             @endif
@@ -1759,6 +1763,8 @@
                                                 $total_client_revenue = App\Models\Transaction::select(DB::raw('sum(amount - discount_price) as total'))
                                                     ->where('client_id', $client->id)
                                                     ->first();
+
+
                                             @endphp
                                             <tr>
                                                 <!--begin::Client ID-->
@@ -1783,7 +1789,7 @@
                                                 <!--end::Client until-->
                                                 <!--begin::Total revenue-->
                                                 <td class="text-center">
-                                                    {{ $total_client_revenue->total != null ? $total_client_revenue->total : 0 }}€
+                                                    {{ Helper::money_format('EUR','de_DE',$total_client_revenue->total != null ? $total_client_revenue->total : 0)  }}€
                                                 </td>
                                                 <!--end::Total revenue-->
                                                 <!--begin::Open costs-->
@@ -2099,7 +2105,7 @@
                                                 <td class="text-center">{{ $shipping_detail->max_length }}</td>
                                                 <!--end::Size-->
                                                 <!--begin::price-->
-                                                <td class="text-center">{{ $shipping_detail->cost }}</td>
+                                                <td class="text-center">{{ Helper::money_format('EUR','de_DE',$shipping_detail->cost) }}€</td>
                                                 <!--end::price-->
                                                 {{-- <td class="text-center">{{$shipping_detail->fees}}</td> --}}
 
@@ -2285,9 +2291,13 @@
                                                                         class="required fs-6 fw-bold form-label mb-2">{{ trans('message.COST') }}</label>
                                                                     <!--end::Label-->
                                                                     <!--begin::Input-->
-                                                                    <input type="text"
+                                                                    <div class="input-group mb-3">
+                                                                        <input type="text" class="form-control" placeholder="e.g . 500 cent" aria-label="Recipient's username" name="cost" aria-describedby="basic-addon2" value="{{ $shipping_detail->cost }}">
+                                                                        <span class="input-group-text" id="basic-addon2">cent</span>
+                                                                    </div>
+                                                                    {{-- <input type="text"
                                                                         class="form-control form-control-solid" name="cost"
-                                                                        value="{{ $shipping_detail->cost }}" />
+                                                                        value="{{ $shipping_detail->cost }}" /> --}}
                                                                     <!--end::Input-->
                                                                     @if ($errors->has('cost'))
                                                                         <div class="text-danger">
@@ -2392,9 +2402,9 @@
                                                 <td class="text-center">{{ $shipping_package->package }}</td>
                                                 <!--end::Transport-->
                                                 <!--begin::Type-->
-                                                <td class="text-center">{{ $shipping_package->package_fee }}€</td>
+                                                <td class="text-center">{{Helper::money_format('EUR','de_DE',$shipping_package->package_fee)}}€</td>
                                                 <!--end::Type-->
-
+                                                {{-- {{ Helper::money_format('EUR','de_DE',$shipping_package->package_fee) }} --}}
                                                 <td class="text-center">
                                                     <a data-bs-toggle="modal"
                                                         data-bs-target="#editpackagefee{{ $shipping_package->fee_id }}"
@@ -2478,9 +2488,13 @@
                                                                         class="required fs-6 fw-bold form-label mb-2">{{ trans('message.Fee') }}</label>
                                                                     <!--end::Label-->
                                                                     <!--begin::Input-->
-                                                                    <input type="text"
+                                                                    <div class="input-group mb-3">
+                                                                        <input type="text" class="form-control" placeholder="e.g . 500 cent" name="fee" aria-label="Recipient's username" aria-describedby="basic-addon2" value="{{ $shipping_package->package_fee }}">
+                                                                        <span class="input-group-text" id="basic-addon2">cent</span>
+                                                                    </div>
+                                                                    {{-- <input type="text"
                                                                         class="form-control form-control-solid" name="fee"
-                                                                        value="{{ $shipping_package->package_fee }}" />
+                                                                        value="{{ $shipping_package->package_fee }}" /> --}}
                                                                     <!--end::Input-->
                                                                     @if ($errors->has('fee'))
                                                                         <div class="text-danger">

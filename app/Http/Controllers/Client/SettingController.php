@@ -8,7 +8,10 @@ use App\Models\AdminCompany;
 use App\Models\AffiliateLink;
 use App\Models\ApiIntegration;
 use App\Models\Client;
+use App\Models\ShipmentpackageFee;
+use App\Models\ShippingDetail;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -39,7 +42,11 @@ class SettingController extends Controller
     {
 
 
+
+
         try {
+
+            //return $request->previous_profile;
              $image = $request->file('profile_picture');
                 if (isset($image)) {
                     $image_name = $image->getClientOriginalName();
@@ -47,11 +54,17 @@ class SettingController extends Controller
                     $image_path = 'upload/CompanyProfile/';
                     $image->move($image_path, $image_name);
                     $profile_picture = $image_path.$image_name;
-                } else {
+                }else if($request->previous_profile == 1){
+                    $profile_picture = null;
+                }else {
                     $profile_picture = $request->previous_profile;
                 }
 
+
+                //return $profile_picture;
             Client::where('id',session('client_id'))->update([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
                 'profile_picture' => $profile_picture,
                 'company_name' => $request->company_name,
                 'house_number' => $request->house_number,
@@ -65,7 +78,37 @@ class SettingController extends Controller
                 'website' => $request->website,
                 'vat_id' => $request->vat,
                 'registration_number' => $request->registration_number,
+                'referral_link' => 'ufill.devatease.com/client/register/' . $request->company_name . '-' . session('client_id'),
             ]);
+
+
+
+            session([
+                'profile_picture' => $profile_picture,
+                'company_name' => $request->company_name,
+            ]);
+
+            $client = Client::where('id',session('client_id'))->first();
+            //updating customer in stripe
+            $stripe = new \Stripe\StripeClient(
+                'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
+            );
+            $stripe->customers->update(
+                $client->stripe_id,
+                [
+                    'address' => [
+                        'country' => $request->country,
+                        'line1' => $request->street,
+                        'line2' => $request->house_number,
+                        'postal_code' => $request->zip_code,
+                        'state' => $request->state,
+                        'city' => $request->state
+                    ],
+                    'email' => $request->email,
+                    'name' => $request->first_name . ' ' . $request->last_name,
+                    'phone' => $request->mobile_number,
+                ]
+            );
 
             return redirect()->Route('client.overview');
         } catch (Exception $th) {
@@ -149,4 +192,50 @@ class SettingController extends Controller
                                                ->with('total_revenue',$total_revenue)->with('referred_clients_count',$referred_clients_count)
                                                ->with('total_clients',$total_clients);
     }
+
+
+    public function packageShipment()
+    {
+        $referred_clients = AffiliateLink::where('affiliate_from',session('client_id'))->pluck('affiliate_to');
+        $total_revenue = Transaction::select(DB::raw('sum(amount - discount_price) as total'))->where('client_id',session('client_id'))->first();
+        //return response()->json($total_revenue);
+        $referred_clients_count = AffiliateLink::where('affiliate_from',session('client_id'))->count();
+        $total_clients = Client::count();
+        $client_info = Client::where('id',session('client_id'))->join('variants','variants.variant_id','clients.account_type')->first();
+        $shipping_details = ShippingDetail::all();
+        $shipment_package_fee = ShipmentpackageFee::where('package',$client_info->shipping_quantity)->first();
+        $affiliated_at = AffiliateLink::where('affiliate_from',session('client_id'))->join('clients','clients.id','affiliate_link.affiliate_from')->get();
+        $total_clients = Client::count();
+
+        //shipment query by filter
+        $today_shipments = ShippingDetail::whereDate('created_at', Carbon::today())->get();
+        $this_week_shipments = ShippingDetail::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
+        $last_week_shipments = ShippingDetail::whereBetween('created_at', [Carbon::now()->subWeek()->startOfWeek(), Carbon::now()->subWeek()->endOfWeek()])->get();
+        $this_month_shipments = ShippingDetail::whereMonth('created_at', Carbon::now()->month)->get();
+        $last_month_shipments = ShippingDetail::whereBetween('created_at', [Carbon::now()->subMonth()->startOfMonth(), Carbon::now()->subMonth()->endOfMonth()])->get();
+        $this_year_shipments = ShippingDetail::whereYear('created_at', date('Y'))->get();
+        $last_year_shipments = ShippingDetail::whereMonth('created_at', Carbon::now()->month)->get();
+
+        return view('client.settings.package_shipment')->with('client_info',$client_info)->with('referred_clients',$referred_clients)
+                                               ->with('shipping_details',$shipping_details)->with('affiliated_at',$affiliated_at)
+                                               ->with('total_revenue',$total_revenue)->with('referred_clients_count',$referred_clients_count)
+                                               ->with('total_clients',$total_clients)->with('shipment_package_fee',$shipment_package_fee)
+                                               ->with('this_week_shipments', $this_week_shipments)->with('last_week_shipments', $last_week_shipments)
+                                               ->with('this_month_shipments', $this_month_shipments)->with('today_shipments', $today_shipments)
+                                               ->with('last_month_shipments', $last_month_shipments)->with('this_year_shipments', $this_year_shipments)
+                                               ->with('last_year_shipments', $last_year_shipments);
+    }
+
+    public function updateShippingQuantity(Request $request ,$id)
+    {
+        Client::where('id',$id)->update([
+
+            'shipping_quantity' => $request->shipping_quantity
+
+        ]);
+
+        return back()->with('message','Shipping Quantity have been updated');
+    }
+
+
 }

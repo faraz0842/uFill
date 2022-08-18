@@ -134,7 +134,7 @@
                                                 <td class="text-center">{{date('d-m-Y ', strtotime($client->client_until))}}</td>
                                                 <!--end::Client until-->
                                                 <!--begin::Total revenue-->
-                                                <td class="text-center">{{$total_client_revenue->total != null ? $total_client_revenue->total : 0}}€</td>
+                                                <td class="text-center">{{ Helper::money_format('EUR','de_DE',$total_client_revenue->total != null ? $total_client_revenue->total : 0)}}€</td>
                                                 <!--end::Total revenue-->
                                                 <!--begin::Open costs-->
                                                 <td class="text-center">
