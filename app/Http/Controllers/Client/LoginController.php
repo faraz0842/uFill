@@ -41,9 +41,11 @@ class LoginController extends Controller
         try {
 
             $is_exists = Client::where('email',$request->email)->first();
-            $package = Variant::where('variant_id',$is_exists->account_type)->first();
+
 
             if ($is_exists) {
+
+                $package = Variant::where('variant_id', $is_exists->account_type)->first();
 
                 if (Hash::check($request->password, $is_exists->password)) {
 

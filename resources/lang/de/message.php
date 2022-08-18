@@ -1249,7 +1249,7 @@ return [
 
     "Discount successfully applied. You will receive a one-time discount of" => "Rabatt erfolgreich angewendet. Sie erhalten einen einmaligen Rabatt von",
 
-    "Error! Please try a different discount code!" => "Fehler! Bitte versuchen Sie es mit einem anderen Rabattcode!",
+    "Error! Code has expired. Please try a different discount code! " => "Fehler! Code ist abgelaufen. Bitte versuchen Sie es mit einem anderen Rabattcode!",
 
     'resend_code' => 'Erneut senden',
     'or' => 'oder',

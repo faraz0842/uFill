@@ -178,7 +178,18 @@
                             @if (session('error'))
                                 <div class="alert alert-danger">{{ session('error') }}</div>
                             @endif
+                            @if($errors->any())
+                                <div class="alert alert-danger">
+                                    <p><strong>Opps Something went wrong</strong></p>
+                                    <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                         </div>
+
 
                         <form action="{{ Route('client.register.store') }}" method="post" class="my-auto pb-5"
                             enctype="multipart/form-data" name="myform" novalidate>
@@ -558,6 +569,7 @@
                                         <input name="company_name"
                                             class="form-control form-control-lg form-control-solid" value=""
                                             placeholder="Mustermann GmbH" required />
+
                                         <!--end::Input-->
                                     </div>
                                     <!--end::Input group-->
@@ -603,6 +615,7 @@
                                                 <input name="street"
                                                     class="form-control form-control-lg form-control-solid"
                                                     value="" placeholder="Musterweg" required />
+
                                                 <!--end::Input-->
                                             </div>
                                             <!--end::Col-->
@@ -963,8 +976,7 @@
                                                     <option value="Norway">Norway
                                                     </option>
                                                     <option value="Oman">Oman</option>
-                                                    <option value="Pakistan"Pakistan
-                                                    </option>
+                                                    <option value="Pakistan">Pakistan</option>
                                                     <option value="Palau">Palau
                                                     </option>
                                                     <option value="Palestinian Territory, Occupied">
@@ -1648,7 +1660,7 @@
                         } else {
 
                             $("#check_code_message").append(
-                                '<h5 class="text-danger" id="not_valid" style="margin-top: 12px; margin-left:8px">{{trans("message.Error! Please try a different discount code!")}}</h5>'
+                                '<h5 class="text-danger" id="not_valid" style="margin-top: 12px; margin-left:8px">{{trans("message.Error! Code has expired. Please try a different discount code! ")}}</h5>'
                             );
 
                             $('#valid').hide();

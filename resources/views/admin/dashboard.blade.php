@@ -2105,7 +2105,7 @@
                                                 <td class="text-center">{{ $shipping_detail->max_length }}</td>
                                                 <!--end::Size-->
                                                 <!--begin::price-->
-                                                <td class="text-center">{{ Helper::money_format('EUR','de_DE',$shipping_detail->cost) }}</td>
+                                                <td class="text-center">{{ Helper::money_format('EUR','de_DE',$shipping_detail->cost) }}€</td>
                                                 <!--end::price-->
                                                 {{-- <td class="text-center">{{$shipping_detail->fees}}</td> --}}
 

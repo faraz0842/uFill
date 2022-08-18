@@ -20,19 +20,25 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Stripe;
 use App\Helpers\Helper;
+use Illuminate\Support\Facades\Crypt;
 
 class RegisterController extends Controller
 {
     public function register($is_affiliate = null)
     {
 
-        $stripe = new \Stripe\StripeClient(
-            'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
-        );
-        $subscription_retrieve = $stripe->subscriptions->retrieve(
-            'sub_1LI4qpLRABgW92OXFPNViJ0H',
-            []
-        );
+
+        //$date = Carbon::now();
+        //return $date->addYear();
+
+
+        // $stripe = new \Stripe\StripeClient(
+        //     'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
+        // );
+        // $subscription_retrieve = $stripe->subscriptions->retrieve(
+        //     'sub_1LI4qpLRABgW92OXFPNViJ0H',
+        //     []
+        // );
 
         //return response()->json($subscription_retrieve);
 
@@ -55,7 +61,6 @@ class RegisterController extends Controller
             'email' => 'required|unique:clients,email',
             'company_name' => 'required|unique:clients,company_name',
             'telephone' => 'required|unique:clients,telephone',
-            'mobile_number' => 'required|unique:clients,mobile_number',
         ]);
 
         try {
@@ -90,6 +95,11 @@ class RegisterController extends Controller
             ||  getting card id
              ************************************/
             $card_id = $result["card"]["id"];
+
+
+
+
+
 
 
             /***********************************
@@ -137,6 +147,16 @@ class RegisterController extends Controller
             $client->hear_about_us  = $request->hear_about_us;
             $client->profile_picture  = $logo;
             $client->package_price = $variant_plan->price;
+            if($request->account_plan == 'year'){
+
+                $client->client_until  = Carbon::now()->addYear();
+                $client->next_payment = Carbon::now()->addYear();
+            }else{
+
+                $client->client_until  = Carbon::now()->addMonth();
+                $client->next_payment = Carbon::now()->addMonth();
+
+            }
             if ($client->save()) {
 
                 Client::where('id', $client->id)->update([
@@ -148,6 +168,7 @@ class RegisterController extends Controller
                  ***********************************************************/
                 session([
                     'client_id' => $client->id,
+                    'package_name' => $variant_plan->name,
                 ]);
 
                 /******************************************
@@ -160,10 +181,10 @@ class RegisterController extends Controller
                     $card->card_id = $card_id;
                     $card->client_id = $client->id;
                     $card->card_name = $request->card_name;
-                    $card->card_number = $request->card_number;
-                    $card->expiry_month = $request->card_expiry_month;
+                    $card->card_number = Crypt::encryptString($request->card_number) ;
+                    $card->expiry_month =  $request->card_expiry_month;
                     $card->expiry_year = $request->card_expiry_year;
-                    $card->cvv = $request->card_cvv;
+                    $card->cvv = Crypt::encryptString($request->card_cvv) ;
                     $card->type = 'default';
                     $card->save();
                 }
@@ -233,9 +254,17 @@ class RegisterController extends Controller
                 ]);
                 Stripe\Stripe::setApiKey('sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF');
 
-                if (is_null($user->stripe_id)) {
-                    $stripeCustomer = $user->createAsStripeCustomer($options);
-                    $tax_id = $user->createTaxId('eu_vat', $request->vat_id);
+                if (is_null($user->stripe_id)  ) {
+
+                    if($request->vat_id){
+
+                        $stripeCustomer = $user->createAsStripeCustomer($options);
+                        $tax_id = $user->createTaxId('eu_vat', $request->vat_id);
+                    }else{
+
+                        $stripeCustomer = $user->createAsStripeCustomer($options);
+                    }
+
                 }
 
                 Stripe\Customer::createSource(
@@ -243,8 +272,7 @@ class RegisterController extends Controller
                     ['source' => $token]
                 );
 
-
-                $discount = DiscountCode::where('code', $request->discount_code)->first();
+                $discount = DiscountCode::where('code', $request->discount_code)->where('available_until', '>=', Carbon::now())->first();
 
 
                 if ($discount) {
@@ -278,57 +306,31 @@ class RegisterController extends Controller
                         );
                 }
 
-                // $package = VariantPlan::where('variant_id', $client->account_type)->where('plan', $client->account_plan)->first();
 
-                // $creating_subscription = $stripe->subscriptions->create([
-                //     'customer' => $creating_customer->id,
-                //     'cancel_at_period_end' => true,
-                //     'items' => [
-                //         ['price' => $package->price_token],
-                //         'price_data' =>[
-                //             'currency' => 'eur',
-                //             'product' => $package->variant_id,
-                //         ],
-                //     ],
+                // $date = Carbon::now();
+                // if($request->account_plan == 'year'){
+
+                //     Client::where('id', $client->id)->update([
+                //         'client_until' => $date->addYear(),
+                //         'next_payment' => $date->addYear(),
+                //     ]);
+
+                // }else{
+
+                //     Client::where('id', $client->id)->update([
+                //         'client_until' => $date->addMonth(),
+                //         'next_payment' => $date->addMonth(),
+                //     ]);
+
+                // }
+
+                // Client::where('id', $client->id)->update([
+                //     'client_until' => Carbon::parse($stripe_subscription_response->current_period_end),
+                //     'next_payment' => Carbon::parse($stripe_subscription_response->current_period_end),
                 // ]);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                // $user = Client::where('id', $client->id)->first();
-                // $input = $request->all();
-                // $token =  $result["id"];
-                // $paymentMethod = $request->paymentMethod;
-
-                // $package = VariantPlan::where('variant_id', $client->account_type)->where('plan', $client->account_plan)->first();
-
-                // Stripe\Stripe::setApiKey('sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF');
-
-                // if (is_null($user->stripe_id)) {
-                //     $stripeCustomer = $user->createAsStripeCustomer();
-                // }
-
-                // Stripe\Customer::createSource(
-                //     $user->stripe_id,
-                //     ['source' => $token]
-                // );
 
                 // $discount_price = 0;
                 // if ($request->is_affiliate != null) {
@@ -347,39 +349,6 @@ class RegisterController extends Controller
                 //      $discount_amount =  0;
                 //  }
 
-                // $stripe = new \Stripe\StripeClient(
-                // 'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
-                // );
-
-                // $stripe_subscription_response =   $stripe->subscriptions->create([
-                // 'customer' => $user->stripe_id,
-
-                // 'items' => [
-                //     ['price' => $package->price_token],
-                // ],
-                //     'coupon' => $discount_code,
-                // ]);
-
-                //return response()->json($stripe_subscription_response);
-
-
-
-
-
-                // $name = $user->first_name . ' ' . $user->last_name;
-                // $stripe_subscription_response = $user->newSubscription($name,$package->price_token)
-                //     ->create($paymentMethod,
-                //     [
-                //         'email' => $user->email,
-                //         'coupon' => $discount_code,
-                //     ],
-
-                // );
-
-                Client::where('id', $client->id)->update([
-                    'client_until' => Carbon::parse($stripe_subscription_response->current_period_end),
-                    'next_payment' => Carbon::parse($stripe_subscription_response->current_period_end),
-                ]);
 
                 //  if($discount){
                 //     $discount_amount =  ((float) $package->price/100) * $discount->percent;
@@ -416,16 +385,7 @@ class RegisterController extends Controller
             }
 
 
-            // $unpaid_invoices = 0;
-            // $paid_invoices = 0;
-            // foreach(){
-            //     if(paid){
-            //         $paid_invoices += amount;
-            //     }else{
-            //         $unpaid_invoices += amount;
-            //     }
-            // }
-
+            //Inserting If Affilate Link is in registeration
 
             if ($request->is_affiliate != null) {
                 $is_affiliate_exist = Client::where('referral_link', $request->is_affiliate)->first();
@@ -445,6 +405,7 @@ class RegisterController extends Controller
                     $affiliate_link->save();
                 }
             }
+
 
             return redirect()->Route('client.dashboard');
         } catch (\Exception $th) {
@@ -483,24 +444,7 @@ class RegisterController extends Controller
 
     public function checkDiscountCode(Request $request)
     {
-        $check_discount = DiscountCode::where('code', $request->value)->first();
-
-        // $variant_id = $request->variant_id;
-        // $info = VariantPlan::where('variant_id', $variant_id)->get();
-        // $data = array();
-        // foreach ($info as $value) {
-        //     $data[] = [
-        //         "plan" => $value->plan,
-        //         "price" => Helper::money_format('EUR','de_DE',$value->price)
-        //     ];
-        // }
-
-        // $product_info = array();
-
-        // $product_info['check_discount'] = $check_discount;
-        // $product_info['product_data'] = $data;
-
-
+        $check_discount = DiscountCode::where('code', $request->value)->where('available_until','>=', Carbon::now())->first();
         return $check_discount;
     }
 }

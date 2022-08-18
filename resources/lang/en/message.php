@@ -686,7 +686,7 @@ return [
 
     "Discount successfully applied. You will receive a one-time discount of" => "Discount successfully applied. You will receive a one-time discount of",
 
-    "Error! Please try a different discount code!" => "Error! Please try a different discount code!",
+    "Error! Code has expired. Please try a different discount code! " => "Error! Code has expired. Please try a different discount code! ",
 
 
     'resend_code' => 'Resend code',

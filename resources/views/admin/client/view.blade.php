@@ -784,10 +784,14 @@
                                                         @endif
                                                 </td>
 
+                                                @php
+                                                    $card_number = Crypt::decryptString($card_detail->card_number);
+                                                @endphp
 
                                         <!--end::Transport-->
+                                        {{-- {{substr($card_number, -4) }} --}}
                                         <!--begin::Type-->
-                                        <td class="text-center pe-3 min-w-50px">************{{substr($card_detail->card_number, -4) }}
+                                        <td class="text-center pe-3 min-w-50px">************{{substr($card_number, -4) }}
                                         </td>
                                         <!--end::Type-->
                                         <!--begin::Weight-->
