@@ -167,8 +167,8 @@ class DashboardController extends Controller
         //return $current_month_count;
 
         if($clients && $current_month_count ){
-            //$check_client_progress = ( $current_month_count / $clients->count())  * 100 ;
-            $check_client_progress = ( $current_month_count / 1)  * 100 ;
+            $check_client_progress = ( $current_month_count / $clients->count())  * 100 ;
+            //$check_client_progress = ( $current_month_count / 1)  * 100 ;
         }else{
             $check_client_progress = 0 ;
         }

@@ -119,7 +119,7 @@ class RegisterController extends Controller
             }
 
 
-            $variant_plan = VariantPlan::where('variant_id', $request->account_type)->where('plan', $request->account_plan)->first();
+            $variant_plan = VariantPlan::where('variant_id', $request->account_type)->where('plan', $request->account_plan)->join('variants','variants.variant_id', 'variants_plan.variant_id')->first();
 
 
             $client = new Client();

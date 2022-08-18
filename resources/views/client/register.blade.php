@@ -32,7 +32,7 @@
     <!--begin::Main-->
     <!--begin::Root-->
     <div class="d-flex flex-column flex-root">
-        <div class="card-header " >
+        <div class="card-header ">
             <a href="{{ url('lang/en') }}" class="menu-link d-flex m-2" style="float:right;">
                 <span class="symbol symbol-20px me-4">
                     <img class="rounded-1" src="{{ asset('assets/media/flags/united-states.svg') }}" alt="" />
@@ -92,7 +92,8 @@
                                 <!--begin::Label-->
                                 <div class="stepper-label">
                                     <h3 class="stepper-title">{{ trans('message.Account Info') }}</h3>
-                                    <div class="stepper-desc fw-bold">{{ trans('message.How would you like to start?') }}</div>
+                                    <div class="stepper-desc fw-bold">
+                                        {{ trans('message.How would you like to start?') }}</div>
                                 </div>
                                 <!--end::Label-->
                             </div>
@@ -130,7 +131,8 @@
                                 <!--begin::Label-->
                                 <div class="stepper-label">
                                     <h3 class="stepper-title">{{ trans('message.Payment details') }}</h3>
-                                    <div class="stepper-desc fw-bold">{{ trans('message.Choose your payment method.') }}</div>
+                                    <div class="stepper-desc fw-bold">
+                                        {{ trans('message.Choose your payment method.') }}</div>
                                 </div>
                                 <!--end::Label-->
                             </div>
@@ -178,13 +180,13 @@
                             @if (session('error'))
                                 <div class="alert alert-danger">{{ session('error') }}</div>
                             @endif
-                            @if($errors->any())
+                            @if ($errors->any())
                                 <div class="alert alert-danger">
                                     <p><strong>Opps Something went wrong</strong></p>
                                     <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             @endif
@@ -202,13 +204,15 @@
                                     <!--begin::Heading-->
                                     <div class="pb-10 pb-lg-15">
                                         <!--begin::Title-->
-                                        <h2 class="fw-bolder d-flex align-items-center text-dark">{{ trans('message.Please choose…') }}
+                                        <h2 class="fw-bolder d-flex align-items-center text-dark">
+                                            {{ trans('message.Please choose…') }}
                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
                                                 title="Die Kosten sowie der Funktionsumfang sind abhängig von Ihrer Wahl."></i>
                                         </h2>
                                         <!--end::Title-->
                                         <!--begin::Notice-->
-                                        <div class="text-muted fw-bold fs-6">{{ trans('message.See the product overview for more information on the differences . You can adjust your decision later.') }}
+                                        <div class="text-muted fw-bold fs-6">
+                                            {{ trans('message.See the product overview for more information on the differences . You can adjust your decision later.') }}
                                             {{-- <a href="#" class="link-primary fw-bolder" target="_blank">{{ trans('message.See the product overview for more information on the differences . You can adjust your decision later.') }}</a>. --}}
                                         </div>
                                         <!--end::Notice-->
@@ -223,12 +227,14 @@
                                                 <div class="col-lg-12">
                                                     <!--begin::Option-->
                                                     @if ($variant->name == 'single')
-                                                        <input type="radio" class="btn-check account_type" name="account_type"
+                                                        <input type="radio" class="btn-check account_type"
+                                                            name="account_type"
                                                             onclick="getVariantPrice([this.value,'payment_interval'])"
                                                             value="{{ $variant->variant_id }}" checked
                                                             id="kt_create_account_form_account_type_{{ $variant->name }}" />
                                                     @else
-                                                        <input type="radio" class="btn-check account_type" name="account_type"
+                                                        <input type="radio" class="btn-check account_type"
+                                                            name="account_type"
                                                             onclick="getVariantPrice([this.value,'payment_interval'])"
                                                             value="{{ $variant->variant_id }}"
                                                             id="kt_create_account_form_account_type_{{ $variant->name }}" />
@@ -255,8 +261,10 @@
                                                             <span
                                                                 class="text-dark fw-bolder d-block fs-4 mb-2">"{{ $variant->name }}"
                                                                 Account</span>
-                                                            <span class="text-muted fw-bold fs-7">{{ trans('message.You only want to manage your shipments and take advantage of our favorable conditions?.') }}.</span>
-                                                            <span class="d-block text-muted fw-bold fs-6">{{ trans('message.Price: from') }}
+                                                            <span
+                                                                class="text-muted fw-bold fs-7">{{ trans('message.You only want to manage your shipments and take advantage of our favorable conditions?.') }}.</span>
+                                                            <span
+                                                                class="d-block text-muted fw-bold fs-6">{{ trans('message.Price: from') }}
                                                                 €{{ Helper::money_format('EUR', 'de_DE', $variant->price) }}
                                                                 / {{ trans('message.month') }}</span>
                                                         </span>
@@ -330,10 +338,12 @@
                                     <!--begin::Heading-->
                                     <div class="pb-10 pb-lg-15">
                                         <!--begin::Title-->
-                                        <h2 class="fw-bolder text-dark">{{ trans('message.Account Information') }}</h2>
+                                        <h2 class="fw-bolder text-dark">{{ trans('message.Account Information') }}
+                                        </h2>
                                         <!--end::Title-->
                                         <!--begin::Notice-->
-                                        <div class="text-muted fw-bold fs-6">{{ trans('message.Need help or have a question? Our team will be happy to help you. Contact us.') }}
+                                        <div class="text-muted fw-bold fs-6">
+                                            {{ trans('message.Need help or have a question? Our team will be happy to help you. Contact us.') }}
                                             <a href="#" class="link-primary fw-bolder"
                                                 target="_blank">{{ trans('message.Contact') }}</a>.
                                         </div>
@@ -343,7 +353,8 @@
                                     <!--begin::Input group-->
                                     <div class="mb-10 fv-row">
                                         <!--begin::Label-->
-                                        <label class="d-flex align-items-center form-label mb-5 required">{{ trans('message.Choose payment interval') }}
+                                        <label
+                                            class="d-flex align-items-center form-label mb-5 required">{{ trans('message.Choose payment interval') }}
 
                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
                                                 title="Bitte wählen Sie den gewünschten Zahlungsinterval."></i></label>
@@ -365,7 +376,8 @@
                                                     <span class="d-flex flex-column">
                                                         <span
                                                             class="fw-bolder text-gray-800 text-hover-primary fs-5">{{ trans('message.Monthly Package') }}</span>
-                                                        <span class="fs-6 fw-bold text-muted">{{ trans('message.Your account will be charged monthly with €9,99.') }}</span>
+                                                        <span
+                                                            class="fs-6 fw-bold text-muted">{{ trans('message.Your account will be charged monthly with €9,99.') }}</span>
                                                     </span>
                                                     <!--end:Description-->
                                                 </span>
@@ -392,7 +404,8 @@
                                                     <span class="d-flex flex-column">
                                                         <span
                                                             class="fw-bolder text-gray-800 text-hover-primary fs-5">{{ trans('message.Yearly Package') }}</span>
-                                                        <span class="fs-6 fw-bold text-muted">{{ trans('message.Your account will be charged yearly with €95,88.') }}</span>
+                                                        <span
+                                                            class="fs-6 fw-bold text-muted">{{ trans('message.Your account will be charged yearly with €95,88.') }}</span>
                                                     </span>
                                                     <!--end:Description-->
                                                 </span>
@@ -443,20 +456,21 @@
                                     </div>
                                     <!--end::Input group-->
                                     <!--begin::Input group-->
-                                    <div class="mb-10 fv-row" >
+                                    <div class="mb-10 fv-row">
                                         @csrf
                                         <input name="is_affiliate"
-                                            value="ufill.devatease.com/client/register/{{ $is_affiliate }}"
-                                            hidden />
+                                            value="ufill.devatease.com/client/register/{{ $is_affiliate }}" hidden />
                                         <!--begin::Label-->
                                         <label
                                             class="d-flex align-items-center form-label mb-3">{{ trans('message.Discount Code') }}</label>
                                         <!--end::Label-->
                                         <!--begin::Row-->
                                         <div class="col-md-12" style="display: inline-flex">
-                                            <input type="text" id="code" class="form-control form-control-solid" style="width: 75%"
+                                            <input type="text" id="code"
+                                                class="form-control form-control-solid" style="width: 75%"
                                                 name="discount_code" placeholder="Discount Code eg. AD344FD" />
-                                            <a onclick="checkDiscountCode()" class="btn btn-primary" style="width: 25%; margin-left:20px">{{ trans('message.Check Code') }}</a>
+                                            <a onclick="checkDiscountCode()" class="btn btn-primary"
+                                                style="width: 25%; margin-left:20px">{{ trans('message.Check Code') }}</a>
 
                                         </div>
                                         <br>
@@ -477,10 +491,14 @@
                                             class="form-select form-select-lg form-select-solid"
                                             data-control="select2" data-placeholder="Bitte wählen..."
                                             data-allow-clear="true" data-hide-search="true" required>
-                                            <option value="0-50">0 - 50 {{ trans('message.pcs.') }} / {{ trans('message.monthly') }}</option>
-                                            <option value="50-500" selected>50 - 500 {{ trans('message.pcs.') }} / {{ trans('message.monthly') }}</option>
-                                            <option value="500-2000">500 - 2000 {{ trans('message.pcs.') }} / {{ trans('message.monthly') }}</option>
-                                            <option value="ab-2000">ab 2000 {{ trans('message.pcs.') }} / {{ trans('message.monthly') }}</option>
+                                            <option value="0-50">0 - 50 {{ trans('message.pcs.') }} /
+                                                {{ trans('message.monthly') }}</option>
+                                            <option value="50-500" selected>50 - 500 {{ trans('message.pcs.') }} /
+                                                {{ trans('message.monthly') }}</option>
+                                            <option value="500-2000">500 - 2000 {{ trans('message.pcs.') }} /
+                                                {{ trans('message.monthly') }}</option>
+                                            <option value="ab-2000">ab 2000 {{ trans('message.pcs.') }} /
+                                                {{ trans('message.monthly') }}</option>
                                         </select>
                                         <!--end::Input-->
                                     </div>
@@ -496,10 +514,12 @@
                                     <!--begin::Heading-->
                                     <div class="pb-10 pb-lg-12">
                                         <!--begin::Title-->
-                                        <h2 class="fw-bolder text-dark">{{ trans('message.Your personal information') }}</h2>
+                                        <h2 class="fw-bolder text-dark">
+                                            {{ trans('message.Your personal information') }}</h2>
                                         <!--end::Title-->
                                         <!--begin::Notice-->
-                                        <div class="text-muted fw-bold fs-6">{{ trans('message.Need help or have a question? Our team will be happy to help you. Contact us.') }}
+                                        <div class="text-muted fw-bold fs-6">
+                                            {{ trans('message.Need help or have a question? Our team will be happy to help you. Contact us.') }}
                                             <a href="#" class="link-primary fw-bolder"
                                                 target="_blank">{{ trans('message.Contact') }}</a>.
                                         </div>
@@ -512,8 +532,8 @@
                                             <span>{{ trans('message.Company logo') }}</span>
                                             <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
                                                 title=""
-                                                data-bs-original-title="{{trans('message.Allowed formats: png, jpg, jpeg')}}"
-                                                aria-label="{{trans('message.Allowed formats: png, jpg, jpeg')}}"></i>
+                                                data-bs-original-title="{{ trans('message.Allowed formats: png, jpg, jpeg') }}"
+                                                aria-label="{{ trans('message.Allowed formats: png, jpg, jpeg') }}"></i>
                                         </label>
                                         <!--end::Label-->
                                         <!--begin::Image input wrapper-->
@@ -543,7 +563,8 @@
                                                 <span
                                                     class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
                                                     data-kt-image-input-action="cancel" data-bs-toggle="tooltip"
-                                                    title="" data-bs-original-title="{{trans('message.Change logo')}}">
+                                                    title=""
+                                                    data-bs-original-title="{{ trans('message.Change logo') }}">
                                                     <i class="bi bi-x fs-2"></i>
                                                 </span>
                                                 <!--end::Cancel-->
@@ -551,7 +572,8 @@
                                                 <span
                                                     class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
                                                     data-kt-image-input-action="remove" data-bs-toggle="tooltip"
-                                                    title="" data-bs-original-title="{{trans('message.Remove logo')}}">
+                                                    title=""
+                                                    data-bs-original-title="{{ trans('message.Remove logo') }}">
                                                     <i class="bi bi-x fs-2"></i>
                                                 </span>
                                                 <!--end::Remove-->
@@ -579,7 +601,8 @@
                                             <!--begin::Col-->
                                             <div class="col-6">
                                                 <!--begin::Label-->
-                                                <label class="form-label required">{{ trans('message.First name') }}</label>
+                                                <label
+                                                    class="form-label required">{{ trans('message.First name') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <input name="first_name"
@@ -591,7 +614,8 @@
                                             <!--begin::Col-->
                                             <div class="col-6">
                                                 <!--begin::Label-->
-                                                <label class="form-label required">{{ trans('message.Last name') }}</label>
+                                                <label
+                                                    class="form-label required">{{ trans('message.Last name') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <input name="last_name"
@@ -609,7 +633,8 @@
                                             <!--begin::Col-->
                                             <div class="col-8">
                                                 <!--begin::Label-->
-                                                <label class="form-label required">{{ trans('message.Street') }}</label>
+                                                <label
+                                                    class="form-label required">{{ trans('message.Street') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <input name="street"
@@ -622,7 +647,8 @@
                                             <!--begin::Col-->
                                             <div class="col-4">
                                                 <!--begin::Label-->
-                                                <label class="form-label required">{{ trans('message.House number') }}</label>
+                                                <label
+                                                    class="form-label required">{{ trans('message.House number') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <input name="house_number"
@@ -640,7 +666,8 @@
                                             <!--begin::Col-->
                                             <div class="col-4">
                                                 <!--begin::Label-->
-                                                <label class="form-label required">{{ trans('message.Zip Code') }}</label>
+                                                <label
+                                                    class="form-label required">{{ trans('message.Zip Code') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <input type="number" name="plz"
@@ -652,7 +679,8 @@
                                             <!--begin::Col-->
                                             <div class="col-8">
                                                 <!--begin::Label-->
-                                                <label class="form-label required">{{ trans('message.State') }}</label>
+                                                <label
+                                                    class="form-label required">{{ trans('message.State') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <input name="state"
@@ -673,448 +701,328 @@
                                         <!--begin::Input-->
                                         <select name="country" aria-label="Select..." data-control="select2"
                                             data-placeholder="Select..." class="form-select form-select-solid">
-                                            <option value=""
-                                                        >
-                                                        {{ trans('message.Please choose') }}...</option>
-                                                    <option value="Afghanistan">
-                                                        Afghanistan</option>
-                                                    <option value="Aland Islands"\>Aland
-                                                        Islands</option>
-                                                    <option value="Albania">Albania
-                                                    </option>
-                                                    <option value="Algeria">Algeria
-                                                    </option>
-                                                    <option value="American Samoa">
-                                                        American Samoa</option>
-                                                    <option value="Andorra">Andorra
-                                                    </option>
-                                                    <option value="Angola"Angola
-                                                    </option>
-                                                    <option value="Anguilla">Anguilla
-                                                    </option>
-                                                    <option value="Antigua and Barbuda">
-                                                        Antigua and Barbuda</option>
-                                                    <option value="Argentina">Argentina
-                                                    </option>
-                                                    <option value="Armenia">Armenia
-                                                    </option>>Aruba
-                                                    </option>
-                                                    <option value="Australia">Australia
-                                                    </option>
-                                                    <option value="Austria">Austria
-                                                    </option>
-                                                    <option value="Azerbaijan">
-                                                        Azerbaijan</option>
-                                                    <option value="Bahamas">Bahamas
-                                                    </option>
-                                                    <option value="Bahrain">Bahrain
-                                                    </option>
-                                                    <option value="Bangladesh">
-                                                        Bangladesh</option>
-                                                    <option value="Barbados">Barbados
-                                                    </option>
-                                                    <option value="Belarus">Belarus
-                                                    </option>
-                                                    <option value="Belgium">Belgium
-                                                    </option>
-                                                    <option value="Belize">Belize
-                                                    </option>
-                                                    <option value="Benin">Benin
-                                                    </option>
-                                                    <option value="Bermuda">Bermuda
-                                                    </option>
-                                                    <option value="Bhutan">Bhutan
-                                                    </option>
-                                                    <option value="Bolivia, Plurinational State of">
-                                                        Bolivia, Plurinational State of</option>
-                                                    <option value="Bonaire, Sint Eustatius and Saba">
-                                                        Bonaire, Sint Eustatius and Saba</option>
-                                                    <option value="Bosnia and Herzegovina">
-                                                        Bosnia and Herzegovina</option>
-                                                    <option value="Botswana">Botswana
-                                                    </option>
-                                                    <option value="Brazil">Brazil
-                                                    </option>
-                                                    <option value="British Indian Ocean Territory">
-                                                        British Indian Ocean Territory</option>
-                                                    <option value="Brunei Darussalam">
-                                                        Brunei Darussalam</option>
-                                                    <option value="Bulgaria">Bulgaria
-                                                    </option>
-                                                    <option value="Burkina Faso">
-                                                        Burkina Faso</option>
-                                                    <option value="Burundi">Burundi
-                                                    </option>
-                                                    <option value="Cambodia">Cambodia
-                                                    </option>
-                                                    <option value="Cameroon">Cameroon
-                                                    </option>
-                                                    <option value="Canada">Canada
-                                                    </option>
-                                                    <option value="Cape Verde">Cape
-                                                        Verde</option>
-                                                    <option value="Cayman Islands">
-                                                        Cayman Islands</option>
-                                                    <option value="Central African Republic">
-                                                        Central African Republic</option>
-                                                    <option value="Chad">Chad</option>
-                                                    <option value="Chile">Chile
-                                                    </option>
-                                                    <option value="China">China
-                                                    </option>
-                                                    <option value="Christmas Island">
-                                                        Christmas Island</option>
-                                                    <option value="Cocos (Keeling) Islands">
-                                                        Cocos (Keeling) Islands</option>
-                                                    <option value="Colombia">Colombia
-                                                    </option>
-                                                    <option value="Comoros">Comoros
-                                                    </option>
-                                                    <option value="Cook Islands">Cook
-                                                        Islands</option>
-                                                    <option value="Costa Rica">Costa
-                                                        Rica</option>
-                                                    <option value="Côte d Ivoire">Côte
-                                                        d'Ivoire</option>
-                                                    <option value="Croatia">Croatia
-                                                    </option>
-                                                    <option value="Cuba">Cuba</option>
-                                                    <option value="Curaçao">Curaçao
-                                                    </option>
-                                                    <option value="Czech Republic">
-                                                        Czech Republic</option>
-                                                    <option value="Denmark">Denmark
-                                                    </option>
-                                                    <option value="Djibouti">Djibouti
-                                                    </option>
-                                                    <option value="Dominica">Dominica
-                                                    </option>
-                                                    <option value="Dominican Republic">
-                                                        Dominican Republic</option>
-                                                    <option value="Ecuador">Ecuador
-                                                    </option>
-                                                    <option value="Egypt">Egypt
-                                                    </option>
-                                                    <option value="El Salvador">El
-                                                        Salvador</option>
-                                                    <option value="Equatorial Guinea">
-                                                        Equatorial Guinea</option>
-                                                    <option value="Eritrea">Eritrea
-                                                    </option>
-                                                    <option value="Estonia">Estonia
-                                                    </option>
-                                                    <option value="Ethiopia"}>Ethiopia
-                                                    </option>
-                                                    <option value="Falkland Islands (Malvinas)">
-                                                        Falkland Islands (Malvinas)</option>
-                                                    <option value="Fiji">Fiji</option>
-                                                    <option value="Finland">Finland
-                                                    </option>
-                                                    <option value="France">France
-                                                    </option>
-                                                    <option value="French Polynesia">
-                                                        French Polynesia</option>
-                                                    <option value="Gabon">Gabon
-                                                    </option>
-                                                    <option value="Gambia">Gambia
-                                                    </option>
-                                                    <option value="Georgia">Georgia
-                                                    </option>
-                                                    <option value="Germany">Germany
-                                                    </option>
-                                                    <option value="Ghana">Ghana
-                                                    </option>
-                                                    <option value="Gibraltar">Gibraltar
-                                                    </option>
-                                                    <option value="Greece">Greece
-                                                    </option>
-                                                    <option value="Greenland">Greenland
-                                                    </option>
-                                                    <option value="Grenada">Grenada
-                                                    </option>
-                                                    <option value="Guam">Guam</option>
-                                                    <option value="Guatemala">Guatemala
-                                                    </option>
-                                                    <option value="Guernsey">Guernsey
-                                                    </option>
-                                                    <option value="Guinea">Guinea
-                                                    </option>
-                                                    <option value="Guinea-Bissau">
-                                                        Guinea-Bissau</option>
-                                                    <option value="Haiti">Haiti
-                                                    </option>
-                                                    <option value="Holy See (Vatican City State)">
-                                                        Holy See (Vatican City State)</option>
-                                                    <option value="Honduras">Honduras
-                                                    </option>
-                                                    <option value="Hong Kong">Hong Kong
-                                                    </option>
-                                                    <option value="Hungary">Hungary
-                                                    </option>
-                                                    <option value="Iceland">Iceland
-                                                    </option>
-                                                    <option value="India">India
-                                                    </option>
-                                                    <option value="Indonesia">Indonesia
-                                                    </option>
-                                                    <option value="Iran">Iran</option>
-                                                    <option value="Iraq">Iraq</option>
-                                                    <option value="Ireland">Ireland
-                                                    </option>
-                                                    <option value="Isle of Man">Isle of
-                                                        Man</option>
-                                                    <option value="Israel">Israel
-                                                    </option>
-                                                    <option value="Italy"
-                                                        >Italy
-                                                    </option>
-                                                    <option value="Jamaica"
-                                                        : >Jamaica
-                                                    </option>
-                                                    <option value="Japan"
-                                                        >Japan
-                                                    </option>
-                                                    <option value="Jersey"
-                                                         >Jersey
-                                                    </option>
-                                                    <option value="Jordan"
-                                                         >Jordan
-                                                    </option>
-                                                    <option value="Kazakhstan">
-                                                        Kazakhstan</option>
-                                                    <option value="Kenya"
-                                                        >Kenya
-                                                    </option>
-                                                    <option value="Kiriba >Kiribati">
-                                                    </option>
-                                                    <option value="Korea">Korea
-                                                    </option>
-                                                    <option value="Kuwait"
-                                                         >Kuwait
-                                                    </option>
-                                                    <option value="Kyrgyzstan">
-                                                        Kyrgyzstan</option>
-                                                    <option value="Lao Peoples Democratic Republic">
-                                                        Lao People's Democratic Republic</option>
-                                                    <option value="Latvia"
-                                                         >Latvia
-                                                    </option>
-                                                    <option value="Lebanon">Lebanon
-                                                    </option>
-                                                    <option value="Lesotho">Lesotho
-                                                    </option>
-                                                    <option value="Liberia">Liberia
-                                                    </option>
-                                                    <option value="Libya">Libya
-                                                    </option>
-                                                    <option value="Liechtenstein">
-                                                        Liechtenstein</option>
-                                                    <option value="Lithuania">Lithuania
-                                                    </option>
-                                                    <option value="Luxembourg">
-                                                        Luxembourg</option>
-                                                    <option value="Macao">Macao
-                                                    </option>
-                                                    <option value="Madagascar">
-                                                        Madagascar</option>
-                                                    <option value="Malawi">Malawi
-                                                    </option>
-                                                    <option value="Malaysia">Malaysia
-                                                    </option>
-                                                    <option value="Maldives">Maldives
-                                                    </option>
-                                                    <option value="Mali">Mali</option>
-                                                    <option value="Malta">Malta
-                                                    </option>
-                                                    <option value="Marshall Islands">
-                                                        Marshall Islands</option>
-                                                    <option>
-                                                        Mauritania</option>
-                                                    <option value="Mauritius">Mauritius
-                                                    </option>
-                                                    <option value="Mexico">Mexico
-                                                    </option>
-                                                    <option value="Micronesia">
-                                                        Micronesia</option>
-                                                    <option value="Moldova">Moldova
-                                                    </option>
-                                                    <option value="Monaco">Monaco
-                                                    </option>
-                                                    <option value="Mongolia">Mongolia
-                                                    </option>
-                                                    <option value="Montenegro">
-                                                        Montenegro</option>
-                                                    <option value="Montserrat">
-                                                        Montserrat</option>
-                                                    <option value="Morocco">Morocco
-                                                    </option>
-                                                    <option value="Mozambique">
-                                                        Mozambique</option>
-                                                    <option value="Myanmar">Myanmar
-                                                    </option>
-                                                    <option value="Namibia">Namibia
-                                                    </option>
-                                                    <option value="Nauru">Nauru
-                                                    </option>
-                                                    <option value="Nepal">Nepal
-                                                    </option>
-                                                    <option value="Netherlands">
-                                                        Netherlands</option>
-                                                    <option value="New Zealand">New
-                                                        Zealand</option>
-                                                    <option value="Nicaragua">Nicaragua
-                                                    </option>
-                                                    <option value="Niger">Niger
-                                                    </option>
-                                                    <option value="Nigeria">Nigeria
-                                                    </option>
-                                                    <option value="Niue">Niue</option>
-                                                    <option value="Norfolk Island">
-                                                        Norfolk Island</option>
-                                                    <option value="Northern Mariana Islands">
-                                                        Northern Mariana Islands</option>
-                                                    <option value="Norway">Norway
-                                                    </option>
-                                                    <option value="Oman">Oman</option>
-                                                    <option value="Pakistan">Pakistan</option>
-                                                    <option value="Palau">Palau
-                                                    </option>
-                                                    <option value="Palestinian Territory, Occupied">
-                                                        Palestinian Territory, Occupied</option>
-                                                    <option value="Panama">Panama
-                                                    </option>
-                                                    <option value="Papua New Guinea">
-                                                        Papua New Guinea</option>
-                                                    <option value="Paraguay">Paraguay
-                                                    </option>
-                                                    <option value="Peru">Peru</option>
-                                                    <option value="Philippines">
-                                                        Philippines</option>
-                                                    <option value="Poland">Poland
-                                                    </option>
-                                                    <option value="Portugal">Portugal
-                                                    </option>
-                                                    <option value="Puerto Rico">Puerto
-                                                        Rico</option>
-                                                    <option value="Qatar">Qatar
-                                                    </option>
-                                                    <option value="Romania">Romania
-                                                    </option>
-                                                    <option value="Russian Federation">
-                                                        Russian Federation</option>
-                                                    <option value="Rwanda">Rwanda
-                                                    </option>
-                                                    <option value="Saint Barthélemy">
-                                                        Saint Barthélemy</option>
-                                                    <option value="Saint Kitts and Nevis">
-                                                        Saint Kitts and Nevis</option>
-                                                    <option value="Saint Lucia">Saint
-                                                        Lucia</option>
-                                                    <option value="Saint Martin (French part)">
-                                                        Saint Martin (French part)</option>
-                                                    <option value="Saint Vincent and the Grenadines">
-                                                        Saint Vincent and the Grenadines</option>
-                                                    <option value="Samoa">Samoa
-                                                    </option>
-                                                    <option value="San Marino">San
-                                                        Marino</option>
-                                                    <option value="Sao Tome and Principe">
-                                                        Sao Tome and Principe</option>
-                                                    <option value="Saudi Arabia">Saudi
-                                                        Arabia</option>
-                                                    <option value="Senegal">Senegal
-                                                    </option>
-                                                    <option value="Serbia">Serbia
-                                                    </option>
-                                                    <option value="Seychelles">
-                                                        Seychelles</option>
-                                                    <option value="Sierra Leone">Sierra
-                                                        Leone</option>
-                                                    <option value="Singapore">Singapore
-                                                    </option>
-                                                    <option value="Sint Maarten (Dutch part)">
-                                                        Sint Maarten (Dutch part)</option>
-                                                    <option value="Slovakia">Slovakia
-                                                    </option>
-                                                    <option value="Slovenia">Slovenia
-                                                    </option>
-                                                    <option value="Solomon Islands">
-                                                        Solomon Islands</option>
-                                                    <option value="Somalia">Somalia
-                                                    </option>
-                                                    <option value="South Africa">South
-                                                        Africa</option>
-                                                    <option value="South Korea">South
-                                                        Korea</option>
-                                                    <option value="South Sudan">South
-                                                        Sudan</option>
-                                                    <option value="Spain">Spain
-                                                    </option>
-                                                    <option value="Sri Lanka">Sri Lanka
-                                                    </option>
-                                                    <option value="Sudan">Sudan
-                                                    </option>
-                                                    <option value="Suriname">Suriname
-                                                    </option>
-                                                    <option value="Swaziland">Swaziland
-                                                    </option>
-                                                    <option value="Sweden">Sweden
-                                                    </option>
-                                                    <option value="Switzerland">
-                                                        Switzerland</option>
-                                                    <option value="Syrian Arab Republic">
-                                                        Syrian Arab Republic</option>
-                                                    <option value="Taiwan, Province of China">
-                                                        Taiwan, Province of China</option>
-                                                    <option value="Tajikistan">
-                                                        Tajikistan</option>
-                                                    <option value="Tanzania, United Republic of">
-                                                        Tanzania, United Republic of</option>
-                                                    <option value="Thailand">Thailand
-                                                    </option>
-                                                    <option value="Togo">Togo</option>
-                                                    <option value="Tokelau">Tokelau
-                                                    </option>
-                                                    <option value="Tonga">Tonga
-                                                    </option>
-                                                    <option value="Trinidad and Tobago">
-                                                        Trinidad and Tobago</option>
-                                                    <option value="Tunisia">Tunisia
-                                                    </option>
-                                                    <option value="Turkey">Turkey
-                                                    </option>
-                                                    <option value="Turkmenistan">
-                                                        Turkmenistan</option>
-                                                    <option value="Turks and Caicos Islands">
-                                                        Turks and Caicos Islands</option>
-                                                    <option value="Tuvalu">Tuvalu
-                                                    </option>
-                                                    <option value="Uganda">Uganda
-                                                    </option>
-                                                    <option value="Ukraine">Ukraine
-                                                    </option>
-                                                    <option value="United Arab Emirates">
-                                                        United Arab Emirates</option>
-                                                    <option value="United Kingdom">
-                                                        United Kingdom</option>
-                                                    <option value="United States">
-                                                        United States</option>
-                                                    <option value="Uruguay">Uruguay
-                                                    </option>
-                                                    <option value="Uzbekistan">
-                                                        Uzbekistan</option>
-                                                    <option value="Vanuatu">
-                                                    </option>
-                                                    <option value="Venezuela, Bolivarian Republic of">
-                                                        Venezuela, Bolivarian Republic of</option>
-                                                    <option value="Vietnam">Vietnam
-                                                    </option>
-                                                    <option value="Yemen">Yemen
-                                                    </option>
-                                                    <option value="Zambia">Zambia
-                                                    </option>
-                                                    <option value="Zimbabwe">Zimbabwe
-                                                    </option>
+                                            <option value="">
+                                                {{ trans('message.Please choose') }}...</option>
+                                            <option data-kt-flag="flags/afghanistan.svg" value="AF">Afghanistan
+                                            </option>
+                                            <option data-kt-flag="flags/aland-islands.svg" value="AX">Aland
+                                                Islands</option>
+                                            <option data-kt-flag="flags/albania.svg" value="AL">Albania</option>
+                                            <option data-kt-flag="flags/algeria.svg" value="DZ">Algeria</option>
+                                            <option data-kt-flag="flags/american-samoa.svg" value="AS">American
+                                                Samoa</option>
+                                            <option data-kt-flag="flags/andorra.svg" value="AD">Andorra</option>
+                                            <option data-kt-flag="flags/angola.svg" value="AO">Angola</option>
+                                            <option data-kt-flag="flags/anguilla.svg" value="AI">Anguilla</option>
+                                            <option data-kt-flag="flags/antigua-and-barbuda.svg" value="AG">
+                                                Antigua and Barbuda</option>
+                                            <option data-kt-flag="flags/argentina.svg" value="AR">Argentina
+                                            </option>
+                                            <option data-kt-flag="flags/armenia.svg" value="AM">Armenia</option>
+                                            <option data-kt-flag="flags/aruba.svg" value="AW">Aruba</option>
+                                            <option data-kt-flag="flags/australia.svg" value="AU">Australia
+                                            </option>
+                                            <option data-kt-flag="flags/austria.svg" value="AT">Austria</option>
+                                            <option data-kt-flag="flags/azerbaijan.svg" value="AZ">Azerbaijan
+                                            </option>
+                                            <option data-kt-flag="flags/bahamas.svg" value="BS">Bahamas</option>
+                                            <option data-kt-flag="flags/bahrain.svg" value="BH">Bahrain</option>
+                                            <option data-kt-flag="flags/bangladesh.svg" value="BD">Bangladesh
+                                            </option>
+                                            <option data-kt-flag="flags/barbados.svg" value="BB">Barbados</option>
+                                            <option data-kt-flag="flags/belarus.svg" value="BY">Belarus</option>
+                                            <option data-kt-flag="flags/belgium.svg" value="BE">Belgium</option>
+                                            <option data-kt-flag="flags/belize.svg" value="BZ">Belize</option>
+                                            <option data-kt-flag="flags/benin.svg" value="BJ">Benin</option>
+                                            <option data-kt-flag="flags/bermuda.svg" value="BM">Bermuda</option>
+                                            <option data-kt-flag="flags/bhutan.svg" value="BT">Bhutan</option>
+                                            <option data-kt-flag="flags/bolivia.svg" value="BO">Bolivia,
+                                                Plurinational State of</option>
+                                            <option data-kt-flag="flags/bonaire.svg" value="BQ">Bonaire, Sint
+                                                Eustatius and Saba</option>
+                                            <option data-kt-flag="flags/bosnia-and-herzegovina.svg" value="BA">
+                                                Bosnia and Herzegovina</option>
+                                            <option data-kt-flag="flags/botswana.svg" value="BW">Botswana</option>
+                                            <option data-kt-flag="flags/brazil.svg" value="BR">Brazil</option>
+                                            <option data-kt-flag="flags/british-indian-ocean-territory.svg"
+                                                value="IO">British Indian Ocean Territory</option>
+                                            <option data-kt-flag="flags/brunei.svg" value="BN">Brunei Darussalam
+                                            </option>
+                                            <option data-kt-flag="flags/bulgaria.svg" value="BG">Bulgaria</option>
+                                            <option data-kt-flag="flags/burkina-faso.svg" value="BF">Burkina Faso
+                                            </option>
+                                            <option data-kt-flag="flags/burundi.svg" value="BI">Burundi</option>
+                                            <option data-kt-flag="flags/cambodia.svg" value="KH">Cambodia</option>
+                                            <option data-kt-flag="flags/cameroon.svg" value="CM">Cameroon</option>
+                                            <option data-kt-flag="flags/canada.svg" value="CA">Canada</option>
+                                            <option data-kt-flag="flags/cape-verde.svg" value="CV">Cape Verde
+                                            </option>
+                                            <option data-kt-flag="flags/cayman-islands.svg" value="KY">Cayman
+                                                Islands</option>
+                                            <option data-kt-flag="flags/central-african-republic.svg" value="CF">
+                                                Central African Republic</option>
+                                            <option data-kt-flag="flags/chad.svg" value="TD">Chad</option>
+                                            <option data-kt-flag="flags/chile.svg" value="CL">Chile</option>
+                                            <option data-kt-flag="flags/china.svg" value="CN">China</option>
+                                            <option data-kt-flag="flags/christmas-island.svg" value="CX">Christmas
+                                                Island</option>
+                                            <option data-kt-flag="flags/cocos-island.svg" value="CC">Cocos
+                                                (Keeling) Islands</option>
+                                            <option data-kt-flag="flags/colombia.svg" value="CO">Colombia</option>
+                                            <option data-kt-flag="flags/comoros.svg" value="KM">Comoros</option>
+                                            <option data-kt-flag="flags/cook-islands.svg" value="CK">Cook Islands
+                                            </option>
+                                            <option data-kt-flag="flags/costa-rica.svg" value="CR">Costa Rica
+                                            </option>
+                                            <option data-kt-flag="flags/ivory-coast.svg" value="CI">Côte d'Ivoire
+                                            </option>
+                                            <option data-kt-flag="flags/croatia.svg" value="HR">Croatia</option>
+                                            <option data-kt-flag="flags/cuba.svg" value="CU">Cuba</option>
+                                            <option data-kt-flag="flags/curacao.svg" value="CW">Curaçao</option>
+                                            <option data-kt-flag="flags/czech-republic.svg" value="CZ">Czech
+                                                Republic</option>
+                                            <option data-kt-flag="flags/denmark.svg" value="DK">Denmark</option>
+                                            <option data-kt-flag="flags/djibouti.svg" value="DJ">Djibouti</option>
+                                            <option data-kt-flag="flags/dominica.svg" value="DM">Dominica</option>
+                                            <option data-kt-flag="flags/dominican-republic.svg" value="DO">
+                                                Dominican Republic</option>
+                                            <option data-kt-flag="flags/ecuador.svg" value="EC">Ecuador</option>
+                                            <option data-kt-flag="flags/egypt.svg" value="EG">Egypt</option>
+                                            <option data-kt-flag="flags/el-salvador.svg" value="SV">El Salvador
+                                            </option>
+                                            <option data-kt-flag="flags/equatorial-guinea.svg" value="GQ">
+                                                Equatorial Guinea</option>
+                                            <option data-kt-flag="flags/eritrea.svg" value="ER">Eritrea</option>
+                                            <option data-kt-flag="flags/estonia.svg" value="EE">Estonia</option>
+                                            <option data-kt-flag="flags/ethiopia.svg" value="ET">Ethiopia</option>
+                                            <option data-kt-flag="flags/falkland-islands.svg" value="FK">Falkland
+                                                Islands (Malvinas)</option>
+                                            <option data-kt-flag="flags/fiji.svg" value="FJ">Fiji</option>
+                                            <option data-kt-flag="flags/finland.svg" value="FI">Finland</option>
+                                            <option data-kt-flag="flags/france.svg" value="FR">France</option>
+                                            <option data-kt-flag="flags/french-polynesia.svg" value="PF">French
+                                                Polynesia</option>
+                                            <option data-kt-flag="flags/gabon.svg" value="GA">Gabon</option>
+                                            <option data-kt-flag="flags/gambia.svg" value="GM">Gambia</option>
+                                            <option data-kt-flag="flags/georgia.svg" value="GE">Georgia</option>
+                                            <option data-kt-flag="flags/germany.svg" value="DE">Germany</option>
+                                            <option data-kt-flag="flags/ghana.svg" value="GH">Ghana</option>
+                                            <option data-kt-flag="flags/gibraltar.svg" value="GI">Gibraltar
+                                            </option>
+                                            <option data-kt-flag="flags/greece.svg" value="GR">Greece</option>
+                                            <option data-kt-flag="flags/greenland.svg" value="GL">Greenland
+                                            </option>
+                                            <option data-kt-flag="flags/grenada.svg" value="GD">Grenada</option>
+                                            <option data-kt-flag="flags/guam.svg" value="GU">Guam</option>
+                                            <option data-kt-flag="flags/guatemala.svg" value="GT">Guatemala
+                                            </option>
+                                            <option data-kt-flag="flags/guernsey.svg" value="GG">Guernsey</option>
+                                            <option data-kt-flag="flags/guinea.svg" value="GN">Guinea</option>
+                                            <option data-kt-flag="flags/guinea-bissau.svg" value="GW">
+                                                Guinea-Bissau</option>
+                                            <option data-kt-flag="flags/haiti.svg" value="HT">Haiti</option>
+                                            <option data-kt-flag="flags/vatican-city.svg" value="VA">Holy See
+                                                (Vatican City State)</option>
+                                            <option data-kt-flag="flags/honduras.svg" value="HN">Honduras</option>
+                                            <option data-kt-flag="flags/hong-kong.svg" value="HK">Hong Kong
+                                            </option>
+                                            <option data-kt-flag="flags/hungary.svg" value="HU">Hungary</option>
+                                            <option data-kt-flag="flags/iceland.svg" value="IS">Iceland</option>
+                                            <option data-kt-flag="flags/india.svg" value="IN">India</option>
+                                            <option data-kt-flag="flags/indonesia.svg" value="ID">Indonesia
+                                            </option>
+                                            <option data-kt-flag="flags/iran.svg" value="IR">Iran, Islamic
+                                                Republic of</option>
+                                            <option data-kt-flag="flags/iraq.svg" value="IQ">Iraq</option>
+                                            <option data-kt-flag="flags/ireland.svg" value="IE">Ireland</option>
+                                            <option data-kt-flag="flags/isle-of-man.svg" value="IM">Isle of Man
+                                            </option>
+                                            <option data-kt-flag="flags/israel.svg" value="IL">Israel</option>
+                                            <option data-kt-flag="flags/italy.svg" value="IT">Italy</option>
+                                            <option data-kt-flag="flags/jamaica.svg" value="JM">Jamaica</option>
+                                            <option data-kt-flag="flags/japan.svg" value="JP">Japan</option>
+                                            <option data-kt-flag="flags/jersey.svg" value="JE">Jersey</option>
+                                            <option data-kt-flag="flags/jordan.svg" value="JO">Jordan</option>
+                                            <option data-kt-flag="flags/kazakhstan.svg" value="KZ">Kazakhstan
+                                            </option>
+                                            <option data-kt-flag="flags/kenya.svg" value="KE">Kenya</option>
+                                            <option data-kt-flag="flags/kiribati.svg" value="KI">Kiribati</option>
+                                            <option data-kt-flag="flags/north-korea.svg" value="KP">Korea,
+                                                Democratic People's Republic of</option>
+                                            <option data-kt-flag="flags/kuwait.svg" value="KW">Kuwait</option>
+                                            <option data-kt-flag="flags/kyrgyzstan.svg" value="KG">Kyrgyzstan
+                                            </option>
+                                            <option data-kt-flag="flags/laos.svg" value="LA">Lao People's
+                                                Democratic Republic</option>
+                                            <option data-kt-flag="flags/latvia.svg" value="LV">Latvia</option>
+                                            <option data-kt-flag="flags/lebanon.svg" value="LB">Lebanon</option>
+                                            <option data-kt-flag="flags/lesotho.svg" value="LS">Lesotho</option>
+                                            <option data-kt-flag="flags/liberia.svg" value="LR">Liberia</option>
+                                            <option data-kt-flag="flags/libya.svg" value="LY">Libya</option>
+                                            <option data-kt-flag="flags/liechtenstein.svg" value="LI">
+                                                Liechtenstein</option>
+                                            <option data-kt-flag="flags/lithuania.svg" value="LT">Lithuania
+                                            </option>
+                                            <option data-kt-flag="flags/luxembourg.svg" value="LU">Luxembourg
+                                            </option>
+                                            <option data-kt-flag="flags/macao.svg" value="MO">Macao</option>
+                                            <option data-kt-flag="flags/madagascar.svg" value="MG">Madagascar
+                                            </option>
+                                            <option data-kt-flag="flags/malawi.svg" value="MW">Malawi</option>
+                                            <option data-kt-flag="flags/malaysia.svg" value="MY">Malaysia</option>
+                                            <option data-kt-flag="flags/maldives.svg" value="MV">Maldives</option>
+                                            <option data-kt-flag="flags/mali.svg" value="ML">Mali</option>
+                                            <option data-kt-flag="flags/malta.svg" value="MT">Malta</option>
+                                            <option data-kt-flag="flags/marshall-island.svg" value="MH">Marshall
+                                                Islands</option>
+                                            <option data-kt-flag="flags/martinique.svg" value="MQ">Martinique
+                                            </option>
+                                            <option data-kt-flag="flags/mauritania.svg" value="MR">Mauritania
+                                            </option>
+                                            <option data-kt-flag="flags/mauritius.svg" value="MU">Mauritius
+                                            </option>
+                                            <option data-kt-flag="flags/mexico.svg" value="MX">Mexico</option>
+                                            <option data-kt-flag="flags/micronesia.svg" value="FM">Micronesia,
+                                                Federated States of</option>
+                                            <option data-kt-flag="flags/moldova.svg" value="MD">Moldova, Republic
+                                                of</option>
+                                            <option data-kt-flag="flags/monaco.svg" value="MC">Monaco</option>
+                                            <option data-kt-flag="flags/mongolia.svg" value="MN">Mongolia</option>
+                                            <option data-kt-flag="flags/montenegro.svg" value="ME">Montenegro
+                                            </option>
+                                            <option data-kt-flag="flags/montserrat.svg" value="MS">Montserrat
+                                            </option>
+                                            <option data-kt-flag="flags/morocco.svg" value="MA">Morocco</option>
+                                            <option data-kt-flag="flags/mozambique.svg" value="MZ">Mozambique
+                                            </option>
+                                            <option data-kt-flag="flags/myanmar.svg" value="MM">Myanmar</option>
+                                            <option data-kt-flag="flags/namibia.svg" value="NA">Namibia</option>
+                                            <option data-kt-flag="flags/nauru.svg" value="NR">Nauru</option>
+                                            <option data-kt-flag="flags/nepal.svg" value="NP">Nepal</option>
+                                            <option data-kt-flag="flags/netherlands.svg" value="NL">Netherlands
+                                            </option>
+                                            <option data-kt-flag="flags/new-zealand.svg" value="NZ">New Zealand
+                                            </option>
+                                            <option data-kt-flag="flags/nicaragua.svg" value="NI">Nicaragua
+                                            </option>
+                                            <option data-kt-flag="flags/niger.svg" value="NE">Niger</option>
+                                            <option data-kt-flag="flags/nigeria.svg" value="NG">Nigeria</option>
+                                            <option data-kt-flag="flags/niue.svg" value="NU">Niue</option>
+                                            <option data-kt-flag="flags/norfolk-island.svg" value="NF">Norfolk
+                                                Island</option>
+                                            <option data-kt-flag="flags/northern-mariana-islands.svg" value="MP">
+                                                Northern Mariana Islands</option>
+                                            <option data-kt-flag="flags/norway.svg" value="NO">Norway</option>
+                                            <option data-kt-flag="flags/oman.svg" value="OM">Oman</option>
+                                            <option data-kt-flag="flags/pakistan.svg" value="PK">Pakistan</option>
+                                            <option data-kt-flag="flags/palau.svg" value="PW">Palau</option>
+                                            <option data-kt-flag="flags/palestine.svg" value="PS">Palestinian
+                                                Territory, Occupied</option>
+                                            <option data-kt-flag="flags/panama.svg" value="PA">Panama</option>
+                                            <option data-kt-flag="flags/papua-new-guinea.svg" value="PG">Papua New
+                                                Guinea</option>
+                                            <option data-kt-flag="flags/paraguay.svg" value="PY">Paraguay</option>
+                                            <option data-kt-flag="flags/peru.svg" value="PE">Peru</option>
+                                            <option data-kt-flag="flags/philippines.svg" value="PH">Philippines
+                                            </option>
+                                            <option data-kt-flag="flags/poland.svg" value="PL">Poland</option>
+                                            <option data-kt-flag="flags/portugal.svg" value="PT">Portugal</option>
+                                            <option data-kt-flag="flags/puerto-rico.svg" value="PR">Puerto Rico
+                                            </option>
+                                            <option data-kt-flag="flags/qatar.svg" value="QA">Qatar</option>
+                                            <option data-kt-flag="flags/romania.svg" value="RO">Romania</option>
+                                            <option data-kt-flag="flags/russia.svg" value="RU">Russian Federation
+                                            </option>
+                                            <option data-kt-flag="flags/rwanda.svg" value="RW">Rwanda</option>
+                                            <option data-kt-flag="flags/st-barts.svg" value="BL">Saint Barthélemy
+                                            </option>
+                                            <option data-kt-flag="flags/saint-kitts-and-nevis.svg" value="KN">
+                                                Saint Kitts and Nevis</option>
+                                            <option data-kt-flag="flags/st-lucia.svg" value="LC">Saint Lucia
+                                            </option>
+                                            <option data-kt-flag="flags/sint-maarten.svg" value="MF">Saint Martin
+                                                (French part)</option>
+                                            <option data-kt-flag="flags/st-vincent-and-the-grenadines.svg"
+                                                value="VC">Saint Vincent and the Grenadines</option>
+                                            <option data-kt-flag="flags/samoa.svg" value="WS">Samoa</option>
+                                            <option data-kt-flag="flags/san-marino.svg" value="SM">San Marino
+                                            </option>
+                                            <option data-kt-flag="flags/sao-tome-and-prince.svg" value="ST">Sao
+                                                Tome and Principe</option>
+                                            <option data-kt-flag="flags/saudi-arabia.svg" value="SA">Saudi Arabia
+                                            </option>
+                                            <option data-kt-flag="flags/senegal.svg" value="SN">Senegal</option>
+                                            <option data-kt-flag="flags/serbia.svg" value="RS">Serbia</option>
+                                            <option data-kt-flag="flags/seychelles.svg" value="SC">Seychelles
+                                            </option>
+                                            <option data-kt-flag="flags/sierra-leone.svg" value="SL">Sierra Leone
+                                            </option>
+                                            <option data-kt-flag="flags/singapore.svg" value="SG">Singapore
+                                            </option>
+                                            <option data-kt-flag="flags/sint-maarten.svg" value="SX">Sint Maarten
+                                                (Dutch part)</option>
+                                            <option data-kt-flag="flags/slovakia.svg" value="SK">Slovakia</option>
+                                            <option data-kt-flag="flags/slovenia.svg" value="SI">Slovenia</option>
+                                            <option data-kt-flag="flags/solomon-islands.svg" value="SB">Solomon
+                                                Islands</option>
+                                            <option data-kt-flag="flags/somalia.svg" value="SO">Somalia</option>
+                                            <option data-kt-flag="flags/south-africa.svg" value="ZA">South Africa
+                                            </option>
+                                            <option data-kt-flag="flags/south-korea.svg" value="KR">South Korea
+                                            </option>
+                                            <option data-kt-flag="flags/south-sudan.svg" value="SS">South Sudan
+                                            </option>
+                                            <option data-kt-flag="flags/spain.svg" value="ES">Spain</option>
+                                            <option data-kt-flag="flags/sri-lanka.svg" value="LK">Sri Lanka
+                                            </option>
+                                            <option data-kt-flag="flags/sudan.svg" value="SD">Sudan</option>
+                                            <option data-kt-flag="flags/suriname.svg" value="SR">Suriname</option>
+                                            <option data-kt-flag="flags/swaziland.svg" value="SZ">Swaziland
+                                            </option>
+                                            <option data-kt-flag="flags/sweden.svg" value="SE">Sweden</option>
+                                            <option data-kt-flag="flags/switzerland.svg" value="CH">Switzerland
+                                            </option>
+                                            <option data-kt-flag="flags/syria.svg" value="SY">Syrian Arab Republic
+                                            </option>
+                                            <option data-kt-flag="flags/taiwan.svg" value="TW">Taiwan, Province of
+                                                China</option>
+                                            <option data-kt-flag="flags/tajikistan.svg" value="TJ">Tajikistan
+                                            </option>
+                                            <option data-kt-flag="flags/tanzania.svg" value="TZ">Tanzania, United
+                                                Republic of</option>
+                                            <option data-kt-flag="flags/thailand.svg" value="TH">Thailand</option>
+                                            <option data-kt-flag="flags/togo.svg" value="TG">Togo</option>
+                                            <option data-kt-flag="flags/tokelau.svg" value="TK">Tokelau</option>
+                                            <option data-kt-flag="flags/tonga.svg" value="TO">Tonga</option>
+                                            <option data-kt-flag="flags/trinidad-and-tobago.svg" value="TT">
+                                                Trinidad and Tobago</option>
+                                            <option data-kt-flag="flags/tunisia.svg" value="TN">Tunisia</option>
+                                            <option data-kt-flag="flags/turkey.svg" value="TR">Turkey</option>
+                                            <option data-kt-flag="flags/turkmenistan.svg" value="TM">Turkmenistan
+                                            </option>
+                                            <option data-kt-flag="flags/turks-and-caicos.svg" value="TC">Turks and
+                                                Caicos Islands</option>
+                                            <option data-kt-flag="flags/tuvalu.svg" value="TV">Tuvalu</option>
+                                            <option data-kt-flag="flags/uganda.svg" value="UG">Uganda</option>
+                                            <option data-kt-flag="flags/ukraine.svg" value="UA">Ukraine</option>
+                                            <option data-kt-flag="flags/united-arab-emirates.svg" value="AE">
+                                                United Arab Emirates</option>
+                                            <option data-kt-flag="flags/united-kingdom.svg" value="GB">United
+                                                Kingdom</option>
+                                            <option data-kt-flag="flags/united-states.svg" value="US">United
+                                                States</option>
+                                            <option data-kt-flag="flags/uruguay.svg" value="UY">Uruguay</option>
+                                            <option data-kt-flag="flags/uzbekistan.svg" value="UZ">Uzbekistan
+                                            </option>
+                                            <option data-kt-flag="flags/vanuatu.svg" value="VU">Vanuatu</option>
+                                            <option data-kt-flag="flags/venezuela.svg" value="VE">Venezuela,
+                                                Bolivarian Republic of</option>
+                                            <option data-kt-flag="flags/vietnam.svg" value="VN">Vietnam</option>
+                                            <option data-kt-flag="flags/virgin-islands.svg" value="VI">Virgin
+                                                Islands</option>
+                                            <option data-kt-flag="flags/yemen.svg" value="YE">Yemen</option>
+                                            <option data-kt-flag="flags/zambia.svg" value="ZM">Zambia</option>
+                                            <option data-kt-flag="flags/zimbabwe.svg" value="ZW">Zimbabwe</option>
                                         </select>
                                         @if ($errors->has('country'))
                                             <div class="text-danger">{{ $errors->first('country') }}</div>
@@ -1127,7 +1035,8 @@
                                             <!--begin::Col-->
                                             <div class="col-6">
                                                 <!--begin::Label-->
-                                                <label class="form-label required">{{ trans('message.Telephone') }}</label>
+                                                <label
+                                                    class="form-label required">{{ trans('message.Telephone') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <input type="tel" name="telephone"
@@ -1181,7 +1090,8 @@
                                             <!--begin::Col-->
                                             <div class="col-6">
                                                 <!--begin::Label-->
-                                                <label class="form-label">{{ trans('message.Registration number') }}</label>
+                                                <label
+                                                    class="form-label">{{ trans('message.Registration number') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <input name="registration_number"
@@ -1231,7 +1141,7 @@
                                         <!--end::Label-->
                                         <!--begin::Input-->
                                         <textarea name="company_description" class="form-control form-control-lg form-control-solid" rows="5"
-                                            placeholder="{{trans('message.Please let us know briefly in which area your company operates and which products you sell.')}}"></textarea>
+                                            placeholder="{{ trans('message.Please let us know briefly in which area your company operates and which products you sell.') }}"></textarea>
                                         <!--end::Input-->
                                     </div>
                                     <!--end::Input group-->
@@ -1249,7 +1159,8 @@
                                         <h2 class="fw-bolder text-dark">{{ trans('message.Payment details') }}</h2>
                                         <!--end::Title-->
                                         <!--begin::Notice-->
-                                        <div class="text-muted fw-bold fs-6">{{ trans('message.You can later edit your payment details and payment method in your account settings For a secure and uncomplicated payment, all transactions are processed via Stripe.') }}
+                                        <div class="text-muted fw-bold fs-6">
+                                            {{ trans('message.You can later edit your payment details and payment method in your account settings For a secure and uncomplicated payment, all transactions are processed via Stripe.') }}
                                             {{-- <a href="#" class="text-primary fw-bolder" target="_blank">account
                                                 settings</a> For a secure and uncomplicated payment, all transactions
                                             are processed via
@@ -1275,7 +1186,8 @@
                                     <!--begin::Input group-->
                                     <div class="d-flex flex-column mb-7 fv-row">
                                         <!--begin::Label-->
-                                        <label class="required fs-6 fw-bold form-label mb-2">{{ trans('message.Card number') }}</label>
+                                        <label
+                                            class="required fs-6 fw-bold form-label mb-2">{{ trans('message.Card number') }}</label>
                                         <!--end::Label-->
                                         <!--begin::Input wrapper-->
                                         <div class="position-relative">
@@ -1303,7 +1215,8 @@
                                         <!--begin::Col-->
                                         <div class="col-md-8 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required fs-6 fw-bold form-label mb-2">{{ trans('message.Date of Expiry') }}</label>
+                                            <label
+                                                class="required fs-6 fw-bold form-label mb-2">{{ trans('message.Date of Expiry') }}</label>
                                             <!--end::Label-->
                                             <!--begin::Row-->
                                             <div class="row fv-row">
@@ -1383,15 +1296,19 @@
                                     <div class="d-flex flex-stack">
                                         <!--begin::Label-->
                                         <div class="me-5">
-                                            <label class="fs-6 fw-bold form-label">{{ trans('message.Approval of the debit') }}</label>
-                                            <div class="fs-7 fw-bold text-muted">{{ trans('message.I confirm the purchase and agree to the payment.') }}</div>
+                                            <label
+                                                class="fs-6 fw-bold form-label">{{ trans('message.Approval of the debit') }}</label>
+                                            <div class="fs-7 fw-bold text-muted">
+                                                {{ trans('message.I confirm the purchase and agree to the payment.') }}
+                                            </div>
                                         </div>
                                         <!--end::Label-->
                                         <!--begin::Switch-->
                                         <label class="form-check form-switch form-check-custom form-check-solid">
                                             <input class="form-check-input" type="checkbox" value="1"
                                                 checked="checked" />
-                                            <span class="form-check-label fw-bold text-muted">{{ trans('message.Accept.') }}</span>
+                                            <span
+                                                class="form-check-label fw-bold text-muted">{{ trans('message.Accept.') }}</span>
                                         </label>
                                         <!--end::Switch-->
                                     </div>
@@ -1414,19 +1331,21 @@
                                     <!--begin::Input group-->
                                     <div class="fv-row mb-10">
                                         <!--begin::Label-->
-                                        <label class="form-label">{{ trans('message.How did you hear about us?') }}</label>
+                                        <label
+                                            class="form-label">{{ trans('message.How did you hear about us?') }}</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
                                         <input name="hear_about_us"
                                             class="form-control form-control-lg form-control-solid" value=""
-                                            placeholder="{{trans('message.eg. Advertising')}}" />
+                                            placeholder="{{ trans('message.eg. Advertising') }}" />
                                         <!--end::Input-->
                                     </div>
                                     <!--end::Input group-->
                                     <!--begin::Body-->
                                     <div class="mb-0">
                                         <!--begin::Text-->
-                                        <div class="fs-6 text-gray-600 mb-5">{{ trans("message.To complete your registration, please click on 'Get Started'. The system then checks your data and prepares everything for your start. Please be patient and do not close your browser window. You will be logged in automatically. You will also receive an email to activate the account and set your password. We wish you every success and thank you for choosing uFill!") }}
+                                        <div class="fs-6 text-gray-600 mb-5">
+                                            {{ trans("message.To complete your registration, please click on 'Get Started'. The system then checks your data and prepares everything for your start. Please be patient and do not close your browser window. You will be logged in automatically. You will also receive an email to activate the account and set your password. We wish you every success and thank you for choosing uFill!") }}
                                         </div>
                                         <!--end::Text-->
                                         <!--begin::Alert-->
@@ -1455,8 +1374,11 @@
                                             <div class="d-flex flex-stack flex-grow-1">
                                                 <!--begin::Content-->
                                                 <div class="fw-bold">
-                                                    <h4 class="text-gray-900 fw-bolder">{{ trans('message.Please note!') }}</h4>
-                                                    <div class="fs-6 text-gray-700">{{ trans('message.We ask for your understanding that the initial setup of your account may take a moment. Should there be any problems, your personal contact person will be happy to assist you. Thank you very much.') }}</div>
+                                                    <h4 class="text-gray-900 fw-bolder">
+                                                        {{ trans('message.Please note!') }}</h4>
+                                                    <div class="fs-6 text-gray-700">
+                                                        {{ trans('message.We ask for your understanding that the initial setup of your account may take a moment. Should there be any problems, your personal contact person will be happy to assist you. Thank you very much.') }}
+                                                    </div>
                                                 </div>
                                                 <!--end::Content-->
                                             </div>
@@ -1495,8 +1417,8 @@
                                         <span class="indicator-label">{{ trans('message.Lets Go') }}.
                                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
                                             <span class="svg-icon svg-icon-4 ms-2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                    height="24" viewBox="0 0 24 24" fill="none">
                                                     <rect opacity="0.5" x="18" y="13"
                                                         width="13" height="2" rx="1"
                                                         transform="rotate(-180 18 13)" fill="black" />
@@ -1517,9 +1439,9 @@
                                         <span class="svg-icon svg-icon-4 ms-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 viewBox="0 0 24 24" fill="none">
-                                                <rect opacity="0.5" x="18" y="13" width="13"
-                                                    height="2" rx="1" transform="rotate(-180 18 13)"
-                                                    fill="black" />
+                                                <rect opacity="0.5" x="18" y="13"
+                                                    width="13" height="2" rx="1"
+                                                    transform="rotate(-180 18 13)" fill="black" />
                                                 <path
                                                     d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z"
                                                     fill="black" />
@@ -1624,52 +1546,53 @@
 </script>
 
 <script>
-
     //hiding the success text
 
 
 
-        function checkDiscountCode() {
+    function checkDiscountCode() {
 
-            var variant_id = document.getElementsByClassName('account_type')[0].value;
-            var code = document.getElementById("code").value;
-            console.log(variant_id);
+        var variant_id = document.getElementsByClassName('account_type')[0].value;
+        var code = document.getElementById("code").value;
+        console.log(variant_id);
 
-            $.ajax({
-                    url: "{{ Route('client.check.discount') }}",
-                    method: "GET",
-                    data: {
-                        value: code,
-                        variant_id : variant_id,
-                    },
-                    success: function(result) {
-                        if (result != "") {
-                            console.log(result);
-                            if(result.percent == null){
-                                $("#check_code_message").append(
-                                    '<h5 class="text-success" id="valid" style="margin-top: 12px; margin-left:8px">{{trans("message.Discount successfully applied. You will receive a one-time discount of")}} '+ result.price +'€</h5>'
-                                );
-                            }else{
-                                $("#check_code_message").append(
-                                    '<h5 class="text-success" id="valid" style="margin-top: 12px; margin-left:8px">{{trans("message.Discount successfully applied. You will receive a one-time discount of")}} '+ result.percent +'%</h5>'
-                                );
-                            }
-
-                            $('#not_valid').hide();
-
-                        } else {
-
-                            $("#check_code_message").append(
-                                '<h5 class="text-danger" id="not_valid" style="margin-top: 12px; margin-left:8px">{{trans("message.Error! Code has expired. Please try a different discount code! ")}}</h5>'
-                            );
-
-                            $('#valid').hide();
-                        }
-
+        $.ajax({
+            url: "{{ Route('client.check.discount') }}",
+            method: "GET",
+            data: {
+                value: code,
+                variant_id: variant_id,
+            },
+            success: function(result) {
+                if (result != "") {
+                    console.log(result);
+                    if (result.percent == null) {
+                        $("#check_code_message").append(
+                            '<h5 class="text-success" id="valid" style="margin-top: 12px; margin-left:8px">{{ trans('message.Discount successfully applied. You will receive a one-time discount of') }} ' +
+                            result.price + '€</h5>'
+                        );
+                    } else {
+                        $("#check_code_message").append(
+                            '<h5 class="text-success" id="valid" style="margin-top: 12px; margin-left:8px">{{ trans('message.Discount successfully applied. You will receive a one-time discount of') }} ' +
+                            result.percent + '%</h5>'
+                        );
                     }
-                })
 
-        }
+                    $('#not_valid').hide();
+
+                } else {
+
+                    $("#check_code_message").append(
+                        '<h5 class="text-danger" id="not_valid" style="margin-top: 12px; margin-left:8px">{{ trans('message.Error! Code has expired. Please try a different discount code! ') }}</h5>'
+                    );
+
+                    $('#valid').hide();
+                }
+
+            }
+        })
+
+    }
 </script>
 <!--end::Javascript-->
 </body>

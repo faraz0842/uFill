@@ -173,7 +173,12 @@
                                                 @endphp
                                                 <span class="fw-boldest fs-6 text-dark">{{ $amount_paid }}€ von
                                                     {{ $total_amount }}€</span>
-                                                <span class="fw-bolder fs-6 text-gray-400">{{ $progress }}%</span>
+                                                    @if ($progress)
+                                                        <span class="fw-bolder fs-6 text-gray-400">{{ $progress  }}%</span>
+                                                    @else
+                                                        <span class="fw-bolder fs-6 text-gray-400">{{ number_format($progress,2)  }}%</span>
+                                                    @endif
+
                                             </div>
                                             <div class="h-8px mx-3 w-100 bg-light-success rounded">
                                                 @if ($progress <= 25)
