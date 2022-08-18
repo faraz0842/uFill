@@ -418,6 +418,7 @@ return [
     'Range' => 'Range',
     'invoice number' => 'Invoice Number',
     'invoice date' => 'Invoice Date',
+    'download' => 'Download',
     'Due Date' => 'Due Date',
     'Bill from' => 'Bill from',
     'bill to' => 'Bill To',

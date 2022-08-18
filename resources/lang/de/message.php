@@ -975,6 +975,7 @@ return [
     'Range' => 'Spanne',
     'invoice number' => 'Rechnungsnummer',
     'invoice date' => 'Rechnungsdatum',
+    'download' => 'Herunterladen',
     'Due Date' => 'Fälligkeitsdatum',
     'Bill from' => 'Rechnung von',
     'bill to' => 'Rechnung an',

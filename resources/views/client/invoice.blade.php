@@ -48,7 +48,7 @@
                                         <!--end::Logo-->
                                         <!--begin::Action-->
                                         <button id="printbtn" type="button" class="btn btn-success my-1 me-12"
-                                            onclick="generatePDF()" data-html2canvas-ignore="true" >Download</button>
+                                            onclick="generatePDF()" data-html2canvas-ignore="true" >{{ trans('message.download') }}</button>
                                         <!--end::Action-->
                                         <input type="hidden" id="invoice_number" value="{{ $invoice->number }}"/>
                                     </div>

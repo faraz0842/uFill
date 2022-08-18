@@ -119,7 +119,7 @@
                                                 </span>
                                                 <!--end::Svg Icon-->{{ $client_info->street }}
                                                 {{ $client_info->house_number }} , {{ $client_info->plz }}
-                                                {{ $client_info->state }} {{ $client_info->country }}
+                                                {{ $client_info->state }} , {{ $client_info->country }}
                                             </div>
                                             <div class="d-flex align-items-center text-gray-400 mb-2">
                                                 <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
