@@ -495,14 +495,18 @@ return [
     'The abbreviation "#SHP-..." stands for "Shipment". The numbers attached stand for the respective individual number of the shipment label. You can find the tracking number either on the label or in the associated order' => 'The abbreviation "#SHP-..." stands for "Shipment". The numbers attached stand for the respective individual number of the shipment label. You can find the tracking number either on the label or in the associated order',
     'User Roles' => 'User Roles',
     'How does it work?' => 'How does it work?',
-    'First, a disclaimer – the entire process of writing a blog post often takes more than a couple of hours, even if you can type eighty words as per minute and your writing skills are sharp' => 'First, a disclaimer – the entire process of writing a blog post often takes more than a couple of hours, even if you can type eighty words as per minute and your writing skills are sharp',
     'Do I need a designer to use this Admin Theme?' => 'Do I need a designer to use this Admin Theme?',
     'What do I need to do to start selling?' => 'What do I need to do to start selling?',
     'How much does Extended license cost?' => 'How much does Extended license cost?',
-    'Reports Generation' => 'Reports Generation',
     'How many people can it support?' => 'How many people can it support?',
-    'How long is the warrianty?' => 'How long is the warrianty?',
-    'How fast is the installation?' => 'How fast is the installation?',
+
+    'future expansions' => 'Future Expansions',
+    'faq-question-4-1' => 'How often are new enhancements such as new features or further integrations released?',
+    'faq-answer-4-1' => 'With our regular updates, major enhancements such as new shop integrations or the Costumer Service Center are also released. A timetable for the planned expansions can be found on our website.',
+    'faq-question-4-2' => 'Are there any additional costs if you want to use the new extensions?',
+    'faq-answer-4-2' => 'No. Depending on whether you have booked the corresponding package, the respective extensions are available to you at no additional cost. An overview of the functions and the corresponding prices can be found on our website.',
+    'faq-question-4-3' => 'Can I submit a request for an extension?',
+    'faq-answer-4-3' => 'Sure. Please send us your wishes via the form in the following area: Help Center > Contact us',
 
 
     //list

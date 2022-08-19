@@ -1053,14 +1053,18 @@ return [
     'The abbreviation "#SHP-..." stands for "Shipment". The numbers attached stand for the respective individual number of the shipment label. You can find the tracking number either on the label or in the associated order' => 'The abbreviation "#SHP-..." stands for "Shipment". The numbers attached stand for the respective individual number of the shipment label. You can find the tracking number either on the label or in the associated order',
     'User Roles' => 'Benutzerberechtigungen',
     'How does it work?' => 'Wie funktioniert es?',
-    'First, a disclaimer – the entire process of writing a blog post often takes more than a couple of hours, even if you can type eighty words as per minute and your writing skills are sharp' => 'First, a disclaimer – the entire process of writing a blog post often takes more than a couple of hours, even if you can type eighty words as per minute and your writing skills are sharp',
     'Do I need a designer to use Admin Theme ?' => 'Benötige ich einen Designer, um Admin Theme zu verwenden?',
     'What do I need to do to start selling?' => 'Was muss ich tun, um mit dem Verkauf zu beginnen?',
     'How much does Extended license cost?' => 'Wie viel kostet die erweiterte Lizenz?',
-    'Reports Generation' => 'Berichterstellung',
     'How many people can it support?' => 'Wie viele Menschen kann es unterstützen?',
-    'How long is the warrianty?' => 'Wie lange habe ich Garantie?',
-    'How fast is the installation?' => 'Wie schnell geht die Installation?',
+
+    'future expansions' => 'zukünftige Erweiterungen',
+    'faq-question-4-1' => 'Wie oft werden neue Erweiterungen wie z.B. neue Funktionen oder weitere Integrationen veröffentlicht?',
+    'faq-answer-4-1' => 'Mit unseren regelmäßigen Updates werden ebenfalls größere Erweiterungen wie z.B. neue Shopintegrationen oder  das Costumer Service Center veröffentlicht. Einen Zeitplan zu den geplanten Erweiterungen finden Sie auf unserer Webseite.',
+    'faq-question-4-2' => 'Fallen zusätzliche Kosten an, wenn man die neuen Erweiterungen nutzen möchte?',
+    'faq-answer-4-2' => 'Nein. Je nachdem ob Sie das entsprechende Paket gebucht haben, stehen Ihnen die jeweiligen Erweiterungen ohne zusätzliche Kosten zur Verfügung. Eine Übersicht der Funktionen sowie der dazugehörigen Preise finden Sie auf unserer Webseite.',
+    'faq-question-4-3' => 'Kann ich einen Wunsch für eine Erweiterung einreichen?',
+    'faq-answer-4-3' => 'Klar. Lassen Sie uns Ihre Wünsche gerne über das Formular im folgenden Bereich zukommen: Hilfe Center > Kontakt aufnehmen',
 
 
     //list
