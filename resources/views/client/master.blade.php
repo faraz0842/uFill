@@ -803,7 +803,7 @@
                 <div class="aside-footer flex-column-auto pt-5 pb-7 px-5" id="kt_aside_footer">
                     <a href="{{ Route('help.overview') }}" class="btn btn-custom btn-primary w-100" data-bs-toggle="tooltip"
                         data-bs-trigger="hover" data-bs-dismiss-="click"
-                        title="Sie benötigen Hilfe? Werfen Sie einen Blick in unser Wiki oder kontaktieren Sie unseren Kundensupport.">
+                        title="{{ trans('message.helpcenter tooltip') }}">
                         <span class="btn-label">{{ trans('message.ufill support center') }}</span>
                         <!--begin::Svg Icon | path: icons/duotune/general/gen005.svg-->
                         <span class="svg-icon btn-icon svg-icon-2">

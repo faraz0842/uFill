@@ -52,6 +52,7 @@ return [
     'functions' => 'Functions',
     'terms and conditions' => 'Terms and conditions',
     'ufill support center' => 'uFill Support Center',
+    'helpcenter tooltip' => 'Need help? Take a look at our wiki or contact our customer support.',
 
     // dashboard
     'admin' => 'Administrator',
@@ -460,7 +461,8 @@ return [
     'Regarding' => 'Regarding',
     'call us' => 'Call Us',
     'Our headquarters' => 'Our headquarters',
-
+    'message' => 'Message',
+    'Please wait' => 'Please wait',
 
     // faq
     'uFill Help Center > FAQ' => 'uFill Help Center > FAQ',
@@ -524,14 +526,14 @@ return [
     'Link' => 'Link',
     'show more' => 'Show more',
     'Helpful links' => 'Helpful links',
-    'uFill website' => 'uFill website',
-    'Terms and Conditions (GTC)' => 'Terms and Conditions (GTC)',
-    'Legal information (imprint and data protection)' => 'Legal information (imprint and data protection)',
-    'your contract data' => 'your contract data',
+    'uFill website' => 'uFill Website',
+    'Terms and Conditions' => 'Terms and Conditions',
+    'Legal information' => 'Legal information',
+    'your contract data' => 'Your contract data',
     'your company information' => 'Your Company Information',
     'Contact form uFill Support' => 'Contact form uFill Support',
     'uFill News' => 'uFill News',
-    'uFill update history' => 'uFill update history',
+    'uFill changelog' => 'uFill Changelog',
     'sign In' => 'Sign In',
     'Login Admin Area' => 'Login Admin Area',
     'Login Client Area' => 'Login Client Area',

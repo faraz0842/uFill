@@ -131,7 +131,7 @@
                                     <!--end::Input group-->
                                     <!--begin::Input group-->
                                     <div class="d-flex flex-column mb-10 fv-row">
-                                        <label class="fs-6 fw-bold mb-2 required">{{ trans('message.news') }}</label>
+                                        <label class="fs-6 fw-bold mb-2 required">{{ trans('message.message') }}</label>
                                         <textarea class="form-control form-control-solid" rows="6" name="message" placeholder="" required></textarea>
                                     </div>
                                     <!--end::Input group-->
@@ -139,7 +139,7 @@
                                     <button type="submit" class="btn btn-primary" id="kt_contact_submit_button">
                                         <!--begin::Indicator-->
                                         <span class="indicator-label">{{ trans('message.Send') }}</span>
-                                        <span class="indicator-progress">Bitte warten...
+                                        <span class="indicator-progress">{{ trans('message.Please wait') }}...
                                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                         <!--end::Indicator-->
                                     </button>
@@ -170,7 +170,7 @@
                                         <!--end::Svg Icon-->
                                         <!--end::Icon-->
                                         <!--begin::Subtitle-->
-                                        <h1 class="text-dark fw-bolder my-5">{{ trans('call us') }}.</h1>
+                                        <h1 class="text-dark fw-bolder my-5">{{ trans('message.call us') }}.</h1>
                                         <!--end::Subtitle-->
                                         <!--begin::Number-->
                                         <a href="tel:{{$company_data->phone}}" class="text-gray-700 fw-bold fs-2">{{$company_data->phone}}</a>
@@ -202,8 +202,8 @@
                                         <!--end::Subtitle-->
                                         <!--begin::Description-->
                                         <div class="text-gray-700 fs-3 fw-bold">{{$company_data->company_name}} </br>
-                                            {{$company_data->street}}  {{$company_data->house_number}}  </br>
-                                            {{$company_data->zip_code}} , {{$company_data->city}}
+                                            {{$company_data->street}}  {{$company_data->house_number}},  </br>
+                                            {{$company_data->zip_code}}  {{$company_data->city}},
                                         </br> {{$company_data->country}}
                                         </div>
                                         <!--end::Description-->

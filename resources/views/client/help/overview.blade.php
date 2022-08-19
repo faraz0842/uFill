@@ -846,7 +846,7 @@
                                     <!--begin::Subtitle-->
                                     <a href="https://ufill.de/agb"
                                         class="fw-bold text-gray-800 text-hover-primary fs-3 m-0"
-                                        target="_blank">{{ trans('message.Terms and Conditions (GTC)') }}</a>
+                                        target="_blank">{{ trans('message.Terms and Conditions') }}</a>
                                     <!--end::Subtitle-->
                                 </div>
                                 <!--begin::Item-->
@@ -867,7 +867,7 @@
                                     <!--begin::Subtitle-->
                                     <a href="https://ufill.de/rechtliches"
                                         class="fw-bold text-gray-800 text-hover-primary fs-3 m-0"
-                                        target="_blank">{{ trans('message.Legal information (imprint and data protection)') }}</a>
+                                        target="_blank">{{ trans('message.Legal information') }}</a>
                                     <!--end::Subtitle-->
                                 </div>
                                 <!--begin::Item-->
@@ -975,7 +975,7 @@
                                     <!--end::Icon-->
                                     <!--begin::Subtitle-->
                                     <a href="{{ Route('client.changelog') }}"
-                                        class="fw-bold text-gray-800 text-hover-primary fs-3 m-0">{{ trans('message.uFill update history') }}</a>
+                                        class="fw-bold text-gray-800 text-hover-primary fs-3 m-0">{{ trans('message.uFill changelog') }}</a>
                                     <!--end::Subtitle-->
                                 </div>
                                 <!--begin::Item-->

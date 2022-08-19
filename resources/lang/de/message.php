@@ -609,6 +609,7 @@ return [
     'functions' => 'Funktionen',
     'terms and conditions' => 'Rechtliches',
     'ufill support center' => 'uFill Hilfe Center',
+    'helpcenter tooltip' => 'Sie benötigen Hilfe? Werfen Sie einen Blick in unser Wiki oder kontaktieren Sie unseren Kundensupport.',
 
     // dashboard
     'admin' => 'Administrator',
@@ -1014,9 +1015,11 @@ return [
     'Contact' => 'Kontakt',
     'make contact' => 'Kontakt aufnehmen',
     'write to us' => 'Schreiben Sie uns',
-    'Regarding' => 'In Bezug auf',
+    'Regarding' => 'Betreff',
     'call us' => 'Rufen Sie uns an',
     'Our headquarters' => 'Unser Hauptsitz',
+    'message' => 'Nachricht',
+    'Please wait' => 'Bitte warten',
 
 
     // faq
@@ -1082,13 +1085,13 @@ return [
     'show more' => 'Mehr anzeigen',
     'Helpful links' => 'Hilfreiche Links',
     'uFill website' => 'uFill Webseite',
-    'Terms and Conditions (GTC)' => 'Allgemeine Geschäftsbedingungen (AGB)',
-    'Legal information (imprint and data protection)' => 'Rechtliche Hinweise (Impressum und Datenschutz)',
+    'Terms and Conditions' => 'Allgemeine Geschäftsbedingungen',
+    'Legal information' => 'Rechtliche Hinweise',
     'your contract data' => 'Ihre Vertragsdaten',
     'your company information' => 'Ihre Unternehmensinformationen',
     'Contact form uFill Support' => 'Kontaktformular uFill Support',
     'uFill News' => 'uFill Neuigkeiten',
-    'uFill update history' => 'uFill Changelog',
+    'uFill changelog' => 'uFill Changelog',
 
 
     'sign In' => 'Anmelden',
