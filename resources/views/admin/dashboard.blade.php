@@ -1609,9 +1609,10 @@
                                                     src="{{ URL::asset($affiliated_clients_image->profile_picture) }}" height="50px" width="50px" class="img-rounded"/></a>
 
                                             @else
-                                            <a href="{{Route('admin.client.view',[$affiliated_clients_image->id,$affiliated_clients_image->stripe_id])}}">
+                                            <img alt="Pic" src="{{ asset('assets/media/svg/avatars/blank.svg') }}"  height="50px" width="50px"/>
+                                            {{-- <a href="{{Route('admin.client.view',[$affiliated_clients_image->id,$affiliated_clients_image->stripe_id])}}">
                                                 <img alt="Pic" src="{{ asset('assets/media/svg/avatars/blank.svg') }}"  height="50px" width="50px"/>
-                                            </a>
+                                            </a> --}}
 
                                             @endif
 

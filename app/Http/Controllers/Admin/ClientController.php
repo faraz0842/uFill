@@ -333,7 +333,7 @@ class ClientController extends Controller
         $company_detail = AdminCompany::where('company_id',1)->first();
         $client = Client::where('stripe_id',$invoice->customer)->first();
 
-        //return response()->json($invoice);
+        return response()->json($invoice);
 
         return view('admin.client.invoice')->with('invoice',$invoice)->with('created_date',$created_date)->with('client',$client)
                                           ->with('period_end',$period_end)->with('company_detail',$company_detail);

@@ -227,9 +227,15 @@
                                                             {{ trans('message.Discount') }}</div>
                                                         <!--end::Accountname-->
                                                         <!--begin::Label-->
-                                                        <div class="text-end fw-bolder fs-6 text-gray-800">
-                                                            {{ Helper::money_format('EUR', 'de_DE', $invoice->discount) }}€ /
+                                                        @if ($invoice->discount->coupon->percent_off)
+                                                            <div class="text-end fw-bolder fs-6 text-gray-800">
+                                                            {{ 0}}€ /{{$invoice->discount->coupon->percent_off}} %</div>
+                                                        @else
+                                                            <div class="text-end fw-bolder fs-6 text-gray-800">
+                                                            {{ Helper::money_format('EUR', 'de_DE',$invoice->discount->coupon->amount) }}€ /
                                                             0%</div>
+                                                        @endif
+
                                                         <!--end::Label-->
                                                     </div>
                                                     <!--end::Item-->
@@ -254,7 +260,7 @@
                                                         @php
                                                             $tax = $invoice->total - $invoice->total / 1.19;
 
-                                                            $total = $subtotal - $invoice->discount + 0;
+                                                            $total = $subtotal - $invoice->discount->coupon->percent_off + 0;
                                                         @endphp
                                                         <div class="text-end fw-bolder fs-6 text-gray-800">
                                                             {{ Helper::money_format('EUR', 'de_DE', round($tax)) }}€</div>

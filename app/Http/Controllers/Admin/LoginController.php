@@ -68,7 +68,6 @@ class LoginController extends Controller
                         );
 
                         Mail::send('admin.mail.code', $data , function($message) use ($request , $email){
-                            $message->to($email);
                             $message->to($email, 'UFILL ECOM SOLUTION')->subject('Two Step Verification Code');
                             $message->from('ufillsolutions@gmail.com','UFILL ECOM SOLUTION');
                         });
@@ -181,6 +180,11 @@ class LoginController extends Controller
                 'status' => 'online',
 
         ]);
+    }
+
+    public function resendCode()
+    {
+        # code...
     }
 
 }

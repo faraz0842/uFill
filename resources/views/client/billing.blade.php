@@ -896,7 +896,7 @@
                                                                                 class="form-control form-control-solid"
                                                                                 placeholder="Enter card number"
                                                                                 name="card_number"
-                                                                                value="{{ ***********{{substr($card_number, -4)}} }}"
+                                                                                value="***********{{substr($card_number, -4)}} "
                                                                                 required />
                                                                             <!--end::Input-->
                                                                             <!--begin::Card logos-->
