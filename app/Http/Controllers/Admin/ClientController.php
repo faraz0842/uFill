@@ -155,7 +155,8 @@ class ClientController extends Controller
             $client->state  = $request->state ;
             $client->country  = $request->country ;
             $client->telephone  = $request->telephone ;
-            $client->mobile_number  = $request->mobile_number ;
+            $client->mobile_number  = $request->mobile_number;
+            $client->language  = $request->language;
             $client->email  = $request->email ;
             $client->vat_id  = $request->vat_id ;
             $client->registration_number  = $request->registration_number ;

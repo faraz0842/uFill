@@ -3346,11 +3346,9 @@
                                             </label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <select name="country" aria-label="Select..." data-control="select2"
-                                                data-placeholder="Select..."
-                                                data-dropdown-parent="#kt_modal_edit_billig_info"
+                                            <select name="country"
                                                 class="form-select form-select-solid">
-                                                <option value="">Bitte wählen...</option>
+                                                <option value="">{{ trans('message.Please choose…') }}</option>
                                                 <option value="AF" {{ $client->country == 'AF' ? 'selected' : '' }}>
                                                     Afghanistan
                                                 </option>
@@ -3872,6 +3870,23 @@
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Row-->
+                                        <div class="fv-row mb-10">
+                                            <!--begin::Label-->
+                                            <label class="fs-6 fw-bold mb-2 ">
+                                                <span>{{ trans('message.language') }}</span>
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <select name="language" class="form-select form-select-solid">
+                                                <option value="">{{ trans('message.Please choose…') }}</option>
+                                                <option value="en" {{ $client->language == 'en' ? 'selected' : ' ' }}>English</option>
+                                                <option value="de" {{ $client->language == 'de' ? 'selected' : ' ' }}>German</option>
+                                            </select>
+                                            @if ($errors->has('country'))
+                                                <div class="text-danger">{{ $errors->first('country') }}</div>
+                                            @endif
+                                            <!--end::Input-->
+                                        </div>
                                         <!--begin::Row-->
                                         <div class="fv-row mb-10">
                                             <div class="row fv-row">

@@ -304,7 +304,7 @@ class DashboardController extends Controller
 
 
 
-            //return response()->json($product_price->data[0]);
+            //return response()->json($product_price->data[1]);
 
             foreach ($product_price->data as $key => $prod_price) {
 

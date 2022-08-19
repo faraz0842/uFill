@@ -50,58 +50,6 @@ class ProfileController extends Controller
 
     }
 
-    public function updateProfile(Request $request , $id)
-    {
-         try {
-
-            //return $request->avatar_remove;
-            $profile_picture = $request->file('profile_picture');
-            if (isset($profile_picture)) {
-                $image_name = $profile_picture->getClientOriginalName();
-                $image_name = str_replace(" ", "_", time() . $image_name);
-                $image_path = 'upload/StaffImages/';
-                $profile_picture->move($image_path, $image_name);
-                $profile = $image_path.$image_name;
-            } elseif($request->avatar_remove == 1) {
-                $profile = null;
-            }else{
-                $profile = $request->previous_image;
-            }
-
-
-            $admin = Admin::where('admin_id',$id)->first();
-            $admin->first_name = $request->first_name;
-            $admin->surname = $request->surname;
-            $admin->email = $request->email;
-            $admin->name = $request->first_name .' ' . $request->surname;
-            $admin->street = $request->street;
-            $admin->house_number = $request->house_number;
-            // $admin->phone = $request->phone;
-            //$admin->mobile = $request->mobile;
-            $admin->zip_code = $request->zip_code;
-            $admin->city = $request->city;
-            $admin->country = $request->country;
-            $admin->language = $request->language;
-            $admin->profile_picture = $profile;
-            $admin->save();
-
-            if(session('id') == $id){
-                session([
-                    'profile_picture' => $profile
-                ]);
-            }
-
-
-
-            return  redirect()->Route('admin.profile',$id);
-
-
-        } catch (Exception $th) {
-            return back()->withError($th->getMessage())->withInput();
-        }
-    }
-
-
      /*********************************
      * ===== Client Update Password
      *********************************/

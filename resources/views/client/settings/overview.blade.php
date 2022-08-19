@@ -228,10 +228,16 @@
                                                         </svg>
                                                     </span>
                                                     <!--end::Svg Icon-->
-                                                    <div class="fs-2 fw-bolder" data-kt-countup="true"
+                                                    @if ($client_info->name == 'shipment')
+                                                        <div class="fs-2 fw-bolder" >N/A
+                                                        </div>
+                                                    @else
+                                                        <div class="fs-2 fw-bolder" data-kt-countup="true"
                                                         data-kt-countup-value="{{ $referred_clients_count }}">
                                                         {{ $referred_clients_count }}
                                                     </div>
+                                                    @endif
+
                                                 </div>
                                                 <!--end::Number-->
                                                 <!--begin::Label-->

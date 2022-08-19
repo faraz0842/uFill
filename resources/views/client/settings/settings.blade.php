@@ -228,10 +228,15 @@
                                                         </svg>
                                                     </span>
                                                     <!--end::Svg Icon-->
-                                                    <div class="fs-2 fw-bolder" data-kt-countup="true"
+                                                    @if ($client_info->name == 'shipment')
+                                                        <div class="fs-2 fw-bolder" >N/A
+                                                        </div>
+                                                    @else
+                                                        <div class="fs-2 fw-bolder" data-kt-countup="true"
                                                         data-kt-countup-value="{{ $referred_clients_count }}">
                                                         {{ $referred_clients_count }}
                                                     </div>
+                                                    @endif
                                                 </div>
                                                 <!--end::Number-->
                                                 <!--begin::Label-->
@@ -280,7 +285,7 @@
                             <!--end::Nav item-->
                             <li class="nav-item mt-2">
                                 <a class="nav-link text-active-primary ms-0 me-10 py-5 "
-                                    href="{{ Route('client.profile',session('client_id')) }}">{{ trans('message.security') }}</a>
+                                    href="{{ Route('client.profile', session('client_id')) }}">{{ trans('message.security') }}</a>
                             </li>
                             <li class="nav-item mt-2">
                                 <a class="nav-link text-active-primary ms-0 me-10 py-5 "
@@ -401,8 +406,7 @@
                                             <div class="col-lg-12 fv-row">
                                                 <input type="text" name="first_name"
                                                     class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                                    placeholder="firstname"
-                                                    value="{{ $client_info->first_name }}"
+                                                    placeholder="firstname" value="{{ $client_info->first_name }}"
                                                     required />
                                             </div>
                                             <!--end::Col-->
@@ -431,8 +435,7 @@
                                             <div class="col-lg-12 fv-row">
                                                 <input type="text" name="last_name"
                                                     class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                                    placeholder="firstname"
-                                                    value="{{ $client_info->last_name }}"
+                                                    placeholder="firstname" value="{{ $client_info->last_name }}"
                                                     required />
                                             </div>
                                             <!--end::Col-->
@@ -563,531 +566,553 @@
                                         <select name="country" aria-label="Select..." data-placeholder="Select..."
                                             class="form-select form-select-solid form-select-lg fw-bold" required>
                                             <option value="">Select...</option>
-                                            <option value=""
-                                                        {{ $client_info->country == '' ? 'selected' : '' }}>
-                                                        {{ trans('message.Please choose') }}...</option>
-                                                    {{-- <option value="Afghanistan"
+                                            <option value="" {{ $client_info->country == '' ? 'selected' : '' }}>
+                                                {{ trans('message.Please choose') }}...</option>
+                                            {{-- <option value="Afghanistan"
                                                         {{ $client_info->country == 'Afghanistan' ? 'selected' : '' }}>
                                                         Afghanistan</option> --}}
-                                                    <option value="AF" {{ $client_info->country == 'AF' ? 'selected' : '' }}>
-                                                    Afghanistan
-                                                </option>
-                                                <option value="AX" {{ $client_info->country == 'AX' ? 'selected' : '' }}>
-                                                    Aland Islands
-                                                </option>
-                                                <option value="AL" {{ $client_info->country == 'AL' ? 'selected' : '' }}>
-                                                    Albania</option>
-                                                <option value="DZ" {{ $client_info->country == 'DZ' ? 'selected' : '' }}>
-                                                    Algeria</option>
-                                                <option value="AS" {{ $client_info->country == 'AS' ? 'selected' : '' }}>
-                                                    American Samoa
-                                                </option>
-                                                <option value="AD" {{ $client_info->country == 'AD' ? 'selected' : '' }}>
-                                                    Andorra</option>
-                                                <option value="AO" {{ $client_info->country == 'AO' ? 'selected' : '' }}>
-                                                    Angola</option>
-                                                <option value="AI" {{ $client_info->country == 'AI' ? 'selected' : '' }}>
-                                                    Anguilla</option>
-                                                <option value="AG" {{ $client_info->country == 'AG' ? 'selected' : '' }}>
-                                                    Antigua and Barbuda
-                                                </option>
-                                                <option value="AR" {{ $client_info->country == 'AR' ? 'selected' : '' }}>
-                                                    Argentina</option>
-                                                <option value="AM" {{ $client_info->country == 'AM' ? 'selected' : '' }}>
-                                                    Armenia</option>
-                                                <option value="AW" {{ $client_info->country == 'AW' ? 'selected' : '' }}>
-                                                    Aruba</option>
-                                                <option value="AU" {{ $client_info->country == 'AU' ? 'selected' : '' }}>
-                                                    Australia</option>
-                                                <option value="AT" {{ $client_info->country == 'AT' ? 'selected' : '' }}>
-                                                    Austria</option>
-                                                <option value="AZ" {{ $client_info->country == 'AZ' ? 'selected' : '' }}>
-                                                    Azerbaijan</option>
-                                                <option value="BS" {{ $client_info->country == 'BS' ? 'selected' : '' }}>
-                                                    Bahamas</option>
-                                                <option value="BH" {{ $client_info->country == 'BH' ? 'selected' : '' }}>
-                                                    Bahrain</option>
-                                                <option value="BD" {{ $client_info->country == 'BD' ? 'selected' : '' }}>
-                                                    Bangladesh</option>
-                                                <option value="BB" {{ $client_info->country == 'BB' ? 'selected' : '' }}>
-                                                    Barbados</option>
-                                                <option value="BY" {{ $client_info->country == 'BY' ? 'selected' : '' }}>
-                                                    Belarus</option>
-                                                <option value="BE" {{ $client_info->country == 'BE' ? 'selected' : '' }}>
-                                                    Belgium</option>
-                                                <option value="BZ" {{ $client_info->country == 'BZ' ? 'selected' : '' }}>
-                                                    Belize</option>
-                                                <option value="BJ" {{ $client_info->country == 'BJ' ? 'selected' : '' }}>
-                                                    Benin</option>
-                                                <option value="BM" {{ $client_info->country == 'BM' ? 'selected' : '' }}>
-                                                    Bermuda</option>
-                                                <option value="BT" {{ $client_info->country == 'BT' ? 'selected' : '' }}>
-                                                    Bhutan</option>
-                                                <option value="BO" {{ $client_info->country == 'BO' ? 'selected' : '' }}>
-                                                    Bolivia,
-                                                    Plurinational State of</option>
-                                                <option value="BQ" {{ $client_info->country == 'BQ' ? 'selected' : '' }}>
-                                                    Bonaire, Sint
-                                                    Eustatius and Saba</option>
-                                                <option value="BA" {{ $client_info->country == 'BA' ? 'selected' : '' }}>
-                                                    Bosnia and
-                                                    Herzegovina</option>
-                                                <option value="BW" {{ $client_info->country == 'BW' ? 'selected' : '' }}>
-                                                    Botswana</option>
-                                                <option value="BR" {{ $client_info->country == 'BR' ? 'selected' : '' }}>
-                                                    Brazil</option>
-                                                <option value="IO" {{ $client_info->country == 'IO' ? 'selected' : '' }}>
-                                                    British Indian
-                                                    Ocean Territory</option>
-                                                <option value="BN" {{ $client_info->country == 'BN' ? 'selected' : '' }}>
-                                                    Brunei Darussalam
-                                                </option>
-                                                <option value="BG" {{ $client_info->country == 'BG' ? 'selected' : '' }}>
-                                                    Bulgaria</option>
-                                                <option value="BF" {{ $client_info->country == 'BF' ? 'selected' : '' }}>
-                                                    Burkina Faso
-                                                </option>
-                                                <option value="BI" {{ $client_info->country == 'BI' ? 'selected' : '' }}>
-                                                    Burundi</option>
-                                                <option value="KH" {{ $client_info->country == 'KH' ? 'selected' : '' }}>
-                                                    Cambodia</option>
-                                                <option value="CM" {{ $client_info->country == 'CM' ? 'selected' : '' }}>
-                                                    Cameroon</option>
-                                                <option value="CA" {{ $client_info->country == 'CA' ? 'selected' : '' }}>
-                                                    Canada</option>
-                                                <option value="CV" {{ $client_info->country == 'CV' ? 'selected' : '' }}>
-                                                    Cape Verde</option>
-                                                <option value="KY" {{ $client_info->country == 'KY' ? 'selected' : '' }}>
-                                                    Cayman Islands
-                                                </option>
-                                                <option value="CF" {{ $client_info->country == 'CF' ? 'selected' : '' }}>
-                                                    Central African
-                                                    Republic</option>
-                                                <option value="TD" {{ $client_info->country == 'TD' ? 'selected' : '' }}>
-                                                    Chad</option>
-                                                <option value="CL" {{ $client_info->country == 'CL' ? 'selected' : '' }}>
-                                                    Chile</option>
-                                                <option value="CN" {{ $client_info->country == 'CN' ? 'selected' : '' }}>
-                                                    China</option>
-                                                <option value="CX" {{ $client_info->country == 'CX' ? 'selected' : '' }}>
-                                                    Christmas Island
-                                                </option>
-                                                <option value="CC" {{ $client_info->country == 'CC' ? 'selected' : '' }}>
-                                                    Cocos (Keeling)
-                                                    Islands</option>
-                                                <option value="CO" {{ $client_info->country == 'CO' ? 'selected' : '' }}>
-                                                    Colombia</option>
-                                                <option value="KM" {{ $client_info->country == 'KM' ? 'selected' : '' }}>
-                                                    Comoros</option>
-                                                <option value="CK" {{ $client_info->country == 'CK' ? 'selected' : '' }}>
-                                                    Cook Islands
-                                                </option>
-                                                <option value="CR" {{ $client_info->country == 'CR' ? 'selected' : '' }}>
-                                                    Costa Rica</option>
-                                                <option value="CI" {{ $client_info->country == 'CI' ? 'selected' : '' }}>
-                                                    Côte d'Ivoire
-                                                </option>
-                                                <option value="HR" {{ $client_info->country == 'HR' ? 'selected' : '' }}>
-                                                    Croatia</option>
-                                                <option value="CU" {{ $client_info->country == 'CU' ? 'selected' : '' }}>
-                                                    Cuba</option>
-                                                <option value="CW" {{ $client_info->country == 'CW' ? 'selected' : '' }}>
-                                                    Curaçao</option>
-                                                <option value="CZ" {{ $client_info->country == 'CZ' ? 'selected' : '' }}>
-                                                    Czech Republic
-                                                </option>
-                                                <option value="DK" {{ $client_info->country == 'DK' ? 'selected' : '' }}>
-                                                    Denmark</option>
-                                                <option value="DJ" {{ $client_info->country == 'DJ' ? 'selected' : '' }}>
-                                                    Djibouti</option>
-                                                <option value="DM" {{ $client_info->country == 'DM' ? 'selected' : '' }}>
-                                                    Dominica</option>
-                                                <option value="DO" {{ $client_info->country == 'DO' ? 'selected' : '' }}>
-                                                    Dominican Republic
-                                                </option>
-                                                <option value="EC" {{ $client_info->country == 'EC' ? 'selected' : '' }}>
-                                                    Ecuador</option>
-                                                <option value="EG" {{ $client_info->country == 'EG' ? 'selected' : '' }}>
-                                                    Egypt</option>
-                                                <option value="SV" {{ $client_info->country == 'SV' ? 'selected' : '' }}>
-                                                    El Salvador
-                                                </option>
-                                                <option value="GQ" {{ $client_info->country == 'GQ' ? 'selected' : '' }}>
-                                                    Equatorial Guinea
-                                                </option>
-                                                <option value="ER" {{ $client_info->country == 'ER' ? 'selected' : '' }}>
-                                                    Eritrea</option>
-                                                <option value="EE" {{ $client_info->country == 'EE' ? 'selected' : '' }}>
-                                                    Estonia</option>
-                                                <option value="ET" {{ $client_info->country == 'ET' ? 'selected' : '' }}>
-                                                    Ethiopia</option>
-                                                <option value="FK" {{ $client_info->country == 'FK' ? 'selected' : '' }}>
-                                                    Falkland Islands
-                                                    (Malvinas)</option>
-                                                <option value="FJ" {{ $client_info->country == 'FJ' ? 'selected' : '' }}>
-                                                    Fiji</option>
-                                                <option value="FI" {{ $client_info->country == 'FI' ? 'selected' : '' }}>
-                                                    Finland</option>
-                                                <option value="FR" {{ $client_info->country == 'FR' ? 'selected' : '' }}>
-                                                    France</option>
-                                                <option value="PF" {{ $client_info->country == 'PF' ? 'selected' : '' }}>
-                                                    French Polynesia
-                                                </option>
-                                                <option value="GA" {{ $client_info->country == 'GA' ? 'selected' : '' }}>
-                                                    Gabon</option>
-                                                <option value="GM" {{ $client_info->country == 'GM' ? 'selected' : '' }}>
-                                                    Gambia</option>
-                                                <option value="GE" {{ $client_info->country == 'GE' ? 'selected' : '' }}>
-                                                    Georgia</option>
-                                                <option value="DE" {{ $client_info->country == 'DE' ? 'selected' : '' }}>
-                                                    Germany</option>
-                                                <option value="GH" {{ $client_info->country == 'GH' ? 'selected' : '' }}>
-                                                    Ghana</option>
-                                                <option value="GI" {{ $client_info->country == 'GI' ? 'selected' : '' }}>
-                                                    Gibraltar</option>
-                                                <option value="GR" {{ $client_info->country == 'GR' ? 'selected' : '' }}>
-                                                    Greece</option>
-                                                <option value="GL" {{ $client_info->country == 'GL' ? 'selected' : '' }}>
-                                                    Greenland</option>
-                                                <option value="GD" {{ $client_info->country == 'GD' ? 'selected' : '' }}>
-                                                    Grenada</option>
-                                                <option value="GU" {{ $client_info->country == 'GU' ? 'selected' : '' }}>
-                                                    Guam</option>
-                                                <option value="GT" {{ $client_info->country == 'GT' ? 'selected' : '' }}>
-                                                    Guatemala</option>
-                                                <option value="GG" {{ $client_info->country == 'GG' ? 'selected' : '' }}>
-                                                    Guernsey</option>
-                                                <option value="GN" {{ $client_info->country == 'GN' ? 'selected' : '' }}>
-                                                    Guinea</option>
-                                                <option value="GW" {{ $client_info->country == 'GW' ? 'selected' : '' }}>
-                                                    Guinea-Bissau
-                                                </option>
-                                                <option value="HT" {{ $client_info->country == 'HT' ? 'selected' : '' }}>
-                                                    Haiti</option>
-                                                <option value="VA" {{ $client_info->country == 'VA' ? 'selected' : '' }}>
-                                                    Holy See (Vatican
-                                                    City State)</option>
-                                                <option value="HN" {{ $client_info->country == 'HN' ? 'selected' : '' }}>
-                                                    Honduras</option>
-                                                <option value="HK" {{ $client_info->country == 'HK' ? 'selected' : '' }}>
-                                                    Hong Kong</option>
-                                                <option value="HU" {{ $client_info->country == 'HU' ? 'selected' : '' }}>
-                                                    Hungary</option>
-                                                <option value="IS" {{ $client_info->country == 'IS' ? 'selected' : '' }}>
-                                                    Iceland</option>
-                                                <option value="IN" {{ $client_info->country == 'IN' ? 'selected' : '' }}>
-                                                    India</option>
-                                                <option value="ID" {{ $client_info->country == 'ID' ? 'selected' : '' }}>
-                                                    Indonesia</option>
-                                                <option value="IR" {{ $client_info->country == 'IR' ? 'selected' : '' }}>
-                                                    Iran, Islamic
-                                                    Republic of</option>
-                                                <option value="IQ" {{ $client_info->country == 'IQ' ? 'selected' : '' }}>
-                                                    Iraq</option>
-                                                <option value="IE" {{ $client_info->country == 'IE' ? 'selected' : '' }}>
-                                                    Ireland</option>
-                                                <option value="IM" {{ $client_info->country == 'IM' ? 'selected' : '' }}>
-                                                    Isle of Man
-                                                </option>
-                                                <option value="IL" {{ $client_info->country == 'IL' ? 'selected' : '' }}>
-                                                    Israel</option>
-                                                <option value="IT" {{ $client_info->country == 'IT' ? 'selected' : '' }}>
-                                                    Italy</option>
-                                                <option value="JM" {{ $client_info->country == 'JM' ? 'selected' : '' }}>
-                                                    Jamaica</option>
-                                                <option value="JP" {{ $client_info->country == 'JP' ? 'selected' : '' }}>
-                                                    Japan</option>
-                                                <option value="JE" {{ $client_info->country == 'JE' ? 'selected' : '' }}>
-                                                    Jersey</option>
-                                                <option value="JO" {{ $client_info->country == 'JO' ? 'selected' : '' }}>
-                                                    Jordan</option>
-                                                <option value="KZ" {{ $client_info->country == 'KZ' ? 'selected' : '' }}>
-                                                    Kazakhstan</option>
-                                                <option value="KE" {{ $client_info->country == 'KE' ? 'selected' : '' }}>
-                                                    Kenya</option>
-                                                <option value="KI" {{ $client_info->country == 'KI' ? 'selected' : '' }}>
-                                                    Kiribati</option>
-                                                <option value="KP" {{ $client_info->country == 'KP' ? 'selected' : '' }}>
-                                                    Korea, Democratic
-                                                    People's Republic of</option>
-                                                <option value="KW" {{ $client_info->country == 'KW' ? 'selected' : '' }}>
-                                                    Kuwait</option>
-                                                <option value="KG" {{ $client_info->country == 'KG' ? 'selected' : '' }}>
-                                                    Kyrgyzstan</option>
-                                                <option value="LA" {{ $client_info->country == 'LA' ? 'selected' : '' }}>
-                                                    Lao People's
-                                                    Democratic Republic</option>
-                                                <option value="LV" {{ $client_info->country == 'LV' ? 'selected' : '' }}>
-                                                    Latvia</option>
-                                                <option value="LB" {{ $client_info->country == 'LB' ? 'selected' : '' }}>
-                                                    Lebanon</option>
-                                                <option value="LS" {{ $client_info->country == 'LS' ? 'selected' : '' }}>
-                                                    Lesotho</option>
-                                                <option value="LR" {{ $client_info->country == 'LR' ? 'selected' : '' }}>
-                                                    Liberia</option>
-                                                <option value="LY" {{ $client_info->country == 'LY' ? 'selected' : '' }}>
-                                                    Libya</option>
-                                                <option value="LI" {{ $client_info->country == 'LI' ? 'selected' : '' }}>
-                                                    Liechtenstein
-                                                </option>
-                                                <option value="LT" {{ $client_info->country == 'LT' ? 'selected' : '' }}>
-                                                    Lithuania</option>
-                                                <option value="LU" {{ $client_info->country == 'LU' ? 'selected' : '' }}>
-                                                    Luxembourg</option>
-                                                <option value="MO" {{ $client_info->country == 'MO' ? 'selected' : '' }}>
-                                                    Macao</option>
-                                                <option value="MG" {{ $client_info->country == 'MG' ? 'selected' : '' }}>
-                                                    Madagascar</option>
-                                                <option value="MW" {{ $client_info->country == 'MW' ? 'selected' : '' }}>
-                                                    Malawi</option>
-                                                <option value="MY" {{ $client_info->country == 'MY' ? 'selected' : '' }}>
-                                                    Malaysia</option>
-                                                <option value="MV" {{ $client_info->country == 'MV' ? 'selected' : '' }}>
-                                                    Maldives</option>
-                                                <option value="ML" {{ $client_info->country == 'ML' ? 'selected' : '' }}>
-                                                    Mali</option>
-                                                <option value="MT" {{ $client_info->country == 'MT' ? 'selected' : '' }}>
-                                                    Malta</option>
-                                                <option value="MH" {{ $client_info->country == 'MH' ? 'selected' : '' }}>
-                                                    Marshall Islands
-                                                </option>
-                                                <option value="MQ" {{ $client_info->country == 'MQ' ? 'selected' : '' }}>
-                                                    Martinique</option>
-                                                <option value="MR" {{ $client_info->country == 'MR' ? 'selected' : '' }}>
-                                                    Mauritania</option>
-                                                <option value="MU" {{ $client_info->country == 'MU' ? 'selected' : '' }}>
-                                                    Mauritius</option>
-                                                <option value="MX" {{ $client_info->country == 'MX' ? 'selected' : '' }}>
-                                                    Mexico</option>
-                                                <option value="FM" {{ $client_info->country == 'FM' ? 'selected' : '' }}>
-                                                    Micronesia,
-                                                    Federated States of</option>
-                                                <option value="MD" {{ $client_info->country == 'MD' ? 'selected' : '' }}>
-                                                    Moldova, Republic
-                                                    of</option>
-                                                <option value="MC" {{ $client_info->country == 'MC' ? 'selected' : '' }}>
-                                                    Monaco</option>
-                                                <option value="MN" {{ $client_info->country == 'MN' ? 'selected' : '' }}>
-                                                    Mongolia</option>
-                                                <option value="ME" {{ $client_info->country == 'ME' ? 'selected' : '' }}>
-                                                    Montenegro</option>
-                                                <option value="MS" {{ $client_info->country == 'MS' ? 'selected' : '' }}>
-                                                    Montserrat</option>
-                                                <option value="MA" {{ $client_info->country == 'MA' ? 'selected' : '' }}>
-                                                    Morocco</option>
-                                                <option value="MZ" {{ $client_info->country == 'MZ' ? 'selected' : '' }}>
-                                                    Mozambique</option>
-                                                <option value="MM" {{ $client_info->country == 'MM' ? 'selected' : '' }}>
-                                                    Myanmar</option>
-                                                <option value="NA" {{ $client_info->country == 'NA' ? 'selected' : '' }}>
-                                                    Namibia</option>
-                                                <option value="NR" {{ $client_info->country == 'NR' ? 'selected' : '' }}>
-                                                    Nauru</option>
-                                                <option value="NP" {{ $client_info->country == 'NP' ? 'selected' : '' }}>
-                                                    Nepal</option>
-                                                <option value="NL" {{ $client_info->country == 'NL' ? 'selected' : '' }}>
-                                                    Netherlands
-                                                </option>
-                                                <option value="NZ" {{ $client_info->country == 'NZ' ? 'selected' : '' }}>
-                                                    New Zealand
-                                                </option>
-                                                <option value="NI" {{ $client_info->country == 'NI' ? 'selected' : '' }}>
-                                                    Nicaragua</option>
-                                                <option value="NE" {{ $client_info->country == 'NE' ? 'selected' : '' }}>
-                                                    Niger</option>
-                                                <option value="NG" {{ $client_info->country == 'NG' ? 'selected' : '' }}>
-                                                    Nigeria</option>
-                                                <option value="NU" {{ $client_info->country == 'NU' ? 'selected' : '' }}>
-                                                    Niue</option>
-                                                <option value="NF" {{ $client_info->country == 'NF' ? 'selected' : '' }}>
-                                                    Norfolk Island
-                                                </option>
-                                                <option value="MP" {{ $client_info->country == 'MP' ? 'selected' : '' }}>
-                                                    Northern Mariana
-                                                    Islands</option>
-                                                <option value="NO" {{ $client_info->country == 'NO' ? 'selected' : '' }}>
-                                                    Norway</option>
-                                                <option value="OM" {{ $client_info->country == 'OM' ? 'selected' : '' }}>
-                                                    Oman</option>
-                                                <option value="PK" {{ $client_info->country == 'PK' ? 'selected' : '' }}>
-                                                    Pakistan</option>
-                                                <option value="PW" {{ $client_info->country == 'PW' ? 'selected' : '' }}>
-                                                    Palau</option>
-                                                <option value="PS" {{ $client_info->country == 'PS' ? 'selected' : '' }}>
-                                                    Palestinian
-                                                    Territory, Occupied</option>
-                                                <option value="PA" {{ $client_info->country == 'PA' ? 'selected' : '' }}>
-                                                    Panama</option>
-                                                <option value="PG" {{ $client_info->country == 'PG' ? 'selected' : '' }}>
-                                                    Papua New Guinea
-                                                </option>
-                                                <option value="PY" {{ $client_info->country == 'PY' ? 'selected' : '' }}>
-                                                    Paraguay</option>
-                                                <option value="PE" {{ $client_info->country == 'PE' ? 'selected' : '' }}>
-                                                    Peru</option>
-                                                <option value="PH" {{ $client_info->country == 'PH' ? 'selected' : '' }}>
-                                                    Philippines
-                                                </option>
-                                                <option value="PL" {{ $client_info->country == 'PL' ? 'selected' : '' }}>
-                                                    Poland</option>
-                                                <option value="PT" {{ $client_info->country == 'PT' ? 'selected' : '' }}>
-                                                    Portugal</option>
-                                                <option value="PR" {{ $client_info->country == 'PR' ? 'selected' : '' }}>
-                                                    Puerto Rico
-                                                </option>
-                                                <option value="QA" {{ $client_info->country == 'QA' ? 'selected' : '' }}>
-                                                    Qatar</option>
-                                                <option value="RO" {{ $client_info->country == 'RO' ? 'selected' : '' }}>
-                                                    Romania</option>
-                                                <option value="RU" {{ $client_info->country == 'RU' ? 'selected' : '' }}>
-                                                    Russian Federation
-                                                </option>
-                                                <option value="RW" {{ $client_info->country == 'RW' ? 'selected' : '' }}>
-                                                    Rwanda</option>
-                                                <option value="BL" {{ $client_info->country == 'BL' ? 'selected' : '' }}>
-                                                    Saint Barthélemy
-                                                </option>
-                                                <option value="KN" {{ $client_info->country == 'KN' ? 'selected' : '' }}>
-                                                    Saint Kitts and
-                                                    Nevis</option>
-                                                <option value="LC" {{ $client_info->country == 'LC' ? 'selected' : '' }}>
-                                                    Saint Lucia
-                                                </option>
-                                                <option value="MF" {{ $client_info->country == 'MF' ? 'selected' : '' }}>
-                                                    Saint Martin
-                                                    (French part)</option>
-                                                <option value="VC" {{ $client_info->country == 'VC' ? 'selected' : '' }}>
-                                                    Saint Vincent and
-                                                    the Grenadines</option>
-                                                <option value="WS" {{ $client_info->country == 'WS' ? 'selected' : '' }}>
-                                                    Samoa</option>
-                                                <option value="SM" {{ $client_info->country == 'SM' ? 'selected' : '' }}>
-                                                    San Marino</option>
-                                                <option value="ST" {{ $client_info->country == 'ST' ? 'selected' : '' }}>
-                                                    Sao Tome and
-                                                    Principe</option>
-                                                <option value="SA" {{ $client_info->country == 'SA' ? 'selected' : '' }}>
-                                                    Saudi Arabia
-                                                </option>
-                                                <option value="SN" {{ $client_info->country == 'SN' ? 'selected' : '' }}>
-                                                    Senegal</option>
-                                                <option value="RS" {{ $client_info->country == 'RS' ? 'selected' : '' }}>
-                                                    Serbia</option>
-                                                <option value="SC" {{ $client_info->country == 'SC' ? 'selected' : '' }}>
-                                                    Seychelles</option>
-                                                <option value="SL" {{ $client_info->country == 'SL' ? 'selected' : '' }}>
-                                                    Sierra Leone
-                                                </option>
-                                                <option value="SG" {{ $client_info->country == 'SG' ? 'selected' : '' }}>
-                                                    Singapore</option>
-                                                <option value="SX" {{ $client_info->country == 'SX' ? 'selected' : '' }}>
-                                                    Sint Maarten (Dutch
-                                                    part)</option>
-                                                <option value="SK" {{ $client_info->country == 'SK' ? 'selected' : '' }}>
-                                                    Slovakia</option>
-                                                <option value="SI" {{ $client_info->country == 'SI' ? 'selected' : '' }}>
-                                                    Slovenia</option>
-                                                <option value="SB" {{ $client_info->country == 'SB' ? 'selected' : '' }}>
-                                                    Solomon Islands
-                                                </option>
-                                                <option value="SO" {{ $client_info->country == 'SO' ? 'selected' : '' }}>
-                                                    Somalia</option>
-                                                <option value="ZA" {{ $client_info->country == 'ZA' ? 'selected' : '' }}>
-                                                    South Africa
-                                                </option>
-                                                <option value="KR" {{ $client_info->country == 'KR' ? 'selected' : '' }}>
-                                                    South Korea
-                                                </option>
-                                                <option value="SS" {{ $client_info->country == 'SS' ? 'selected' : '' }}>
-                                                    South Sudan
-                                                </option>
-                                                <option value="ES" {{ $client_info->country == 'ES' ? 'selected' : '' }}>
-                                                    Spain</option>
-                                                <option value="LK" {{ $client_info->country == 'LK' ? 'selected' : '' }}>
-                                                    Sri Lanka</option>
-                                                <option value="SD" {{ $client_info->country == 'SD' ? 'selected' : '' }}>
-                                                    Sudan</option>
-                                                <option value="SR" {{ $client_info->country == 'SR' ? 'selected' : '' }}>
-                                                    Suriname</option>
-                                                <option value="SZ" {{ $client_info->country == 'SZ' ? 'selected' : '' }}>
-                                                    Swaziland</option>
-                                                <option value="SE" {{ $client_info->country == 'SE' ? 'selected' : '' }}>
-                                                    Sweden</option>
-                                                <option value="CH" {{ $client_info->country == 'CH' ? 'selected' : '' }}>
-                                                    Switzerland
-                                                </option>
-                                                <option value="SY" {{ $client_info->country == 'SY' ? 'selected' : '' }}>
-                                                    Syrian Arab
-                                                    Republic</option>
-                                                <option value="TW" {{ $client_info->country == 'TW' ? 'selected' : '' }}>
-                                                    Taiwan, Province of
-                                                    China</option>
-                                                <option value="TJ" {{ $client_info->country == 'TJ' ? 'selected' : '' }}>
-                                                    Tajikistan</option>
-                                                <option value="TZ" {{ $client_info->country == 'TZ' ? 'selected' : '' }}>
-                                                    Tanzania, United
-                                                    Republic of</option>
-                                                <option value="TH" {{ $client_info->country == 'TH' ? 'selected' : '' }}>
-                                                    Thailand</option>
-                                                <option value="TG" {{ $client_info->country == 'TG' ? 'selected' : '' }}>
-                                                    Togo</option>
-                                                <option value="TK" {{ $client_info->country == 'TK' ? 'selected' : '' }}>
-                                                    Tokelau</option>
-                                                <option value="TO" {{ $client_info->country == 'TQ' ? 'selected' : '' }}>
-                                                    Tonga</option>
-                                                <option value="TT" {{ $client_info->country == 'TT' ? 'selected' : '' }}>
-                                                    Trinidad and Tobago
-                                                </option>
-                                                <option value="TN" {{ $client_info->country == 'TN' ? 'selected' : '' }}>
-                                                    Tunisia</option>
-                                                <option value="TR" {{ $client_info->country == 'TR' ? 'selected' : '' }}>
-                                                    Turkey</option>
-                                                <option value="TM" {{ $client_info->country == 'TM' ? 'selected' : '' }}>
-                                                    Turkmenistan
-                                                </option>
-                                                <option value="TC" {{ $client_info->country == 'TC' ? 'selected' : '' }}>
-                                                    Turks and Caicos
-                                                    Islands</option>
-                                                <option value="TV" {{ $client_info->country == 'TV' ? 'selected' : '' }}>
-                                                    Tuvalu</option>
-                                                <option value="UG" {{ $client_info->country == 'UG' ? 'selected' : '' }}>
-                                                    Uganda</option>
-                                                <option value="UA" {{ $client_info->country == 'UA' ? 'selected' : '' }}>
-                                                    Ukraine</option>
-                                                <option value="AE" {{ $client_info->country == 'AE' ? 'selected' : '' }}>
-                                                    United Arab
-                                                    Emirates</option>
-                                                <option value="GB" {{ $client_info->country == 'GB' ? 'selected' : '' }}>
-                                                    United Kingdom
-                                                </option>
-                                                <option value="US" {{ $client_info->country == 'US' ? 'selected' : '' }}>
-                                                    United States
-                                                </option>
-                                                <option value="UY" {{ $client_info->country == 'UY' ? 'selected' : '' }}>
-                                                    Uruguay</option>
-                                                <option value="UZ" {{ $client_info->country == 'UZ' ? 'selected' : '' }}>
-                                                    Uzbekistan</option>
-                                                <option value="VU" {{ $client_info->country == 'VU' ? 'selected' : '' }}>
-                                                    Vanuatu</option>
-                                                <option value="VE" {{ $client_info->country == 'VE' ? 'selected' : '' }}>
-                                                    Venezuela,
-                                                    Bolivarian Republic of</option>
-                                                <option value="VN" {{ $client_info->country == 'VN' ? 'selected' : '' }}>
-                                                    Vietnam</option>
-                                                <option value="VI" {{ $client_info->country == 'VI' ? 'selected' : '' }}>
-                                                    Virgin Islands
-                                                </option>
-                                                <option value="YE" {{ $client_info->country == 'YE' ? 'selected' : '' }}>
-                                                    Yemen</option>
-                                                <option value="ZM" {{ $client_info->country == 'ZM' ? 'selected' : '' }}>
-                                                    Zambia</option>
-                                                <option value="ZW" {{ $client_info->country == 'ZW' ? 'selected' : '' }}>
-                                                    Zimbabwe</option>
+                                            <option value="AF" {{ $client_info->country == 'AF' ? 'selected' : '' }}>
+                                                Afghanistan
+                                            </option>
+                                            <option value="AX" {{ $client_info->country == 'AX' ? 'selected' : '' }}>
+                                                Aland Islands
+                                            </option>
+                                            <option value="AL" {{ $client_info->country == 'AL' ? 'selected' : '' }}>
+                                                Albania</option>
+                                            <option value="DZ" {{ $client_info->country == 'DZ' ? 'selected' : '' }}>
+                                                Algeria</option>
+                                            <option value="AS" {{ $client_info->country == 'AS' ? 'selected' : '' }}>
+                                                American Samoa
+                                            </option>
+                                            <option value="AD" {{ $client_info->country == 'AD' ? 'selected' : '' }}>
+                                                Andorra</option>
+                                            <option value="AO" {{ $client_info->country == 'AO' ? 'selected' : '' }}>
+                                                Angola</option>
+                                            <option value="AI" {{ $client_info->country == 'AI' ? 'selected' : '' }}>
+                                                Anguilla</option>
+                                            <option value="AG" {{ $client_info->country == 'AG' ? 'selected' : '' }}>
+                                                Antigua and Barbuda
+                                            </option>
+                                            <option value="AR" {{ $client_info->country == 'AR' ? 'selected' : '' }}>
+                                                Argentina</option>
+                                            <option value="AM" {{ $client_info->country == 'AM' ? 'selected' : '' }}>
+                                                Armenia</option>
+                                            <option value="AW" {{ $client_info->country == 'AW' ? 'selected' : '' }}>
+                                                Aruba</option>
+                                            <option value="AU" {{ $client_info->country == 'AU' ? 'selected' : '' }}>
+                                                Australia</option>
+                                            <option value="AT" {{ $client_info->country == 'AT' ? 'selected' : '' }}>
+                                                Austria</option>
+                                            <option value="AZ" {{ $client_info->country == 'AZ' ? 'selected' : '' }}>
+                                                Azerbaijan</option>
+                                            <option value="BS" {{ $client_info->country == 'BS' ? 'selected' : '' }}>
+                                                Bahamas</option>
+                                            <option value="BH" {{ $client_info->country == 'BH' ? 'selected' : '' }}>
+                                                Bahrain</option>
+                                            <option value="BD" {{ $client_info->country == 'BD' ? 'selected' : '' }}>
+                                                Bangladesh</option>
+                                            <option value="BB" {{ $client_info->country == 'BB' ? 'selected' : '' }}>
+                                                Barbados</option>
+                                            <option value="BY" {{ $client_info->country == 'BY' ? 'selected' : '' }}>
+                                                Belarus</option>
+                                            <option value="BE" {{ $client_info->country == 'BE' ? 'selected' : '' }}>
+                                                Belgium</option>
+                                            <option value="BZ" {{ $client_info->country == 'BZ' ? 'selected' : '' }}>
+                                                Belize</option>
+                                            <option value="BJ" {{ $client_info->country == 'BJ' ? 'selected' : '' }}>
+                                                Benin</option>
+                                            <option value="BM" {{ $client_info->country == 'BM' ? 'selected' : '' }}>
+                                                Bermuda</option>
+                                            <option value="BT" {{ $client_info->country == 'BT' ? 'selected' : '' }}>
+                                                Bhutan</option>
+                                            <option value="BO" {{ $client_info->country == 'BO' ? 'selected' : '' }}>
+                                                Bolivia,
+                                                Plurinational State of</option>
+                                            <option value="BQ" {{ $client_info->country == 'BQ' ? 'selected' : '' }}>
+                                                Bonaire, Sint
+                                                Eustatius and Saba</option>
+                                            <option value="BA" {{ $client_info->country == 'BA' ? 'selected' : '' }}>
+                                                Bosnia and
+                                                Herzegovina</option>
+                                            <option value="BW" {{ $client_info->country == 'BW' ? 'selected' : '' }}>
+                                                Botswana</option>
+                                            <option value="BR" {{ $client_info->country == 'BR' ? 'selected' : '' }}>
+                                                Brazil</option>
+                                            <option value="IO" {{ $client_info->country == 'IO' ? 'selected' : '' }}>
+                                                British Indian
+                                                Ocean Territory</option>
+                                            <option value="BN" {{ $client_info->country == 'BN' ? 'selected' : '' }}>
+                                                Brunei Darussalam
+                                            </option>
+                                            <option value="BG" {{ $client_info->country == 'BG' ? 'selected' : '' }}>
+                                                Bulgaria</option>
+                                            <option value="BF" {{ $client_info->country == 'BF' ? 'selected' : '' }}>
+                                                Burkina Faso
+                                            </option>
+                                            <option value="BI" {{ $client_info->country == 'BI' ? 'selected' : '' }}>
+                                                Burundi</option>
+                                            <option value="KH" {{ $client_info->country == 'KH' ? 'selected' : '' }}>
+                                                Cambodia</option>
+                                            <option value="CM" {{ $client_info->country == 'CM' ? 'selected' : '' }}>
+                                                Cameroon</option>
+                                            <option value="CA" {{ $client_info->country == 'CA' ? 'selected' : '' }}>
+                                                Canada</option>
+                                            <option value="CV" {{ $client_info->country == 'CV' ? 'selected' : '' }}>
+                                                Cape Verde</option>
+                                            <option value="KY" {{ $client_info->country == 'KY' ? 'selected' : '' }}>
+                                                Cayman Islands
+                                            </option>
+                                            <option value="CF" {{ $client_info->country == 'CF' ? 'selected' : '' }}>
+                                                Central African
+                                                Republic</option>
+                                            <option value="TD" {{ $client_info->country == 'TD' ? 'selected' : '' }}>
+                                                Chad</option>
+                                            <option value="CL" {{ $client_info->country == 'CL' ? 'selected' : '' }}>
+                                                Chile</option>
+                                            <option value="CN" {{ $client_info->country == 'CN' ? 'selected' : '' }}>
+                                                China</option>
+                                            <option value="CX" {{ $client_info->country == 'CX' ? 'selected' : '' }}>
+                                                Christmas Island
+                                            </option>
+                                            <option value="CC" {{ $client_info->country == 'CC' ? 'selected' : '' }}>
+                                                Cocos (Keeling)
+                                                Islands</option>
+                                            <option value="CO" {{ $client_info->country == 'CO' ? 'selected' : '' }}>
+                                                Colombia</option>
+                                            <option value="KM" {{ $client_info->country == 'KM' ? 'selected' : '' }}>
+                                                Comoros</option>
+                                            <option value="CK" {{ $client_info->country == 'CK' ? 'selected' : '' }}>
+                                                Cook Islands
+                                            </option>
+                                            <option value="CR" {{ $client_info->country == 'CR' ? 'selected' : '' }}>
+                                                Costa Rica</option>
+                                            <option value="CI" {{ $client_info->country == 'CI' ? 'selected' : '' }}>
+                                                Côte d'Ivoire
+                                            </option>
+                                            <option value="HR" {{ $client_info->country == 'HR' ? 'selected' : '' }}>
+                                                Croatia</option>
+                                            <option value="CU" {{ $client_info->country == 'CU' ? 'selected' : '' }}>
+                                                Cuba</option>
+                                            <option value="CW" {{ $client_info->country == 'CW' ? 'selected' : '' }}>
+                                                Curaçao</option>
+                                            <option value="CZ" {{ $client_info->country == 'CZ' ? 'selected' : '' }}>
+                                                Czech Republic
+                                            </option>
+                                            <option value="DK" {{ $client_info->country == 'DK' ? 'selected' : '' }}>
+                                                Denmark</option>
+                                            <option value="DJ" {{ $client_info->country == 'DJ' ? 'selected' : '' }}>
+                                                Djibouti</option>
+                                            <option value="DM" {{ $client_info->country == 'DM' ? 'selected' : '' }}>
+                                                Dominica</option>
+                                            <option value="DO" {{ $client_info->country == 'DO' ? 'selected' : '' }}>
+                                                Dominican Republic
+                                            </option>
+                                            <option value="EC" {{ $client_info->country == 'EC' ? 'selected' : '' }}>
+                                                Ecuador</option>
+                                            <option value="EG" {{ $client_info->country == 'EG' ? 'selected' : '' }}>
+                                                Egypt</option>
+                                            <option value="SV" {{ $client_info->country == 'SV' ? 'selected' : '' }}>
+                                                El Salvador
+                                            </option>
+                                            <option value="GQ" {{ $client_info->country == 'GQ' ? 'selected' : '' }}>
+                                                Equatorial Guinea
+                                            </option>
+                                            <option value="ER" {{ $client_info->country == 'ER' ? 'selected' : '' }}>
+                                                Eritrea</option>
+                                            <option value="EE" {{ $client_info->country == 'EE' ? 'selected' : '' }}>
+                                                Estonia</option>
+                                            <option value="ET" {{ $client_info->country == 'ET' ? 'selected' : '' }}>
+                                                Ethiopia</option>
+                                            <option value="FK" {{ $client_info->country == 'FK' ? 'selected' : '' }}>
+                                                Falkland Islands
+                                                (Malvinas)</option>
+                                            <option value="FJ" {{ $client_info->country == 'FJ' ? 'selected' : '' }}>
+                                                Fiji</option>
+                                            <option value="FI" {{ $client_info->country == 'FI' ? 'selected' : '' }}>
+                                                Finland</option>
+                                            <option value="FR" {{ $client_info->country == 'FR' ? 'selected' : '' }}>
+                                                France</option>
+                                            <option value="PF" {{ $client_info->country == 'PF' ? 'selected' : '' }}>
+                                                French Polynesia
+                                            </option>
+                                            <option value="GA" {{ $client_info->country == 'GA' ? 'selected' : '' }}>
+                                                Gabon</option>
+                                            <option value="GM" {{ $client_info->country == 'GM' ? 'selected' : '' }}>
+                                                Gambia</option>
+                                            <option value="GE" {{ $client_info->country == 'GE' ? 'selected' : '' }}>
+                                                Georgia</option>
+                                            <option value="DE" {{ $client_info->country == 'DE' ? 'selected' : '' }}>
+                                                Germany</option>
+                                            <option value="GH" {{ $client_info->country == 'GH' ? 'selected' : '' }}>
+                                                Ghana</option>
+                                            <option value="GI" {{ $client_info->country == 'GI' ? 'selected' : '' }}>
+                                                Gibraltar</option>
+                                            <option value="GR" {{ $client_info->country == 'GR' ? 'selected' : '' }}>
+                                                Greece</option>
+                                            <option value="GL" {{ $client_info->country == 'GL' ? 'selected' : '' }}>
+                                                Greenland</option>
+                                            <option value="GD" {{ $client_info->country == 'GD' ? 'selected' : '' }}>
+                                                Grenada</option>
+                                            <option value="GU" {{ $client_info->country == 'GU' ? 'selected' : '' }}>
+                                                Guam</option>
+                                            <option value="GT" {{ $client_info->country == 'GT' ? 'selected' : '' }}>
+                                                Guatemala</option>
+                                            <option value="GG" {{ $client_info->country == 'GG' ? 'selected' : '' }}>
+                                                Guernsey</option>
+                                            <option value="GN" {{ $client_info->country == 'GN' ? 'selected' : '' }}>
+                                                Guinea</option>
+                                            <option value="GW" {{ $client_info->country == 'GW' ? 'selected' : '' }}>
+                                                Guinea-Bissau
+                                            </option>
+                                            <option value="HT" {{ $client_info->country == 'HT' ? 'selected' : '' }}>
+                                                Haiti</option>
+                                            <option value="VA" {{ $client_info->country == 'VA' ? 'selected' : '' }}>
+                                                Holy See (Vatican
+                                                City State)</option>
+                                            <option value="HN" {{ $client_info->country == 'HN' ? 'selected' : '' }}>
+                                                Honduras</option>
+                                            <option value="HK" {{ $client_info->country == 'HK' ? 'selected' : '' }}>
+                                                Hong Kong</option>
+                                            <option value="HU" {{ $client_info->country == 'HU' ? 'selected' : '' }}>
+                                                Hungary</option>
+                                            <option value="IS" {{ $client_info->country == 'IS' ? 'selected' : '' }}>
+                                                Iceland</option>
+                                            <option value="IN" {{ $client_info->country == 'IN' ? 'selected' : '' }}>
+                                                India</option>
+                                            <option value="ID" {{ $client_info->country == 'ID' ? 'selected' : '' }}>
+                                                Indonesia</option>
+                                            <option value="IR" {{ $client_info->country == 'IR' ? 'selected' : '' }}>
+                                                Iran, Islamic
+                                                Republic of</option>
+                                            <option value="IQ" {{ $client_info->country == 'IQ' ? 'selected' : '' }}>
+                                                Iraq</option>
+                                            <option value="IE" {{ $client_info->country == 'IE' ? 'selected' : '' }}>
+                                                Ireland</option>
+                                            <option value="IM" {{ $client_info->country == 'IM' ? 'selected' : '' }}>
+                                                Isle of Man
+                                            </option>
+                                            <option value="IL" {{ $client_info->country == 'IL' ? 'selected' : '' }}>
+                                                Israel</option>
+                                            <option value="IT" {{ $client_info->country == 'IT' ? 'selected' : '' }}>
+                                                Italy</option>
+                                            <option value="JM" {{ $client_info->country == 'JM' ? 'selected' : '' }}>
+                                                Jamaica</option>
+                                            <option value="JP" {{ $client_info->country == 'JP' ? 'selected' : '' }}>
+                                                Japan</option>
+                                            <option value="JE" {{ $client_info->country == 'JE' ? 'selected' : '' }}>
+                                                Jersey</option>
+                                            <option value="JO" {{ $client_info->country == 'JO' ? 'selected' : '' }}>
+                                                Jordan</option>
+                                            <option value="KZ" {{ $client_info->country == 'KZ' ? 'selected' : '' }}>
+                                                Kazakhstan</option>
+                                            <option value="KE" {{ $client_info->country == 'KE' ? 'selected' : '' }}>
+                                                Kenya</option>
+                                            <option value="KI" {{ $client_info->country == 'KI' ? 'selected' : '' }}>
+                                                Kiribati</option>
+                                            <option value="KP" {{ $client_info->country == 'KP' ? 'selected' : '' }}>
+                                                Korea, Democratic
+                                                People's Republic of</option>
+                                            <option value="KW" {{ $client_info->country == 'KW' ? 'selected' : '' }}>
+                                                Kuwait</option>
+                                            <option value="KG" {{ $client_info->country == 'KG' ? 'selected' : '' }}>
+                                                Kyrgyzstan</option>
+                                            <option value="LA" {{ $client_info->country == 'LA' ? 'selected' : '' }}>
+                                                Lao People's
+                                                Democratic Republic</option>
+                                            <option value="LV" {{ $client_info->country == 'LV' ? 'selected' : '' }}>
+                                                Latvia</option>
+                                            <option value="LB" {{ $client_info->country == 'LB' ? 'selected' : '' }}>
+                                                Lebanon</option>
+                                            <option value="LS" {{ $client_info->country == 'LS' ? 'selected' : '' }}>
+                                                Lesotho</option>
+                                            <option value="LR" {{ $client_info->country == 'LR' ? 'selected' : '' }}>
+                                                Liberia</option>
+                                            <option value="LY" {{ $client_info->country == 'LY' ? 'selected' : '' }}>
+                                                Libya</option>
+                                            <option value="LI" {{ $client_info->country == 'LI' ? 'selected' : '' }}>
+                                                Liechtenstein
+                                            </option>
+                                            <option value="LT" {{ $client_info->country == 'LT' ? 'selected' : '' }}>
+                                                Lithuania</option>
+                                            <option value="LU" {{ $client_info->country == 'LU' ? 'selected' : '' }}>
+                                                Luxembourg</option>
+                                            <option value="MO" {{ $client_info->country == 'MO' ? 'selected' : '' }}>
+                                                Macao</option>
+                                            <option value="MG" {{ $client_info->country == 'MG' ? 'selected' : '' }}>
+                                                Madagascar</option>
+                                            <option value="MW" {{ $client_info->country == 'MW' ? 'selected' : '' }}>
+                                                Malawi</option>
+                                            <option value="MY" {{ $client_info->country == 'MY' ? 'selected' : '' }}>
+                                                Malaysia</option>
+                                            <option value="MV" {{ $client_info->country == 'MV' ? 'selected' : '' }}>
+                                                Maldives</option>
+                                            <option value="ML" {{ $client_info->country == 'ML' ? 'selected' : '' }}>
+                                                Mali</option>
+                                            <option value="MT" {{ $client_info->country == 'MT' ? 'selected' : '' }}>
+                                                Malta</option>
+                                            <option value="MH" {{ $client_info->country == 'MH' ? 'selected' : '' }}>
+                                                Marshall Islands
+                                            </option>
+                                            <option value="MQ" {{ $client_info->country == 'MQ' ? 'selected' : '' }}>
+                                                Martinique</option>
+                                            <option value="MR" {{ $client_info->country == 'MR' ? 'selected' : '' }}>
+                                                Mauritania</option>
+                                            <option value="MU" {{ $client_info->country == 'MU' ? 'selected' : '' }}>
+                                                Mauritius</option>
+                                            <option value="MX" {{ $client_info->country == 'MX' ? 'selected' : '' }}>
+                                                Mexico</option>
+                                            <option value="FM" {{ $client_info->country == 'FM' ? 'selected' : '' }}>
+                                                Micronesia,
+                                                Federated States of</option>
+                                            <option value="MD" {{ $client_info->country == 'MD' ? 'selected' : '' }}>
+                                                Moldova, Republic
+                                                of</option>
+                                            <option value="MC" {{ $client_info->country == 'MC' ? 'selected' : '' }}>
+                                                Monaco</option>
+                                            <option value="MN" {{ $client_info->country == 'MN' ? 'selected' : '' }}>
+                                                Mongolia</option>
+                                            <option value="ME" {{ $client_info->country == 'ME' ? 'selected' : '' }}>
+                                                Montenegro</option>
+                                            <option value="MS" {{ $client_info->country == 'MS' ? 'selected' : '' }}>
+                                                Montserrat</option>
+                                            <option value="MA" {{ $client_info->country == 'MA' ? 'selected' : '' }}>
+                                                Morocco</option>
+                                            <option value="MZ" {{ $client_info->country == 'MZ' ? 'selected' : '' }}>
+                                                Mozambique</option>
+                                            <option value="MM" {{ $client_info->country == 'MM' ? 'selected' : '' }}>
+                                                Myanmar</option>
+                                            <option value="NA" {{ $client_info->country == 'NA' ? 'selected' : '' }}>
+                                                Namibia</option>
+                                            <option value="NR" {{ $client_info->country == 'NR' ? 'selected' : '' }}>
+                                                Nauru</option>
+                                            <option value="NP" {{ $client_info->country == 'NP' ? 'selected' : '' }}>
+                                                Nepal</option>
+                                            <option value="NL" {{ $client_info->country == 'NL' ? 'selected' : '' }}>
+                                                Netherlands
+                                            </option>
+                                            <option value="NZ" {{ $client_info->country == 'NZ' ? 'selected' : '' }}>
+                                                New Zealand
+                                            </option>
+                                            <option value="NI" {{ $client_info->country == 'NI' ? 'selected' : '' }}>
+                                                Nicaragua</option>
+                                            <option value="NE" {{ $client_info->country == 'NE' ? 'selected' : '' }}>
+                                                Niger</option>
+                                            <option value="NG" {{ $client_info->country == 'NG' ? 'selected' : '' }}>
+                                                Nigeria</option>
+                                            <option value="NU" {{ $client_info->country == 'NU' ? 'selected' : '' }}>
+                                                Niue</option>
+                                            <option value="NF" {{ $client_info->country == 'NF' ? 'selected' : '' }}>
+                                                Norfolk Island
+                                            </option>
+                                            <option value="MP" {{ $client_info->country == 'MP' ? 'selected' : '' }}>
+                                                Northern Mariana
+                                                Islands</option>
+                                            <option value="NO" {{ $client_info->country == 'NO' ? 'selected' : '' }}>
+                                                Norway</option>
+                                            <option value="OM" {{ $client_info->country == 'OM' ? 'selected' : '' }}>
+                                                Oman</option>
+                                            <option value="PK" {{ $client_info->country == 'PK' ? 'selected' : '' }}>
+                                                Pakistan</option>
+                                            <option value="PW" {{ $client_info->country == 'PW' ? 'selected' : '' }}>
+                                                Palau</option>
+                                            <option value="PS" {{ $client_info->country == 'PS' ? 'selected' : '' }}>
+                                                Palestinian
+                                                Territory, Occupied</option>
+                                            <option value="PA" {{ $client_info->country == 'PA' ? 'selected' : '' }}>
+                                                Panama</option>
+                                            <option value="PG" {{ $client_info->country == 'PG' ? 'selected' : '' }}>
+                                                Papua New Guinea
+                                            </option>
+                                            <option value="PY" {{ $client_info->country == 'PY' ? 'selected' : '' }}>
+                                                Paraguay</option>
+                                            <option value="PE" {{ $client_info->country == 'PE' ? 'selected' : '' }}>
+                                                Peru</option>
+                                            <option value="PH" {{ $client_info->country == 'PH' ? 'selected' : '' }}>
+                                                Philippines
+                                            </option>
+                                            <option value="PL" {{ $client_info->country == 'PL' ? 'selected' : '' }}>
+                                                Poland</option>
+                                            <option value="PT" {{ $client_info->country == 'PT' ? 'selected' : '' }}>
+                                                Portugal</option>
+                                            <option value="PR" {{ $client_info->country == 'PR' ? 'selected' : '' }}>
+                                                Puerto Rico
+                                            </option>
+                                            <option value="QA" {{ $client_info->country == 'QA' ? 'selected' : '' }}>
+                                                Qatar</option>
+                                            <option value="RO" {{ $client_info->country == 'RO' ? 'selected' : '' }}>
+                                                Romania</option>
+                                            <option value="RU" {{ $client_info->country == 'RU' ? 'selected' : '' }}>
+                                                Russian Federation
+                                            </option>
+                                            <option value="RW" {{ $client_info->country == 'RW' ? 'selected' : '' }}>
+                                                Rwanda</option>
+                                            <option value="BL" {{ $client_info->country == 'BL' ? 'selected' : '' }}>
+                                                Saint Barthélemy
+                                            </option>
+                                            <option value="KN" {{ $client_info->country == 'KN' ? 'selected' : '' }}>
+                                                Saint Kitts and
+                                                Nevis</option>
+                                            <option value="LC" {{ $client_info->country == 'LC' ? 'selected' : '' }}>
+                                                Saint Lucia
+                                            </option>
+                                            <option value="MF" {{ $client_info->country == 'MF' ? 'selected' : '' }}>
+                                                Saint Martin
+                                                (French part)</option>
+                                            <option value="VC" {{ $client_info->country == 'VC' ? 'selected' : '' }}>
+                                                Saint Vincent and
+                                                the Grenadines</option>
+                                            <option value="WS" {{ $client_info->country == 'WS' ? 'selected' : '' }}>
+                                                Samoa</option>
+                                            <option value="SM" {{ $client_info->country == 'SM' ? 'selected' : '' }}>
+                                                San Marino</option>
+                                            <option value="ST" {{ $client_info->country == 'ST' ? 'selected' : '' }}>
+                                                Sao Tome and
+                                                Principe</option>
+                                            <option value="SA" {{ $client_info->country == 'SA' ? 'selected' : '' }}>
+                                                Saudi Arabia
+                                            </option>
+                                            <option value="SN" {{ $client_info->country == 'SN' ? 'selected' : '' }}>
+                                                Senegal</option>
+                                            <option value="RS" {{ $client_info->country == 'RS' ? 'selected' : '' }}>
+                                                Serbia</option>
+                                            <option value="SC" {{ $client_info->country == 'SC' ? 'selected' : '' }}>
+                                                Seychelles</option>
+                                            <option value="SL" {{ $client_info->country == 'SL' ? 'selected' : '' }}>
+                                                Sierra Leone
+                                            </option>
+                                            <option value="SG" {{ $client_info->country == 'SG' ? 'selected' : '' }}>
+                                                Singapore</option>
+                                            <option value="SX" {{ $client_info->country == 'SX' ? 'selected' : '' }}>
+                                                Sint Maarten (Dutch
+                                                part)</option>
+                                            <option value="SK" {{ $client_info->country == 'SK' ? 'selected' : '' }}>
+                                                Slovakia</option>
+                                            <option value="SI" {{ $client_info->country == 'SI' ? 'selected' : '' }}>
+                                                Slovenia</option>
+                                            <option value="SB" {{ $client_info->country == 'SB' ? 'selected' : '' }}>
+                                                Solomon Islands
+                                            </option>
+                                            <option value="SO" {{ $client_info->country == 'SO' ? 'selected' : '' }}>
+                                                Somalia</option>
+                                            <option value="ZA" {{ $client_info->country == 'ZA' ? 'selected' : '' }}>
+                                                South Africa
+                                            </option>
+                                            <option value="KR" {{ $client_info->country == 'KR' ? 'selected' : '' }}>
+                                                South Korea
+                                            </option>
+                                            <option value="SS" {{ $client_info->country == 'SS' ? 'selected' : '' }}>
+                                                South Sudan
+                                            </option>
+                                            <option value="ES" {{ $client_info->country == 'ES' ? 'selected' : '' }}>
+                                                Spain</option>
+                                            <option value="LK" {{ $client_info->country == 'LK' ? 'selected' : '' }}>
+                                                Sri Lanka</option>
+                                            <option value="SD" {{ $client_info->country == 'SD' ? 'selected' : '' }}>
+                                                Sudan</option>
+                                            <option value="SR" {{ $client_info->country == 'SR' ? 'selected' : '' }}>
+                                                Suriname</option>
+                                            <option value="SZ" {{ $client_info->country == 'SZ' ? 'selected' : '' }}>
+                                                Swaziland</option>
+                                            <option value="SE" {{ $client_info->country == 'SE' ? 'selected' : '' }}>
+                                                Sweden</option>
+                                            <option value="CH" {{ $client_info->country == 'CH' ? 'selected' : '' }}>
+                                                Switzerland
+                                            </option>
+                                            <option value="SY" {{ $client_info->country == 'SY' ? 'selected' : '' }}>
+                                                Syrian Arab
+                                                Republic</option>
+                                            <option value="TW" {{ $client_info->country == 'TW' ? 'selected' : '' }}>
+                                                Taiwan, Province of
+                                                China</option>
+                                            <option value="TJ" {{ $client_info->country == 'TJ' ? 'selected' : '' }}>
+                                                Tajikistan</option>
+                                            <option value="TZ" {{ $client_info->country == 'TZ' ? 'selected' : '' }}>
+                                                Tanzania, United
+                                                Republic of</option>
+                                            <option value="TH" {{ $client_info->country == 'TH' ? 'selected' : '' }}>
+                                                Thailand</option>
+                                            <option value="TG" {{ $client_info->country == 'TG' ? 'selected' : '' }}>
+                                                Togo</option>
+                                            <option value="TK" {{ $client_info->country == 'TK' ? 'selected' : '' }}>
+                                                Tokelau</option>
+                                            <option value="TO" {{ $client_info->country == 'TQ' ? 'selected' : '' }}>
+                                                Tonga</option>
+                                            <option value="TT" {{ $client_info->country == 'TT' ? 'selected' : '' }}>
+                                                Trinidad and Tobago
+                                            </option>
+                                            <option value="TN" {{ $client_info->country == 'TN' ? 'selected' : '' }}>
+                                                Tunisia</option>
+                                            <option value="TR" {{ $client_info->country == 'TR' ? 'selected' : '' }}>
+                                                Turkey</option>
+                                            <option value="TM" {{ $client_info->country == 'TM' ? 'selected' : '' }}>
+                                                Turkmenistan
+                                            </option>
+                                            <option value="TC" {{ $client_info->country == 'TC' ? 'selected' : '' }}>
+                                                Turks and Caicos
+                                                Islands</option>
+                                            <option value="TV" {{ $client_info->country == 'TV' ? 'selected' : '' }}>
+                                                Tuvalu</option>
+                                            <option value="UG" {{ $client_info->country == 'UG' ? 'selected' : '' }}>
+                                                Uganda</option>
+                                            <option value="UA" {{ $client_info->country == 'UA' ? 'selected' : '' }}>
+                                                Ukraine</option>
+                                            <option value="AE" {{ $client_info->country == 'AE' ? 'selected' : '' }}>
+                                                United Arab
+                                                Emirates</option>
+                                            <option value="GB" {{ $client_info->country == 'GB' ? 'selected' : '' }}>
+                                                United Kingdom
+                                            </option>
+                                            <option value="US" {{ $client_info->country == 'US' ? 'selected' : '' }}>
+                                                United States
+                                            </option>
+                                            <option value="UY" {{ $client_info->country == 'UY' ? 'selected' : '' }}>
+                                                Uruguay</option>
+                                            <option value="UZ" {{ $client_info->country == 'UZ' ? 'selected' : '' }}>
+                                                Uzbekistan</option>
+                                            <option value="VU" {{ $client_info->country == 'VU' ? 'selected' : '' }}>
+                                                Vanuatu</option>
+                                            <option value="VE" {{ $client_info->country == 'VE' ? 'selected' : '' }}>
+                                                Venezuela,
+                                                Bolivarian Republic of</option>
+                                            <option value="VN" {{ $client_info->country == 'VN' ? 'selected' : '' }}>
+                                                Vietnam</option>
+                                            <option value="VI" {{ $client_info->country == 'VI' ? 'selected' : '' }}>
+                                                Virgin Islands
+                                            </option>
+                                            <option value="YE" {{ $client_info->country == 'YE' ? 'selected' : '' }}>
+                                                Yemen</option>
+                                            <option value="ZM" {{ $client_info->country == 'ZM' ? 'selected' : '' }}>
+                                                Zambia</option>
+                                            <option value="ZW" {{ $client_info->country == 'ZW' ? 'selected' : '' }}>
+                                                Zimbabwe</option>
                                         </select>
                                     </div>
                                     <!--end::Col-->
                                 </div>
                                 <!--end::Input group-->
+                                <div class="row mb-6">
+                                    <!--begin::Label-->
+                                    <label class="col-lg-4 col-form-label fw-bold fs-6">
+                                        <span class="required">{{ trans('message.Language') }}</span>
+                                    </label>
+
+
+
+                                    <!--end::Label-->
+                                    <!--begin::Col-->
+                                    <div class="col-lg-8 fv-row">
+                                        <select name="language" aria-label="Select..." data-control="select2"
+                                        data-placeholder="Select..." class="form-select form-select-solid">
+                                        <option value="en" {{ $client_info->language == 'en' ? 'selected' : ' ' }}>
+                                            English
+                                        </option>
+                                        <option value="de" {{ $client_info->language == 'de' ? 'selected' : ' ' }}>German
+                                        </option>
+
+                                    </select>
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
                                 <!--begin::Input group-->
                                 <div class="row mb-6">
                                     <!--begin::Label-->

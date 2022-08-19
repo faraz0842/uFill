@@ -1605,8 +1605,10 @@
                                         <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
                                             title="{{ $affiliated_clients_image->first_name . ' ' . $affiliated_clients_image->last_name }}">
                                             @if ($affiliated_clients_image->profile_picture)
-                                            <a href="{{Route('admin.client.view',[$affiliated_clients_image->id,$affiliated_clients_image->stripe_id])}}"><img alt="Pic"
-                                                    src="{{ URL::asset($affiliated_clients_image->profile_picture) }}" height="50px" width="50px" class="img-rounded"/></a>
+                                            <img alt="Pic"
+                                                    src="{{ URL::asset($affiliated_clients_image->profile_picture) }}" height="50px" width="50px" class="img-rounded"/>
+                                            {{-- <a href="{{Route('admin.client.view',[$affiliated_clients_image->id,$affiliated_clients_image->stripe_id])}}"><img alt="Pic"
+                                                    src="{{ URL::asset($affiliated_clients_image->profile_picture) }}" height="50px" width="50px" class="img-rounded"/></a> --}}
 
                                             @else
                                             <img alt="Pic" src="{{ asset('assets/media/svg/avatars/blank.svg') }}"  height="50px" width="50px"/>
@@ -2009,9 +2011,13 @@
                                                                 class="required fs-6 fw-bold form-label mb-2">{{ trans('message.COST') }}</label>
                                                             <!--end::Label-->
                                                             <!--begin::Input-->
-                                                            <input type="text" class="form-control form-control-solid"
-                                                                name="cost" value="" />
+                                                            <div class="input-group mb-3">
+                                                                        <input type="text" class="form-control" placeholder="e.g . 500 cent" name="cost" aria-label="Recipient's username" aria-describedby="basic-addon2" >
+                                                                        <span class="input-group-text" id="basic-addon2">cent</span>
+                                                                    </div>
                                                             <!--end::Input-->
+                                                                    <!--begin::Input-->
+
                                                             @if ($errors->has('cost'))
                                                                 <div class="text-danger">
                                                                     {{ $errors->first('cost') }}</div>

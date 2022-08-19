@@ -134,6 +134,7 @@ class RegisterController extends Controller
             $client->plz  = $request->plz;
             $client->state  = $request->state;
             $client->country  = $request->country;
+            $client->language  = $request->language;
             $client->telephone  = $request->telephone;
             $client->mobile_number  = $request->mobile_number;
             $client->email  = $request->email;

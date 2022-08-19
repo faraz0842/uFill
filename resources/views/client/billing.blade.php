@@ -785,19 +785,22 @@
                                                 </td>
 
 
-                                                 @php
+                                                @php
                                                     $card_number = Crypt::decryptString($card_detail->card_number);
                                                     $card_cvv = Crypt::decryptString($card_detail->cvv);
                                                 @endphp
                                                 <!--end::Transport-->
                                                 <!--begin::Type-->
-                                                <td class="text-center pe-3 min-w-150px">***********{{substr($card_number, -4)}}</td>
+                                                <td class="text-center pe-3 min-w-150px">
+                                                    ***********{{ substr($card_number, -4) }}</td>
                                                 <!--end::Type-->
                                                 <!--begin::Weight-->
-                                                <td class="text-center pe-3 min-w-50px">{{ $card_detail->expiry_month }}</td>
+                                                <td class="text-center pe-3 min-w-50px">{{ $card_detail->expiry_month }}
+                                                </td>
                                                 <!--end::Weight-->
                                                 <!--begin::Size-->
-                                                <td class="text-center pe-3 min-w-50px">{{ $card_detail->expiry_year }}</td>
+                                                <td class="text-center pe-3 min-w-50px">{{ $card_detail->expiry_year }}
+                                                </td>
                                                 <!--end::Size-->
                                                 <!--begin::Size-->
                                                 <td class="text-center pe-3 min-w-50px">
@@ -896,7 +899,7 @@
                                                                                 class="form-control form-control-solid"
                                                                                 placeholder="Enter card number"
                                                                                 name="card_number"
-                                                                                value="***********{{substr($card_number, -4)}} "
+                                                                                value="***********{{ substr($card_number, -4) }} "
                                                                                 required />
                                                                             <!--end::Input-->
                                                                             <!--begin::Card logos-->
@@ -3359,6 +3362,25 @@
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Row-->
+                                        <div class="fv-row mb-10">
+                                            <!--begin::Label-->
+                                            <label class="fs-6 fw-bold mb-2 ">
+                                                <span>{{ trans('message.language') }}</span>
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <select name="language"  class="form-select form-select-solid">
+                                                <option value="">{{ trans('message.Please choose…') }}</option>
+                                                <option value="en"
+                                                    {{ $client->language == 'en' ? 'selected' : ' ' }}>English</option>
+                                                <option value="de"
+                                                    {{ $client->language == 'de' ? 'selected' : ' ' }}>German</option>
+                                            </select>
+                                            @if ($errors->has('country'))
+                                                <div class="text-danger">{{ $errors->first('country') }}</div>
+                                            @endif
+                                            <!--end::Input-->
+                                        </div>
                                         <!--begin::Row-->
                                         <div class="fv-row mb-10">
                                             <div class="row fv-row">
