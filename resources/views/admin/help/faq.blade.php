@@ -86,7 +86,7 @@
                                             <h4 class="fs-2x text-gray-800 w-bolder mb-6">{{ trans('message.Frequently Asked Questions') }}</h4>
                                             <!--end::Title-->
                                             <!--begin::Text-->
-                                            <p class="fw-bold fs-4 text-gray-600 mb-2">{{ trans('message.First, a disclaimer – the entire process of writing a blog post often takes more than a couple of hours, even if you can type eighty words as per minute and your writing skills are sharp') }}.</p>
+                                            <p class="fw-bold fs-4 text-gray-600 mb-2">{{ trans('message.faq-description') }}.</p>
                                             <!--end::Text-->
                                         </div>
                                         <!--end::Intro-->
@@ -650,14 +650,14 @@
                                             <!--begin::Col-->
                                             <div class="col-md-6 pe-md-10 mb-10 mb-md-0">
                                                 <!--begin::Title-->
-                                                <h2 class="text-gray-800 w-bolder mb-4">{{ trans('message.User Roles') }}</h2>
+                                                <h2 class="text-gray-800 w-bolder mb-4">{{ trans('message.account management') }}</h2>
                                                 <!--end::Title-->
                                                 <!--begin::Accordion-->
                                                 <div class="overflow-auto h-300px">
                                                     <!--begin::Section-->
                                                     <div class="m-0">
                                                         <!--begin::Heading-->
-                                                        <div class="d-flex align-items-center collapsible py-3 toggle mb-0" data-bs-toggle="collapse" data-bs-target="#kt_job_6_1">
+                                                        <div class="d-flex align-items-center collapsible py-3 toggle mb-0" data-bs-toggle="collapse" data-bs-target="#ufill_faq_3_1">
                                                             <!--begin::Icon-->
                                                             <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
                                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen036.svg-->
@@ -680,14 +680,14 @@
                                                             </div>
                                                             <!--end::Icon-->
                                                             <!--begin::Title-->
-                                                            <h4 class="text-gray-700 fw-bolder cursor-pointer mb-0">{{ trans('message.How does it work?') }}</h4>
+                                                            <h4 class="text-gray-700 fw-bolder cursor-pointer mb-0">{{ trans('message.faq-question-3-1') }}</h4>
                                                             <!--end::Title-->
                                                         </div>
                                                         <!--end::Heading-->
                                                         <!--begin::Body-->
-                                                        <div id="kt_job_6_1" class="collapse show fs-6 ms-1">
+                                                        <div id="ufill_faq_3_1" class="collapse show fs-6 ms-1">
                                                             <!--begin::Text-->
-                                                            <div class="mb-4 text-gray-600 fw-bold fs-6 ps-10">{{ trans('message.First, a disclaimer – the entire process of writing a blog post often takes more than a couple of hours, even if you can type eighty words as per minute and your writing skills are sharp') }}.</div>
+                                                            <div class="mb-4 text-gray-600 fw-bold fs-6 ps-10">{{ trans('message.faq-answer-3-1') }}</div>
                                                             <!--end::Text-->
                                                         </div>
                                                         <!--end::Content-->
@@ -699,7 +699,7 @@
                                                     <!--begin::Section-->
                                                     <div class="m-0">
                                                         <!--begin::Heading-->
-                                                        <div class="d-flex align-items-center collapsible py-3 toggle collapsed mb-0" data-bs-toggle="collapse" data-bs-target="#kt_job_6_2">
+                                                        <div class="d-flex align-items-center collapsible py-3 toggle collapsed mb-0" data-bs-toggle="collapse" data-bs-target="#ufill_faq_3_2">
                                                             <!--begin::Icon-->
                                                             <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
                                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen036.svg-->
@@ -722,14 +722,14 @@
                                                             </div>
                                                             <!--end::Icon-->
                                                             <!--begin::Title-->
-                                                            <h4 class="text-gray-700 fw-bolder cursor-pointer mb-0">{{ trans('message.Do I need a designer to use this Admin Theme?') }}</h4>
+                                                            <h4 class="text-gray-700 fw-bolder cursor-pointer mb-0">{{ trans('message.faq-question-3-2') }}</h4>
                                                             <!--end::Title-->
                                                         </div>
                                                         <!--end::Heading-->
                                                         <!--begin::Body-->
-                                                        <div id="kt_job_6_2" class="collapse fs-6 ms-1">
+                                                        <div id="ufill_faq_3_2" class="collapse fs-6 ms-1">
                                                             <!--begin::Text-->
-                                                            <div class="mb-4 text-gray-600 fw-bold fs-6 ps-10">{{ trans('message.First, a disclaimer – the entire process of writing a blog post often takes more than a couple of hours, even if you can type eighty words as per minute and your writing skills are sharp') }}.</div>
+                                                            <div class="mb-4 text-gray-600 fw-bold fs-6 ps-10">{{ trans('message.faq-answer-3-2') }}</div>
                                                             <!--end::Text-->
                                                         </div>
                                                         <!--end::Content-->
@@ -741,7 +741,7 @@
                                                     <!--begin::Section-->
                                                     <div class="m-0">
                                                         <!--begin::Heading-->
-                                                        <div class="d-flex align-items-center collapsible py-3 toggle collapsed mb-0" data-bs-toggle="collapse" data-bs-target="#kt_job_6_3">
+                                                        <div class="d-flex align-items-center collapsible py-3 toggle collapsed mb-0" data-bs-toggle="collapse" data-bs-target="#ufill_faq_3_3">
                                                             <!--begin::Icon-->
                                                             <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
                                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen036.svg-->
@@ -764,14 +764,14 @@
                                                             </div>
                                                             <!--end::Icon-->
                                                             <!--begin::Title-->
-                                                            <h4 class="text-gray-700 fw-bolder cursor-pointer mb-0">{{ trans('message.What do I need to do to start selling?') }}</h4>
+                                                            <h4 class="text-gray-700 fw-bolder cursor-pointer mb-0">{{ trans('message.faq-question-3-3') }}</h4>
                                                             <!--end::Title-->
                                                         </div>
                                                         <!--end::Heading-->
                                                         <!--begin::Body-->
-                                                        <div id="kt_job_6_3" class="collapse fs-6 ms-1">
+                                                        <div id="ufill_faq_3_3" class="collapse fs-6 ms-1">
                                                             <!--begin::Text-->
-                                                            <div class="mb-4 text-gray-600 fw-bold fs-6 ps-10">{{ trans('message.First, a disclaimer – the entire process of writing a blog post often takes more than a couple of hours, even if you can type eighty words as per minute and your writing skills are sharp') }}.</div>
+                                                            <div class="mb-4 text-gray-600 fw-bold fs-6 ps-10">{{ trans('message.faq-answer-3-3') }}</div>
                                                             <!--end::Text-->
                                                         </div>
                                                         <!--end::Content-->
@@ -783,7 +783,7 @@
                                                     <!--begin::Section-->
                                                     <div class="m-0">
                                                         <!--begin::Heading-->
-                                                        <div class="d-flex align-items-center collapsible py-3 toggle collapsed mb-0" data-bs-toggle="collapse" data-bs-target="#kt_job_6_4">
+                                                        <div class="d-flex align-items-center collapsible py-3 toggle collapsed mb-0" data-bs-toggle="collapse" data-bs-target="#ufill_faq_3_4">
                                                             <!--begin::Icon-->
                                                             <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
                                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen036.svg-->
@@ -806,14 +806,14 @@
                                                             </div>
                                                             <!--end::Icon-->
                                                             <!--begin::Title-->
-                                                            <h4 class="text-gray-700 fw-bolder cursor-pointer mb-0">{{ trans('How much does Extended license cost?') }}</h4>
+                                                            <h4 class="text-gray-700 fw-bolder cursor-pointer mb-0">{{ trans('message.faq-question-3-4') }}</h4>
                                                             <!--end::Title-->
                                                         </div>
                                                         <!--end::Heading-->
                                                         <!--begin::Body-->
-                                                        <div id="kt_job_6_4" class="collapse fs-6 ms-1">
+                                                        <div id="ufill_faq_3_4" class="collapse fs-6 ms-1">
                                                             <!--begin::Text-->
-                                                            <div class="mb-4 text-gray-600 fw-bold fs-6 ps-10">{{ trans('message.First, a disclaimer – the entire process of writing a blog post often takes more than a couple of hours, even if you can type eighty words as per minute and your writing skills are sharp') }}.</div>
+                                                            <div class="mb-4 text-gray-600 fw-bold fs-6 ps-10">{{ trans('message.faq-answer-3-4') }}</div>
                                                             <!--end::Text-->
                                                         </div>
                                                         <!--end::Content-->
