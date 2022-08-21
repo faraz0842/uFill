@@ -555,20 +555,20 @@
                                                 class="table align-middle table-row-dashed fs-6 fw-bolder gs-0 gy-4 p-0 m-0">
                                                 <!--begin::Thead-->
                                                 <thead class="border-bottom border-gray-200 fs-7 text-uppercase fw-bolder">
-                                                    <tr class=" text-gray-400">
+                                                    <tr class="text-center text-gray-400">
                                                         <th class="min-w-100px text-start">{{ trans('message.id') }}</th>
                                                         <th class="min-w-100px">{{ trans('message.total') }}</th>
                                                         <th class="min-w-100px">{{ trans('message.Status') }}</th>
                                                         <th class="min-w-100px">{{ trans('message.date') }}</th>
-                                                        <th class="min-w-100px">{{ trans('message.invoice') }}</th>
+                                                        <th class="min-w-100px text-center">{{ trans('message.invoice') }}</th>
                                                     </tr>
                                                 </thead>
                                                 <!--end::Thead-->
                                                 <!--begin::Tbody-->
                                                 <tbody class="fs-6 fw-bold text-gray-600">
                                                     @foreach ($invoices as $invoice)
-                                                        <tr>
-                                                            <td>
+                                                        <tr class="text-center">
+                                                            <td class="text-start">
                                                                 <a href="{{ Route('view.invoice', $invoice->id) }}"
                                                                     class="text-gray-600 text-hover-primary">{{ $invoice->id }}</a>
                                                             </td>

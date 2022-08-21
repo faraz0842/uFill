@@ -28,13 +28,22 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::leftJoin('subscriptions','subscriptions.client_id','clients.id')
-                           ->join('variants','variants.variant_id','clients.account_type')
-                           ->select('clients.*','subscriptions.id as subscription_id','subscriptions.client_id','subscriptions.name as subscription_name','subscriptions.stripe_status',
-                            'variants.variant_id','variants.name as variant_name','variants.variant_id','variants.name as variant_name')->get();
-       // return response()->json($clients);
+        $clients = Client::leftJoin('subscriptions', 'subscriptions.client_id', 'clients.id')
+            ->join('variants', 'variants.variant_id', 'clients.account_type')
+            ->select(
+                'clients.*',
+                'subscriptions.id as subscription_id',
+                'subscriptions.client_id',
+                'subscriptions.name as subscription_name',
+                'subscriptions.stripe_status',
+                'variants.variant_id',
+                'variants.name as variant_name',
+                'variants.variant_id',
+                'variants.name as variant_name'
+            )->get();
+        // return response()->json($clients);
 
-        return view('admin.client.index')->with('clients',$clients);
+        return view('admin.client.index')->with('clients', $clients);
     }
 
     /**
@@ -55,7 +64,6 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-
     }
 
     /**
@@ -64,7 +72,7 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id , $stripe_id)
+    public function show($id, $stripe_id)
     {
         $variants = Variant::all();
         $stripe = new \Stripe\StripeClient(
@@ -73,7 +81,7 @@ class ClientController extends Controller
 
         $invoices =  $stripe->invoices->all(['customer' => $stripe_id]);
 
-        $affiliated_at = AffiliateLink::where('affiliate_from',$id)->join('clients','clients.id','affiliate_link.affiliate_from')->get();
+        $affiliated_at = AffiliateLink::where('affiliate_from', $id)->join('clients', 'clients.id', 'affiliate_link.affiliate_from')->get();
 
         //return response()->json($invoices);
         //$shipping_details = ShippingDetail::all();
@@ -85,28 +93,35 @@ class ClientController extends Controller
         $this_year_shipments = ShippingDetail::whereYear('created_at', date('Y'))->get();
         $last_year_shipments = ShippingDetail::whereMonth('created_at', Carbon::now()->month)->get();
 
-        $card_details = ClientCardDetail::where('client_id',$id)->get();
+        $card_details = ClientCardDetail::where('client_id', $id)->get();
 
-        $variant_name = Variant::where('name','team')->first();
-        $client_users = Client::where('account_type',$variant_name->variant_id)->count();
+        $variant_name = Variant::where('name', 'team')->first();
+        $client_users = Client::where('account_type', $variant_name->variant_id)->count();
         $date = Carbon::now();
         $current_date = $date->toDateTimeString();
 
         //return response()->json($client_users);
 
-        $client = Client::where('clients.id',$id)->leftJoin('subscriptions','subscriptions.client_id','clients.id')
-                            ->join('variants','variants.variant_id','clients.account_type')
-                            ->select('clients.*','subscriptions.id as subscription_id','subscriptions.client_id','subscriptions.name as subscription_name','subscriptions.stripe_status',
-                            'variants.variant_id','variants.name as variant_name')->first();
+        $client = Client::where('clients.id', $id)->leftJoin('subscriptions', 'subscriptions.client_id', 'clients.id')
+            ->join('variants', 'variants.variant_id', 'clients.account_type')
+            ->select(
+                'clients.*',
+                'subscriptions.id as subscription_id',
+                'subscriptions.client_id',
+                'subscriptions.name as subscription_name',
+                'subscriptions.stripe_status',
+                'variants.variant_id',
+                'variants.name as variant_name'
+            )->first();
 
-        $referred_clients = AffiliateLink::where('affiliate_from',$client->id)->count();
+        $referred_clients = AffiliateLink::where('affiliate_from', $client->id)->count();
 
         //return response()->json($client);
-        return view('admin.client.view')->with('client',$client)->with('today_shipments',$today_shipments)->with('affiliated_at',$affiliated_at)->with('client_users',$client_users)
-                                        ->with('variants',$variants)->with('invoices',$invoices->data)->with('card_details',$card_details)->with('referred_clients',$referred_clients)
-                                        ->with('this_week_shipments',$this_week_shipments)->with('last_week_shipments',$last_week_shipments)->with('this_month_shipments',$this_month_shipments)
-                                        ->with('last_month_shipments',$last_month_shipments)->with('this_year_shipments',$this_year_shipments)->with('last_year_shipments',$last_year_shipments)
-                                        ->with('current_date',$current_date);
+        return view('admin.client.view')->with('client', $client)->with('today_shipments', $today_shipments)->with('affiliated_at', $affiliated_at)->with('client_users', $client_users)
+            ->with('variants', $variants)->with('invoices', $invoices->data)->with('card_details', $card_details)->with('referred_clients', $referred_clients)
+            ->with('this_week_shipments', $this_week_shipments)->with('last_week_shipments', $last_week_shipments)->with('this_month_shipments', $this_month_shipments)
+            ->with('last_month_shipments', $last_month_shipments)->with('this_year_shipments', $this_year_shipments)->with('last_year_shipments', $last_year_shipments)
+            ->with('current_date', $current_date);
     }
 
     /**
@@ -138,31 +153,31 @@ class ClientController extends Controller
                 $image_name = str_replace(" ", "_", time() . $image_name);
                 $image_path = 'upload/CompanyLogo/';
                 $company_logo->move($image_path, $image_name);
-                $logo = $image_path.$image_name;
-            } elseif($request->avatar_remove == 1) {
+                $logo = $image_path . $image_name;
+            } elseif ($request->avatar_remove == 1) {
                 $logo = null;
-            }else{
+            } else {
                 $logo = $request->previous_image;
             }
 
-            $client = Client::where('id',$id)->first();
-            $client->company_name  = $request->company_name ;
-            $client->first_name  = $request->first_name ;
-            $client->last_name  = $request->last_name ;
-            $client->street  = $request->street ;
-            $client->house_number  = $request->house_number ;
-            $client->plz  = $request->plz ;
-            $client->state  = $request->state ;
-            $client->country  = $request->country ;
-            $client->telephone  = $request->telephone ;
+            $client = Client::where('id', $id)->first();
+            $client->company_name  = $request->company_name;
+            $client->first_name  = $request->first_name;
+            $client->last_name  = $request->last_name;
+            $client->street  = $request->street;
+            $client->house_number  = $request->house_number;
+            $client->plz  = $request->plz;
+            $client->state  = $request->state;
+            $client->country  = $request->country;
+            $client->telephone  = $request->telephone;
             $client->mobile_number  = $request->mobile_number;
             $client->language  = $request->language;
-            $client->email  = $request->email ;
-            $client->vat_id  = $request->vat_id ;
-            $client->registration_number  = $request->registration_number ;
-            $client->website  = $request->website ;
-            $client->company_size  = $request->company_size ;
-            $client->company_description  = $request->company_description ;
+            $client->email  = $request->email;
+            $client->vat_id  = $request->vat_id;
+            $client->registration_number  = $request->registration_number;
+            $client->website  = $request->website;
+            $client->company_size  = $request->company_size;
+            $client->company_description  = $request->company_description;
             $client->profile_picture = $logo;
             $client->referral_link = 'ufill.devatease.com/client/register/' . $request->company_name . '-' . session('client_id');
             $client->save();
@@ -192,7 +207,6 @@ class ClientController extends Controller
         } catch (\Exception $th) {
             return back()->withError($th->getMessage())->withInput();
         }
-
     }
 
     /**
@@ -203,38 +217,38 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        Client::where('id',$id)->delete();
+        Client::where('id', $id)->delete();
         return back();
     }
 
-    public function updateVariant(Request $request , $client_id)
+    public function updateVariant(Request $request, $client_id)
     {
 
         //return $request->account_type . ' ' . $request->account_plan_selected;
 
         try {
 
-        $client_subcription_id = Subscription::where('client_id',$client_id)->first();
-        $price_id = VariantPlan::where('variant_id',$request->account_type)->where('plan',$request->account_plan_selected)->first();
+            $client_subcription_id = Subscription::where('client_id', $client_id)->first();
+            $price_id = VariantPlan::where('variant_id', $request->account_type)->where('plan', $request->account_plan_selected)->first();
 
-        //return $price_id;
+            //return $price_id;
 
-        // $stripe = new \Stripe\StripeClient(
-        //     'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
-        // );
-        \Stripe\Stripe::setApiKey('sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF');
+            // $stripe = new \Stripe\StripeClient(
+            //     'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
+            // );
+            \Stripe\Stripe::setApiKey('sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF');
 
-        $subscription = \Stripe\Subscription::retrieve($client_subcription_id->stripe_id);
-        \Stripe\Subscription::update($client_subcription_id->stripe_id, [
-            'cancel_at_period_end' => true,
-            'proration_behavior' => 'create_prorations',
-            'items' => [
-                [
-                'id' => $subscription->items->data[0]->id,
-                'price' => $price_id->price_token,
+            $subscription = \Stripe\Subscription::retrieve($client_subcription_id->stripe_id);
+            \Stripe\Subscription::update($client_subcription_id->stripe_id, [
+                'cancel_at_period_end' => true,
+                'proration_behavior' => 'create_prorations',
+                'items' => [
+                    [
+                        'id' => $subscription->items->data[0]->id,
+                        'price' => $price_id->price_token,
+                    ],
                 ],
-            ],
-        ]);
+            ]);
 
             Client::where('id', $client_id)->update([
                 'account_type' => $request->account_type,
@@ -244,28 +258,26 @@ class ClientController extends Controller
                 'package_price' => $price_id->price,
             ]);
 
-        // $subscription_updated = \Stripe\Subscription::retrieve($client_subcription_id->stripe_id);
-        // return response()->json($subscription_updated);
+            // $subscription_updated = \Stripe\Subscription::retrieve($client_subcription_id->stripe_id);
+            // return response()->json($subscription_updated);
 
 
 
 
-        return back()->with('message' , 'Account Information Updated Succesfully')->withInput();
-
+            return back()->with('message', 'Account Information Updated Succesfully')->withInput();
         } catch (\Exception $th) {
-           return back()->withError($th->getMessage())->withInput();
+            return back()->withError($th->getMessage())->withInput();
         }
-
     }
 
-    public function cancelSubscription(Request $request , $client_id)
+    public function cancelSubscription(Request $request, $client_id)
     {
         try {
 
-            $stripe_id = Subscription::where('client_id',$client_id)->first();
+            $stripe_id = Subscription::where('client_id', $client_id)->first();
 
 
-            if($request->termination_option == "terminate"){
+            if ($request->termination_option == "terminate") {
 
                 $stripe = new \Stripe\StripeClient(
                     'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
@@ -280,11 +292,10 @@ class ClientController extends Controller
                     'stripe_status' => 'Cancelled'
                 ]);
 
-                Client::where('id',$client_id)->delete();
+                Client::where('id', $client_id)->delete();
 
                 return redirect()->Route('admin.clients');
-
-            }else{
+            } else {
 
                 \Stripe\Stripe::setApiKey('sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF');
 
@@ -292,7 +303,7 @@ class ClientController extends Controller
                     $stripe_id->stripe_id,
                     [
                         'pause_collection' => [
-                        'behavior' => 'mark_uncollectible',
+                            'behavior' => 'mark_uncollectible',
                         ],
                     ]
                 );
@@ -301,20 +312,15 @@ class ClientController extends Controller
                     'stripe_status' => 'Pause'
                 ]);
 
-                Client::where('id',$client_id)->update([
+                Client::where('id', $client_id)->update([
                     'reason_of_termination' => $request->reason,
                 ]);
 
-                return back()->with('message','Subscription Pause succesfully')->withInput();
-
+                return back()->with('message', 'Subscription Pause succesfully')->withInput();
             }
-
-
-
         } catch (\Exception $th) {
             return back()->withError($th->getMessage())->withInput();
         }
-
     }
 
     public function invoiceView($invoice_id)
@@ -328,16 +334,17 @@ class ClientController extends Controller
             []
         );
 
+        //return response()->json($invoice);
         $created_date = Carbon::parse($invoice->created);
         $period_end = Carbon::parse($invoice->period_end);
 
-        $company_detail = AdminCompany::where('company_id',1)->first();
-        $client = Client::where('stripe_id',$invoice->customer)->first();
+        $company_detail = AdminCompany::where('company_id', 1)->first();
+        $client = Client::where('stripe_id', $invoice->customer)->first();
 
-        return response()->json($invoice);
+        //return response()->json($invoice);
 
-        return view('admin.client.invoice')->with('invoice',$invoice)->with('created_date',$created_date)->with('client',$client)
-                                          ->with('period_end',$period_end)->with('company_detail',$company_detail);
+        return view('admin.client.invoice')->with('invoice', $invoice)->with('created_date', $created_date)->with('client', $client)
+            ->with('period_end', $period_end)->with('company_detail', $company_detail);
     }
 
     public function invoicePrint($invoice_id)
@@ -351,12 +358,12 @@ class ClientController extends Controller
             []
         );
 
-        $company_detail = AdminCompany::where('company_id',1)->first();
-        $client = Client::where('stripe_id',$invoice->customer)->first();
+        $company_detail = AdminCompany::where('company_id', 1)->first();
+        $client = Client::where('stripe_id', $invoice->customer)->first();
 
         //return response()->json($invoice);
 
-        return view('admin.client.invoice_print')->with('invoice',$invoice)->with('client',$client)->with('company_detail',$company_detail);
+        return view('admin.client.invoice_print')->with('invoice', $invoice)->with('client', $client)->with('company_detail', $company_detail);
     }
 
 
@@ -368,20 +375,20 @@ class ClientController extends Controller
         foreach ($info as $value) {
             $data[] = [
                 "plan" => $value->plan,
-                "price" => Helper::money_format('EUR','de_DE',$value->price)
+                "price" => Helper::money_format('EUR', 'de_DE', $value->price)
             ];
         }
         return response()->json($data);
     }
 
-    public function updateShippingQuantity(Request $request ,$id)
+    public function updateShippingQuantity(Request $request, $id)
     {
-        Client::where('id',$id)->update([
+        Client::where('id', $id)->update([
 
             'shipping_quantity' => $request->shipping_quantity
 
         ]);
 
-        return back()->with('message','Shipping Quantity have been updated');
+        return back()->with('message', 'Shipping Quantity have been updated');
     }
 }

@@ -216,7 +216,7 @@
                                                         <!--end::Accountname-->
                                                         <!--begin::Label-->
                                                         <div class="text-end fw-bolder fs-6 text-gray-800">
-                                                            {{ Helper::money_format('EUR', 'de_DE', $subtotal) }}€</div>
+                                                            {{ Helper::money_format('EUR', 'de_DE', $invoice->subtotal) }}€</div>
                                                         <!--end::Label-->
                                                     </div>
                                                     <!--end::Item-->
@@ -227,13 +227,14 @@
                                                             {{ trans('message.Discount') }}</div>
                                                         <!--end::Accountname-->
                                                         <!--begin::Label-->
-                                                        @if ($invoice->discount->coupon->percent_off)
+                                                        @if ($invoice->discount == null)
                                                             <div class="text-end fw-bolder fs-6 text-gray-800">
-                                                            {{ 0}}€ /{{$invoice->discount->coupon->percent_off}} %</div>
+                                                                0€ /0%
+                                                            </div>
                                                         @else
                                                             <div class="text-end fw-bolder fs-6 text-gray-800">
-                                                            {{ Helper::money_format('EUR', 'de_DE',$invoice->discount->coupon->amount) }}€ /
-                                                            0%</div>
+                                                                {{ Helper::money_format('EUR', 'de_DE', $invoice->discount->coupon->amount_off) }}€ / {{$invoice->discount->coupon->percent_off}}%
+                                                            </div>
                                                         @endif
 
                                                         <!--end::Label-->
@@ -257,13 +258,13 @@
                                                             {{ trans('message.Taxes 19') }}</div>
                                                         <!--end::Accountname-->
                                                         <!--begin::Label-->
-                                                        @php
+                                                        {{-- @php
                                                             $tax = $invoice->total - $invoice->total / 1.19;
 
                                                             $total = $subtotal - $invoice->discount->coupon->percent_off + 0;
-                                                        @endphp
+                                                        @endphp --}}
                                                         <div class="text-end fw-bolder fs-6 text-gray-800">
-                                                            {{ Helper::money_format('EUR', 'de_DE', round($tax)) }}€</div>
+                                                            {{ Helper::money_format('EUR', 'de_DE', round($invoice->tax)) }}€</div>
                                                         {{-- <div class="text-end fw-bolder fs-6 text-gray-800">{{$tax}}€</div> --}}
                                                         <!--end::Label-->
                                                     </div>
@@ -276,7 +277,7 @@
                                                         <!--end::Code-->
                                                         <!--begin::Label-->
                                                         <div class="text-end fw-bolder fs-6 text-gray-800">
-                                                            {{ Helper::money_format('EUR', 'de_DE', round($total)) }}€</div>
+                                                            {{ Helper::money_format('EUR', 'de_DE', round($invoice->total)) }}€</div>
                                                         <!--end::Label-->
                                                     </div>
                                                     <!--end::Item-->
