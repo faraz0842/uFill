@@ -404,8 +404,7 @@
                                             <tbody class="fw-bold text-gray-800">
                                                 <tr>
                                                     <td>
-                                                        <label class="w-150px">uFill "{{ $client->variant_name }}"
-                                                            Account</label>
+                                                        <label class="w-150px">uFill "{{ $client->variant_name }}" Account</label>
                                                         <div class="fw-normal text-gray-600">{{ $client->account_plan }}
                                                             {{ trans('message.Package') }}</div>
                                                     </td>
@@ -572,14 +571,14 @@
                                                                 <a href="{{ Route('view.invoice', $invoice->id) }}"
                                                                     class="text-gray-600 text-hover-primary">{{ $invoice->id }}</a>
                                                             </td>
-                                                            <td class="text-success">€
-                                                                {{ Helper::money_format('EUR', 'de_DE', $invoice->total) }}
+                                                            <td class="text-success">
+                                                                {{ Helper::money_format('EUR', 'de_DE', $invoice->total) }} €
                                                             </td>
                                                             <td>
                                                                 <span
                                                                     class="badge badge-light-success">{{ $invoice->status }}</span>
                                                             </td>
-                                                            <td>{{ date('m-d-y', strtotime(\Carbon\Carbon::parse($invoice->created))) }}
+                                                            <td>{{ date('d-m-Y', strtotime(\Carbon\Carbon::parse($invoice->created))) }}
                                                             </td>
                                                             <td class="text-center">
                                                                 <a href="{{ Route('view.invoice', $invoice->id) }}"
