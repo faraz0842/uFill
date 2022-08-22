@@ -258,8 +258,8 @@
                                                 <tr>
                                                     <td class="text-gray-400">{{ trans('message.Address') }}:</td>
                                                     <td class="text-gray-800">{{ $client->street }}
-                                                        {{ $client->house_number }} {{ $client->plz }}
-                                                        {{ $client->state }} {{ $client->country }}</td>
+                                                        {{ $client->house_number }}, {{ $client->plz }}
+                                                        {{ $client->state }}, {{ $client->country }}</td>
                                                 </tr>
                                                 <!--end::Row-->
                                                 <!--begin::Row-->
