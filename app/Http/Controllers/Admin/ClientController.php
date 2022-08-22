@@ -334,7 +334,7 @@ class ClientController extends Controller
             []
         );
 
-        //return response()->json($invoice);
+       // return response()->json($invoice);
         $created_date = Carbon::parse($invoice->created);
         $period_end = Carbon::parse($invoice->period_end);
 

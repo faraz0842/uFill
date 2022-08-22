@@ -133,7 +133,7 @@
                                                     <br />{{ $client->plz }} {{ $client->state }}
                                                     <br />{{ $client->country }}
                                                     <br />{{ $client->email }}
-                                                    <br />{{ $client->mobile_number }}
+                                                    <br />{{ $client->telephone }}
                                                 </div>
                                                 <!--end::Description-->
                                             </div>
@@ -227,13 +227,25 @@
                                                             {{ trans('message.Discount') }}</div>
                                                         <!--end::Accountname-->
                                                         <!--begin::Label-->
-                                                        @if ($invoice->discount == null)
+                                                        @if ($invoice->discount != null)
+                                                            @if ($invoice->discount->coupon->amount_off)
+                                                                <div class="text-end fw-bolder fs-6 text-gray-800">
+                                                                    {{ Helper::money_format('EUR', 'de_DE', $invoice->discount->coupon->amount_off) }}€
+                                                                </div>
+                                                            @else
                                                             <div class="text-end fw-bolder fs-6 text-gray-800">
-                                                                0€ /0%
-                                                            </div>
+                                                                    {{ Helper::money_format('EUR', 'de_DE', $invoice->discount->coupon->percent_off)}}%
+                                                                </div>
+
+                                                            @endif
+
                                                         @else
+
                                                             <div class="text-end fw-bolder fs-6 text-gray-800">
                                                                 {{ Helper::money_format('EUR', 'de_DE', $invoice->discount->coupon->amount_off) }}€ / {{$invoice->discount->coupon->percent_off}}%
+                                                            </div>
+                                                            <div class="text-end fw-bolder fs-6 text-gray-800">
+                                                                0€ /0%
                                                             </div>
                                                         @endif
 
@@ -241,7 +253,7 @@
                                                     </div>
                                                     <!--end::Item-->
                                                     <!--begin::Item-->
-                                                    <div class="d-flex flex-stack mb-3">
+                                                    {{-- <div class="d-flex flex-stack mb-3">
                                                         <!--begin::Accountname-->
                                                         <div class="fw-bold pe-10 text-gray-600 fs-7">
                                                             {{ trans('Shipping') }}</div>
@@ -249,7 +261,7 @@
                                                         <!--begin::Label-->
                                                         <div class="text-end fw-bolder fs-6 text-gray-800">0€</div>
                                                         <!--end::Label-->
-                                                    </div>
+                                                    </div> --}}
                                                     <!--end::Item-->
                                                     <!--begin::Item-->
                                                     <div class="d-flex flex-stack mb-3">
