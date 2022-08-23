@@ -48,7 +48,7 @@
                                             <div class="d-flex align-items-center mb-2">
                                                 <!--begin::Value-->
                                                 <span
-                                                    class="fs-2hx fw-bolder text-gray-800 lh-1">{{ $total_revenue }}</span>
+                                                    class="fs-2hx fw-bolder text-gray-800 lh-1">{{ Helper::money_format('EUR','de_DE',$total_revenue) }}</span>
 
                                                 <!--end::Value-->
                                                 <!--begin::Currency-->
@@ -171,8 +171,8 @@
                                                         $progress = ($amount_paid / ($total_amount)) * 100;
                                                     }
                                                 @endphp
-                                                <span class="fw-boldest fs-6 text-dark">{{ $amount_paid }}€ von
-                                                    {{ $total_amount }}€</span>
+                                                <span class="fw-boldest fs-6 text-dark">{{ Helper::money_format('EUR','de_DE',$amount_paid) }}€ von
+                                                    {{ Helper::money_format('EUR','de_DE',$total_amount) }}€</span>
                                                     @if ($progress)
                                                         <span class="fw-bolder fs-6 text-gray-400">{{ $progress  }}%</span>
                                                     @else
@@ -183,17 +183,17 @@
                                             <div class="h-8px mx-3 w-100 bg-light-success rounded">
                                                 @if ($progress <= 25)
                                                     <div class="bg-danger rounded h-8px" role="progressbar"
-                                                        style="width: {{ $progress }}%;" aria-valuenow="50"
+                                                        style="width: {{ number_format($progress,2) }}%;" aria-valuenow="50"
                                                         aria-valuemin="0" aria-valuemax="100">
                                                     </div>
                                                 @elseif($progress <= 50)
                                                     <div class="bg-warning rounded h-8px" role="progressbar"
-                                                        style="width: {{ $progress }}%;" aria-valuenow="50"
+                                                        style="width: {{ number_format($progress,2) }}%;" aria-valuenow="50"
                                                         aria-valuemin="0" aria-valuemax="100">
                                                     </div>
                                                 @else
                                                     <div class="bg-success rounded h-8px" role="progressbar"
-                                                        style="width: {{ $progress }}%;" aria-valuenow="50"
+                                                        style="width: {{ number_format($progress,2) }}%;" aria-valuenow="50"
                                                         aria-valuemin="0" aria-valuemax="100">
                                                     </div>
                                                 @endif
@@ -217,7 +217,7 @@
                                             <div class="d-flex align-items-center mb-2">
                                                 <!--begin::Value-->
                                                 <span
-                                                    class="fs-2hx fw-bolder text-gray-800 lh-1">{{ $clients->count() }}</span>
+                                                    class="fs-2hx fw-bolder text-gray-800 lh-1">{{ $active_client_count }}</span>
                                                 <!--end::Value-->
                                                 <!--begin::Currency-->
                                                 <span
@@ -843,7 +843,7 @@
                             <!--begin::Card body-->
                             <div class="card-body">
                                 <!--begin::Table-->
-                                <table class="kt_datatable_example_1 table table-row-bordered gy-5">
+                                <table class="table kt_datatable_example_1  table-row-bordered gy-5">
                                     <!--begin::Table head-->
                                     <thead>
                                         <!--begin::Table row-->

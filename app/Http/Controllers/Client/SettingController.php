@@ -73,6 +73,7 @@ class SettingController extends Controller
                 'state' => $request->state,
                 'country' => $request->country,
                 'email' => $request->email,
+                'language' => $request->language,
                 'mobile_number' => $request->mobile_number,
                 'telephone' => $request->telephone,
                 'website' => $request->website,

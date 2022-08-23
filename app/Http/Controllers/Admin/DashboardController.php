@@ -64,6 +64,9 @@ class DashboardController extends Controller
         //     }
         // }
 
+        $active_client_count = Client::join('subscriptions', 'subscriptions.client_id', 'clients.id')->where('stripe_status', 'active')->count();
+
+
         $affiliated_clients_images = AffiliateLink::join('clients','clients.id','affiliate_link.affiliate_to')->distinct()->take(5)->get();
 
         //return response()->json($affiliated_clients_images);
@@ -83,7 +86,9 @@ class DashboardController extends Controller
 
         // +++++++++++   Dashboard Calculations ++++++++++++++
         $last_30_days = Carbon::now()->subDays(30);
-        $last_30_days_clients = Client::where('created_at', '>=', $last_30_days)->get();
+        $last_30_days_clients = Client::join('subscriptions', 'subscriptions.client_id', 'clients.id')
+                                ->where('clients.created_at', '>=', $last_30_days)->where('stripe_status','active')
+                                ->orderBy('clients.id','DESC')->get();
 
         $client_pictures = $last_30_days_clients->take(5);
         //return $client_pictures;
@@ -186,7 +191,8 @@ class DashboardController extends Controller
         $affiliated_programs = AffiliateProgram::all();
 
         $discount_codes = DiscountCode::orderby('id','DESC')->get();
-        $logs = Log::join('clients','clients.id','logs.client_id')->get();
+
+        $logs = Log::join('clients','clients.id','logs.client_id')->orderby('id', 'DESC')->get();
 
 
         $client_countries = CLient::groupBy('country')->selectraw("country")->get();
@@ -229,7 +235,7 @@ class DashboardController extends Controller
 
 
         }
-        //return $client_month;
+        //return $amount;
 
         //return response()->json($countries);
 
@@ -250,7 +256,7 @@ class DashboardController extends Controller
                                       ->with('open_invoice_amount',$open_invoice_amount)
                                       ->with('countries',$countries)->with('months',$months)->with('amount',$amount)
                                       ->with('year',$year)->with('client_month',$client_month)->with('total_clients',$total_clients)
-                                      ->with('client_year',$client_year);
+                                      ->with('client_year',$client_year)->with('active_client_count', $active_client_count);
     }
 
     /*******************

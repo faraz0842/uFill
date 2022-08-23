@@ -1150,7 +1150,7 @@
                                 <div class="row mb-6">
                                     <!--begin::Label-->
                                     <label class="col-lg-4 col-form-label fw-bold fs-6">
-                                        <span class="required">{{ trans('message.Mobile') }}</span>
+                                        <span class="">{{ trans('message.Mobile') }}</span>
                                     </label>
                                     <!--end::Label-->
                                     <!--begin::Col-->

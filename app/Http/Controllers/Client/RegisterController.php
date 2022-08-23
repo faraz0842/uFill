@@ -55,11 +55,13 @@ class RegisterController extends Controller
     {
 
         $request->validate([
-            'first_name' => 'required|unique:clients,first_name',
-            'last_name' => 'required|unique:clients,last_name',
+            'first_name' => 'required',
+            'last_name' => 'required',
             'email' => 'required|unique:clients,email',
             'company_name' => 'required|unique:clients,company_name',
             'telephone' => 'required|unique:clients,telephone',
+            // 'registration_number' => 'unique:clients,registration_number',
+            // 'vat_id' => 'unique:clients,vat_id'
         ]);
 
         try {
@@ -258,7 +260,7 @@ class RegisterController extends Controller
                     $transaction->client_id = $client->id;
                     $transaction->package_id = $package->plan_id;
                     $transaction->amount = $package->price;
-                    $transaction->discount_price = 0;
+                    $transaction->discount_price = $discount_amount;
                     $transaction->save();
 
 
@@ -308,7 +310,7 @@ class RegisterController extends Controller
                 'email' => $client->email,
                 'name' => $client->first_name . ' ' . $client->last_name,
                 'profile_picture' => $client_info->profile_picture,
-                'locale' => $client_info->language,
+                'locale' => $request->language,
                 'status' => 'online',
                 'package_name' => $variant_plan->name,
                 'company_name' => $client_info->company_name,

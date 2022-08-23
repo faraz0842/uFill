@@ -1416,4 +1416,22 @@ return [
     'Delivered' => 'Zugestellt',
     'Receiver' => 'Empfänger',
     'Location' => 'Ortsangabe',
+
+
+    //client master menus
+    'menu' => 'Menu',
+    'dashboards' => 'Dashboards',
+    'ecommerce' => 'eCommerce',
+    'create shipment' => 'Sendung erstellen',
+    'shipments' => 'Sendungen',
+    'status check' => 'Statusprüfer',
+    'settings' => 'Einstellungen',
+    'Billing' => 'Abrechnung',
+    'Overview' => 'Übersicht',
+    'Affiliate Program' => 'Partnerprogramm',
+    'Security' => 'Sicherheit',
+    'Shipment Configuration' => 'Versandkonfiguration',
+    'news' => 'Neuigkeiten',
+    'changelog' => 'Updateverlauf',
+    'delivery' => 'Lieferung',
 ];

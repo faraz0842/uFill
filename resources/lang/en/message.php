@@ -855,4 +855,20 @@ return [
     'Location' => 'Location',
 
 
+    //client master menus
+    'menu' => 'Menu',
+    'dashboards' => 'Dashboards',
+    'ecommerce' => 'eCommerce',
+    'create shipment' => 'Create shipment',
+    'shipments' => 'Shipments',
+    'status check' => 'Status check',
+    'settings' => 'Settings',
+    'Billing' => 'Billing',
+    'Overview' => 'Overview',
+    'Affiliate Program' => 'Affiliate Program',
+    'Security' => 'Security',
+    'Shipment Configuration' => 'Shipment Configuration',
+    'news' => 'News',
+    'changelog' => 'Changelog',
+    'delivery' => 'Delivery',
 ];
