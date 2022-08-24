@@ -65,7 +65,7 @@
                         tooltip: {
                             style: { fontSize: "12px" },
                             x: {
-                                formatter: function (e) {
+                                formatter: function (e = @json($client_month)) {
                                     return "month " + e;
                                 },
                             },
@@ -162,12 +162,15 @@
                             style: { fontSize: "12px" },
                             x: {
                                 formatter: function (e) {
-                                    return " ";
+                                    @json($client_month).forEach(element => {
+                                        return "Month" ;
+                                    });
+
                                 },
                             },
                             y: {
                                 formatter: function (e) {
-                                    return @json($clients->count()) +  '(' + e + ')'  + '(' + 0 + ')';
+                                    return @json($clients->count()) +  '(' + @json($active_client_count) + ')'  + '(' + @json($cancelled_clients) + ')' + '(' + 'xxx' + ')';
                                 },
                             },
                         },

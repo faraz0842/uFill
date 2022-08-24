@@ -76,7 +76,9 @@ class DashboardController extends Controller
                            ->select('clients.*','subscriptions.id as subscription_id','subscriptions.client_id','subscriptions.name as subscription_name','subscriptions.stripe_status',
                             'variants.variant_id','variants.name as variant_name','variants.variant_id','variants.name as variant_name')->get();
 
+        $cancelled_clients = Client::join('subscriptions','subscriptions.client_id','clients.id')->where('stripe_status','Cancelled')->count();
 
+        //return response()->json($cancelled_clients);
         $total_amount = Transaction::sum('amount');
         $total_discount = Transaction::sum('discount_price');
 
@@ -90,7 +92,7 @@ class DashboardController extends Controller
                                 ->where('clients.created_at', '>=', $last_30_days)->where('stripe_status','active')
                                 ->orderBy('clients.id','DESC')->get();
 
-        $client_pictures = $last_30_days_clients->take(5);
+        $client_pictures = $last_30_days_clients;
         //return $client_pictures;
 
        $last_30_days_revenue = Transaction::select(DB::raw('sum(amount - discount_price) as total'))->where('created_at', '>=' , $last_30_days)->first();
@@ -139,14 +141,15 @@ class DashboardController extends Controller
                 $amount_paid += $value->amount_paid;
             }
 
+            $t_revenue[] = $value->amount_paid;
 
             $total_amount += $value->total;
         }
 
-        // $amount_paid_sum = array_sum($amount_paid);
-        // $total_amount_sum = array_sum($total_amount);
+        //  $amount_paid_sum = array_sum($amount_paid);
+        //  $total_amount_sum = array_sum($total_amount);
 
-        //return response()->json($amount_paid);
+        //return response()->json(array_sum($t_revenue));
         $unpaid_invoices = 0;
         $paid_invoices = 0;
         $unpaid_invoices_count = 0;
@@ -237,7 +240,7 @@ class DashboardController extends Controller
         }
         //return $amount;
 
-        //return response()->json($countries);
+        //return response()->json($client_month);
 
         return view('admin.dashboard')->with('clients',$clients)->with('costs_overview',$costs_overview)
                                       ->with('discount_codes',$discount_codes)->with('logs',$logs)
@@ -256,7 +259,8 @@ class DashboardController extends Controller
                                       ->with('open_invoice_amount',$open_invoice_amount)
                                       ->with('countries',$countries)->with('months',$months)->with('amount',$amount)
                                       ->with('year',$year)->with('client_month',$client_month)->with('total_clients',$total_clients)
-                                      ->with('client_year',$client_year)->with('active_client_count', $active_client_count);
+                                      ->with('client_year',$client_year)->with('active_client_count', $active_client_count)
+                                      ->with('cancelled_clients',$cancelled_clients)->with('t_revenue', $t_revenue);
     }
 
     /*******************

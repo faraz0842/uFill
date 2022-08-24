@@ -48,7 +48,7 @@
                                             <div class="d-flex align-items-center mb-2">
                                                 <!--begin::Value-->
                                                 <span
-                                                    class="fs-2hx fw-bolder text-gray-800 lh-1">{{ Helper::money_format('EUR','de_DE',$total_revenue) }}</span>
+                                                    class="fs-2hx fw-bolder text-gray-800 lh-1">{{ Helper::money_format('EUR','de_DE',array_sum($t_revenue)) }}</span>
 
                                                 <!--end::Value-->
                                                 <!--begin::Currency-->
@@ -173,7 +173,7 @@
                                                 @endphp
                                                 <span class="fw-boldest fs-6 text-dark">{{ Helper::money_format('EUR','de_DE',$amount_paid) }}€ von
                                                     {{ Helper::money_format('EUR','de_DE',$total_amount) }}€</span>
-                                                    @if ($progress)
+                                                    @if ($progress == 100)
                                                         <span class="fw-bolder fs-6 text-gray-400">{{ $progress  }}%</span>
                                                     @else
                                                         <span class="fw-bolder fs-6 text-gray-400">{{ number_format($progress,2)  }}%</span>
@@ -874,7 +874,7 @@
                                                 <td class="text-center">{{ $log->client_id }}</td>
                                                 <!--end::Client-->
                                                 <!--begin::Client-->
-                                                <td class="text-center">{{ $log->first_name . $log->last_name }}</td>
+                                                <td class="text-center">{{ $log->first_name . ' ' . $log->last_name }}</td>
                                                 <!--end::Client-->
                                                 <!--begin::Client-->
                                                 <td class="text-center">{{ $log->company_name }}</td>

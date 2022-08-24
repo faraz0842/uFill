@@ -241,11 +241,11 @@
 
                                                         @else
 
-                                                            <div class="text-end fw-bolder fs-6 text-gray-800">
+                                                            {{-- <div class="text-end fw-bolder fs-6 text-gray-800">
                                                                 {{ Helper::money_format('EUR', 'de_DE', $invoice->discount->coupon->amount_off) }}€ / {{$invoice->discount->coupon->percent_off}}%
-                                                            </div>
+                                                            </div> --}}
                                                             <div class="text-end fw-bolder fs-6 text-gray-800">
-                                                                0€ /0%
+                                                                {{-- 0€ /0% --}}0
                                                             </div>
                                                         @endif
 

@@ -57,7 +57,7 @@
                                 <!--begin::Card body-->
                                 <div class="card-body py-4 overflow-auto">
                                     <!--begin::Table-->
-                                    <table class=" kt_datatable_example_1 table align-middle table-row-dashed fs-6 gy-5">
+                                    <table class="kt_datatable_example_1 table align-middle table-row-dashed fs-6 gy-5">
                                         <!--begin::Table head-->
                                         <thead>
                                             <!--begin::Table row-->
@@ -200,12 +200,12 @@
 
 @section('custom_scripts')
 
-<script>
+{{-- <script>
     var table = $('.kt_datatable_example_1').DataTable();
         $('#search').on('keyup', function() {
             table.search(this.value).draw();
         });
 
-</script>
+</script> --}}
 
 @endsection
