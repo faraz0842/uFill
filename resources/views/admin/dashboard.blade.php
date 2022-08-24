@@ -168,11 +168,11 @@
                                                     if ($paid_invoices_count == 0 && $unpaid_invoices_count == 0) {
                                                         $progress = 0;
                                                     } else {
-                                                        $progress = ($amount_paid / ($total_amount)) * 100;
+                                                        $progress = ($amount_paid_sum / ($total_amount_sum)) * 100;
                                                     }
                                                 @endphp
-                                                <span class="fw-boldest fs-6 text-dark">{{ Helper::money_format('EUR','de_DE',$amount_paid) }}€ von
-                                                    {{ Helper::money_format('EUR','de_DE',$total_amount) }}€</span>
+                                                <span class="fw-boldest fs-6 text-dark">{{ Helper::money_format('EUR','de_DE',$amount_paid_sum) }}€ von
+                                                    {{ Helper::money_format('EUR','de_DE',$total_amount_sum) }}€</span>
                                                     @if ($progress == 100)
                                                         <span class="fw-bolder fs-6 text-gray-400">{{ $progress  }}%</span>
                                                     @else
@@ -641,6 +641,7 @@
                                                         $total_revenue = (($total_number_of_client * $cost_overview->price) - $client_discounts );
                                                     } elseif($cost_overview->plan == 'year') {
                                                         $total_revenue = (($total_number_of_client * $cost_overview->price) - $client_discounts ) / 12;
+                                                        $total_revenue = round($total_revenue);
                                                     }
 
 
@@ -668,6 +669,7 @@
                                                 <!--begin::price-->
                                                 {{-- <td class="text-center">{{ numfmt_format_currency($fmt, Helper::money_format('EUR','de_DE',$total_revenue), "EUR") }}€</td> --}}
                                                 <td class="text-center">{{ Helper::money_format('EUR','de_DE',$total_revenue)}}€</td>
+                                                {{-- <td class="text-center">{{$total_revenue}}€</td> --}}
                                                 <!--end::price-->
                                             </tr>
 
@@ -1108,8 +1110,12 @@
                                                         <label class=" fs-6 fw-bold form-label mb-2">Price</label>
                                                         <!--end::Label-->
                                                         <!--begin::Input-->
-                                                        <input type="text" class="form-control form-control-solid"
-                                                            name="price" value="" />
+                                                        <div class="input-group mb-3">
+                                                                        <input type="text" class="form-control" placeholder="e.g . 500 euro" name="price">
+                                                                        <span class="input-group-text" id="basic-addon2">euro</span>
+                                                                    </div>
+                                                        {{-- <input type="text" class="form-control form-control-solid"
+                                                            name="price" value="" /> --}}
                                                         <!--end::Input-->
                                                         @if ($errors->has('price'))
                                                             <div class="text-danger">{{ $errors->first('price') }}
@@ -1189,7 +1195,7 @@
                                                 <!--end::Available until-->
                                                 <!--begin::price-->
                                                 @if ($discount_code->price)
-                                                    <td class="text-center">{{ $discount_code->price }}€</td>
+                                                    <td class="text-center">{{ Helper::money_format('EUR','de_DE',$discount_code->price) }}€</td>
                                                 @elseif($discount_code->percent)
                                                     <td class="text-center">{{ $discount_code->percent }}% </td>
                                                 @endif

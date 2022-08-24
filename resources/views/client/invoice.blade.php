@@ -13,7 +13,7 @@
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                     <!--begin::Description-->
-                    <small class="text-muted fs-7 fw-bold my-1 ms-1">{{ trans('message.administrator') }} >
+                    <small class="text-muted fs-7 fw-bold my-1 ms-1">
                         {{ trans('message.clients') }} > {{ trans('message.invoice') }} >
                         #{{ $invoice->number }}</small>
                     <!--end::Description-->
@@ -270,13 +270,11 @@
                                                             {{ trans('message.Taxes 19') }}</div>
                                                         <!--end::Accountname-->
                                                         <!--begin::Label-->
-                                                        {{-- @php
-                                                            $tax = $invoice->total - $invoice->total / 1.19;
-
-                                                            $total = $subtotal - $invoice->discount->coupon->percent_off + 0;
-                                                        @endphp --}}
+                                                        @php
+                                                            $tax = $invoice->total - ($invoice->total / 1.19);
+                                                        @endphp
                                                         <div class="text-end fw-bolder fs-6 text-gray-800">
-                                                            {{ Helper::money_format('EUR', 'de_DE', round($invoice->tax)) }}€</div>
+                                                            {{ Helper::money_format('EUR', 'de_DE', round($tax)) }}€</div>
                                                         {{-- <div class="text-end fw-bolder fs-6 text-gray-800">{{$tax}}€</div> --}}
                                                         <!--end::Label-->
                                                     </div>

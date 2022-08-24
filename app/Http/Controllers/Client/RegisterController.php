@@ -245,11 +245,14 @@ class RegisterController extends Controller
 
                         );
 
-                    $discount_price = 0;
+                        DiscountCode::where('id',$discount->id)->update([
+                            'code_used' => 1
+                        ]);
 
 
                     if($discount->percent != null){
                         $discount_amount =  ((float) $package->price/100) * $discount->percent;
+                        $discount_amount = round($discount_amount);
                         //return $discount_amount;
                      } elseif ($discount->price != null) {
                         $discount_amount =  ((float) $package->price -  $discount->price) ;

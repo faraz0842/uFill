@@ -131,25 +131,26 @@ class DashboardController extends Controller
         ]);
 
 
-        $amount_paid = 1;
-        $total_amount = 1;
+        $t_revenue = array();
+        $amount_paid = array();
+        $total_amount = array();
         $open_invoice_amount = 0;
         foreach ($search_invoice->data as $key => $value) {
-            if($value->status == 'unpaid'){
-                $open_invoice_amount += $value->amount_remaining;
-            }elseif($value->status == 'paid') {
-                $amount_paid += $value->amount_paid;
-            }
+            // if($value->status == 'unpaid'){
+            //     $open_invoice_amount += $value->amount_remaining;
+            // }elseif($value->status == 'paid') {
+            //     $amount_paid += $value->amount_paid;
+            // }
 
             $t_revenue[] = $value->amount_paid;
-
-            $total_amount += $value->total;
+            $total_amount[] = $value->total;
+            $amount_paid[] = $value->amount_paid;
         }
 
-        //  $amount_paid_sum = array_sum($amount_paid);
-        //  $total_amount_sum = array_sum($total_amount);
+        $amount_paid_sum = array_sum($amount_paid);
+        $total_amount_sum = array_sum($total_amount);
 
-        //return response()->json(array_sum($t_revenue));
+        //return response()->json($amount_paid);
         $unpaid_invoices = 0;
         $paid_invoices = 0;
         $unpaid_invoices_count = 0;
@@ -260,7 +261,8 @@ class DashboardController extends Controller
                                       ->with('countries',$countries)->with('months',$months)->with('amount',$amount)
                                       ->with('year',$year)->with('client_month',$client_month)->with('total_clients',$total_clients)
                                       ->with('client_year',$client_year)->with('active_client_count', $active_client_count)
-                                      ->with('cancelled_clients',$cancelled_clients)->with('t_revenue', $t_revenue);
+                                      ->with('cancelled_clients',$cancelled_clients)->with('t_revenue', $t_revenue)
+                                      ->with('amount_paid_sum', $amount_paid_sum)->with('total_amount_sum', $total_amount_sum);
     }
 
     /*******************
@@ -622,16 +624,6 @@ class DashboardController extends Controller
                     ]);
                 }
 
-                // $coupon = $stripe->coupons->create([
-                //     'id' => $request->code,
-                //     'percent_off' => $request->percentage,
-                //     'currency' => 'eur',
-                //     //'amount_off' => $request->price,
-                //     'duration' => $request->duration,
-                //     'redeem_by' => strtotime($request->available_until),
-                //     'max_redemptions' => $request->code_redemption,
-                //     'name' => $request->name,
-                // ]);
             } else {
 
                 if ($request->price) {
@@ -639,7 +631,6 @@ class DashboardController extends Controller
 
                     $coupon = $stripe->coupons->create([
                         'id' => $request->code,
-                        //'percent_off' => $request->percentage,
                         'currency' => 'eur',
                         'amount_off' => $price,
                         'duration' => $request->duration,
@@ -652,7 +643,6 @@ class DashboardController extends Controller
                         'id' => $request->code,
                         'percent_off' => $request->percentage,
                         'currency' => 'eur',
-                        //'amount_off' => $request->price,
                         'duration' => $request->duration,
                         'redeem_by' => strtotime($request->available_until),
                         'max_redemptions' => $request->code_redemption,
@@ -660,19 +650,11 @@ class DashboardController extends Controller
                     ]);
                 }
 
-                // $coupon = $stripe->coupons->create([
-                //     'id' => $request->code,
-                //     'percent_off' => $request->percentage,
-                //     'currency' => 'eur',
-                //     //'amount_off' => $request->price,
-                //     //'duration' => $request->duration,
-                //     'redeem_by' => strtotime($request->available_until),
-                //     'max_redemptions' => $request->code_redemption,
-                //     'name' => $request->name,
-                // ]);
             }
 
-           //return response()->json($coupon);
+            //return response()->json($coupon);
+
+
 
             $discount_code = new DiscountCode();
             $discount_code->code = $request->code;
@@ -681,11 +663,16 @@ class DashboardController extends Controller
             $discount_code->available_until = $request->available_until;
             $discount_code->max_redemption =  $request->code_redemption;
             $discount_code->code_used =  0;
-            $discount_code->price = $request->price;
             $discount_code->discount_type = $request->duration;
-            $discount_code->percent = $request->percentage;
-            $discount_code->save();
+            if($request->price){
+                $discount_code->price = $request->price * 100;
+                $discount_code->percent = null;
+            }else{
+                $discount_code->price = null;
+                $discount_code->percent = $request->percentage;
+            }
 
+            $discount_code->save();
 
             return redirect()->Route('admin.dashboard')->with('message','coupon added successfully');
 

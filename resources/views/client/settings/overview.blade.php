@@ -514,7 +514,7 @@
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8">
-                                <div class="fw-bold fs-6 text-gray-800">{{ Helper::money_format('EUR','de_DE',$client_info->price)}} €</div>
+                                <div class="fw-bold fs-6 text-gray-800">{{ Helper::money_format('EUR','de_DE',$client_info->package_price)}} €</div>
                             </div>
                             <!--end::Col-->
                         </div>
