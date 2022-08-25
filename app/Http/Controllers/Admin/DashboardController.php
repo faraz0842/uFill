@@ -241,7 +241,7 @@ class DashboardController extends Controller
         }
         //return $amount;
 
-        //return response()->json($client_month);
+       // return response()->json($client_month);
 
         return view('admin.dashboard')->with('clients',$clients)->with('costs_overview',$costs_overview)
                                       ->with('discount_codes',$discount_codes)->with('logs',$logs)

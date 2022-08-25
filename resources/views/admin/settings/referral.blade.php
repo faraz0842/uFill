@@ -116,7 +116,11 @@
                                                                     </svg>
                                                                 </span>
                                                                 <!--end::Svg Icon-->
-                                                                <div class="fs-2 fw-bolder" data-kt-countup="true" data-kt-countup-value="{{$total_revenue->total != null ? $total_revenue->total : 0}}" data-kt-countup-suffix="€">{{$total_revenue->total != null ? $total_revenue->total : 0}}</div>
+                                                                <div class="fs-2 fw-bolder" data-kt-countup="true"
+                                                                    data-kt-countup-value="{{ Helper::clients_total_revenue() != null ? Helper::clients_total_revenue() : 0 }}"
+                                                                    data-kt-countup-suffix="€">
+                                                                    {{ Helper::clients_total_revenue() != null ? Helper::clients_total_revenue() : 0 }}
+                                                                </div>
                                                             </div>
                                                             <!--end::Number-->
                                                             <!--begin::Label-->
@@ -246,21 +250,49 @@
 
 <script>
     function myFunction() {
-    /* Get the text field */
-    var copyText = document.getElementById("kt_referral_link_input");
+        /* Get the text field */
+        var copyText = document.getElementById("kt_referral_link_input").value;
 
-    $( "#kt_referral_program_link_copy_btn" ).removeClass('btn-light btn-active-light-primary');
-    // $('#kt_referral_program_link_copy_btn').addClass('btn-active-light-success');
-    $('#kt_referral_program_link_copy_btn').css({'color': 'white' , 'background-color' : '#90EE90'});
+        //console.log(copyText);
+        $( "#kt_referral_program_link_copy_btn" ).removeClass('btn-light btn-active-light-primary');
+        // $('#kt_referral_program_link_copy_btn').addClass('btn-active-light-success');
+        $('#kt_referral_program_link_copy_btn').css({'color': 'white' , 'background-color' : '#90EE90'});
 
-    /* Select the text field */
-    copyText.select();
-    copyText.setSelectionRange(0, 99999); /* For mobile devices */
+        /* Select the text field */
+        // copyText.textContent();
+        // copyText.setSelectionRange(0, 99999); /* For mobile devices */
 
-    /* Copy the text inside the text field */
-    navigator.clipboard.writeText(copyText.value);
+        /* Copy the text inside the text field */
+        navigator.clipboard.writeText(copyText.value);
 
     }
+
+    // function myFunction() {
+
+    //     var range, selection, worked , element;
+
+    //     element = document.getElementById("kt_referral_link_input").value;
+
+    //     if (document.body.createTextRange) {
+    //         range = document.body.createTextRange();
+    //         range.moveToElementText(element);
+    //         range.select();
+    //     } else if (window.getSelection) {
+    //         selection = window.getSelection();
+    //         range = document.createRange();
+    //         range.selectNodeContents(element);
+    //         selection.removeAllRanges();
+    //         selection.addRange(range);
+    //     }
+
+    //     try {
+    //         document.execCommand('copy');
+    //         alert('text copied');
+    //     }
+    //     catch (err) {
+    //         alert('unable to copy text');
+    //     }
+    // }
 </script>
 
 @endsection

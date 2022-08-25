@@ -5,6 +5,7 @@
     init: function () {
         !(function () {
             var e = document.getElementById("total_evenue_chart");
+            var client_months = @json($client_month);
             if (e) {
                 var t = parseInt(KTUtil.css(e, "height")),
                     a =
@@ -65,8 +66,9 @@
                         tooltip: {
                             style: { fontSize: "12px" },
                             x: {
-                                formatter: function (e = @json($client_month)) {
-                                    return "month " + e;
+                                formatter: function (e,client_months) {
+                                    console.log(client_months[1]);
+                                    return "month " + client_months;
                                 },
                             },
                             y: {

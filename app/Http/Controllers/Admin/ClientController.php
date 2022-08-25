@@ -83,7 +83,7 @@ class ClientController extends Controller
 
         $affiliated_at = AffiliateLink::where('affiliate_from', $id)->join('clients', 'clients.id', 'affiliate_link.affiliate_from')->get();
 
-        //return response()->json($invoices);
+        //return response()->json($invoices->data);
         //$shipping_details = ShippingDetail::all();
         $today_shipments = ShippingDetail::whereDate('created_at', Carbon::today())->get();
         $this_week_shipments = ShippingDetail::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
@@ -239,8 +239,8 @@ class ClientController extends Controller
             \Stripe\Stripe::setApiKey('sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF');
 
             $subscription = \Stripe\Subscription::retrieve($client_subcription_id->stripe_id);
-            \Stripe\Subscription::update($client_subcription_id->stripe_id, [
-                'cancel_at_period_end' => true,
+            $subsciption_updated = \Stripe\Subscription::update($client_subcription_id->stripe_id, [
+                'cancel_at_period_end' => false,
                 'proration_behavior' => 'create_prorations',
                 'items' => [
                     [
@@ -253,8 +253,8 @@ class ClientController extends Controller
             Client::where('id', $client_id)->update([
                 'account_type' => $request->account_type,
                 'account_plan' => $request->account_plan_selected,
-                'client_until' => Carbon::parse($subscription->current_period_end),
-                'next_payment' => Carbon::parse($subscription->current_period_end),
+                'client_until' => Carbon::parse($subsciption_updated->current_period_end),
+                'next_payment' => Carbon::parse($subsciption_updated->current_period_end),
                 'package_price' => $price_id->price,
             ]);
 
@@ -334,7 +334,7 @@ class ClientController extends Controller
             []
         );
 
-       // return response()->json($invoice);
+       return response()->json($invoice);
         $created_date = Carbon::parse($invoice->created);
         $period_end = Carbon::parse($invoice->period_end);
 
