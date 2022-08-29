@@ -34,6 +34,7 @@ class DashboardController extends Controller
 
     public function dashboard()
     {
+
         // $time = Carbon::now()->subHours(1)->toDateTimeString();
         // $admin_users = Log::whereNotNull('admin_id')->where('created_at' ,'<=' , Carbon::now()->subHours(1)->toDateTimeString())->groupBy('admin_id')->pluck('admin_id');
 
@@ -118,6 +119,57 @@ class DashboardController extends Controller
         );
 
         $invoices =  $stripe->invoices->all();
+        //return $invoices->data;
+
+        if ($invoices->data != null) {
+
+            //storing invoice amount in transaction table
+            foreach ($invoices->data as $key => $value) {
+
+                $client = Client::where('stripe_id',$value->customer)->first();
+                $package = VariantPlan::where('variant_id', $value['lines']->data[0]->plan->product)->where('plan', $value['lines']->data[0]->plan->interval)->first();
+                $check_invoice = Transaction::where('invoice_id', $value->id)->first();
+
+                // $discount_amount = 0;
+                // if($value->discount){
+                //     if ($value->discount->coupon->amount_off) {
+                //         $discount_amount =  $value->discount->coupon->amount_off;
+                //      } elseif ($value->discount->coupon->percent_off) {
+                //         $discount_amount =  $value->discount->coupon->percent_off;
+                //      }
+                // }
+                if($check_invoice){
+
+                    $tranasction = Transaction::where('invoice_id', $value->id)->first();
+                    $tranasction->client_id = $client->id;
+                    $tranasction->package_id = $package->plan_id;
+                    $tranasction->invoice_id = $value->id;
+                    $tranasction->invoice_number = $value->number;
+                    $tranasction->amount = $package->price;
+                    $tranasction->discount_price = $value->subtotal - $value->total;
+                    $tranasction->subtotal = $value->subtotal;
+                    $tranasction->total_amount = $value->total;
+                    $tranasction->save();
+
+                }else{
+
+                    $tranasction = new Transaction();
+                    $tranasction->client_id = $client->id;
+                    $tranasction->package_id = $package->plan_id;
+                    $tranasction->invoice_number = $value->number;
+                    $tranasction->invoice_id = $value->id;
+                    $tranasction->amount = $package->price;
+                    $tranasction->discount_price = $value->subtotal - $value->total;
+                    $tranasction->subtotal = $value->subtotal;
+                    $tranasction->total_amount = $value->total;
+                    $tranasction->type = 'basic transaction';
+                    $tranasction->save();
+
+                }
+
+            }
+        }
+
 
 
 
@@ -135,6 +187,7 @@ class DashboardController extends Controller
         $amount_paid = array();
         $total_amount = array();
         $open_invoice_amount = 0;
+        $amount_remaining = array();
         foreach ($search_invoice->data as $key => $value) {
             // if($value->status == 'unpaid'){
             //     $open_invoice_amount += $value->amount_remaining;
@@ -145,10 +198,12 @@ class DashboardController extends Controller
             $t_revenue[] = $value->amount_paid;
             $total_amount[] = $value->total;
             $amount_paid[] = $value->amount_paid;
+            $amount_remaining[] = $value->amount_remaining;
         }
 
         $amount_paid_sum = array_sum($amount_paid);
         $total_amount_sum = array_sum($total_amount);
+        $remaining_amount_sum = array_sum($amount_remaining);
 
         //return response()->json($amount_paid);
         $unpaid_invoices = 0;
@@ -262,7 +317,8 @@ class DashboardController extends Controller
                                       ->with('year',$year)->with('client_month',$client_month)->with('total_clients',$total_clients)
                                       ->with('client_year',$client_year)->with('active_client_count', $active_client_count)
                                       ->with('cancelled_clients',$cancelled_clients)->with('t_revenue', $t_revenue)
-                                      ->with('amount_paid_sum', $amount_paid_sum)->with('total_amount_sum', $total_amount_sum);
+                                      ->with('amount_paid_sum', $amount_paid_sum)->with('total_amount_sum', $total_amount_sum)
+                                      ->with('remaining_amount_sum', $remaining_amount_sum);
     }
 
     /*******************

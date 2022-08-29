@@ -250,21 +250,21 @@ class RegisterController extends Controller
                         ]);
 
 
-                    if($discount->percent != null){
-                        $discount_amount =  ((float) $package->price/100) * $discount->percent;
-                        $discount_amount = round($discount_amount);
-                        //return $discount_amount;
-                     } elseif ($discount->price != null) {
-                        $discount_amount =  ((float) $package->price -  $discount->price) ;
-                     }
+                    // if($discount->percent != null){
+                    //     $discount_amount =  ((float) $package->price/100) * $discount->percent;
+                    //     $discount_amount = round($discount_amount);
+                    //     //return $discount_amount;
+                    //  } elseif ($discount->price != null) {
+                    //     $discount_amount =  ((float) $package->price -  $discount->price) ;
+                    //  }
 
 
-                    $transaction = new Transaction();
-                    $transaction->client_id = $client->id;
-                    $transaction->package_id = $package->plan_id;
-                    $transaction->amount = $package->price;
-                    $transaction->discount_price = $discount_amount;
-                    $transaction->save();
+                    // $transaction = new Transaction();
+                    // $transaction->client_id = $client->id;
+                    // $transaction->package_id = $package->plan_id;
+                    // $transaction->amount = $package->price;
+                    // $transaction->discount_price = $discount_amount;
+                    // $transaction->save();
 
 
                 } else {
@@ -281,12 +281,12 @@ class RegisterController extends Controller
 
                         );
 
-                    $transaction = new Transaction();
-                    $transaction->client_id = $client->id;
-                    $transaction->package_id = $package->plan_id;
-                    $transaction->amount = $package->price;
-                    $transaction->discount_price = 0;
-                    $transaction->save();
+                    // $transaction = new Transaction();
+                    // $transaction->client_id = $client->id;
+                    // $transaction->package_id = $package->plan_id;
+                    // $transaction->amount = $package->price;
+                    // $transaction->discount_price = 0;
+                    // $transaction->save();
                 }
 
 

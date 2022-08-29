@@ -270,12 +270,12 @@
                                                             {{ trans('message.Taxes 19') }}</div>
                                                         <!--end::Accountname-->
                                                         <!--begin::Label-->
-                                                        @php
+                                                        {{-- @php
                                                             $tax = $invoice->total - ($invoice->total / 1.19);
-                                                        @endphp
-                                                        <div class="text-end fw-bolder fs-6 text-gray-800">
-                                                            {{ Helper::money_format('EUR', 'de_DE', round($tax)) }}€</div>
-                                                        {{-- <div class="text-end fw-bolder fs-6 text-gray-800">{{$tax}}€</div> --}}
+                                                        @endphp --}}
+                                                        {{-- <div class="text-end fw-bolder fs-6 text-gray-800">
+                                                            {{ Helper::money_format('EUR', 'de_DE', round($tax)) }}€</div> --}}
+                                                        <div class="text-end fw-bolder fs-6 text-gray-800">{{ Helper::money_format('EUR', 'de_DE', round($invoice->tax))}}€</div>
                                                         <!--end::Label-->
                                                     </div>
                                                     <!--end::Item-->

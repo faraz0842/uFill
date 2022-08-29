@@ -48,7 +48,7 @@
                                             <div class="d-flex align-items-center mb-2">
                                                 <!--begin::Value-->
                                                 <span
-                                                    class="fs-2hx fw-bolder text-gray-800 lh-1">{{ Helper::money_format('EUR','de_DE',array_sum($t_revenue)) }}</span>
+                                                    class="fs-2hx fw-bolder text-gray-800 lh-1">{{ Helper::money_format('EUR','de_DE',Helper::clients_total_revenue()) }}</span>
 
                                                 <!--end::Value-->
                                                 <!--begin::Currency-->
@@ -143,7 +143,7 @@
                                             <!--begin::Info-->
                                             <div class="d-flex align-items-center">
                                                 <!--begin::Amount-->
-                                                <span class="fs-2hx fw-bolder text-dark lh-1">{{ $open_invoice_amount }}</span>
+                                                <span class="fs-2hx fw-bolder text-dark lh-1">{{ Helper::invoice_open_cost() }}</span>
                                                 <!--end::Amount-->
                                                 <!--begin::Currency-->
                                                 <span
@@ -171,7 +171,7 @@
                                                         $progress = ($amount_paid_sum / ($total_amount_sum)) * 100;
                                                     }
                                                 @endphp
-                                                <span class="fw-boldest fs-6 text-dark">{{ Helper::money_format('EUR','de_DE',$amount_paid_sum) }}€ von
+                                                <span class="fw-boldest fs-6 text-dark">{{ Helper::money_format('EUR','de_DE',$amount_paid_sum - $remaining_amount_sum) }}€ von
                                                     {{ Helper::money_format('EUR','de_DE',$total_amount_sum) }}€</span>
                                                     @if ($progress == 100)
                                                         <span class="fw-bolder fs-6 text-gray-400">{{ $progress  }}%</span>
@@ -628,19 +628,22 @@
                                                             ->count();
 
                                                     $client_discounts = App\Models\Transaction::where('package_id',$cost_overview->plan_id)->sum('discount_price');
-
-
                                                     $fmt = numfmt_create( 'de_DE', NumberFormatter::CURRENCY );
                                                     $monthly_price = App\Models\VariantPlan::where('variant_id',$cost_overview->variant_id)->where('plan','month')->pluck('price')->first();
                                                     $yearly_price = App\Models\VariantPlan::where('variant_id',$cost_overview->variant_id)->where('plan','year')->pluck('price')->first();
 
                                                     $amount_of_discount = (($monthly_price * 12) - $yearly_price);
+                                                    $amount_of_discount = $amount_of_discount != null ? $amount_of_discount : 0;
+
                                                     $amount_of_discount_in_percent = (((($monthly_price * 12) - $yearly_price) * 100) / ($monthly_price * 12));
+                                                    $amount_of_discount_in_percent = $amount_of_discount_in_percent != null ? $amount_of_discount_in_percent : 0;
 
                                                     if ($cost_overview->plan == 'month') {
                                                         $total_revenue = (($total_number_of_client * $cost_overview->price) - $client_discounts );
+                                                        $client_discount = $client_discounts;
                                                     } elseif($cost_overview->plan == 'year') {
                                                         $total_revenue = (($total_number_of_client * $cost_overview->price) - $client_discounts ) / 12;
+                                                        $client_discount = round($client_discounts / 12);
                                                         $total_revenue = round($total_revenue);
                                                     }
 
@@ -657,14 +660,16 @@
                                                 <!--begin::price-->
 
                                                 @if ($cost_overview->plan == 'year')
-                                                    <td class="text-center">{{number_format($amount_of_discount_in_percent,2)}} % / {{ numfmt_format_currency($fmt, Helper::money_format('EUR','de_DE',$amount_of_discount), "EUR") }}</td>
+                                                    {{-- <td class="text-center">{{number_format($amount_of_discount_in_percent,2)}} % / {{ numfmt_format_currency($fmt, Helper::money_format('EUR','de_DE',$amount_of_discount), "EUR") }}</td> --}}
+                                                    <td class="text-center">{{number_format($amount_of_discount_in_percent,2)}} % / {{ Helper::money_format('EUR','de_DE',$amount_of_discount)}}</td>
                                                 @else
                                                     <td class="text-center">xxx</td>
                                                 @endif
 
                                                 <!--end::price-->
                                                 <!--begin::price-->
-                                                <td class="text-center">{{ Helper::money_format('EUR','de_DE',$client_discounts) }}€</td>
+                                                <td class="text-center">{{ Helper::money_format('EUR','de_DE',$client_discount) }}€</td>
+                                                {{-- <td class="text-center">{{ $client_discounts }}€</td> --}}
                                                 <!--end::price-->
                                                 <!--begin::price-->
                                                 {{-- <td class="text-center">{{ numfmt_format_currency($fmt, Helper::money_format('EUR','de_DE',$total_revenue), "EUR") }}€</td> --}}

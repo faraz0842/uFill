@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use PDF;
 use App\Helpers\Helper;
 use App\Models\AdminCompany;
+use App\Models\Transaction;
 
 class ClientController extends Controller
 {
@@ -258,6 +259,13 @@ class ClientController extends Controller
                 'package_price' => $price_id->price,
             ]);
 
+            $transaction = new Transaction();
+            $transaction->client_id = $client_id;
+            $transaction->package_id = $price_id->plan_id;
+            $transaction->amount = $price_id->price;
+            $transaction->discount_price = 0;
+            $transaction->save();
+
             // $subscription_updated = \Stripe\Subscription::retrieve($client_subcription_id->stripe_id);
             // return response()->json($subscription_updated);
 
@@ -334,7 +342,7 @@ class ClientController extends Controller
             []
         );
 
-       return response()->json($invoice);
+       //return response()->json($invoice);
         $created_date = Carbon::parse($invoice->created);
         $period_end = Carbon::parse($invoice->period_end);
 

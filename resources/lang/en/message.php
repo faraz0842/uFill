@@ -407,7 +407,7 @@ return [
     'Subtotal' => 'Subtotal',
     'Discount' => 'Discount',
     'Shipping' => 'Shipping',
-    'Taxes 19' => 'Taxes 19%',
+    'Taxes 19' => 'Taxes',
     'Total' => 'Total',
     'Bank Name' => 'Bank Name',
     'Account Holder' => 'Account Holder',

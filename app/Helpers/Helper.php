@@ -57,7 +57,7 @@ class Helper
         return $total_open_cost;
     }
 
-    public function clients_total_revenue()
+    public static function clients_total_revenue()
     {
         $stripe = new \Stripe\StripeClient(
             'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
@@ -73,6 +73,24 @@ class Helper
         $total = array_sum($amount_paid);
 
         return $total;
+    }
+
+    public static function invoice_open_cost()
+    {
+        $stripe = new \Stripe\StripeClient(
+            'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
+        );
+
+        $invoices =  $stripe->invoices->all();
+
+        $invoice_open_cost = array();
+        foreach ($invoices->data as $key => $value) {
+            $invoice_open_cost[] = $value->amount_remaining;
+        }
+
+        $total_invoice_open_cost = array_sum($invoice_open_cost);
+
+        return $total_invoice_open_cost;
     }
 
 
