@@ -395,7 +395,7 @@
                                                     <th class="min-w-125px">{{ trans('message.Number') }}</th>
                                                     <th class="min-w-125px">{{ trans('message.billing cycle') }}</th>
                                                     <th class="min-w-125px">{{ trans('message.debit') }}</th>
-                                                    <th class="min-w-125px">{{ trans('In total') }}</th>
+                                                    <th class="min-w-125px">{{ trans('In total') }} ({{ trans('message.excl. taxes') }})</th>
                                                 </tr>
                                                 <!--end::Table row-->
                                             </thead>
@@ -2265,7 +2265,7 @@
                                             <div class="col-lg-8 mb-10 mb-lg-0">
                                                 <!--begin::Tabs-->
                                                 <div class="nav flex-column">
-                                                    <!--begin::Tab link-->
+                                                   <!--begin::Tab link-->
                                                     <div class="nav-link btn btn-outline btn-outline-dashed btn-color-dark btn-active btn-active-primary d-flex flex-stack text-start p-6 active mb-6"
                                                         data-bs-toggle="tab" data-bs-target="#kt_upgrade_plan_startup">
                                                         <!--end::Description-->
@@ -2275,7 +2275,7 @@
                                                                 class="form-check form-check-custom form-check-solid form-check-success me-6">
                                                                 <input class="form-check-input" type="radio"
                                                                     name="account_type" checked="checked"
-                                                                    value="prod_MIpk8AcCTMwufp" />
+                                                                    value="prod_MJL5of93Z6AHzr" />
                                                             </div>
                                                             <!--end::Radio-->
                                                             <!--begin::Info-->
@@ -2292,10 +2292,8 @@
                                                         <!--begin::Price-->
                                                         <div class="ms-5">
                                                             {{-- <span class="mb-2">€</span> --}}
-                                                            <span class="fs-3x fw-bolder" data-kt-plan-price-month="9,99€"
-                                                                data-kt-plan-price-annual="95,88€">9,99€</span>
-                                                            {{-- <span class="fs-7 opacity-50">/
-                                                <span data-kt-element="period"></span></span> --}}
+                                                            <span class="fs-3x fw-bolder" data-kt-plan-price-month="8,39€"
+                                                                data-kt-plan-price-annual="80,57€">8,39€</span>
                                                         </div>
                                                         <!--end::Price-->
                                                     </div>
@@ -2309,7 +2307,7 @@
                                                             <div
                                                                 class="form-check form-check-custom form-check-solid form-check-success me-6">
                                                                 <input class="form-check-input" type="radio"
-                                                                    name="account_type" value="prod_MIph8GhjI7EGfD" />
+                                                                    name="account_type" value="prod_MJL7GlNVYWfwhk" />
                                                             </div>
                                                             <!--end::Radio-->
                                                             <!--begin::Info-->
@@ -2327,24 +2325,23 @@
                                                         <div class="ms-5">
                                                             {{-- <span class="mb-2">$</span> --}}
                                                             <span class="fs-3x fw-bolder"
-                                                                data-kt-plan-price-month="44,99€"
-                                                                data-kt-plan-price-annual="359,88€">44,99€</span>
-                                                            {{-- <span class="fs-7 opacity-50">/
-                                                <span data-kt-element="period">Mon</span></span> --}}
+                                                                data-kt-plan-price-month="37,81€"
+                                                                data-kt-plan-price-annual="302,42€">37,81€</span>
                                                         </div>
                                                         <!--end::Price-->
                                                     </div>
                                                     <!--end::Tab link-->
 
                                                     <div class="nav-link btn btn-outline btn-outline-dashed btn-color-dark btn-active btn-active-primary d-flex flex-stack text-start p-6 mb-6"
-                                                        data-bs-toggle="tab" data-bs-target="#kt_upgrade_plan_enterprise">
+                                                        data-bs-toggle="tab"
+                                                        data-bs-target="#kt_upgrade_plan_enterprise">
                                                         <!--end::Description-->
                                                         <div class="d-flex align-items-center me-2">
                                                             <!--begin::Radio-->
                                                             <div
                                                                 class="form-check form-check-custom form-check-solid form-check-success me-6">
                                                                 <input class="form-check-input" type="radio"
-                                                                    name="account_type" value="prod_MIpmaOE6br77zw" />
+                                                                    name="account_type" value="prod_MJL35hW4QAqDK7" />
                                                             </div>
                                                             <!--end::Radio-->
                                                             <!--begin::Info-->
@@ -2362,10 +2359,8 @@
                                                         <div class="ms-5">
                                                             {{-- <span class="mb-2">$</span> --}}
                                                             <span class="fs-3x fw-bolder"
-                                                                data-kt-plan-price-month="49,99€"
-                                                                data-kt-plan-price-annual="419,88€">49,99€</span>
-                                                            {{-- <span class="fs-7 opacity-50">/
-                                                    <span data-kt-element="period">Mon</span></span> --}}
+                                                                data-kt-plan-price-month="42,01€"
+                                                                data-kt-plan-price-annual="352,84€">42,01€</span>
                                                         </div>
                                                         <!--end::Price-->
                                                     </div>

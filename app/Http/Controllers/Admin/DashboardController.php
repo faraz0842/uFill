@@ -684,26 +684,54 @@ class DashboardController extends Controller
 
                 if ($request->price) {
                     $price = $request->price * 100;
+                    if ($request->available_until == null) {
+                        $coupon = $stripe->coupons->create([
+                            'id' => $request->code,
+                            'currency' => 'eur',
+                            'amount_off' => $price,
+                            'duration' => $request->duration,
+                            //'redeem_by' => strtotime($request->available_until),
+                            'max_redemptions' => $request->code_redemption,
+                            'name' => $request->name,
+                        ]);
+                    } else {
+                        $coupon = $stripe->coupons->create([
+                            'id' => $request->code,
+                            'currency' => 'eur',
+                            'amount_off' => $price,
+                            'duration' => $request->duration,
+                            'redeem_by' => strtotime($request->available_until),
+                            'max_redemptions' => $request->code_redemption,
+                            'name' => $request->name,
+                        ]);
+                    }
 
-                    $coupon = $stripe->coupons->create([
-                        'id' => $request->code,
-                        'currency' => 'eur',
-                        'amount_off' => $price,
-                        'duration' => $request->duration,
-                        'redeem_by' => strtotime($request->available_until),
-                        'max_redemptions' => $request->code_redemption,
-                        'name' => $request->name,
-                    ]);
+
+
                 } else {
-                   $coupon = $stripe->coupons->create([
-                        'id' => $request->code,
-                        'percent_off' => $request->percentage,
-                        'currency' => 'eur',
-                        'duration' => $request->duration,
-                        'redeem_by' => strtotime($request->available_until),
-                        'max_redemptions' => $request->code_redemption,
-                        'name' => $request->name,
-                    ]);
+                    if ($request->available_until == null) {
+                        $coupon = $stripe->coupons->create([
+                            'id' => $request->code,
+                            'percent_off' => $request->percentage,
+                            'currency' => 'eur',
+                            'duration' => $request->duration,
+                            //'redeem_by' => strtotime($request->available_until),
+                            'max_redemptions' => $request->code_redemption,
+                            'name' => $request->name,
+                        ]);
+                    } else {
+                        $coupon = $stripe->coupons->create([
+                            'id' => $request->code,
+                            'percent_off' => $request->percentage,
+                            'currency' => 'eur',
+                            'duration' => $request->duration,
+                            'redeem_by' => strtotime($request->available_until),
+                            'max_redemptions' => $request->code_redemption,
+                            'name' => $request->name,
+                        ]);
+                    }
+
+
                 }
 
             }

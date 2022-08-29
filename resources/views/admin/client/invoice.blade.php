@@ -154,7 +154,7 @@
                                                             <th class="min-w-80px text-center pb-2">
                                                                 {{ trans('message.Price') }}</th>
                                                             <th class="min-w-100px text-center pb-2">
-                                                                {{ trans('message.In total') }}</th>
+                                                                {{ trans('message.In total') }} ({{ trans('message.excl. taxes') }})</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>

@@ -588,8 +588,8 @@
                                                 {{ trans('message.Number of clients with this package') }}
                                             </th>
                                             <th class="text-center pe-3 min-w-100px">{{ trans('message.runtime') }}</th>
-                                            <th class="text-center pe-3 min-w-50px">{{ trans('message.price') }}</th>
-                                            <th class="text-center pe-3 min-w-50px">{{ trans('message.Money saved') }}<i
+                                            <th class="text-center pe-3 min-w-50px">{{ trans('message.price')  }}({{ trans('message.excl. taxes') }})</th>
+                                            <th class="text-center pe-3 min-w-50px">{{ trans('message.Money saved') }}({{ trans('message.excl. taxes') }})<i
                                                     class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
                                                     title="Clients save these costs if they choose a longer runtime."></i>
                                             </th>

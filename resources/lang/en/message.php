@@ -871,4 +871,6 @@ return [
     'news' => 'News',
     'changelog' => 'Changelog',
     'delivery' => 'Delivery',
+
+    'excl. taxes' => 'excl. taxes',
 ];

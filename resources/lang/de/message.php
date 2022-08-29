@@ -1434,4 +1434,7 @@ return [
     'news' => 'Neuigkeiten',
     'changelog' => 'Updateverlauf',
     'delivery' => 'Lieferung',
+
+
+    'excl. taxes' => 'exkl. MwSt',
 ];

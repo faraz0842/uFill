@@ -353,6 +353,18 @@ class RegisterController extends Controller
                     $affiliate_link->affiliate_from = $is_affiliate_exist->id;
                     $affiliate_link->affiliate_to = $client->id;
                     $affiliate_link->save();
+
+                    // $affiliated_client_counts = $is_affiliate_exist->count();
+                    // if ($affiliated_client_counts <= 9) {
+                    //     # code...
+                    // }else if($affiliated_client_counts <= 49){
+
+                    // }else if($affiliated_client_counts <= 99){
+
+                    // } else if ($affiliated_client_counts >= 100 ) {
+                    //     # code...
+                    // }
+
                 }
                 if ($is_affiate_from_admin) {
 
