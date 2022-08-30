@@ -35,6 +35,14 @@ class DashboardController extends Controller
     public function dashboard()
     {
 
+        // $stripe = new \Stripe\StripeClient(
+        //     'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
+        // );
+        // $stripe->invoices->delete(
+        //     'in_1LawtRLRABgW92OX0oLVpg08',
+        //     []
+        // );
+
         // $time = Carbon::now()->subHours(1)->toDateTimeString();
         // $admin_users = Log::whereNotNull('admin_id')->where('created_at' ,'<=' , Carbon::now()->subHours(1)->toDateTimeString())->groupBy('admin_id')->pluck('admin_id');
 
@@ -118,57 +126,57 @@ class DashboardController extends Controller
             'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
         );
 
-        $invoices =  $stripe->invoices->all();
-        //return $invoices->data;
+         $invoices =  $stripe->invoices->all();
+        // //return $invoices->data;
 
-        if ($invoices->data != null) {
+        // if ($invoices->data != null) {
 
-            //storing invoice amount in transaction table
-            foreach ($invoices->data as $key => $value) {
+        //     //storing invoice amount in transaction table
+        //     foreach ($invoices->data as $key => $value) {
 
-                $client = Client::where('stripe_id',$value->customer)->first();
-                $package = VariantPlan::where('variant_id', $value['lines']->data[0]->plan->product)->where('plan', $value['lines']->data[0]->plan->interval)->first();
-                $check_invoice = Transaction::where('invoice_id', $value->id)->first();
+        //         $client = Client::where('stripe_id',$value->customer)->first();
+        //         $package = VariantPlan::where('variant_id', $value['lines']->data[0]->plan->product)->where('plan', $value['lines']->data[0]->plan->interval)->first();
+        //         $check_invoice = Transaction::where('invoice_id', $value->id)->first();
 
-                // $discount_amount = 0;
-                // if($value->discount){
-                //     if ($value->discount->coupon->amount_off) {
-                //         $discount_amount =  $value->discount->coupon->amount_off;
-                //      } elseif ($value->discount->coupon->percent_off) {
-                //         $discount_amount =  $value->discount->coupon->percent_off;
-                //      }
-                // }
-                if($check_invoice){
+        //         // $discount_amount = 0;
+        //         // if($value->discount){
+        //         //     if ($value->discount->coupon->amount_off) {
+        //         //         $discount_amount =  $value->discount->coupon->amount_off;
+        //         //      } elseif ($value->discount->coupon->percent_off) {
+        //         //         $discount_amount =  $value->discount->coupon->percent_off;
+        //         //      }
+        //         // }
+        //         if($check_invoice){
 
-                    $tranasction = Transaction::where('invoice_id', $value->id)->first();
-                    $tranasction->client_id = $client->id;
-                    $tranasction->package_id = $package->plan_id;
-                    $tranasction->invoice_id = $value->id;
-                    $tranasction->invoice_number = $value->number;
-                    $tranasction->amount = $package->price;
-                    $tranasction->discount_price = $value->subtotal - $value->total;
-                    $tranasction->subtotal = $value->subtotal;
-                    $tranasction->total_amount = $value->total;
-                    $tranasction->save();
+        //             $tranasction = Transaction::where('invoice_id', $value->id)->first();
+        //             $tranasction->client_id = $client->id;
+        //             $tranasction->package_id = $package->plan_id;
+        //             $tranasction->invoice_id = $value->id;
+        //             $tranasction->invoice_number = $value->number;
+        //             $tranasction->amount = $package->price;
+        //             $tranasction->discount_price = $value->subtotal - $value->total;
+        //             $tranasction->subtotal = $value->subtotal;
+        //             $tranasction->total_amount = $value->total;
+        //             $tranasction->save();
 
-                }else{
+        //         }else{
 
-                    $tranasction = new Transaction();
-                    $tranasction->client_id = $client->id;
-                    $tranasction->package_id = $package->plan_id;
-                    $tranasction->invoice_number = $value->number;
-                    $tranasction->invoice_id = $value->id;
-                    $tranasction->amount = $package->price;
-                    $tranasction->discount_price = $value->subtotal - $value->total;
-                    $tranasction->subtotal = $value->subtotal;
-                    $tranasction->total_amount = $value->total;
-                    $tranasction->type = 'basic transaction';
-                    $tranasction->save();
+        //             $tranasction = new Transaction();
+        //             $tranasction->client_id = $client->id;
+        //             $tranasction->package_id = $package->plan_id;
+        //             $tranasction->invoice_number = $value->number;
+        //             $tranasction->invoice_id = $value->id;
+        //             $tranasction->amount = $package->price;
+        //             $tranasction->discount_price = $value->subtotal - $value->total;
+        //             $tranasction->subtotal = $value->subtotal;
+        //             $tranasction->total_amount = $value->total;
+        //             $tranasction->type = 'basic transaction';
+        //             $tranasction->save();
 
-                }
+        //         }
 
-            }
-        }
+        //     }
+        // }
 
 
 

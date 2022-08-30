@@ -314,7 +314,7 @@ class ClientController extends Controller
                     ]
                 );
 
-                $client->delete();
+                //$client->delete();
                 return redirect()->Route('admin.clients');
             } else {
 
