@@ -239,7 +239,7 @@
                                             <div class="col-lg-12">
                                                 <!--begin::Option-->
                                                 <input type="radio" class="btn-check location" name="location"
-                                                    value="germany" checked onclick="getLocation([this.value])"
+                                                    value="germany" checked
                                                     id="germany_location" />
                                                 <label
                                                     class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center mb-10"
@@ -265,7 +265,7 @@
                                             <div class="col-lg-12">
                                                 <!--begin::Option-->
                                                 <input type="radio" class="btn-check location" name="location"
-                                                    value="europe" onclick="getLocation([this.value])"
+                                                    value="europe"
                                                     id="europe_location" />
                                                 <label
                                                     class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center mb-10"
@@ -292,7 +292,7 @@
                                             <div class="col-lg-12">
                                                 <!--begin::Option-->
                                                 <input type="radio" class="btn-check location" name="location"
-                                                    value="outside_europe" onclick="getLocation([this.value])"
+                                                    value="outside_europe"
                                                     id="outside_europe_location" />
                                                 <label
                                                     class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center"
@@ -1651,13 +1651,16 @@
 
     }
 
-    // inputValue = document.querySelector('input[name=location]').value
-    // console.log(inputValue);
+    // var elementsArray = document.getElementsByClassName("stepper-number");
+    // console.log(elementsArray['span.stepper-number']);
 
 
     function getVariantPrice(arr) {
 
-        console.log(arr[0]);
+        var element = document.getElementById('germany_location').checked;
+        console.log(element);
+
+        //console.log(arr[0]);
 
         $("#" + arr[1]).html('');
         $.ajax({
@@ -1670,27 +1673,105 @@
                 // console.log(result);
                 $.each(result, function(key, value) {
                     console.log(result);
-                    $("#" + arr[1]).append(
-                        '<label class="d-flex flex-stack mb-5 cursor-pointer">' +
-                        '<span class="d-flex align-items-center me-2">' +
-                        '<span class="symbol symbol-50px me-6">' +
-                        '<span class="symbol-label">' +
-                        '<i class="fa fa-check"></i>' +
-                        '</span>' +
-                        '</span>' +
-                        '<span id="payment_interval" class="d-flex flex-column">' +
-                        '<span class="fw-bolder text-gray-800 text-hover-primary fs-5">' + value
-                        .plan + 'ly Package</span>' +
-                        '<span class="fs-6 fw-bold text-muted">Your account will be charged ' +
-                        value.plan + 'ly with €' + value.price + '.</span>' +
-                        '</span>' +
-                        '</span>' +
-                        '<span class="form-check form-check-custom form-check-solid">' +
-                        '<input class="form-check-input" type="radio" name="account_plan" value="' +
-                        value.plan + '" />' +
-                        '</span>' +
-                        '</label>'
-                    );
+                    if (element) {
+
+                        //let incl_tax_price = Math.round(value.simple_price * 1.19);
+                        if (value.plan == 'year') {
+                            $("#" + arr[1]).append(
+                                '<label class="d-flex flex-stack mb-5 cursor-pointer">' +
+                                '<span class="d-flex align-items-center me-2">' +
+                                '<span class="symbol symbol-50px me-6">' +
+                                '<span class="symbol-label">' +
+                                '<i class="fa fa-check"></i>' +
+                                '</span>' +
+                                '</span>' +
+                                '<span id="payment_interval" class="d-flex flex-column">' +
+                                '<span class="fw-bolder text-gray-800 text-hover-primary fs-5">' + value
+                                .plan + 'ly Package</span>' +
+                                '<span class="fs-6 fw-bold text-muted">Your account will be charged ' +
+                                value.plan + 'ly with €' + value.tax_incl_price  + '.</span>' +
+                                '</span>' +
+                                '</span>' +
+                                '<span class="form-check form-check-custom form-check-solid">' +
+                                '<input class="form-check-input" checked type="radio" name="account_plan" value="' +
+                                value.plan + '" />' +
+                                '</span>' +
+                                '</label>'
+                            );
+                        } else {
+                            $("#" + arr[1]).append(
+                                '<label class="d-flex flex-stack mb-5 cursor-pointer">' +
+                                '<span class="d-flex align-items-center me-2">' +
+                                '<span class="symbol symbol-50px me-6">' +
+                                '<span class="symbol-label">' +
+                                '<i class="fa fa-check"></i>' +
+                                '</span>' +
+                                '</span>' +
+                                '<span id="payment_interval" class="d-flex flex-column">' +
+                                '<span class="fw-bolder text-gray-800 text-hover-primary fs-5">' + value
+                                .plan + 'ly Package</span>' +
+                                '<span class="fs-6 fw-bold text-muted">Your account will be charged ' +
+                                value.plan + 'ly with €' + value.tax_incl_price  + '.</span>' +
+                                '</span>' +
+                                '</span>' +
+                                '<span class="form-check form-check-custom form-check-solid">' +
+                                '<input class="form-check-input" type="radio" name="account_plan" value="' +
+                                value.plan + '" />' +
+                                '</span>' +
+                                '</label>'
+                            );
+                        }
+
+                    } else {
+                        if (value.plan == 'year') {
+                            $("#" + arr[1]).append(
+                                '<label class="d-flex flex-stack mb-5 cursor-pointer">' +
+                                '<span class="d-flex align-items-center me-2">' +
+                                '<span class="symbol symbol-50px me-6">' +
+                                '<span class="symbol-label">' +
+                                '<i class="fa fa-check"></i>' +
+                                '</span>' +
+                                '</span>' +
+                                '<span id="payment_interval" class="d-flex flex-column">' +
+                                '<span class="fw-bolder text-gray-800 text-hover-primary fs-5">' + value
+                                .plan + 'ly Package</span>' +
+                                '<span class="fs-6 fw-bold text-muted">Your account will be charged ' +
+                                value.plan + 'ly with €' + value.price + '.</span>' +
+                                '</span>' +
+                                '</span>' +
+                                '<span class="form-check form-check-custom form-check-solid">' +
+                                '<input class="form-check-input" type="radio" checked name="account_plan" value="' +
+                                value.plan + '" />' +
+                                '</span>' +
+                                '</label>'
+                            );
+                        } else {
+                            $("#" + arr[1]).append(
+                                '<label class="d-flex flex-stack mb-5 cursor-pointer">' +
+                                '<span class="d-flex align-items-center me-2">' +
+                                '<span class="symbol symbol-50px me-6">' +
+                                '<span class="symbol-label">' +
+                                '<i class="fa fa-check"></i>' +
+                                '</span>' +
+                                '</span>' +
+                                '<span id="payment_interval" class="d-flex flex-column">' +
+                                '<span class="fw-bolder text-gray-800 text-hover-primary fs-5">' + value
+                                .plan + 'ly Package</span>' +
+                                '<span class="fs-6 fw-bold text-muted">Your account will be charged ' +
+                                value.plan + 'ly with €' + value.price + '.</span>' +
+                                '</span>' +
+                                '</span>' +
+                                '<span class="form-check form-check-custom form-check-solid">' +
+                                '<input class="form-check-input" type="radio" name="account_plan" value="' +
+                                value.plan + '" />' +
+                                '</span>' +
+                                '</label>'
+                            );
+                        }
+
+
+                    }
+
                 });
             }
         });

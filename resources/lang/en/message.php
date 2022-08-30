@@ -562,11 +562,11 @@ return [
 
     "Monthly Package" => "Monthly Package",
 
-    "Your account will be charged monthly with €9,99." => "Your account will be charged monthly with €8,39. (excl. taxes)",
+    "Your account will be charged monthly with €9,99." => "Your account will be charged monthly with €9,99. (excl. taxes)",
 
     "Yearly Package" => "Yearly Package",
 
-    "Your account will be charged yearly with €95,88." => "Your account will be charged yearly with €80,57. (excl. taxes)",
+    "Your account will be charged yearly with €95,88." => "Your account will be charged yearly with €95,88. (excl. taxes)",
 
     "Discount Code" => "Discount Code",
 

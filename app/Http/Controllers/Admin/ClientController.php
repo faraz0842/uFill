@@ -396,7 +396,8 @@ class ClientController extends Controller
         foreach ($info as $value) {
             $data[] = [
                 "plan" => $value->plan,
-                "price" => Helper::money_format('EUR', 'de_DE', $value->price)
+                "price" => Helper::money_format('EUR', 'de_DE', $value->price),
+                "tax_incl_price" => Helper::money_format('EUR', 'de_DE', round($value->price * 1.19)),
             ];
         }
         return response()->json($data);
