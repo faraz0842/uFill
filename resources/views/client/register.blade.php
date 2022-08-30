@@ -59,7 +59,6 @@
                         <!--end::Logo-->
                         <!--begin::Nav-->
                         <div class="stepper-nav">
-                            <!--begin::Step 1-->
                             <div class="stepper-item current" data-kt-stepper-element="nav">
                                 <!--begin::Line-->
                                 <div class="stepper-line w-40px"></div>
@@ -68,6 +67,25 @@
                                 <div class="stepper-icon w-40px h-40px">
                                     <i class="stepper-check fas fa-check"></i>
                                     <span class="stepper-number">1</span>
+                                </div>
+                                <!--end::Icon-->
+                                <!--begin::Label-->
+                                <div class="stepper-label">
+                                    <h3 class="stepper-title">{{ trans('message.Location') }}</h3>
+                                    <div class="stepper-desc fw-bold">
+                                        {{ trans('message.Where is your company located?') }}</div>
+                                </div>
+                                <!--end::Label-->
+                            </div>
+                            <!--begin::Step 1-->
+                            <div class="stepper-item" data-kt-stepper-element="nav">
+                                <!--begin::Line-->
+                                <div class="stepper-line w-40px"></div>
+                                <!--end::Line-->
+                                <!--begin::Icon-->
+                                <div class="stepper-icon w-40px h-40px">
+                                    <i class="stepper-check fas fa-check"></i>
+                                    <span class="stepper-number">2</span>
                                 </div>
                                 <!--end::Icon-->
                                 <!--begin::Label-->
@@ -86,7 +104,7 @@
                                 <!--begin::Icon-->
                                 <div class="stepper-icon w-40px h-40px">
                                     <i class="stepper-check fas fa-check"></i>
-                                    <span class="stepper-number">2</span>
+                                    <span class="stepper-number">3</span>
                                 </div>
                                 <!--end::Icon-->
                                 <!--begin::Label-->
@@ -106,7 +124,7 @@
                                 <!--begin::Icon-->
                                 <div class="stepper-icon w-40px h-40px">
                                     <i class="stepper-check fas fa-check"></i>
-                                    <span class="stepper-number">3</span>
+                                    <span class="stepper-number">4</span>
                                 </div>
                                 <!--end::Icon-->
                                 <!--begin::Label-->
@@ -125,7 +143,7 @@
                                 <!--begin::Icon-->
                                 <div class="stepper-icon w-40px h-40px">
                                     <i class="stepper-check fas fa-check"></i>
-                                    <span class="stepper-number">4</span>
+                                    <span class="stepper-number">5</span>
                                 </div>
                                 <!--end::Icon-->
                                 <!--begin::Label-->
@@ -145,7 +163,7 @@
                                 <!--begin::Icon-->
                                 <div class="stepper-icon w-40px h-40px">
                                     <i class="stepper-check fas fa-check"></i>
-                                    <span class="stepper-number">5</span>
+                                    <span class="stepper-number">6</span>
                                 </div>
                                 <!--end::Icon-->
                                 <!--begin::Label-->
@@ -196,9 +214,116 @@
                         <form action="{{ Route('client.register.store') }}" method="post" class="my-auto pb-5"
                             enctype="multipart/form-data" name="myform" novalidate>
 
-
                             <!--begin::Step 1-->
                             <div class="current" data-kt-stepper-element="content">
+                                <!--begin::Wrapper-->
+                                <div class="w-100">
+                                    <!--begin::Heading-->
+                                    <div class="pb-10 pb-lg-15">
+                                        <!--begin::Title-->
+                                        <h2 class="fw-bolder d-flex align-items-center text-dark">{{ trans('message.Important!') }}
+                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                                title="{{trans('message.This information has an impact on your VAT and invoices. Please make sure that your information is correct.')}}"></i>
+                                        </h2>
+                                        <!--end::Title-->
+                                        <!--begin::Notice-->
+                                        <div class="text-muted fw-bold fs-6">{{ trans('message.Please choose where the main location of  company is located.') }}</div>
+                                        <!--end::Notice-->
+                                    </div>
+                                    <!--end::Heading-->
+                                    <!--begin::Input group-->
+                                    <div class="fv-row">
+                                        <!--begin::Row-->
+                                        <div class="row">
+                                            <!--begin::Col-->
+                                            <div class="col-lg-12">
+                                                <!--begin::Option-->
+                                                <input type="radio" class="btn-check location" name="location"
+                                                    value="germany" checked onclick="getLocation([this.value])"
+                                                    id="germany_location" />
+                                                <label
+                                                    class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center mb-10"
+                                                    for="germany_location">
+                                                    <!--begin::Svg Flag-->
+                                                    <span class="symbol symbol-40px me-4">
+                                                        <img class="rounded-1" src="assets/media/flags/germany.svg"
+                                                            alt="">
+                                                    </span>
+                                                    <!--end::Svg Flag-->
+                                                    <!--begin::Info-->
+                                                    <span class="d-block fw-bold text-start">
+                                                        <span
+                                                            class="text-dark fw-bolder d-block fs-4 mb-0">Germany</span>
+                                                        <span class="text-muted fw-bold fs-7">{{ trans('message.Your headquarter is located in Germany.') }}</span>
+                                                    </span>
+                                                    <!--end::Info-->
+                                                </label>
+                                                <!--end::Option-->
+                                            </div>
+                                            <!--end::Col-->
+                                            <!--begin::Col-->
+                                            <div class="col-lg-12">
+                                                <!--begin::Option-->
+                                                <input type="radio" class="btn-check location" name="location"
+                                                    value="europe" onclick="getLocation([this.value])"
+                                                    id="europe_location" />
+                                                <label
+                                                    class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center mb-10"
+                                                    for="europe_location">
+                                                    <!--begin::Svg Flag-->
+                                                    <span class="symbol symbol-40px me-4">
+                                                        <img class="rounded-1"
+                                                            src="assets/media/flags/european-union.svg"
+                                                            alt="">
+                                                    </span>
+                                                    <!--end::Svg Flag-->
+                                                    <!--begin::Info-->
+                                                    <span class="d-block fw-bold text-start">
+                                                        <span
+                                                            class="text-dark fw-bolder d-block fs-4 mb-0">Europe</span>
+                                                        <span class="text-muted fw-bold fs-7">{{ trans('message.Your headquarter is located in Europe for exemple in France.') }}</span>
+                                                    </span>
+                                                    <!--end::Info-->
+                                                </label>
+                                                <!--end::Option-->
+                                            </div>
+                                            <!--end::Col-->
+                                            <!--begin::Col-->
+                                            <div class="col-lg-12">
+                                                <!--begin::Option-->
+                                                <input type="radio" class="btn-check location" name="location"
+                                                    value="outside_europe" onclick="getLocation([this.value])"
+                                                    id="outside_europe_location" />
+                                                <label
+                                                    class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center"
+                                                    for="outside_europe_location">
+                                                    <!--begin::Svg Flag-->
+                                                    <span class="symbol symbol-40px me-4">
+                                                        <img class="rounded-1"
+                                                            src="assets/media/flags/united-states.svg" alt="">
+                                                    </span>
+                                                    <!--end::Svg Flag-->
+                                                    <!--begin::Info-->
+                                                    <span class="d-block fw-bold text-start">
+                                                        <span class="text-dark fw-bolder d-block fs-4 mb-0">Outside of
+                                                            Europe</span>
+                                                        <span class="text-muted fw-bold fs-7">{{ trans('message.Your headquarter is located outside of Europe for exemple in the USA.') }}</span>
+                                                    </span>
+                                                    <!--end::Info-->
+                                                </label>
+                                                <!--end::Option-->
+                                            </div>
+                                            <!--end::Col-->
+                                        </div>
+                                        <!--end::Row-->
+                                    </div>
+                                    <!--end::Input group-->
+                                </div>
+                                <!--end::Wrapper-->
+                            </div>
+
+                            <!--begin::Step 2-->
+                            <div class="" data-kt-stepper-element="content">
                                 <!--begin::Wrapper-->
                                 <div class="w-100">
                                     <!--begin::Heading-->
@@ -263,10 +388,10 @@
                                                                 Account</span>
                                                             <span
                                                                 class="text-muted fw-bold fs-7">{{ trans('message.You only want to manage your shipments and take advantage of our favorable conditions?.') }}.</span>
-                                                            <span
+                                                            {{-- <span
                                                                 class="d-block text-muted fw-bold fs-6">{{ trans('message.Price: from') }}
                                                                 €{{ Helper::money_format('EUR', 'de_DE', $variant->price) }}
-                                                                / {{ trans('message.month') }}</span>
+                                                                / {{ trans('message.month') }}</span> --}}
                                                         </span>
                                                         <!--end::Info-->
                                                     </label>
@@ -350,6 +475,28 @@
                                         <!--end::Notice-->
                                     </div>
                                     <!--end::Heading-->
+                                    <div class="mb-10 fv-row">
+                                        @csrf
+                                        <input name="is_affiliate"
+                                            value="ufill.devatease.com/client/register/{{ $is_affiliate }}" hidden />
+                                        <!--begin::Label-->
+                                        <label
+                                            class="d-flex align-items-center form-label mb-3">{{ trans('message.Discount Code') }}</label>
+                                        <!--end::Label-->
+                                        <!--begin::Row-->
+                                        <div class="col-md-12" style="display: inline-flex">
+                                            <input type="text" id="code"
+                                                class="form-control form-control-solid" style="width: 75%"
+                                                name="discount_code" placeholder="Discount Code eg. AD344FD" />
+                                            <a onclick="checkDiscountCode()" class="btn btn-primary"
+                                                style="width: 25%; margin-left:20px">{{ trans('message.Check Code') }}</a>
+
+                                        </div>
+                                        <br>
+                                        <div id="check_code_message">
+
+                                        </div>
+                                    </div>
                                     <!--begin::Input group-->
                                     <div class="mb-10 fv-row">
                                         <!--begin::Label-->
@@ -413,7 +560,7 @@
                                                 <!--begin:Input-->
                                                 <span class="form-check form-check-custom form-check-solid">
                                                     <input class="form-check-input" type="radio"
-                                                        name="account_plan" value="month" />
+                                                        name="account_plan" value="year" checked />
                                                 </span>
                                                 <!--end:Input-->
                                             </label>
@@ -456,28 +603,7 @@
                                     </div>
                                     <!--end::Input group-->
                                     <!--begin::Input group-->
-                                    <div class="mb-10 fv-row">
-                                        @csrf
-                                        <input name="is_affiliate"
-                                            value="ufill.devatease.com/client/register/{{ $is_affiliate }}" hidden />
-                                        <!--begin::Label-->
-                                        <label
-                                            class="d-flex align-items-center form-label mb-3">{{ trans('message.Discount Code') }}</label>
-                                        <!--end::Label-->
-                                        <!--begin::Row-->
-                                        <div class="col-md-12" style="display: inline-flex">
-                                            <input type="text" id="code"
-                                                class="form-control form-control-solid" style="width: 75%"
-                                                name="discount_code" placeholder="Discount Code eg. AD344FD" />
-                                            <a onclick="checkDiscountCode()" class="btn btn-primary"
-                                                style="width: 25%; margin-left:20px">{{ trans('message.Check Code') }}</a>
 
-                                        </div>
-                                        <br>
-                                        <div id="check_code_message">
-
-                                        </div>
-                                    </div>
                                     <!--end::Input group-->
                                     <!--begin::Input group-->
                                     <div class="fv-row mb-10">
@@ -1068,7 +1194,7 @@
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <select name="language" aria-label="Select..." data-control="select2"
-                                            data-placeholder="Select..." class="form-select form-select-solid">
+                                                data-placeholder="Select..." class="form-select form-select-solid">
                                                 <option></option>
                                                 <option value="en">English</option>
                                                 <option value="de">German</option>
@@ -1373,17 +1499,17 @@
                                             <!--begin::Icon-->
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
                                             <span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                    height="24" viewBox="0 0 24 24" fill="none">
                                                     <rect opacity="0.3" x="2" y="2"
                                                         width="20" height="20" rx="10"
                                                         fill="black" />
                                                     <rect x="11" y="14" width="7"
-                                                        height="2" rx="1" transform="rotate(-90 11 14)"
-                                                        fill="black" />
+                                                        height="2" rx="1"
+                                                        transform="rotate(-90 11 14)" fill="black" />
                                                     <rect x="11" y="17" width="2"
-                                                        height="2" rx="1" transform="rotate(-90 11 17)"
-                                                        fill="black" />
+                                                        height="2" rx="1"
+                                                        transform="rotate(-90 11 17)" fill="black" />
                                                 </svg>
                                             </span>
                                             <!--end::Svg Icon-->
@@ -1519,8 +1645,15 @@
 <script src="{{ asset('assets/js/custom/utilities/modals/create-account.js') }}"></script>
 <!--end::Page Custom Javascript-->
 <script>
-    //  inputValue = document.querySelector('input[name=account_type]').value
+
+    function getLocation(arr){
+        console.log(arr[0]);
+
+    }
+
+    // inputValue = document.querySelector('input[name=location]').value
     // console.log(inputValue);
+
 
     function getVariantPrice(arr) {
 
@@ -1565,10 +1698,6 @@
 </script>
 
 <script>
-    //hiding the success text
-
-
-
     function checkDiscountCode() {
 
         var variant_id = document.getElementsByClassName('account_type')[0].value;

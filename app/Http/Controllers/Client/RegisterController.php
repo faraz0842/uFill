@@ -27,6 +27,8 @@ class RegisterController extends Controller
     public function register($is_affiliate = null)
     {
 
+        //return request()->ip();
+
         //$date = Carbon::now();
         //return $date->addYear();
 
@@ -354,16 +356,57 @@ class RegisterController extends Controller
                     $affiliate_link->affiliate_to = $client->id;
                     $affiliate_link->save();
 
-                    // $affiliated_client_counts = $is_affiliate_exist->count();
-                    // if ($affiliated_client_counts <= 9) {
-                    //     # code...
-                    // }else if($affiliated_client_counts <= 49){
+                    $affiliated_client_counts = AffiliateLink::where('affiliate_from', $is_affiliate_exist->id)->count();
 
-                    // }else if($affiliated_client_counts <= 99){
+                    //$affiliated_client_counts = $is_affiliate_exist->count();
+                    if ($affiliated_client_counts <= 9) {
 
-                    // } else if ($affiliated_client_counts >= 100 ) {
-                    //     # code...
-                    // }
+                        $stripe = new \Stripe\StripeClient(
+                            'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
+                        );
+                        $stripe->customers->update(
+                            $is_affiliate_exist->stripe_id,
+                            [
+                                'coupon' => 'Referral3',
+                            ]
+                        );
+                    }else if($affiliated_client_counts <= 49){
+
+                        $stripe = new \Stripe\StripeClient(
+                            'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
+                        );
+                        $stripe->customers->update(
+                            $is_affiliate_exist->stripe_id,
+                            [
+                                'coupon' => 'Referral5',
+                            ]
+                        );
+
+                    }else if($affiliated_client_counts <= 99){
+
+                        $stripe = new \Stripe\StripeClient(
+                            'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
+                        );
+                        $stripe->customers->update(
+                            $is_affiliate_exist->stripe_id,
+                            [
+                                'coupon' => 'Referral10',
+                            ]
+                        );
+
+
+                    } else if ($affiliated_client_counts >= 100 ) {
+
+                        $stripe = new \Stripe\StripeClient(
+                            'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
+                        );
+                        $stripe->customers->update(
+                            $is_affiliate_exist->stripe_id,
+                            [
+                                'coupon' => 'Referral15',
+                            ]
+                        );
+                    }
 
                 }
                 if ($is_affiate_from_admin) {

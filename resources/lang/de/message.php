@@ -1124,11 +1124,11 @@ return [
 
     "Monthly Package" => "Monatspaket",
 
-    "Your account will be charged monthly with €9,99." => "Ihr Konto wird monatlich mit €9,99 belastet.",
+    "Your account will be charged monthly with €9,99." => "Ihr Konto wird monatlich mit €8,39 belastet. (exkl. MwSt)",
 
     "Yearly Package" => "Jahrespaket",
 
-    "Your account will be charged yearly with €95,88." => "Ihr Konto wird jährlich mit €95,88 belastet.",
+    "Your account will be charged yearly with €95,88." => "Ihr Konto wird jährlich mit €80,57 belastet. (exkl. MwSt)",
 
     "Discount Code" => "Rabattcode",
 
@@ -1437,4 +1437,13 @@ return [
 
 
     'excl. taxes' => 'exkl. MwSt',
+    'Location' => 'Ort',
+    'Where is your company located?' => 'Wo befindet sich Ihr Unternehmen?',
+    'Please choose where the main location of  company is located.' => 'Bitte wählen Sie aus, wo sich der Hauptstandort Ihres Unternehmens befindet.',
+
+    'Important!' => 'Wichtig!',
+    'This information has an impact on your VAT and invoices. Please make sure that your information is correct.' => 'Diese Informationen wirken sich auf Ihre Mehrwertsteuer und Rechnungen aus. Bitte stellen Sie sicher, dass Ihre Angaben korrekt sind.',
+    'Your headquarter is located in Germany.' => 'Ihr Hauptsitz befindet sich in Deutschland.',
+    'Your headquarter is located in Europe for exemple in France.' => 'Ihr Hauptsitz befindet sich in Europa zum Beispiel in Frankreich.',
+    'Your headquarter is located outside of Europe for exemple in the USA.' => 'Ihr Hauptsitz befindet sich außerhalb Europas beispielsweise in den USA.',
 ];

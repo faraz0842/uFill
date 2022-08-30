@@ -300,8 +300,21 @@ class ClientController extends Controller
                     'stripe_status' => 'Cancelled'
                 ]);
 
-                Client::where('id', $client_id)->delete();
+                $affiliate_to = AffiliateLink::where('affiliate_to', $client_id)->first();
+                $client = Client::where('id',$affiliate_to->affiliate_from)->first();
 
+
+                $stripe = new \Stripe\StripeClient(
+                    'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
+                );
+                $stripe->customers->update(
+                    $client->stripe_id,
+                    [
+                        'coupon' => null,
+                    ]
+                );
+
+                $client->delete();
                 return redirect()->Route('admin.clients');
             } else {
 

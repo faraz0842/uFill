@@ -562,11 +562,11 @@ return [
 
     "Monthly Package" => "Monthly Package",
 
-    "Your account will be charged monthly with €9,99." => "Your account will be charged monthly with €9,99.",
+    "Your account will be charged monthly with €9,99." => "Your account will be charged monthly with €8,39. (excl. taxes)",
 
     "Yearly Package" => "Yearly Package",
 
-    "Your account will be charged yearly with €95,88." => "Your account will be charged yearly with €95,88.",
+    "Your account will be charged yearly with €95,88." => "Your account will be charged yearly with €80,57. (excl. taxes)",
 
     "Discount Code" => "Discount Code",
 
@@ -873,4 +873,15 @@ return [
     'delivery' => 'Delivery',
 
     'excl. taxes' => 'excl. taxes',
+    'Location' => 'Location',
+    'Where is your company located?' => ' Where is your company located?',
+    'Please choose where the main location of  company is located.' => 'Please choose where the main location of your company is located.',
+
+    'Important!' => 'Important!',
+    'This information has an impact on your VAT and invoices. Please make sure that your information is correct.' => 'This information has an impact on your VAT and invoices. Please make sure that your information is correct.',
+    'Your headquarter is located in Germany.' => 'Your headquarter is located in Germany.',
+    'Your headquarter is located in Europe for exemple in France.' => 'Your headquarter is located in Europe for exemple in France.',
+    'Your headquarter is located outside of Europe for exemple in the USA.' => 'Your headquarter is located outside of Europe for exemple in the USA.',
+
+
 ];
