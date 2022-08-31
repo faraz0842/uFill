@@ -134,6 +134,7 @@
                                                     <br />{{ $client->country }}
                                                     <br />{{ $client->email }}
                                                     <br />{{ $client->telephone }}
+                                                    <br />{{ $client->vat_id }}
                                                 </div>
                                                 <!--end::Description-->
                                             </div>
@@ -295,6 +296,31 @@
                                                 <!--end::Section-->
                                             </div>
                                             <!--end::Container-->
+                                            <div class="row d-flex justify-content-center">
+                                                @if ($client->location == "Germany")
+                                                    <!--end::Col-->
+                                                    <div class="col-md-12">
+                                                        <!--end::Text-->
+                                                        <h4>{{ trans('message.This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us.') }}</h4>
+                                                    </div>
+                                                    <!--end::Col-->
+                                                @elseif($client->location == "Europe")
+                                                    <!--end::Col-->
+                                                    <div class="col-md-12">
+                                                        <!--end::Text-->
+                                                        <h4>{{ trans('message.Please note the applicable requirements of the "reverse charge" regulation within the EU. This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us.') }}</h4>
+                                                    </div>
+                                                    <!--end::Col-->
+                                                @else()
+                                                    <!--end::Col-->
+                                                    <div class="col-md-12">
+                                                        <!--end::Text-->
+                                                        <h4>{{ trans('message.Please note the tax regulations applicable in your country. This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us.') }}</h4>
+                                                    </div>
+                                                    <!--end::Col-->
+                                                @endif
+
+                                            </div>
                                             <!--begin::Separator-->
                                             <div class="separator separator-dashed mb-8 mt-8"></div>
                                             <!--end::Separator-->

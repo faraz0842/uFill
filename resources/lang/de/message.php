@@ -958,7 +958,7 @@ return [
     'company data' => 'Unternehmensdaten',
     'payment details' => 'Zahlungsdetails',
     'Quantity' => 'Menge',
-    'In total' => 'Gesamt (inkl. MwSt)',
+    'In total' => 'Gesamt',
     'Price' => 'Preis (inkl. MwSt)',
     'Sum of open client invoices in the current month.' => 'Summe alle unbezahlten Kundenrechnungen.',
     'Subtotal' => 'Zwischensumme',
@@ -1177,7 +1177,7 @@ return [
 
     "E-Mail" => "E-Mail",
 
-    "VAT ID no." => "Ust-IdNr.",
+    "VAT ID no." => "Steuer-Code.",
 
     "Registration number" => "Registernummer",
 
@@ -1437,6 +1437,12 @@ return [
 
 
     'excl. taxes' => 'exkl. MwSt',
+    'incl. taxes' => 'inkl. MwSt',
+    '*all prices excl. taxes' => 'alle preise zzgl. Steuern',
+    '*all prices incl. taxes' => 'alle preise inkl. Steuern',
+    'This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us.' => 'Diese Rechnung wurde automatisch erstellt. Wir danken Ihnen für Ihre Nutzung von uFill und das uns entgegengebrachte Vertrauen.',
+    'Please note the applicable requirements of the "reverse charge" regulation within the EU. This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us' => 'Bitte beachten Sie die geltenden Anforderungen der „Reverse Charge“-Verordnung innerhalb der EU. Diese Rechnung wurde automatisch erstellt. Wir danken Ihnen für Ihre Nutzung von uFill und das uns entgegengebrachte Vertrauen',
+    'Please note the tax regulations applicable in your country. This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us.' => 'Bitte beachten Sie die in Ihrem Land geltenden Steuervorschriften. Diese Rechnung wurde automatisch erstellt. Wir danken Ihnen für Ihre Nutzung von uFill und das uns entgegengebrachte Vertrauen.',
     'Location' => 'Ort',
     'Where is your company located?' => 'Wo befindet sich Ihr Unternehmen?',
     'Please choose where the main location of  company is located.' => 'Bitte wählen Sie aus, wo sich der Hauptstandort Ihres Unternehmens befindet.',

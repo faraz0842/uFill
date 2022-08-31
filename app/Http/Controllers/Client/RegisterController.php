@@ -56,6 +56,7 @@ class RegisterController extends Controller
     public function registerClient(Request $request)
     {
 
+        //return $request->location;
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
@@ -63,7 +64,8 @@ class RegisterController extends Controller
             'company_name' => 'required|unique:clients,company_name',
             'telephone' => 'required|unique:clients,telephone',
             // 'registration_number' => 'unique:clients,registration_number',
-            // 'vat_id' => 'unique:clients,vat_id'
+            //'vat_id' => 'unique:clients,vat_id',
+            'vat_id' => 'required'
         ]);
 
         try {
@@ -142,6 +144,7 @@ class RegisterController extends Controller
             $client->telephone  = $request->telephone;
             $client->mobile_number  = $request->mobile_number;
             $client->email  = $request->email;
+            $client->location  = $request->location;
             $client->uu_id = $uuid;
             $client->vat_id  = $request->vat_id;
             $client->registration_number  = $request->registration_number;
@@ -461,6 +464,16 @@ class RegisterController extends Controller
     public function checkDiscountCode(Request $request)
     {
         $check_discount = DiscountCode::where('code', $request->value)->where('available_until','>=', Carbon::now())->first();
-        return $check_discount;
+        // if ($check_discount) {
+        //    if ($check_discount->price) {
+        //         $discount_price = Helper::money_format('EUR','de_DE',$check_discount);
+        //    }
+
+        // } else {
+        //     $discount_price = null;
+        // }
+
+
+        return response()->json($check_discount);
     }
 }

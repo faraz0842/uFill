@@ -291,6 +291,11 @@
                                                     <td class="text-gray-800">{{ $client->registration_number }}</td>
                                                 </tr>
                                                 <!--end::Row-->
+                                                <tr>
+                                                    <td class="text-gray-400">
+                                                        {{ trans('message.Location') }}:</td>
+                                                    <td class="text-gray-800">{{ $client->location }}</td>
+                                                </tr>
                                             </table>
                                             <!--end::Details-->
                                         </div>
@@ -2265,7 +2270,7 @@
                                             <div class="col-lg-8 mb-10 mb-lg-0">
                                                 <!--begin::Tabs-->
                                                 <div class="nav flex-column">
-                                                   <!--begin::Tab link-->
+                                                    <!--begin::Tab link-->
                                                     <div class="nav-link btn btn-outline btn-outline-dashed btn-color-dark btn-active btn-active-primary d-flex flex-stack text-start p-6 active mb-6"
                                                         data-bs-toggle="tab" data-bs-target="#kt_upgrade_plan_startup">
                                                         <!--end::Description-->
@@ -2292,8 +2297,14 @@
                                                         <!--begin::Price-->
                                                         <div class="ms-5">
                                                             {{-- <span class="mb-2">€</span> --}}
-                                                            <span class="fs-3x fw-bolder" data-kt-plan-price-month="8,39€"
+                                                            @if ($client->country == 'DE')
+                                                                <span class="fs-3x fw-bolder" data-kt-plan-price-month="9,99€"
+                                                                data-kt-plan-price-annual="95,88€">9,99€</span>
+                                                            @else
+                                                                <span class="fs-3x fw-bolder" data-kt-plan-price-month="8,39€"
                                                                 data-kt-plan-price-annual="80,57€">8,39€</span>
+                                                            @endif
+
                                                         </div>
                                                         <!--end::Price-->
                                                     </div>
@@ -2324,9 +2335,16 @@
                                                         <!--begin::Price-->
                                                         <div class="ms-5">
                                                             {{-- <span class="mb-2">$</span> --}}
-                                                            <span class="fs-3x fw-bolder"
+                                                            @if ($client->country == 'DE')
+                                                                <span class="fs-3x fw-bolder"
+                                                                data-kt-plan-price-month="44,99€"
+                                                                data-kt-plan-price-annual="359,88€">44,99€</span>
+                                                            @else
+                                                                <span class="fs-3x fw-bolder"
                                                                 data-kt-plan-price-month="37,81€"
                                                                 data-kt-plan-price-annual="302,42€">37,81€</span>
+                                                            @endif
+
                                                         </div>
                                                         <!--end::Price-->
                                                     </div>
@@ -2358,9 +2376,16 @@
                                                         <!--begin::Price-->
                                                         <div class="ms-5">
                                                             {{-- <span class="mb-2">$</span> --}}
-                                                            <span class="fs-3x fw-bolder"
+                                                            @if ($client->location == 'DE')
+                                                                <span class="fs-3x fw-bolder"
+                                                                data-kt-plan-price-month="49,99€"
+                                                                data-kt-plan-price-annual="419,88€">49,99€</span>
+                                                            @else
+                                                                <span class="fs-3x fw-bolder"
                                                                 data-kt-plan-price-month="42,01€"
                                                                 data-kt-plan-price-annual="352,84€">42,01€</span>
+                                                            @endif
+
                                                         </div>
                                                         <!--end::Price-->
                                                     </div>
@@ -2369,13 +2394,20 @@
                                                 <!--end::Tabs-->
                                             </div>
                                             <!--end::Col-->
-                                            <!--begin::Col-->
-
-                                            <!--end::Col-->
                                         </div>
                                         <!--end::Row-->
                                     </div>
                                     <!--end::Plans-->
+                                    @if ($client->country == 'DE')
+                                        <div class="d-flex flex-center flex-row-fluid pt-12">
+                                            <h3 class="text-danger">{{ trans('message.*all prices incl. taxes') }}</h3>
+                                        </div>
+                                    @else
+                                        <div class="d-flex flex-center flex-row-fluid pt-12">
+                                            <h3 class="text-danger">{{ trans('message.*all prices excl. taxes') }}</h3>
+                                        </div>
+                                    @endif
+
                                     <!--begin::Actions-->
                                     <div class="d-flex flex-center flex-row-fluid pt-12">
                                         <button type="reset" class="btn btn-light me-3"

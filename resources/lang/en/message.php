@@ -401,7 +401,7 @@ return [
     'company data' => 'Company Data',
     'payment details' => 'Payment Details',
     'Quantity' => 'Quantity',
-    'In total' => 'In total (incl. tax)',
+    'In total' => 'In total',
     'Price' => 'Price (incl. tax)',
     'Sum of open client invoices in the current month.' => 'Sum of open client invoices in the current month.',
     'Subtotal' => 'Subtotal',
@@ -616,7 +616,7 @@ return [
 
     "E-Mail" => "EMail",
 
-    "VAT ID no." => "VAT ID no.",
+    "VAT ID no." => "Tax code",
 
     "Registration number" => "Registration number",
 
@@ -873,7 +873,13 @@ return [
     'delivery' => 'Delivery',
 
     'excl. taxes' => 'excl. taxes',
+    'incl. taxes' => 'incl. taxes',
+    '*all prices excl. taxes' => '*all prices excl. taxes',
+    '*all prices incl. taxes' => '*all prices incl. taxes',
+    'This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us.' => 'This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us.',
     'Location' => 'Location',
+    'Please note the applicable requirements of the "reverse charge" regulation within the EU. This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us' => 'Please note the applicable requirements of the "reverse charge" regulation within the EU. This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us',
+    'Please note the tax regulations applicable in your country. This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us.' => 'Please note the tax regulations applicable in your country. This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us.',
     'Where is your company located?' => ' Where is your company located?',
     'Please choose where the main location of  company is located.' => 'Please choose where the main location of your company is located.',
 

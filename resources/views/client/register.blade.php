@@ -239,7 +239,7 @@
                                             <div class="col-lg-12">
                                                 <!--begin::Option-->
                                                 <input type="radio" class="btn-check location" name="location"
-                                                    value="germany" checked
+                                                    value="Germany" checked
                                                     id="germany_location" />
                                                 <label
                                                     class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center mb-10"
@@ -265,7 +265,7 @@
                                             <div class="col-lg-12">
                                                 <!--begin::Option-->
                                                 <input type="radio" class="btn-check location" name="location"
-                                                    value="europe"
+                                                    value="Europe"
                                                     id="europe_location" />
                                                 <label
                                                     class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center mb-10"
@@ -292,7 +292,7 @@
                                             <div class="col-lg-12">
                                                 <!--begin::Option-->
                                                 <input type="radio" class="btn-check location" name="location"
-                                                    value="outside_europe"
+                                                    value="Outside Europe"
                                                     id="outside_europe_location" />
                                                 <label
                                                     class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center"
@@ -1646,10 +1646,6 @@
 <!--end::Page Custom Javascript-->
 <script>
 
-    function getLocation(arr){
-        console.log(arr[0]);
-
-    }
 
     // var elementsArray = document.getElementsByClassName("stepper-number");
     // console.log(elementsArray['span.stepper-number']);
@@ -1793,6 +1789,7 @@
                 variant_id: variant_id,
             },
             success: function(result) {
+                console.log(result);
                 if (result != "") {
                     console.log(result);
                     if (result.percent == null) {
