@@ -1124,11 +1124,11 @@ return [
 
     "Monthly Package" => "Monatspaket",
 
-    "Your account will be charged monthly with €9,99." => "Ihr Konto wird monatlich mit €9,99 belastet. (exkl. MwSt)",
+    "Your account will be charged monthly with €9,99." => "Ihr Konto wird monatlich mit €9,99 belastet. (inkl. MwSt)",
 
     "Yearly Package" => "Jahrespaket",
 
-    "Your account will be charged yearly with €95,88." => "Ihr Konto wird jährlich mit €95,88 belastet. (exkl. MwSt)",
+    "Your account will be charged yearly with €95,88." => "Ihr Konto wird jährlich mit €95,88 belastet. (inkl. MwSt)",
 
     "Discount Code" => "Rabattcode",
 
@@ -1180,6 +1180,8 @@ return [
     "VAT ID no." => "Steuer-Code.",
 
     "Registration number" => "Registernummer",
+
+    "ip address" => "IP Adresse",
 
     "Website" => "Webseite",
 

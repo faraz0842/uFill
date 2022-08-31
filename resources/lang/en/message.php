@@ -562,11 +562,11 @@ return [
 
     "Monthly Package" => "Monthly Package",
 
-    "Your account will be charged monthly with €9,99." => "Your account will be charged monthly with €9,99. (excl. taxes)",
+    "Your account will be charged monthly with €9,99." => "Your account will be charged monthly with €9,99. (incl. taxes)",
 
     "Yearly Package" => "Yearly Package",
 
-    "Your account will be charged yearly with €95,88." => "Your account will be charged yearly with €95,88. (excl. taxes)",
+    "Your account will be charged yearly with €95,88." => "Your account will be charged yearly with €95,88. (incl. taxes)",
 
     "Discount Code" => "Discount Code",
 
@@ -617,6 +617,8 @@ return [
     "E-Mail" => "EMail",
 
     "VAT ID no." => "Tax code",
+
+    "ip address" => "IP Address",
 
     "Registration number" => "Registration number",
 

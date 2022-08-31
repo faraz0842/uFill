@@ -154,6 +154,7 @@ class RegisterController extends Controller
             $client->hear_about_us  = $request->hear_about_us;
             $client->profile_picture  = $logo;
             $client->package_price = $variant_plan->price;
+            $client->ip_address = request()->ip();
             if($request->account_plan == 'year'){
 
                 $client->client_until  = Carbon::now()->addYear();

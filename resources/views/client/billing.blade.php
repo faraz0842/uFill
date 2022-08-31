@@ -2376,7 +2376,7 @@
                                                         <!--begin::Price-->
                                                         <div class="ms-5">
                                                             {{-- <span class="mb-2">$</span> --}}
-                                                            @if ($client->location == 'DE')
+                                                            @if ($client->country == 'DE')
                                                                 <span class="fs-3x fw-bolder"
                                                                 data-kt-plan-price-month="49,99€"
                                                                 data-kt-plan-price-annual="419,88€">49,99€</span>

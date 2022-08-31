@@ -1685,7 +1685,7 @@
                                 '<span class="fw-bolder text-gray-800 text-hover-primary fs-5">' + value
                                 .plan + 'ly Package</span>' +
                                 '<span class="fs-6 fw-bold text-muted">Your account will be charged ' +
-                                value.plan + 'ly with €' + value.tax_incl_price  + '.</span>' +
+                                value.plan + 'ly with €' + value.tax_incl_price  + '({{trans("message.incl. taxes")}}).</span>' +
                                 '</span>' +
                                 '</span>' +
                                 '<span class="form-check form-check-custom form-check-solid">' +
@@ -1707,7 +1707,7 @@
                                 '<span class="fw-bolder text-gray-800 text-hover-primary fs-5">' + value
                                 .plan + 'ly Package</span>' +
                                 '<span class="fs-6 fw-bold text-muted">Your account will be charged ' +
-                                value.plan + 'ly with €' + value.tax_incl_price  + '.</span>' +
+                                value.plan + 'ly with €' + value.tax_incl_price  + '({{trans("message.incl. taxes")}}).</span>' +
                                 '</span>' +
                                 '</span>' +
                                 '<span class="form-check form-check-custom form-check-solid">' +
@@ -1732,7 +1732,7 @@
                                 '<span class="fw-bolder text-gray-800 text-hover-primary fs-5">' + value
                                 .plan + 'ly Package</span>' +
                                 '<span class="fs-6 fw-bold text-muted">Your account will be charged ' +
-                                value.plan + 'ly with €' + value.price + '.</span>' +
+                                value.plan + 'ly with €' + value.price + '({{trans("message.excl. taxes")}}).</span>' +
                                 '</span>' +
                                 '</span>' +
                                 '<span class="form-check form-check-custom form-check-solid">' +
@@ -1754,7 +1754,7 @@
                                 '<span class="fw-bolder text-gray-800 text-hover-primary fs-5">' + value
                                 .plan + 'ly Package</span>' +
                                 '<span class="fs-6 fw-bold text-muted">Your account will be charged ' +
-                                value.plan + 'ly with €' + value.price + '.</span>' +
+                                value.plan + 'ly with €' + value.price + '({{trans("message.excl. taxes")}}).</span>' +
                                 '</span>' +
                                 '</span>' +
                                 '<span class="form-check form-check-custom form-check-solid">' +
