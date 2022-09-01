@@ -351,7 +351,7 @@
                                             @foreach ($variants as $variant)
                                                 <div class="col-lg-12">
                                                     <!--begin::Option-->
-                                                    @if ($variant->name == 'single')
+                                                    {{-- @if ($variant->name == 'single')
                                                         <input type="radio" class="btn-check account_type"
                                                             name="account_type"
                                                             onclick="getVariantPrice([this.value,'payment_interval'])"
@@ -363,7 +363,12 @@
                                                             onclick="getVariantPrice([this.value,'payment_interval'])"
                                                             value="{{ $variant->variant_id }}"
                                                             id="kt_create_account_form_account_type_{{ $variant->name }}" />
-                                                    @endif
+                                                    @endif --}}
+                                                    <input type="radio" class="btn-check account_type"
+                                                            name="account_type" required
+                                                            onclick="getVariantPrice([this.value,'payment_interval'])"
+                                                            value="{{ $variant->variant_id }}"
+                                                            id="kt_create_account_form_account_type_{{ $variant->name }}" />
 
                                                     <label
                                                         class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center mb-10"
@@ -508,8 +513,9 @@
                                         <!--end::Label-->
                                         <!--begin::Options-->
                                         <div id="payment_interval" class="mb-0">
+                                            <h3 class="text-danger">Please select product to see prices</h3>
                                             <!--begin:Option-->
-                                            <label class="d-flex flex-stack mb-5 cursor-pointer">
+                                            {{-- <label class="d-flex flex-stack mb-5 cursor-pointer">
                                                 <!--begin:Label-->
                                                 <span class="d-flex align-items-center me-2">
                                                     <!--begin::Icon-->
@@ -563,7 +569,7 @@
                                                         name="account_plan" value="year" checked />
                                                 </span>
                                                 <!--end:Input-->
-                                            </label>
+                                            </label> --}}
                                             <!--end::Option-->
                                             <!--begin:Option-->
 
@@ -1790,30 +1796,39 @@
             },
             success: function(result) {
                 console.log(result);
-                if (result != "") {
-                    console.log(result);
-                    if (result.percent == null) {
+
+
+                if (result.price) {
+
                         $("#check_code_message").append(
                             '<h5 class="text-success" id="valid" style="margin-top: 12px; margin-left:8px">{{ trans('message.Discount successfully applied. You will receive a one-time discount of') }} ' +
                             result.price + '€</h5>'
                         );
-                    } else {
+                        $('#not_valid').hide();
+
+                } else if(result.percent) {
+
                         $("#check_code_message").append(
                             '<h5 class="text-success" id="valid" style="margin-top: 12px; margin-left:8px">{{ trans('message.Discount successfully applied. You will receive a one-time discount of') }} ' +
                             result.percent + '%</h5>'
                         );
-                    }
+                        $('#not_valid').hide();
 
-                    $('#not_valid').hide();
+                }else{
 
-                } else {
+                        $("#check_code_message").append(
+                            '<h5 class="text-danger" id="not_valid" style="margin-top: 12px; margin-left:8px">{{ trans('message.Error! Code has expired. Please try a different discount code! ') }}</h5>'
+                        );
 
-                    $("#check_code_message").append(
-                        '<h5 class="text-danger" id="not_valid" style="margin-top: 12px; margin-left:8px">{{ trans('message.Error! Code has expired. Please try a different discount code! ') }}</h5>'
-                    );
-
-                    $('#valid').hide();
+                        $('#valid').hide();
                 }
+
+
+
+
+
+
+
 
             }
         })

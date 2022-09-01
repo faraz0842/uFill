@@ -465,16 +465,28 @@ class RegisterController extends Controller
     public function checkDiscountCode(Request $request)
     {
         $check_discount = DiscountCode::where('code', $request->value)->where('available_until','>=', Carbon::now())->first();
-        // if ($check_discount) {
-        //    if ($check_discount->price) {
-        //         $discount_price = Helper::money_format('EUR','de_DE',$check_discount);
-        //    }
 
-        // } else {
-        //     $discount_price = null;
-        // }
+        if($check_discount){
+
+            if ($check_discount->price) {
+
+                $price = Helper::money_format('EUR', 'de_DE', $check_discount->price);
+
+                return response()->json(['price' => $price]);
+            } elseif ($check_discount->percent) {
+
+                $percent = $check_discount->percent;
+
+                return response()->json(['percent' => $percent]);
+            }
+
+        } else {
+            return response()->json($check_discount == null);
+        }
 
 
-        return response()->json($check_discount);
+
+
+
     }
 }
