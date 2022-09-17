@@ -154,9 +154,14 @@ class SettingController extends Controller
         $admin_data = Admin::where('admin_id',session('id'))->first();
         $company_info = AdminCompany::first();
 
+        $affiliated_at = AffiliateLink::where('affiliate_from_admin', session('client_id'))
+        ->join('clients', 'clients.id', 'affiliate_link.affiliate_to')
+        ->join('subscriptions', 'subscriptions.client_id', 'affiliate_link.affiliate_to')->get();
+
         $total_clients = Client::count();
         return view('admin.settings.referral')->with('company_info',$company_info)->with('admin_data',$admin_data)
                                               ->with('total_revenue',$total_revenue)->with('referred_clients',$referred_clients)
-                                              ->with('total_clients',$total_clients)->with('admin_user',$admin_user);
+                                              ->with('total_clients',$total_clients)->with('admin_user',$admin_user)
+                                              ->with('affiliated_at', $affiliated_at);
     }
 }

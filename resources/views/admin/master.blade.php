@@ -77,6 +77,7 @@
             <!--begin::Brand-->
             <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                 <!--begin::Logo-->
+
                 <a href="{{ Route('admin.dashboard') }}">
                     <img alt="Logo" src="{{ asset('assets/media/logos/logo-1.png') }}" class="h-50px logo" />
                 </a>
@@ -712,9 +713,9 @@
                                                     class="form-check form-switch form-check-custom form-check-solid pulse pulse-success"
                                                     for="kt_user_menu_dark_mode_toggle">
                                                     <input class="form-check-input w-30px h-20px" type="checkbox"
-                                                        checked value="1" name="mode"
+                                                        checked value="0" name="mode"
                                                         id="kt_user_menu_dark_mode_toggle"
-                                                        data-kt-url="{{ Route('change.theme.dark') }}" />
+                                                        data-kt-url="{{ Route('change.theme.light') }}" />
                                                     <span class="pulse-ring ms-n1"></span>
                                                     <span
                                                         class="form-check-label text-gray-600 fs-7">{{ trans('message.dark_view') }}</span>
@@ -1646,7 +1647,13 @@
         // $("#kt_datatable_example_1").DataTable();
         $(document).ready(function() {
             // Datatables
-            var table = $('.kt_datatable_example_1').DataTable();
+            var table = $('.kt_datatable_example_1').DataTable(
+                {
+                    "order": [
+                        [0, "desc"]
+                    ]
+                }
+            );
             $('#search').on('keyup', function() {
                 table.search(this.value).draw();
             });

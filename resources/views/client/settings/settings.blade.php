@@ -12,7 +12,7 @@
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                     <!--begin::Description-->
-                    <small class="text-muted fs-7 fw-bold my-1 ms-1">{{ trans('message.admin') }} >
+                    <small class="text-muted fs-7 fw-bold my-1 ms-1">{{ trans('message.clients') }} >
                         {{ trans('message.settings') }} > {{ trans('message.Edit') }}</small>
                     <!--end::Description-->
                 </div>
@@ -76,7 +76,7 @@
                                         <!--end::Name-->
                                         <!--begin::Info-->
                                         <div class="d-flex flex-wrap fw-bold fs-6 mb-4 pe-2">
-                                            {{-- <div class="d-flex align-items-center text-gray-400 me-5 mb-2">
+                                            <div class="d-flex align-items-center text-gray-400 me-5 mb-2">
                                                 <!--begin::Svg Icon | path: icons/duotune/communication/com006.svg-->
                                                 <span class="svg-icon svg-icon-4 me-1">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -89,8 +89,8 @@
                                                             fill="currentColor" />
                                                     </svg>
                                                 </span>
-                                                <!--end::Svg Icon-->{{ $client_info->manager_director }}
-                                            </div> --}}
+                                                <!--end::Svg Icon-->{{ $client_info->first_name . ' ' . $client_info->last_name }}
+                                            </div>
                                             <div class="d-flex align-items-center text-gray-400 me-5 mb-2">
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen018.svg-->
                                                 <span class="svg-icon svg-icon-4 me-1">
@@ -104,9 +104,9 @@
                                                             fill="currentColor" />
                                                     </svg>
                                                 </span>
-                                                <!--end::Svg Icon-->{{ $client_info->house_number }}
-                                                {{ $client_info->street }} {{ $client_info->plz }}
-                                                {{ $client_info->state }}
+                                                <!--end::Svg Icon-->{{ $client_info->street }}
+                                                {{ $client_info->house_number }} , {{ $client_info->plz }}
+                                                {{ $client_info->state }} {{ $client_info->country }}
                                             </div>
                                             <div class="d-flex align-items-center text-gray-400 mb-2">
                                                 <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
@@ -154,7 +154,7 @@
                                                     </span>
                                                     <!--end::Svg Icon-->
                                                     @if ($client_info->name == 'shipment')
-                                                        <div class="fs-2 fw-bolder" data-kt-countup="true"
+                                                        <div class="fs-2 fw-bolder" data-kt-countup="false"
                                                             data-kt-countup-value="0" data-kt-countup-suffix="€">
                                                             N/A
                                                         </div>
@@ -228,15 +228,20 @@
                                                         </svg>
                                                     </span>
                                                     <!--end::Svg Icon-->
-                                                    <div class="fs-2 fw-bolder" data-kt-countup="true"
+                                                    @if ($client_info->name == 'shipment')
+                                                        <div class="fs-2 fw-bolder" >N/A
+                                                        </div>
+                                                    @else
+                                                        <div class="fs-2 fw-bolder" data-kt-countup="true"
                                                         data-kt-countup-value="{{ $referred_clients_count }}">
                                                         {{ $referred_clients_count }}
                                                     </div>
+                                                    @endif
                                                 </div>
                                                 <!--end::Number-->
                                                 <!--begin::Label-->
                                                 <div class="fw-bold fs-6 text-gray-400">
-                                                    {{ trans('message.Total Clients') }}</div>
+                                                    {{ trans('message.total customers') }}</div>
                                                 <!--end::Label-->
                                             </div>
                                             <!--end::Stat-->
@@ -271,11 +276,21 @@
                             </li>
                             <!--end::Nav item-->
                             <!--begin::Nav item-->
+                            @if (session('package_name') != 'shipment')
+                                <li class="nav-item mt-2">
+                                    <a class="nav-link text-active-primary ms-0 me-10 py-5 "
+                                        href="{{ Route('client.api') }}">{{ trans('message.apis/integration') }}</a>
+                                </li>
+                            @endif
+                            <!--end::Nav item-->
                             <li class="nav-item mt-2">
                                 <a class="nav-link text-active-primary ms-0 me-10 py-5 "
-                                    href="{{ Route('client.api') }}">{{ trans('message.apis/integration') }}</a>
+                                    href="{{ Route('client.profile', session('client_id')) }}">{{ trans('message.security') }}</a>
                             </li>
-                            <!--end::Nav item-->
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5 "
+                                    href="{{ Route('client.package.shipment') }}">{{ trans('message.package_shipment') }}</a>
+                            </li>
                         </ul>
                         <!--begin::Navs-->
                     </div>
@@ -303,14 +318,14 @@
                             <!--begin::Card body-->
                             <div class="card-body border-top p-9">
 
-                            <div class="form-group m-3">
-                                @if (session('error'))
-                                    <div class="alert alert-danger">{{ session('error') }}</div>
-                                @endif
-                                @if (session('message'))
-                                    <div class="alert alert-success">{{ session('message') }}</div>
-                                @endif
-                            </div>
+                                <div class="form-group m-3">
+                                    @if (session('error'))
+                                        <div class="alert alert-danger">{{ session('error') }}</div>
+                                    @endif
+                                    @if (session('message'))
+                                        <div class="alert alert-success">{{ session('message') }}</div>
+                                    @endif
+                                </div>
                                 <!--begin::Input group-->
                                 <div class="row mb-6">
                                     <!--begin::Label-->
@@ -321,11 +336,20 @@
                                     <div class="col-lg-8">
                                         <!--begin::Image input-->
                                         <div class="image-input image-input-outline" data-kt-image-input="true"
-                                            style="background-image: url('{{ URL::asset($client_info->profile_picture) }})">
+                                            style="background-image: url('{{ asset('assets/media/svg/avatars/blank.svg') }}')">
                                             <!--begin::Preview existing avatar-->
-                                            <div class="image-input-wrapper w-125px h-125px"
+                                            @if (isset($client_info->profile_picture))
+                                                <div class="image-input-wrapper w-125px h-125px"
+                                                    style="background-image: url({{ URL::asset($client_info->profile_picture) }})">
+                                                </div>
+                                            @else
+                                                <div class="image-input-wrapper w-125px h-125px"
+                                                    style="background-image: url({{ asset('assets/media/svg/avatars/blank.svg') }})">
+                                                </div>
+                                            @endif
+                                            {{-- <div class="image-input-wrapper w-125px h-125px"
                                                 style="background-image: url('{{ URL::asset($client_info->profile_picture) }}')">
-                                            </div>
+                                            </div> --}}
                                             <!--end::Preview existing avatar-->
                                             <!--begin::Label-->
                                             <label
@@ -336,9 +360,10 @@
                                                 <!--begin::Inputs-->
                                                 <input type="hidden" name="previous_profile"
                                                     value="{{ $client_info->profile_picture }}">
+                                                <input type="hidden" name="avatar_remove" />
                                                 <input type="file" name="profile_picture"
                                                     accept=".png, .jpg, .jpeg" />
-                                                <input type="hidden" name="avatar_remove" />
+
                                                 <!--end::Inputs-->
                                             </label>
                                             <!--end::Label-->
@@ -361,8 +386,7 @@
                                         </div>
                                         <!--end::Image input-->
                                         <!--begin::Hint-->
-                                        <div class="form-text">Note: A square logo is recommended. Allowed file types: png,
-                                            jpg, jpeg.</div>
+                                        <div class="form-text">{{ $client_info->profile_picture }}.</div>
                                         <!--end::Hint-->
                                     </div>
                                     <!--end::Col-->
@@ -372,7 +396,7 @@
                                 <div class="row mb-6">
                                     <!--begin::Label-->
                                     <label
-                                        class="col-lg-4 col-form-label required fw-bold fs-6">{{ trans('message.Managing Director') }}</label>
+                                        class="col-lg-4 col-form-label required fw-bold fs-6">{{ trans('message.First Name') }}</label>
                                     <!--end::Label-->
                                     <!--begin::Col-->
                                     <div class="col-lg-8">
@@ -380,10 +404,38 @@
                                         <div class="row">
                                             <!--begin::Col-->
                                             <div class="col-lg-12 fv-row">
-                                                <input type="text" name="manager_director"
+                                                <input type="text" name="first_name"
                                                     class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                                    placeholder="firstname"
-                                                    value="{{ $client_info->first_name }} {{ $client_info->last_name }}"
+                                                    placeholder="firstname" value="{{ $client_info->first_name }}"
+                                                    required />
+                                            </div>
+                                            <!--end::Col-->
+                                            <!--begin::Col-->
+                                            {{-- <div class="col-lg-6 fv-row">
+                                                            <input type="text" name="settings_name" class="form-control form-control-lg form-control-solid" placeholder="surname" value="Hiebenga" required/>
+                                                        </div> --}}
+                                            <!--end::Col-->
+                                        </div>
+                                        <!--end::Row-->
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="row mb-6">
+                                    <!--begin::Label-->
+                                    <label
+                                        class="col-lg-4 col-form-label required fw-bold fs-6">{{ trans('message.Last Name') }}</label>
+                                    <!--end::Label-->
+                                    <!--begin::Col-->
+                                    <div class="col-lg-8">
+                                        <!--begin::Row-->
+                                        <div class="row">
+                                            <!--begin::Col-->
+                                            <div class="col-lg-12 fv-row">
+                                                <input type="text" name="last_name"
+                                                    class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                                                    placeholder="firstname" value="{{ $client_info->last_name }}"
                                                     required />
                                             </div>
                                             <!--end::Col-->
@@ -514,544 +566,553 @@
                                         <select name="country" aria-label="Select..." data-placeholder="Select..."
                                             class="form-select form-select-solid form-select-lg fw-bold" required>
                                             <option value="">Select...</option>
-                                            <option data-kt-flag="flags/afghanistan.svg" value="AF"
-                                                {{ $client_info->country == 'AF' ? 'selected' : '' }}>Afghanistan
+                                            <option value="" {{ $client_info->country == '' ? 'selected' : '' }}>
+                                                {{ trans('message.Please choose') }}...</option>
+                                            {{-- <option value="Afghanistan"
+                                                        {{ $client_info->country == 'Afghanistan' ? 'selected' : '' }}>
+                                                        Afghanistan</option> --}}
+                                            <option value="AF" {{ $client_info->country == 'AF' ? 'selected' : '' }}>
+                                                Afghanistan
                                             </option>
-                                            <option data-kt-flag="flags/aland-islands.svg" value="AX"
-                                                {{ $client_info->country == 'AX' ? 'selected' : '' }}>Aland Islands
+                                            <option value="AX" {{ $client_info->country == 'AX' ? 'selected' : '' }}>
+                                                Aland Islands
                                             </option>
-                                            <option data-kt-flag="flags/albania.svg" value="AL"
-                                                {{ $client_info->country == 'AL' ? 'selected' : '' }}>Albania</option>
-                                            <option data-kt-flag="flags/algeria.svg" value="DZ"
-                                                {{ $client_info->country == 'DZ' ? 'selected' : '' }}>Algeria</option>
-                                            <option data-kt-flag="flags/american-samoa.svg" value="AS"
-                                                {{ $client_info->country == 'AS' ? 'selected' : '' }}>American Samoa
+                                            <option value="AL" {{ $client_info->country == 'AL' ? 'selected' : '' }}>
+                                                Albania</option>
+                                            <option value="DZ" {{ $client_info->country == 'DZ' ? 'selected' : '' }}>
+                                                Algeria</option>
+                                            <option value="AS" {{ $client_info->country == 'AS' ? 'selected' : '' }}>
+                                                American Samoa
                                             </option>
-                                            <option data-kt-flag="flags/andorra.svg" value="AD"
-                                                {{ $client_info->country == 'AD' ? 'selected' : '' }}>Andorra</option>
-                                            <option data-kt-flag="flags/angola.svg" value="AO"
-                                                {{ $client_info->country == 'AO' ? 'selected' : '' }}>Angola</option>
-                                            <option data-kt-flag="flags/anguilla.svg" value="AI"
-                                                {{ $client_info->country == 'AI' ? 'selected' : '' }}>Anguilla</option>
-                                            <option data-kt-flag="flags/antigua-and-barbuda.svg" value="AG"
-                                                {{ $client_info->country == 'AG' ? 'selected' : '' }}>Antigua
-                                                and Barbuda</option>
-                                            <option data-kt-flag="flags/argentina.svg" value="AR"
-                                                {{ $client_info->country == 'AR' ? 'selected' : '' }}>Argentina</option>
-                                            <option data-kt-flag="flags/armenia.svg" value="AM"
-                                                {{ $client_info->country == 'AM' ? 'selected' : '' }}>Armenia</option>
-                                            <option data-kt-flag="flags/aruba.svg" value="AW"
-                                                {{ $client_info->country == 'AW' ? 'selected' : '' }}>Aruba</option>
-                                            <option data-kt-flag="flags/australia.svg" value="AU"
-                                                {{ $client_info->country == 'AU' ? 'selected' : '' }}>Australia</option>
-                                            <option data-kt-flag="flags/austria.svg" value="AT"
-                                                {{ $client_info->country == 'AT' ? 'selected' : '' }}>Austria</option>
-                                            <option data-kt-flag="flags/azerbaijan.svg" value="AZ"
-                                                {{ $client_info->country == 'AZ' ? 'selected' : '' }}>Azerbaijan</option>
-                                            <option data-kt-flag="flags/bahamas.svg" value="BS"
-                                                {{ $client_info->country == 'BS' ? 'selected' : '' }}>Bahamas</option>
-                                            <option data-kt-flag="flags/bahrain.svg" value="BH"
-                                                {{ $client_info->country == 'BH' ? 'selected' : '' }}>Bahrain</option>
-                                            <option data-kt-flag="flags/bangladesh.svg" value="BD"
-                                                {{ $client_info->country == 'BD' ? 'selected' : '' }}>Bangladesh</option>
-                                            <option data-kt-flag="flags/barbados.svg" value="BB"
-                                                {{ $client_info->country == 'BB' ? 'selected' : '' }}>Barbados</option>
-                                            <option data-kt-flag="flags/belarus.svg" value="BY"
-                                                {{ $client_info->country == 'BY' ? 'selected' : '' }}>Belarus</option>
-                                            <option data-kt-flag="flags/belgium.svg" value="BE"
-                                                {{ $client_info->country == 'BE' ? 'selected' : '' }}>Belgium</option>
-                                            <option data-kt-flag="flags/belize.svg" value="BZ"
-                                                {{ $client_info->country == 'BZ' ? 'selected' : '' }}>Belize</option>
-                                            <option data-kt-flag="flags/benin.svg" value="BJ"
-                                                {{ $client_info->country == 'BJ' ? 'selected' : '' }}>Benin</option>
-                                            <option data-kt-flag="flags/bermuda.svg" value="BM"
-                                                {{ $client_info->country == 'BM' ? 'selected' : '' }}>Bermuda</option>
-                                            <option data-kt-flag="flags/bhutan.svg" value="BT"
-                                                {{ $client_info->country == 'BT' ? 'selected' : '' }}>Bhutan</option>
-                                            <option data-kt-flag="flags/bolivia.svg" value="BO"
-                                                {{ $client_info->country == 'BO' ? 'selected' : '' }}>Bolivia,
-                                                Plurinational
-                                                State of</option>
-                                            <option data-kt-flag="flags/bonaire.svg" value="BQ"
-                                                {{ $client_info->country == 'BQ' ? 'selected' : '' }}>Bonaire, Sint
+                                            <option value="AD" {{ $client_info->country == 'AD' ? 'selected' : '' }}>
+                                                Andorra</option>
+                                            <option value="AO" {{ $client_info->country == 'AO' ? 'selected' : '' }}>
+                                                Angola</option>
+                                            <option value="AI" {{ $client_info->country == 'AI' ? 'selected' : '' }}>
+                                                Anguilla</option>
+                                            <option value="AG" {{ $client_info->country == 'AG' ? 'selected' : '' }}>
+                                                Antigua and Barbuda
+                                            </option>
+                                            <option value="AR" {{ $client_info->country == 'AR' ? 'selected' : '' }}>
+                                                Argentina</option>
+                                            <option value="AM" {{ $client_info->country == 'AM' ? 'selected' : '' }}>
+                                                Armenia</option>
+                                            <option value="AW" {{ $client_info->country == 'AW' ? 'selected' : '' }}>
+                                                Aruba</option>
+                                            <option value="AU" {{ $client_info->country == 'AU' ? 'selected' : '' }}>
+                                                Australia</option>
+                                            <option value="AT" {{ $client_info->country == 'AT' ? 'selected' : '' }}>
+                                                Austria</option>
+                                            <option value="AZ" {{ $client_info->country == 'AZ' ? 'selected' : '' }}>
+                                                Azerbaijan</option>
+                                            <option value="BS" {{ $client_info->country == 'BS' ? 'selected' : '' }}>
+                                                Bahamas</option>
+                                            <option value="BH" {{ $client_info->country == 'BH' ? 'selected' : '' }}>
+                                                Bahrain</option>
+                                            <option value="BD" {{ $client_info->country == 'BD' ? 'selected' : '' }}>
+                                                Bangladesh</option>
+                                            <option value="BB" {{ $client_info->country == 'BB' ? 'selected' : '' }}>
+                                                Barbados</option>
+                                            <option value="BY" {{ $client_info->country == 'BY' ? 'selected' : '' }}>
+                                                Belarus</option>
+                                            <option value="BE" {{ $client_info->country == 'BE' ? 'selected' : '' }}>
+                                                Belgium</option>
+                                            <option value="BZ" {{ $client_info->country == 'BZ' ? 'selected' : '' }}>
+                                                Belize</option>
+                                            <option value="BJ" {{ $client_info->country == 'BJ' ? 'selected' : '' }}>
+                                                Benin</option>
+                                            <option value="BM" {{ $client_info->country == 'BM' ? 'selected' : '' }}>
+                                                Bermuda</option>
+                                            <option value="BT" {{ $client_info->country == 'BT' ? 'selected' : '' }}>
+                                                Bhutan</option>
+                                            <option value="BO" {{ $client_info->country == 'BO' ? 'selected' : '' }}>
+                                                Bolivia,
+                                                Plurinational State of</option>
+                                            <option value="BQ" {{ $client_info->country == 'BQ' ? 'selected' : '' }}>
+                                                Bonaire, Sint
                                                 Eustatius and Saba</option>
-                                            <option data-kt-flag="flags/bosnia-and-herzegovina.svg" value="BA"
-                                                {{ $client_info->country == 'BA' ? 'selected' : '' }}>Bosnia
-                                                and Herzegovina</option>
-                                            <option data-kt-flag="flags/botswana.svg" value="BW"
-                                                {{ $client_info->country == 'BW' ? 'selected' : '' }}>Botswana</option>
-                                            <option data-kt-flag="flags/brazil.svg" value="BR"
-                                                {{ $client_info->country == 'BR' ? 'selected' : '' }}>Brazil</option>
-                                            <option data-kt-flag="flags/british-indian-ocean-territory.svg" value="IO"
-                                                {{ $client_info->country == 'IO' ? 'selected' : '' }}>British Indian
+                                            <option value="BA" {{ $client_info->country == 'BA' ? 'selected' : '' }}>
+                                                Bosnia and
+                                                Herzegovina</option>
+                                            <option value="BW" {{ $client_info->country == 'BW' ? 'selected' : '' }}>
+                                                Botswana</option>
+                                            <option value="BR" {{ $client_info->country == 'BR' ? 'selected' : '' }}>
+                                                Brazil</option>
+                                            <option value="IO" {{ $client_info->country == 'IO' ? 'selected' : '' }}>
+                                                British Indian
                                                 Ocean Territory</option>
-                                            <option data-kt-flag="flags/brunei.svg" value="BN"
-                                                {{ $client_info->country == 'BN' ? 'selected' : '' }}>Brunei Darussalam
+                                            <option value="BN" {{ $client_info->country == 'BN' ? 'selected' : '' }}>
+                                                Brunei Darussalam
                                             </option>
-                                            <option data-kt-flag="flags/bulgaria.svg" value="BG"
-                                                {{ $client_info->country == 'BG' ? 'selected' : '' }}>Bulgaria</option>
-                                            <option data-kt-flag="flags/burkina-faso.svg" value="BF"
-                                                {{ $client_info->country == 'BF' ? 'selected' : '' }}>Burkina Faso
+                                            <option value="BG" {{ $client_info->country == 'BG' ? 'selected' : '' }}>
+                                                Bulgaria</option>
+                                            <option value="BF" {{ $client_info->country == 'BF' ? 'selected' : '' }}>
+                                                Burkina Faso
                                             </option>
-                                            <option data-kt-flag="flags/burundi.svg" value="BI"
-                                                {{ $client_info->country == 'BI' ? 'selected' : '' }}>Burundi</option>
-                                            <option data-kt-flag="flags/cambodia.svg" value="KH"
-                                                {{ $client_info->country == 'KH' ? 'selected' : '' }}>Cambodia</option>
-                                            <option data-kt-flag="flags/cameroon.svg" value="CM"
-                                                {{ $client_info->country == 'CM' ? 'selected' : '' }}>Cameroon</option>
-                                            <option data-kt-flag="flags/canada.svg" value="CA"
-                                                {{ $client_info->country == 'CA' ? 'selected' : '' }}>Canada</option>
-                                            <option data-kt-flag="flags/cape-verde.svg" value="CV"
-                                                {{ $client_info->country == 'CV' ? 'selected' : '' }}>Cape Verde</option>
-                                            <option data-kt-flag="flags/cayman-islands.svg" value="KY"
-                                                {{ $client_info->country == 'KY' ? 'selected' : '' }}>Cayman Islands
+                                            <option value="BI" {{ $client_info->country == 'BI' ? 'selected' : '' }}>
+                                                Burundi</option>
+                                            <option value="KH" {{ $client_info->country == 'KH' ? 'selected' : '' }}>
+                                                Cambodia</option>
+                                            <option value="CM" {{ $client_info->country == 'CM' ? 'selected' : '' }}>
+                                                Cameroon</option>
+                                            <option value="CA" {{ $client_info->country == 'CA' ? 'selected' : '' }}>
+                                                Canada</option>
+                                            <option value="CV" {{ $client_info->country == 'CV' ? 'selected' : '' }}>
+                                                Cape Verde</option>
+                                            <option value="KY" {{ $client_info->country == 'KY' ? 'selected' : '' }}>
+                                                Cayman Islands
                                             </option>
-                                            <option data-kt-flag="flags/central-african-republic.svg" value="CF"
-                                                {{ $client_info->country == 'CF' ? 'selected' : '' }}>
-                                                Central African Republic</option>
-                                            <option data-kt-flag="flags/chad.svg" value="TD"
-                                                {{ $client_info->country == 'TD' ? 'selected' : '' }}>Chad</option>
-                                            <option data-kt-flag="flags/chile.svg" value="CL"
-                                                {{ $client_info->country == 'CL' ? 'selected' : '' }}>Chile</option>
-                                            <option data-kt-flag="flags/china.svg" value="CN"
-                                                {{ $client_info->country == 'CN' ? 'selected' : '' }}>China</option>
-                                            <option data-kt-flag="flags/christmas-island.svg" value="CX"
-                                                {{ $client_info->country == 'CX' ? 'selected' : '' }}>Christmas
-                                                Island</option>
-                                            <option data-kt-flag="flags/cocos-island.svg" value="CC"
-                                                {{ $client_info->country == 'CC' ? 'selected' : '' }}>Cocos (Keeling)
-                                                Islands</option>
-                                            <option data-kt-flag="flags/colombia.svg" value="CO"
-                                                {{ $client_info->country == 'CO' ? 'selected' : '' }}>Colombia</option>
-                                            <option data-kt-flag="flags/comoros.svg" value="KM"
-                                                {{ $client_info->country == 'KM' ? 'selected' : '' }}>Comoros</option>
-                                            <option data-kt-flag="flags/cook-islands.svg" value="CK"
-                                                {{ $client_info->country == 'CK' ? 'selected' : '' }}>Cook Islands
-                                            </option>
-                                            <option data-kt-flag="flags/costa-rica.svg" value="CR"
-                                                {{ $client_info->country == 'CR' ? 'selected' : '' }}>Costa Rica</option>
-                                            <option data-kt-flag="flags/ivory-coast.svg" value="CI"
-                                                {{ $client_info->country == 'CI' ? 'selected' : '' }}>Côte dIvoire
-                                            </option>
-                                            <option data-kt-flag="flags/croatia.svg" value="HR"
-                                                {{ $client_info->country == 'HR' ? 'selected' : '' }}>Croatia</option>
-                                            <option data-kt-flag="flags/cuba.svg" value="CU"
-                                                {{ $client_info->country == 'CU' ? 'selected' : '' }}>Cuba</option>
-                                            <option data-kt-flag="flags/curacao.svg" value="CW"
-                                                {{ $client_info->country == 'CW' ? 'selected' : '' }}>Curaçao</option>
-                                            <option data-kt-flag="flags/czech-republic.svg" value="CZ"
-                                                {{ $client_info->country == 'CZ' ? 'selected' : '' }}>Czech Republic
-                                            </option>
-                                            <option data-kt-flag="flags/denmark.svg" value="DK"
-                                                {{ $client_info->country == 'DK' ? 'selected' : '' }}>Denmark</option>
-                                            <option data-kt-flag="flags/djibouti.svg" value="DJ"
-                                                {{ $client_info->country == 'DJ' ? 'selected' : '' }}>Djibouti</option>
-                                            <option data-kt-flag="flags/dominica.svg" value="DM"
-                                                {{ $client_info->country == 'DM' ? 'selected' : '' }}>Dominica</option>
-                                            <option data-kt-flag="flags/dominican-republic.svg" value="DO"
-                                                {{ $client_info->country == 'DO' ? 'selected' : '' }}>Dominican
+                                            <option value="CF" {{ $client_info->country == 'CF' ? 'selected' : '' }}>
+                                                Central African
                                                 Republic</option>
-                                            <option data-kt-flag="flags/ecuador.svg" value="EC"
-                                                {{ $client_info->country == 'EC' ? 'selected' : '' }}>Ecuador</option>
-                                            <option data-kt-flag="flags/egypt.svg" value="EG"
-                                                {{ $client_info->country == 'EG' ? 'selected' : '' }}>Egypt</option>
-                                            <option data-kt-flag="flags/el-salvador.svg" value="SV"
-                                                {{ $client_info->country == 'SV' ? 'selected' : '' }}>El Salvador
-                                            </option>
-                                            <option data-kt-flag="flags/equatorial-guinea.svg" value="GQ"
-                                                {{ $client_info->country == 'GQ' ? 'selected' : '' }}>Equatorial
-                                                Guinea</option>
-                                            <option data-kt-flag="flags/eritrea.svg" value="ER"
-                                                {{ $client_info->country == 'ER' ? 'selected' : '' }}>Eritrea</option>
-                                            <option data-kt-flag="flags/estonia.svg" value="EE"
-                                                {{ $client_info->country == 'EE' ? 'selected' : '' }}>Estonia</option>
-                                            <option data-kt-flag="flags/ethiopia.svg" value="ET"
-                                                {{ $client_info->country == 'ET' ? 'selected' : '' }}>Ethiopia</option>
-                                            <option data-kt-flag="flags/falkland-islands.svg" value="FK"
-                                                {{ $client_info->country == 'FK' ? 'selected' : '' }}>Falkland
-                                                Islands (Malvinas)</option>
-                                            <option data-kt-flag="flags/fiji.svg" value="FJ"
-                                                {{ $client_info->country == 'FJ' ? 'selected' : '' }}>Fiji</option>
-                                            <option data-kt-flag="flags/finland.svg" value="FI"
-                                                {{ $client_info->country == 'FI' ? 'selected' : '' }}>Finland</option>
-                                            <option data-kt-flag="flags/france.svg" value="FR"
-                                                {{ $client_info->country == 'FR' ? 'selected' : '' }}>France</option>
-                                            <option data-kt-flag="flags/french-polynesia.svg" value="PF"
-                                                {{ $client_info->country == 'PF' ? 'selected' : '' }}>French
-                                                Polynesia</option>
-                                            <option data-kt-flag="flags/gabon.svg" value="GA"
-                                                {{ $client_info->country == 'GA' ? 'selected' : '' }}>Gabon</option>
-                                            <option data-kt-flag="flags/gambia.svg" value="GM"
-                                                {{ $client_info->country == 'GM' ? 'selected' : '' }}>Gambia</option>
-                                            <option data-kt-flag="flags/georgia.svg" value="GE"
-                                                {{ $client_info->country == 'GE' ? 'selected' : '' }}>Georgia</option>
-                                            <option data-kt-flag="flags/germany.svg" value="DE"
-                                                {{ $client_info->country == 'DE' ? 'selected' : '' }}>Germany</option>
-                                            <option data-kt-flag="flags/ghana.svg" value="GH"
-                                                {{ $client_info->country == 'GH' ? 'selected' : '' }}>Ghana</option>
-                                            <option data-kt-flag="flags/gibraltar.svg" value="GI"
-                                                {{ $client_info->country == 'GI' ? 'selected' : '' }}>Gibraltar</option>
-                                            <option data-kt-flag="flags/greece.svg" value="GR"
-                                                {{ $client_info->country == 'GR' ? 'selected' : '' }}>Greece</option>
-                                            <option data-kt-flag="flags/greenland.svg" value="GL"
-                                                {{ $client_info->country == 'GL' ? 'selected' : '' }}>Greenland</option>
-                                            <option data-kt-flag="flags/grenada.svg" value="GD"
-                                                {{ $client_info->country == 'GD' ? 'selected' : '' }}>Grenada</option>
-                                            <option data-kt-flag="flags/guam.svg" value="GU"
-                                                {{ $client_info->country == 'GU' ? 'selected' : '' }}>Guam</option>
-                                            <option data-kt-flag="flags/guatemala.svg" value="GT"
-                                                {{ $client_info->country == 'GT' ? 'selected' : '' }}>Guatemala</option>
-                                            <option data-kt-flag="flags/guernsey.svg" value="GG"
-                                                {{ $client_info->country == 'GG' ? 'selected' : '' }}>Guernsey</option>
-                                            <option data-kt-flag="flags/guinea.svg" value="GN"
-                                                {{ $client_info->country == 'GN' ? 'selected' : '' }}>Guinea</option>
-                                            <option data-kt-flag="flags/guinea-bissau.svg" value="GW"
-                                                {{ $client_info->country == 'GW' ? 'selected' : '' }}>Guinea-Bissau
-                                            </option>
-                                            <option data-kt-flag="flags/haiti.svg" value="HT"
-                                                {{ $client_info->country == 'HT' ? 'selected' : '' }}>Haiti</option>
-                                            <option data-kt-flag="flags/vatican-city.svg" value="VA"
-                                                {{ $client_info->country == 'VA' ? 'selected' : '' }}>Holy See (Vatican
-                                                City State)</option>
-                                            <option data-kt-flag="flags/honduras.svg" value="HN"
-                                                {{ $client_info->country == 'HN' ? 'selected' : '' }}>Honduras</option>
-                                            <option data-kt-flag="flags/hong-kong.svg" value="HK"
-                                                {{ $client_info->country == 'HK' ? 'selected' : '' }}>Hong Kong</option>
-                                            <option data-kt-flag="flags/hungary.svg" value="HU"
-                                                {{ $client_info->country == 'HU' ? 'selected' : '' }}>Hungary</option>
-                                            <option data-kt-flag="flags/iceland.svg" value="IS"
-                                                {{ $client_info->country == 'IS' ? 'selected' : '' }}>Iceland</option>
-                                            <option data-kt-flag="flags/india.svg" value="IN"
-                                                {{ $client_info->country == 'IN' ? 'selected' : '' }}> India</option>
-                                            <option data-kt-flag="flags/indonesia.svg" value="ID"
-                                                {{ $client_info->country == 'ID' ? 'selected' : '' }}>Indonesia</option>
-                                            <option data-kt-flag="flags/iran.svg" value="IR"
-                                                {{ $client_info->country == 'IR' ? 'selected' : '' }}>Iran, Islamic
-                                                Republic of
-                                            </option>
-                                            <option data-kt-flag="flags/iraq.svg" value="IQ"
-                                                {{ $client_info->country == 'IQ' ? 'selected' : '' }}>Iraq</option>
-                                            <option data-kt-flag="flags/ireland.svg" value="IE"
-                                                {{ $client_info->country == 'IE' ? 'selected' : '' }}>Ireland</option>
-                                            <option data-kt-flag="flags/isle-of-man.svg" value="IM"
-                                                {{ $client_info->country == 'IM' ? 'selected' : '' }}>Isle of Man
-                                            </option>
-                                            <option data-kt-flag="flags/israel.svg" value="IL"
-                                                {{ $client_info->country == 'IL' ? 'selected' : '' }}>Israel</option>
-                                            <option data-kt-flag="flags/italy.svg" value="IT"
-                                                {{ $client_info->country == 'IT' ? 'selected' : '' }}>Italy</option>
-                                            <option data-kt-flag="flags/jamaica.svg" value="JM"
-                                                {{ $client_info->country == 'JM' ? 'selected' : '' }}>Jamaica</option>
-                                            <option data-kt-flag="flags/japan.svg" value="JE"
-                                                {{ $client_info->country == 'JE' ? 'selected' : '' }}> Japan</option>
-                                            <option data-kt-flag="flags/jersey.svg" value="JE"
-                                                {{ $client_info->country == 'JE' ? 'selected' : '' }}>Jersey</option>
-                                            <option data-kt-flag="flags/jordan.svg" value="JO"
-                                                {{ $client_info->country == 'JO' ? 'selected' : '' }}>Jordan</option>
-                                            <option data-kt-flag="flags/kazakhstan.svg" value="KZ"
-                                                {{ $client_info->country == 'KZ' ? 'selected' : '' }}>Kazakhstan
-                                            </option>
-                                            <option data-kt-flag="flags/kenya.svg" value="KE"
-                                                {{ $client_info->country == 'KE' ? 'selected' : '' }}>Kenya</option>
-                                            <option data-kt-flag="flags/kiribati.svg" value="KI"
-                                                {{ $client_info->country == 'KI' ? 'selected' : '' }}>Kiribati</option>
-                                            <option data-kt-flag="flags/north-korea.svg" value="KP"
-                                                {{ $client_info->country == 'KP' ? 'selected' : '' }}>Korea, Democratic
-                                                Peoples Republic of</option>
-                                            <option data-kt-flag="flags/kuwait.svg" value="KW"
-                                                {{ $client_info->country == 'KW' ? 'selected' : '' }}>Kuwait</option>
-                                            <option data-kt-flag="flags/kyrgyzstan.svg" value="KG"
-                                                {{ $client_info->country == 'KG' ? 'selected' : '' }}>Kyrgyzstan
-                                            </option>
-                                            <option data-kt-flag="flags/laos.svg" value="LA"
-                                                {{ $client_info->country == 'LA' ? 'selected' : '' }}>Lao Peoples
-                                                Democratic
-                                                Republic</option>
-                                            <option data-kt-flag="flags/latvia.svg" value="LV"
-                                                {{ $client_info->country == 'LV' ? 'selected' : '' }}>Latvia</option>
-                                            <option data-kt-flag="flags/lebanon.svg" value="LB"
-                                                {{ $client_info->country == 'LB' ? 'selected' : '' }}>Lebanon</option>
-                                            <option data-kt-flag="flags/lesotho.svg" value="LS"
-                                                {{ $client_info->country == 'LS' ? 'selected' : '' }}>Lesotho</option>
-                                            <option data-kt-flag="flags/liberia.svg" value="LR"
-                                                {{ $client_info->country == 'LR' ? 'selected' : '' }}>Liberia</option>
-                                            <option data-kt-flag="flags/libya.svg" value="LY"
-                                                {{ $client_info->country == 'LY' ? 'selected' : '' }}>Libya</option>
-                                            <option data-kt-flag="flags/liechtenstein.svg" value="LI"
-                                                {{ $client_info->country == 'LI' ? 'selected' : '' }}>Liechtenstein
-                                            </option>
-                                            <option data-kt-flag="flags/lithuania.svg" value="LT"
-                                                {{ $client_info->country == 'LT' ? 'selected' : '' }}>Lithuania</option>
-                                            <option data-kt-flag="flags/luxembourg.svg" value="LU"
-                                                {{ $client_info->country == 'LU' ? 'selected' : '' }}>Luxembourg
-                                            </option>
-                                            <option data-kt-flag="flags/macao.svg" value="MO"
-                                                {{ $client_info->country == 'MO' ? 'selected' : '' }}>Macao</option>
-                                            <option data-kt-flag="flags/madagascar.svg" value="MG"
-                                                {{ $client_info->country == 'MG' ? 'selected' : '' }}>Madagascar
-                                            </option>
-                                            <option data-kt-flag="flags/malawi.svg" value="MW"
-                                                {{ $client_info->country == 'MW' ? 'selected' : '' }}>Malawi</option>
-                                            <option data-kt-flag="flags/malaysia.svg" value="MY"
-                                                {{ $client_info->country == 'MY' ? 'selected' : '' }}>Malaysia</option>
-                                            <option data-kt-flag="flags/maldives.svg" value="MV"
-                                                {{ $client_info->country == 'MV' ? 'selected' : '' }}>Maldives</option>
-                                            <option data-kt-flag="flags/mali.svg" value="ML"
-                                                {{ $client_info->country == 'ML' ? 'selected' : '' }}>Mali</option>
-                                            <option data-kt-flag="flags/malta.svg" value="MT"
-                                                {{ $client_info->country == 'MT' ? 'selected' : '' }}>Malta</option>
-                                            <option data-kt-flag="flags/marshall-island.svg" value="MH"
-                                                {{ $client_info->country == 'MH' ? 'selected' : '' }}>Marshall
-                                                Islands</option>
-                                            <option data-kt-flag="flags/martinique.svg" value="MQ"
-                                                {{ $client_info->country == 'MQ' ? 'selected' : '' }}>Martinique
-                                            </option>
-                                            <option data-kt-flag="flags/mauritania.svg" value="MR"
-                                                {{ $client_info->country == 'MR' ? 'selected' : '' }}>Mauritania
-                                            </option>
-                                            <option data-kt-flag="flags/mauritius.svg" value="MU"
-                                                {{ $client_info->country == 'MU' ? 'selected' : '' }}>Mauritius</option>
-                                            <option data-kt-flag="flags/mexico.svg" value="MX"
-                                                {{ $client_info->country == 'MX' ? 'selected' : '' }}>Mexico</option>
-                                            <option data-kt-flag="flags/micronesia.svg" value="FM"
-                                                {{ $client_info->country == 'FM' ? 'selected' : '' }}>Micronesia,
-                                                Federated States of</option>
-                                            <option data-kt-flag="flags/moldova.svg" value="MD"
-                                                {{ $client_info->country == 'MD' ? 'selected' : '' }}>Moldova, Republic
-                                                of
-                                            </option>
-                                            <option data-kt-flag="flags/monaco.svg" value="MC"
-                                                {{ $client_info->country == 'MC' ? 'selected' : '' }}>Monaco</option>
-                                            <option data-kt-flag="flags/mongolia.svg" value="MN"
-                                                {{ $client_info->country == 'MN' ? 'selected' : '' }}>Mongolia</option>
-                                            <option data-kt-flag="flags/montenegro.svg" value="ME"
-                                                {{ $client_info->country == 'ME' ? 'selected' : '' }}>Montenegro
-                                            </option>
-                                            <option data-kt-flag="flags/montserrat.svg" value="MS"
-                                                {{ $client_info->country == 'MS' ? 'selected' : '' }}>Montserrat
-                                            </option>
-                                            <option data-kt-flag="flags/morocco.svg" value="MA"
-                                                {{ $client_info->country == 'MA' ? 'selected' : '' }}>Morocco</option>
-                                            <option data-kt-flag="flags/mozambique.svg" value="MZ"
-                                                {{ $client_info->country == 'MZ' ? 'selected' : '' }}>Mozambique
-                                            </option>
-                                            <option data-kt-flag="flags/myanmar.svg" value="MM"
-                                                {{ $client_info->country == 'MM' ? 'selected' : '' }}>Myanmar</option>
-                                            <option data-kt-flag="flags/namibia.svg" value="NA"
-                                                {{ $client_info->country == 'NA' ? 'selected' : '' }}>Namibia</option>
-                                            <option data-kt-flag="flags/nauru.svg" value="NR"
-                                                {{ $client_info->country == 'NR' ? 'selected' : '' }}>Nauru</option>
-                                            <option data-kt-flag="flags/nepal.svg" value="NP"
-                                                {{ $client_info->country == 'NP' ? 'selected' : '' }}>Nepal</option>
-                                            <option data-kt-flag="flags/netherlands.svg" value="NL"
-                                                {{ $client_info->country == 'NL' ? 'selected' : '' }}>Netherlands
-                                            </option>
-                                            <option data-kt-flag="flags/new-zealand.svg" value="NZ"
-                                                {{ $client_info->country == 'NZ' ? 'selected' : '' }}>New Zealand
-                                            </option>
-                                            <option data-kt-flag="flags/nicaragua.svg" value="NI"
-                                                {{ $client_info->country == 'NI' ? 'selected' : '' }}>Nicaragua</option>
-                                            <option data-kt-flag="flags/niger.svg" value="NE"
-                                                {{ $client_info->country == 'NE' ? 'selected' : '' }}>Niger</option>
-                                            <option data-kt-flag="flags/nigeria.svg" value="NG"
-                                                {{ $client_info->country == 'NG' ? 'selected' : '' }}>Nigeria</option>
-                                            <option data-kt-flag="flags/niue.svg" value="NU"
-                                                {{ $client_info->country == 'NU' ? 'selected' : '' }}>Niue</option>
-                                            <option data-kt-flag="flags/norfolk-island.svg" value="NF"
-                                                {{ $client_info->country == 'NF' ? 'selected' : '' }}>Norfolk Island
-                                            </option>
-                                            <option data-kt-flag="flags/northern-mariana-islands.svg" value="MP"
-                                                {{ $client_info->country == 'MP' ? 'selected' : '' }}>
-                                                Northern Mariana Islands</option>
-                                            <option data-kt-flag="flags/norway.svg" value="NO"
-                                                {{ $client_info->country == 'NO' ? 'selected' : '' }}>Norway</option>
-                                            <option data-kt-flag="flags/oman.svg" value="OM"
-                                                {{ $client_info->country == 'OM' ? 'selected' : '' }}>Oman</option>
-                                            <option data-kt-flag="flags/pakistan.svg" value="PK"
-                                                {{ $client_info->country == 'PK' ? 'selected' : '' }}>Pakistan</option>
-                                            <option data-kt-flag="flags/palau.svg" value="PW"
-                                                {{ $client_info->country == 'PW' ? 'selected' : '' }}>Palau</option>
-                                            <option data-kt-flag="flags/palestine.svg" value="PS"
-                                                {{ $client_info->country == 'PS' ? 'selected' : '' }}>Palestinian
-                                                Territory, Occupied</option>
-                                            <option data-kt-flag="flags/panama.svg" value="PA"
-                                                {{ $client_info->country == 'PA' ? 'selected' : '' }}>Panama</option>
-                                            <option data-kt-flag="flags/papua-new-guinea.svg" value="PG"
-                                                {{ $client_info->country == 'PG' ? 'selected' : '' }}>Papua New
-                                                Guinea</option>
-                                            <option data-kt-flag="flags/paraguay.svg" value="PY"
-                                                {{ $client_info->country == 'PY' ? 'selected' : '' }}>Paraguay</option>
-                                            <option data-kt-flag="flags/peru.svg" value="PE"
-                                                {{ $client_info->country == 'PE' ? 'selected' : '' }}>Peru</option>
-                                            <option data-kt-flag="flags/philippines.svg" value="PH"
-                                                {{ $client_info->country == 'PH' ? 'selected' : '' }}>Philippines
-                                            </option>
-                                            <option data-kt-flag="flags/poland.svg" value="PL"
-                                                {{ $client_info->country == 'PL' ? 'selected' : '' }}>Poland</option>
-                                            <option data-kt-flag="flags/portugal.svg" value="PT"
-                                                {{ $client_info->country == 'PT' ? 'selected' : '' }}>Portugal</option>
-                                            <option data-kt-flag="flags/puerto-rico.svg" value="PR"
-                                                {{ $client_info->country == 'PR' ? 'selected' : '' }}>Puerto Rico
-                                            </option>
-                                            <option data-kt-flag="flags/qatar.svg" value="QA"
-                                                {{ $client_info->country == 'QA' ? 'selected' : '' }}>Qatar</option>
-                                            <option data-kt-flag="flags/romania.svg" value="RO"
-                                                {{ $client_info->country == 'RO' ? 'selected' : '' }}>Romania</option>
-                                            <option data-kt-flag="flags/russia.svg" value="RU"
-                                                {{ $client_info->country == 'RU' ? 'selected' : '' }}>Russian Federation
-                                            </option>
-                                            <option data-kt-flag="flags/rwanda.svg" value="RW"
-                                                {{ $client_info->country == 'RW' ? 'selected' : '' }}>Rwanda</option>
-                                            <option data-kt-flag="flags/st-barts.svg" value="BL"
-                                                {{ $client_info->country == 'BL' ? 'selected' : '' }}>Saint Barthélemy
-                                            </option>
-                                            <option data-kt-flag="flags/saint-kitts-and-nevis.svg" value="KN"
-                                                {{ $client_info->country == 'KN' ? 'selected' : '' }}>Saint
-                                                Kitts and Nevis</option>
-                                            <option data-kt-flag="flags/st-lucia.svg" value="LC"
-                                                {{ $client_info->country == 'LC' ? 'selected' : '' }}>Saint Lucia
-                                            </option>
-                                            <option data-kt-flag="flags/sint-maarten.svg" value="MF"
-                                                {{ $client_info->country == 'MF' ? 'selected' : '' }}>Saint Martin
-                                                (French part)</option>
-                                            <option data-kt-flag="flags/st-vincent-and-the-grenadines.svg" value="VC"
-                                                {{ $client_info->country == 'VC' ? 'selected' : '' }}>
-                                                Saint Vincent and the Grenadines</option>
-                                            <option data-kt-flag="flags/samoa.svg" value="WS"
-                                                {{ $client_info->country == 'WS' ? 'selected' : '' }}>Samoa</option>
-                                            <option data-kt-flag="flags/san-marino.svg" value="SM"
-                                                {{ $client_info->country == 'SM' ? 'selected' : '' }}>San Marino
-                                            </option>
-                                            <option data-kt-flag="flags/sao-tome-and-prince.svg" value="ST"
-                                                {{ $client_info->country == 'ST' ? 'selected' : '' }}>Sao Tome
-                                                and Principe</option>
-                                            <option data-kt-flag="flags/saudi-arabia.svg" value="SA"
-                                                {{ $client_info->country == 'SA' ? 'selected' : '' }}>Saudi Arabia
-                                            </option>
-                                            <option data-kt-flag="flags/senegal.svg" value="SN"
-                                                {{ $client_info->country == 'SN' ? 'selected' : '' }}>Senegal</option>
-                                            <option data-kt-flag="flags/serbia.svg" value="RS"
-                                                {{ $client_info->country == 'RS' ? 'selected' : '' }}>Serbia</option>
-                                            <option data-kt-flag="flags/seychelles.svg" value="SC"
-                                                {{ $client_info->country == 'SC' ? 'selected' : '' }}>Seychelles
-                                            </option>
-                                            <option data-kt-flag="flags/sierra-leone.svg" value="SL"
-                                                {{ $client_info->country == 'SL' ? 'selected' : '' }}>Sierra Leone
-                                            </option>
-                                            <option data-kt-flag="flags/singapore.svg" value="SG"
-                                                {{ $client_info->country == 'SG' ? 'selected' : '' }}>Singapore</option>
-                                            <option data-kt-flag="flags/sint-maarten.svg" value="SX"
-                                                {{ $client_info->country == 'SX' ? 'selected' : '' }}>Sint Maarten
-                                                (Dutch part)</option>
-                                            <option data-kt-flag="flags/slovakia.svg" value="SK"
-                                                {{ $client_info->country == 'SK' ? 'selected' : '' }}>Slovakia</option>
-                                            <option data-kt-flag="flags/slovenia.svg" value="SI"
-                                                {{ $client_info->country == 'SI' ? 'selected' : '' }}>Slovenia</option>
-                                            <option data-kt-flag="flags/solomon-islands.svg" value="SB"
-                                                {{ $client_info->country == 'SB' ? 'selected' : '' }}>Solomon
-                                                Islands</option>
-                                            <option data-kt-flag="flags/somalia.svg" value="SO"
-                                                {{ $client_info->country == 'SO' ? 'selected' : '' }}>Somalia</option>
-                                            <option data-kt-flag="flags/south-africa.svg" value="ZA"
-                                                {{ $client_info->country == 'ZA' ? 'selected' : '' }}>South Africa
-                                            </option>
-                                            <option data-kt-flag="flags/south-korea.svg" value="KR"
-                                                {{ $client_info->country == 'KR' ? 'selected' : '' }}>South Korea
-                                            </option>
-                                            <option data-kt-flag="flags/south-sudan.svg" value="SS"
-                                                {{ $client_info->country == 'SS' ? 'selected' : '' }}>South Sudan
-                                            </option>
-                                            <option data-kt-flag="flags/spain.svg" value="ES"
-                                                {{ $client_info->country == 'ES' ? 'selected' : '' }}>Spain</option>
-                                            <option data-kt-flag="flags/sri-lanka.svg" value="LK"
-                                                {{ $client_info->country == 'LK' ? 'selected' : '' }}>Sri Lanka</option>
-                                            <option data-kt-flag="flags/sudan.svg" value="SD"
-                                                {{ $client_info->country == 'SD' ? 'selected' : '' }}>Sudan</option>
-                                            <option data-kt-flag="flags/suriname.svg" value="SR"
-                                                {{ $client_info->country == 'SR' ? 'selected' : '' }}>Suriname</option>
-                                            <option data-kt-flag="flags/swaziland.svg" value="SZ"
-                                                {{ $client_info->country == 'SZ' ? 'selected' : '' }}>Swaziland</option>
-                                            <option data-kt-flag="flags/sweden.svg" value="SE"
-                                                {{ $client_info->country == 'SE' ? 'selected' : '' }}>Sweden</option>
-                                            <option data-kt-flag="flags/switzerland.svg" value="CH"
-                                                {{ $client_info->country == 'CH' ? 'selected' : '' }}> Switzerland
-                                            </option>
-                                            <option data-kt-flag="flags/syria.svg" value="SY"
-                                                {{ $client_info->country == 'SY' ? 'selected' : '' }}>Syrian Arab
-                                                Republic
-                                            </option>
-                                            <option data-kt-flag="flags/taiwan.svg" value="TW"
-                                                {{ $client_info->country == 'TW' ? 'selected' : '' }}>Taiwan, Province
-                                                of
+                                            <option value="TD" {{ $client_info->country == 'TD' ? 'selected' : '' }}>
+                                                Chad</option>
+                                            <option value="CL" {{ $client_info->country == 'CL' ? 'selected' : '' }}>
+                                                Chile</option>
+                                            <option value="CN" {{ $client_info->country == 'CN' ? 'selected' : '' }}>
                                                 China</option>
-                                            <option data-kt-flag="flags/tajikistan.svg" value="TJ"
-                                                {{ $client_info->country == 'TJ' ? 'selected' : '' }}>Tajikistan
+                                            <option value="CX" {{ $client_info->country == 'CX' ? 'selected' : '' }}>
+                                                Christmas Island
                                             </option>
-                                            <option data-kt-flag="flags/tanzania.svg" value="TZ"
-                                                {{ $client_info->country == 'TZ' ? 'selected' : '' }}>Tanzania, United
+                                            <option value="CC" {{ $client_info->country == 'CC' ? 'selected' : '' }}>
+                                                Cocos (Keeling)
+                                                Islands</option>
+                                            <option value="CO" {{ $client_info->country == 'CO' ? 'selected' : '' }}>
+                                                Colombia</option>
+                                            <option value="KM" {{ $client_info->country == 'KM' ? 'selected' : '' }}>
+                                                Comoros</option>
+                                            <option value="CK" {{ $client_info->country == 'CK' ? 'selected' : '' }}>
+                                                Cook Islands
+                                            </option>
+                                            <option value="CR" {{ $client_info->country == 'CR' ? 'selected' : '' }}>
+                                                Costa Rica</option>
+                                            <option value="CI" {{ $client_info->country == 'CI' ? 'selected' : '' }}>
+                                                Côte d'Ivoire
+                                            </option>
+                                            <option value="HR" {{ $client_info->country == 'HR' ? 'selected' : '' }}>
+                                                Croatia</option>
+                                            <option value="CU" {{ $client_info->country == 'CU' ? 'selected' : '' }}>
+                                                Cuba</option>
+                                            <option value="CW" {{ $client_info->country == 'CW' ? 'selected' : '' }}>
+                                                Curaçao</option>
+                                            <option value="CZ" {{ $client_info->country == 'CZ' ? 'selected' : '' }}>
+                                                Czech Republic
+                                            </option>
+                                            <option value="DK" {{ $client_info->country == 'DK' ? 'selected' : '' }}>
+                                                Denmark</option>
+                                            <option value="DJ" {{ $client_info->country == 'DJ' ? 'selected' : '' }}>
+                                                Djibouti</option>
+                                            <option value="DM" {{ $client_info->country == 'DM' ? 'selected' : '' }}>
+                                                Dominica</option>
+                                            <option value="DO" {{ $client_info->country == 'DO' ? 'selected' : '' }}>
+                                                Dominican Republic
+                                            </option>
+                                            <option value="EC" {{ $client_info->country == 'EC' ? 'selected' : '' }}>
+                                                Ecuador</option>
+                                            <option value="EG" {{ $client_info->country == 'EG' ? 'selected' : '' }}>
+                                                Egypt</option>
+                                            <option value="SV" {{ $client_info->country == 'SV' ? 'selected' : '' }}>
+                                                El Salvador
+                                            </option>
+                                            <option value="GQ" {{ $client_info->country == 'GQ' ? 'selected' : '' }}>
+                                                Equatorial Guinea
+                                            </option>
+                                            <option value="ER" {{ $client_info->country == 'ER' ? 'selected' : '' }}>
+                                                Eritrea</option>
+                                            <option value="EE" {{ $client_info->country == 'EE' ? 'selected' : '' }}>
+                                                Estonia</option>
+                                            <option value="ET" {{ $client_info->country == 'ET' ? 'selected' : '' }}>
+                                                Ethiopia</option>
+                                            <option value="FK" {{ $client_info->country == 'FK' ? 'selected' : '' }}>
+                                                Falkland Islands
+                                                (Malvinas)</option>
+                                            <option value="FJ" {{ $client_info->country == 'FJ' ? 'selected' : '' }}>
+                                                Fiji</option>
+                                            <option value="FI" {{ $client_info->country == 'FI' ? 'selected' : '' }}>
+                                                Finland</option>
+                                            <option value="FR" {{ $client_info->country == 'FR' ? 'selected' : '' }}>
+                                                France</option>
+                                            <option value="PF" {{ $client_info->country == 'PF' ? 'selected' : '' }}>
+                                                French Polynesia
+                                            </option>
+                                            <option value="GA" {{ $client_info->country == 'GA' ? 'selected' : '' }}>
+                                                Gabon</option>
+                                            <option value="GM" {{ $client_info->country == 'GM' ? 'selected' : '' }}>
+                                                Gambia</option>
+                                            <option value="GE" {{ $client_info->country == 'GE' ? 'selected' : '' }}>
+                                                Georgia</option>
+                                            <option value="DE" {{ $client_info->country == 'DE' ? 'selected' : '' }}>
+                                                Germany</option>
+                                            <option value="GH" {{ $client_info->country == 'GH' ? 'selected' : '' }}>
+                                                Ghana</option>
+                                            <option value="GI" {{ $client_info->country == 'GI' ? 'selected' : '' }}>
+                                                Gibraltar</option>
+                                            <option value="GR" {{ $client_info->country == 'GR' ? 'selected' : '' }}>
+                                                Greece</option>
+                                            <option value="GL" {{ $client_info->country == 'GL' ? 'selected' : '' }}>
+                                                Greenland</option>
+                                            <option value="GD" {{ $client_info->country == 'GD' ? 'selected' : '' }}>
+                                                Grenada</option>
+                                            <option value="GU" {{ $client_info->country == 'GU' ? 'selected' : '' }}>
+                                                Guam</option>
+                                            <option value="GT" {{ $client_info->country == 'GT' ? 'selected' : '' }}>
+                                                Guatemala</option>
+                                            <option value="GG" {{ $client_info->country == 'GG' ? 'selected' : '' }}>
+                                                Guernsey</option>
+                                            <option value="GN" {{ $client_info->country == 'GN' ? 'selected' : '' }}>
+                                                Guinea</option>
+                                            <option value="GW" {{ $client_info->country == 'GW' ? 'selected' : '' }}>
+                                                Guinea-Bissau
+                                            </option>
+                                            <option value="HT" {{ $client_info->country == 'HT' ? 'selected' : '' }}>
+                                                Haiti</option>
+                                            <option value="VA" {{ $client_info->country == 'VA' ? 'selected' : '' }}>
+                                                Holy See (Vatican
+                                                City State)</option>
+                                            <option value="HN" {{ $client_info->country == 'HN' ? 'selected' : '' }}>
+                                                Honduras</option>
+                                            <option value="HK" {{ $client_info->country == 'HK' ? 'selected' : '' }}>
+                                                Hong Kong</option>
+                                            <option value="HU" {{ $client_info->country == 'HU' ? 'selected' : '' }}>
+                                                Hungary</option>
+                                            <option value="IS" {{ $client_info->country == 'IS' ? 'selected' : '' }}>
+                                                Iceland</option>
+                                            <option value="IN" {{ $client_info->country == 'IN' ? 'selected' : '' }}>
+                                                India</option>
+                                            <option value="ID" {{ $client_info->country == 'ID' ? 'selected' : '' }}>
+                                                Indonesia</option>
+                                            <option value="IR" {{ $client_info->country == 'IR' ? 'selected' : '' }}>
+                                                Iran, Islamic
                                                 Republic of</option>
-                                            <option data-kt-flag="flags/thailand.svg" value="TH"
-                                                {{ $client_info->country == 'TH' ? 'selected' : '' }}>Thailand</option>
-                                            <option data-kt-flag="flags/togo.svg" value="TG"
-                                                {{ $client_info->country == 'TG' ? 'selected' : '' }}>Togo</option>
-                                            <option data-kt-flag="flags/tokelau.svg" value="TK"
-                                                {{ $client_info->country == 'TK' ? 'selected' : '' }}>Tokelau</option>
-                                            <option data-kt-flag="flags/tonga.svg" value="TO"
-                                                {{ $client_info->country == 'TO' ? 'selected' : '' }}>Tonga</option>
-                                            <option data-kt-flag="flags/trinidad-and-tobago.svg" value="TT"
-                                                {{ $client_info->country == 'TT' ? 'selected' : '' }}>Trinidad
-                                                and Tobago</option>
-                                            <option data-kt-flag="flags/tunisia.svg" value="TN"
-                                                {{ $client_info->country == 'TN' ? 'selected' : '' }}>Tunisia</option>
-                                            <option data-kt-flag="flags/turkey.svg" value="TR"
-                                                {{ $client_info->country == 'TR' ? 'selected' : '' }}>Turkey</option>
-                                            <option data-kt-flag="flags/turkmenistan.svg" value="TM"
-                                                {{ $client_info->country == 'TM' ? 'selected' : '' }}>Turkmenistan
+                                            <option value="IQ" {{ $client_info->country == 'IQ' ? 'selected' : '' }}>
+                                                Iraq</option>
+                                            <option value="IE" {{ $client_info->country == 'IE' ? 'selected' : '' }}>
+                                                Ireland</option>
+                                            <option value="IM" {{ $client_info->country == 'IM' ? 'selected' : '' }}>
+                                                Isle of Man
                                             </option>
-                                            <option data-kt-flag="flags/turks-and-caicos.svg" value="TC"
-                                                {{ $client_info->country == 'TC' ? 'selected' : '' }}>Turks and
-                                                Caicos Islands</option>
-                                            <option data-kt-flag="flags/tuvalu.svg" value="TV"
-                                                {{ $client_info->country == 'TV' ? 'selected' : '' }}>Tuvalu</option>
-                                            <option data-kt-flag="flags/uganda.svg" value="UG"
-                                                {{ $client_info->country == 'UG' ? 'selected' : '' }}>Uganda</option>
-                                            <option data-kt-flag="flags/ukraine.svg" value="UA"
-                                                {{ $client_info->country == 'UA' ? 'selected' : '' }}Ukraine</option>
-                                            <option data-kt-flag="flags/united-arab-emirates.svg" value="AE"
-                                                {{ $client_info->country == 'AE' ? 'selected' : '' }}>United
-                                                Arab Emirates</option>
-                                            <option data-kt-flag="flags/united-kingdom.svg" value="GB"
-                                                {{ $client_info->country == 'GB' ? 'selected' : '' }}>United Kingdom
+                                            <option value="IL" {{ $client_info->country == 'IL' ? 'selected' : '' }}>
+                                                Israel</option>
+                                            <option value="IT" {{ $client_info->country == 'IT' ? 'selected' : '' }}>
+                                                Italy</option>
+                                            <option value="JM" {{ $client_info->country == 'JM' ? 'selected' : '' }}>
+                                                Jamaica</option>
+                                            <option value="JP" {{ $client_info->country == 'JP' ? 'selected' : '' }}>
+                                                Japan</option>
+                                            <option value="JE" {{ $client_info->country == 'JE' ? 'selected' : '' }}>
+                                                Jersey</option>
+                                            <option value="JO" {{ $client_info->country == 'JO' ? 'selected' : '' }}>
+                                                Jordan</option>
+                                            <option value="KZ" {{ $client_info->country == 'KZ' ? 'selected' : '' }}>
+                                                Kazakhstan</option>
+                                            <option value="KE" {{ $client_info->country == 'KE' ? 'selected' : '' }}>
+                                                Kenya</option>
+                                            <option value="KI" {{ $client_info->country == 'KI' ? 'selected' : '' }}>
+                                                Kiribati</option>
+                                            <option value="KP" {{ $client_info->country == 'KP' ? 'selected' : '' }}>
+                                                Korea, Democratic
+                                                People's Republic of</option>
+                                            <option value="KW" {{ $client_info->country == 'KW' ? 'selected' : '' }}>
+                                                Kuwait</option>
+                                            <option value="KG" {{ $client_info->country == 'KG' ? 'selected' : '' }}>
+                                                Kyrgyzstan</option>
+                                            <option value="LA" {{ $client_info->country == 'LA' ? 'selected' : '' }}>
+                                                Lao People's
+                                                Democratic Republic</option>
+                                            <option value="LV" {{ $client_info->country == 'LV' ? 'selected' : '' }}>
+                                                Latvia</option>
+                                            <option value="LB" {{ $client_info->country == 'LB' ? 'selected' : '' }}>
+                                                Lebanon</option>
+                                            <option value="LS" {{ $client_info->country == 'LS' ? 'selected' : '' }}>
+                                                Lesotho</option>
+                                            <option value="LR" {{ $client_info->country == 'LR' ? 'selected' : '' }}>
+                                                Liberia</option>
+                                            <option value="LY" {{ $client_info->country == 'LY' ? 'selected' : '' }}>
+                                                Libya</option>
+                                            <option value="LI" {{ $client_info->country == 'LI' ? 'selected' : '' }}>
+                                                Liechtenstein
                                             </option>
-                                            <option data-kt-flag="flags/united-states.svg" value="US"
-                                                {{ $client_info->country == 'US' ? 'selected' : '' }}>United States
+                                            <option value="LT" {{ $client_info->country == 'LT' ? 'selected' : '' }}>
+                                                Lithuania</option>
+                                            <option value="LU" {{ $client_info->country == 'LU' ? 'selected' : '' }}>
+                                                Luxembourg</option>
+                                            <option value="MO" {{ $client_info->country == 'MO' ? 'selected' : '' }}>
+                                                Macao</option>
+                                            <option value="MG" {{ $client_info->country == 'MG' ? 'selected' : '' }}>
+                                                Madagascar</option>
+                                            <option value="MW" {{ $client_info->country == 'MW' ? 'selected' : '' }}>
+                                                Malawi</option>
+                                            <option value="MY" {{ $client_info->country == 'MY' ? 'selected' : '' }}>
+                                                Malaysia</option>
+                                            <option value="MV" {{ $client_info->country == 'MV' ? 'selected' : '' }}>
+                                                Maldives</option>
+                                            <option value="ML" {{ $client_info->country == 'ML' ? 'selected' : '' }}>
+                                                Mali</option>
+                                            <option value="MT" {{ $client_info->country == 'MT' ? 'selected' : '' }}>
+                                                Malta</option>
+                                            <option value="MH" {{ $client_info->country == 'MH' ? 'selected' : '' }}>
+                                                Marshall Islands
                                             </option>
-                                            <option data-kt-flag="flags/uruguay.svg" value="UY"
-                                                {{ $client_info->country == 'UY' ? 'selected' : '' }}>Uruguay</option>
-                                            <option data-kt-flag="flags/uzbekistan.svg" value="UZ"
-                                                {{ $client_info->country == 'UZ' ? 'selected' : '' }}>Uzbekistan
+                                            <option value="MQ" {{ $client_info->country == 'MQ' ? 'selected' : '' }}>
+                                                Martinique</option>
+                                            <option value="MR" {{ $client_info->country == 'MR' ? 'selected' : '' }}>
+                                                Mauritania</option>
+                                            <option value="MU" {{ $client_info->country == 'MU' ? 'selected' : '' }}>
+                                                Mauritius</option>
+                                            <option value="MX" {{ $client_info->country == 'MX' ? 'selected' : '' }}>
+                                                Mexico</option>
+                                            <option value="FM" {{ $client_info->country == 'FM' ? 'selected' : '' }}>
+                                                Micronesia,
+                                                Federated States of</option>
+                                            <option value="MD" {{ $client_info->country == 'MD' ? 'selected' : '' }}>
+                                                Moldova, Republic
+                                                of</option>
+                                            <option value="MC" {{ $client_info->country == 'MC' ? 'selected' : '' }}>
+                                                Monaco</option>
+                                            <option value="MN" {{ $client_info->country == 'MN' ? 'selected' : '' }}>
+                                                Mongolia</option>
+                                            <option value="ME" {{ $client_info->country == 'ME' ? 'selected' : '' }}>
+                                                Montenegro</option>
+                                            <option value="MS" {{ $client_info->country == 'MS' ? 'selected' : '' }}>
+                                                Montserrat</option>
+                                            <option value="MA" {{ $client_info->country == 'MA' ? 'selected' : '' }}>
+                                                Morocco</option>
+                                            <option value="MZ" {{ $client_info->country == 'MZ' ? 'selected' : '' }}>
+                                                Mozambique</option>
+                                            <option value="MM" {{ $client_info->country == 'MM' ? 'selected' : '' }}>
+                                                Myanmar</option>
+                                            <option value="NA" {{ $client_info->country == 'NA' ? 'selected' : '' }}>
+                                                Namibia</option>
+                                            <option value="NR" {{ $client_info->country == 'NR' ? 'selected' : '' }}>
+                                                Nauru</option>
+                                            <option value="NP" {{ $client_info->country == 'NP' ? 'selected' : '' }}>
+                                                Nepal</option>
+                                            <option value="NL" {{ $client_info->country == 'NL' ? 'selected' : '' }}>
+                                                Netherlands
                                             </option>
-                                            <option data-kt-flag="flags/vanuatu.svg" value="VU"
-                                                {{ $client_info->country == 'VU' ? 'selected' : '' }}>Vanuatu</option>
-                                            <option data-kt-flag="flags/venezuela.svg" value="VE"
-                                                {{ $client_info->country == 'VE' ? 'selected' : '' }}>Venezuela,
+                                            <option value="NZ" {{ $client_info->country == 'NZ' ? 'selected' : '' }}>
+                                                New Zealand
+                                            </option>
+                                            <option value="NI" {{ $client_info->country == 'NI' ? 'selected' : '' }}>
+                                                Nicaragua</option>
+                                            <option value="NE" {{ $client_info->country == 'NE' ? 'selected' : '' }}>
+                                                Niger</option>
+                                            <option value="NG" {{ $client_info->country == 'NG' ? 'selected' : '' }}>
+                                                Nigeria</option>
+                                            <option value="NU" {{ $client_info->country == 'NU' ? 'selected' : '' }}>
+                                                Niue</option>
+                                            <option value="NF" {{ $client_info->country == 'NF' ? 'selected' : '' }}>
+                                                Norfolk Island
+                                            </option>
+                                            <option value="MP" {{ $client_info->country == 'MP' ? 'selected' : '' }}>
+                                                Northern Mariana
+                                                Islands</option>
+                                            <option value="NO" {{ $client_info->country == 'NO' ? 'selected' : '' }}>
+                                                Norway</option>
+                                            <option value="OM" {{ $client_info->country == 'OM' ? 'selected' : '' }}>
+                                                Oman</option>
+                                            <option value="PK" {{ $client_info->country == 'PK' ? 'selected' : '' }}>
+                                                Pakistan</option>
+                                            <option value="PW" {{ $client_info->country == 'PW' ? 'selected' : '' }}>
+                                                Palau</option>
+                                            <option value="PS" {{ $client_info->country == 'PS' ? 'selected' : '' }}>
+                                                Palestinian
+                                                Territory, Occupied</option>
+                                            <option value="PA" {{ $client_info->country == 'PA' ? 'selected' : '' }}>
+                                                Panama</option>
+                                            <option value="PG" {{ $client_info->country == 'PG' ? 'selected' : '' }}>
+                                                Papua New Guinea
+                                            </option>
+                                            <option value="PY" {{ $client_info->country == 'PY' ? 'selected' : '' }}>
+                                                Paraguay</option>
+                                            <option value="PE" {{ $client_info->country == 'PE' ? 'selected' : '' }}>
+                                                Peru</option>
+                                            <option value="PH" {{ $client_info->country == 'PH' ? 'selected' : '' }}>
+                                                Philippines
+                                            </option>
+                                            <option value="PL" {{ $client_info->country == 'PL' ? 'selected' : '' }}>
+                                                Poland</option>
+                                            <option value="PT" {{ $client_info->country == 'PT' ? 'selected' : '' }}>
+                                                Portugal</option>
+                                            <option value="PR" {{ $client_info->country == 'PR' ? 'selected' : '' }}>
+                                                Puerto Rico
+                                            </option>
+                                            <option value="QA" {{ $client_info->country == 'QA' ? 'selected' : '' }}>
+                                                Qatar</option>
+                                            <option value="RO" {{ $client_info->country == 'RO' ? 'selected' : '' }}>
+                                                Romania</option>
+                                            <option value="RU" {{ $client_info->country == 'RU' ? 'selected' : '' }}>
+                                                Russian Federation
+                                            </option>
+                                            <option value="RW" {{ $client_info->country == 'RW' ? 'selected' : '' }}>
+                                                Rwanda</option>
+                                            <option value="BL" {{ $client_info->country == 'BL' ? 'selected' : '' }}>
+                                                Saint Barthélemy
+                                            </option>
+                                            <option value="KN" {{ $client_info->country == 'KN' ? 'selected' : '' }}>
+                                                Saint Kitts and
+                                                Nevis</option>
+                                            <option value="LC" {{ $client_info->country == 'LC' ? 'selected' : '' }}>
+                                                Saint Lucia
+                                            </option>
+                                            <option value="MF" {{ $client_info->country == 'MF' ? 'selected' : '' }}>
+                                                Saint Martin
+                                                (French part)</option>
+                                            <option value="VC" {{ $client_info->country == 'VC' ? 'selected' : '' }}>
+                                                Saint Vincent and
+                                                the Grenadines</option>
+                                            <option value="WS" {{ $client_info->country == 'WS' ? 'selected' : '' }}>
+                                                Samoa</option>
+                                            <option value="SM" {{ $client_info->country == 'SM' ? 'selected' : '' }}>
+                                                San Marino</option>
+                                            <option value="ST" {{ $client_info->country == 'ST' ? 'selected' : '' }}>
+                                                Sao Tome and
+                                                Principe</option>
+                                            <option value="SA" {{ $client_info->country == 'SA' ? 'selected' : '' }}>
+                                                Saudi Arabia
+                                            </option>
+                                            <option value="SN" {{ $client_info->country == 'SN' ? 'selected' : '' }}>
+                                                Senegal</option>
+                                            <option value="RS" {{ $client_info->country == 'RS' ? 'selected' : '' }}>
+                                                Serbia</option>
+                                            <option value="SC" {{ $client_info->country == 'SC' ? 'selected' : '' }}>
+                                                Seychelles</option>
+                                            <option value="SL" {{ $client_info->country == 'SL' ? 'selected' : '' }}>
+                                                Sierra Leone
+                                            </option>
+                                            <option value="SG" {{ $client_info->country == 'SG' ? 'selected' : '' }}>
+                                                Singapore</option>
+                                            <option value="SX" {{ $client_info->country == 'SX' ? 'selected' : '' }}>
+                                                Sint Maarten (Dutch
+                                                part)</option>
+                                            <option value="SK" {{ $client_info->country == 'SK' ? 'selected' : '' }}>
+                                                Slovakia</option>
+                                            <option value="SI" {{ $client_info->country == 'SI' ? 'selected' : '' }}>
+                                                Slovenia</option>
+                                            <option value="SB" {{ $client_info->country == 'SB' ? 'selected' : '' }}>
+                                                Solomon Islands
+                                            </option>
+                                            <option value="SO" {{ $client_info->country == 'SO' ? 'selected' : '' }}>
+                                                Somalia</option>
+                                            <option value="ZA" {{ $client_info->country == 'ZA' ? 'selected' : '' }}>
+                                                South Africa
+                                            </option>
+                                            <option value="KR" {{ $client_info->country == 'KR' ? 'selected' : '' }}>
+                                                South Korea
+                                            </option>
+                                            <option value="SS" {{ $client_info->country == 'SS' ? 'selected' : '' }}>
+                                                South Sudan
+                                            </option>
+                                            <option value="ES" {{ $client_info->country == 'ES' ? 'selected' : '' }}>
+                                                Spain</option>
+                                            <option value="LK" {{ $client_info->country == 'LK' ? 'selected' : '' }}>
+                                                Sri Lanka</option>
+                                            <option value="SD" {{ $client_info->country == 'SD' ? 'selected' : '' }}>
+                                                Sudan</option>
+                                            <option value="SR" {{ $client_info->country == 'SR' ? 'selected' : '' }}>
+                                                Suriname</option>
+                                            <option value="SZ" {{ $client_info->country == 'SZ' ? 'selected' : '' }}>
+                                                Swaziland</option>
+                                            <option value="SE" {{ $client_info->country == 'SE' ? 'selected' : '' }}>
+                                                Sweden</option>
+                                            <option value="CH" {{ $client_info->country == 'CH' ? 'selected' : '' }}>
+                                                Switzerland
+                                            </option>
+                                            <option value="SY" {{ $client_info->country == 'SY' ? 'selected' : '' }}>
+                                                Syrian Arab
+                                                Republic</option>
+                                            <option value="TW" {{ $client_info->country == 'TW' ? 'selected' : '' }}>
+                                                Taiwan, Province of
+                                                China</option>
+                                            <option value="TJ" {{ $client_info->country == 'TJ' ? 'selected' : '' }}>
+                                                Tajikistan</option>
+                                            <option value="TZ" {{ $client_info->country == 'TZ' ? 'selected' : '' }}>
+                                                Tanzania, United
+                                                Republic of</option>
+                                            <option value="TH" {{ $client_info->country == 'TH' ? 'selected' : '' }}>
+                                                Thailand</option>
+                                            <option value="TG" {{ $client_info->country == 'TG' ? 'selected' : '' }}>
+                                                Togo</option>
+                                            <option value="TK" {{ $client_info->country == 'TK' ? 'selected' : '' }}>
+                                                Tokelau</option>
+                                            <option value="TO" {{ $client_info->country == 'TQ' ? 'selected' : '' }}>
+                                                Tonga</option>
+                                            <option value="TT" {{ $client_info->country == 'TT' ? 'selected' : '' }}>
+                                                Trinidad and Tobago
+                                            </option>
+                                            <option value="TN" {{ $client_info->country == 'TN' ? 'selected' : '' }}>
+                                                Tunisia</option>
+                                            <option value="TR" {{ $client_info->country == 'TR' ? 'selected' : '' }}>
+                                                Turkey</option>
+                                            <option value="TM" {{ $client_info->country == 'TM' ? 'selected' : '' }}>
+                                                Turkmenistan
+                                            </option>
+                                            <option value="TC" {{ $client_info->country == 'TC' ? 'selected' : '' }}>
+                                                Turks and Caicos
+                                                Islands</option>
+                                            <option value="TV" {{ $client_info->country == 'TV' ? 'selected' : '' }}>
+                                                Tuvalu</option>
+                                            <option value="UG" {{ $client_info->country == 'UG' ? 'selected' : '' }}>
+                                                Uganda</option>
+                                            <option value="UA" {{ $client_info->country == 'UA' ? 'selected' : '' }}>
+                                                Ukraine</option>
+                                            <option value="AE" {{ $client_info->country == 'AE' ? 'selected' : '' }}>
+                                                United Arab
+                                                Emirates</option>
+                                            <option value="GB" {{ $client_info->country == 'GB' ? 'selected' : '' }}>
+                                                United Kingdom
+                                            </option>
+                                            <option value="US" {{ $client_info->country == 'US' ? 'selected' : '' }}>
+                                                United States
+                                            </option>
+                                            <option value="UY" {{ $client_info->country == 'UY' ? 'selected' : '' }}>
+                                                Uruguay</option>
+                                            <option value="UZ" {{ $client_info->country == 'UZ' ? 'selected' : '' }}>
+                                                Uzbekistan</option>
+                                            <option value="VU" {{ $client_info->country == 'VU' ? 'selected' : '' }}>
+                                                Vanuatu</option>
+                                            <option value="VE" {{ $client_info->country == 'VE' ? 'selected' : '' }}>
+                                                Venezuela,
                                                 Bolivarian Republic of</option>
-                                            <option data-kt-flag="flags/vietnam.svg" value="VN"
-                                                {{ $client_info->country == 'VN' ? 'selected' : '' }}>Vietnam</option>
-                                            <option data-kt-flag="flags/virgin-islands.svg" value="VI"
-                                                {{ $client_info->country == 'VI' ? 'selected' : '' }}>Virgin Islands
+                                            <option value="VN" {{ $client_info->country == 'VN' ? 'selected' : '' }}>
+                                                Vietnam</option>
+                                            <option value="VI" {{ $client_info->country == 'VI' ? 'selected' : '' }}>
+                                                Virgin Islands
                                             </option>
-                                            <option data-kt-flag="flags/yemen.svg" value="YE"
-                                                {{ $client_info->country == 'YE' ? 'selected' : '' }}>Yemen</option>
-                                            <option data-kt-flag="flags/zambia.svg" value="ZM"
-                                                {{ $client_info->country == 'ZM' ? 'selected' : '' }}>Zambia</option>
-                                            <option data-kt-flag="flags/zimbabwe.svg" value="ZW"
-                                                {{ $client_info->country == 'ZW' ? 'selected' : '' }}>Zimbabwe</option>
+                                            <option value="YE" {{ $client_info->country == 'YE' ? 'selected' : '' }}>
+                                                Yemen</option>
+                                            <option value="ZM" {{ $client_info->country == 'ZM' ? 'selected' : '' }}>
+                                                Zambia</option>
+                                            <option value="ZW" {{ $client_info->country == 'ZW' ? 'selected' : '' }}>
+                                                Zimbabwe</option>
                                         </select>
                                     </div>
                                     <!--end::Col-->
                                 </div>
                                 <!--end::Input group-->
+                                <div class="row mb-6">
+                                    <!--begin::Label-->
+                                    <label class="col-lg-4 col-form-label fw-bold fs-6">
+                                        <span class="required">{{ trans('message.Language') }}</span>
+                                    </label>
+
+
+
+                                    <!--end::Label-->
+                                    <!--begin::Col-->
+                                    <div class="col-lg-8 fv-row">
+                                        <select name="language" aria-label="Select..." data-control="select2"
+                                        data-placeholder="Select..." class="form-select form-select-solid">
+                                        <option value="en" {{ $client_info->language == 'en' ? 'selected' : ' ' }}>
+                                            English
+                                        </option>
+                                        <option value="de" {{ $client_info->language == 'de' ? 'selected' : ' ' }}>German
+                                        </option>
+
+                                    </select>
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
                                 <!--begin::Input group-->
                                 <div class="row mb-6">
                                     <!--begin::Label-->
@@ -1078,8 +1139,9 @@
                                     <!--begin::Col-->
                                     <div class="col-lg-8 fv-row">
                                         <input type="tel" name="telephone"
-                                            class="form-control form-control-lg form-control-solid" placeholder="021 111 111 111"
-                                            value="{{ $client_info->telephone }}" required />
+                                            class="form-control form-control-lg form-control-solid"
+                                            placeholder="021 111 111 111" value="{{ $client_info->telephone }}"
+                                            required />
                                     </div>
                                     <!--end::Col-->
                                 </div>
@@ -1088,7 +1150,7 @@
                                 <div class="row mb-6">
                                     <!--begin::Label-->
                                     <label class="col-lg-4 col-form-label fw-bold fs-6">
-                                        <span class="required">{{ trans('message.Mobile') }}</span>
+                                        <span class="">{{ trans('message.Mobile') }}</span>
                                     </label>
                                     <!--end::Label-->
                                     <!--begin::Col-->
@@ -1482,7 +1544,8 @@
                             <div class="card-footer d-flex justify-content-end py-6 px-9">
                                 <button type="reset"
                                     class="btn btn-light btn-active-light-primary me-2">{{ trans('message.Discard') }}</button>
-                                <button type="submit" class="btn btn-primary">{{ trans('message.Save Changes') }}</button>
+                                <button type="submit"
+                                    class="btn btn-primary">{{ trans('message.Save Changes') }}</button>
                             </div>
                             <!--end::Actions-->
                         </form>

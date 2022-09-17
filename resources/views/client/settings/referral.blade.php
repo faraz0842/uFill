@@ -12,7 +12,8 @@
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                     <!--begin::Description-->
-                    <small class="text-muted fs-7 fw-bold my-1 ms-1">Client > Settings > Affiliate Program</small>
+                    <small class="text-muted fs-7 fw-bold my-1 ms-1">{{ trans('message.clients') }} >
+                        {{ trans('message.settings') }} > {{ trans('message.affiliate_program') }}</small>
                     <!--end::Description-->
                 </div>
                 <!--end::Page title-->
@@ -75,7 +76,7 @@
                                         <!--end::Name-->
                                         <!--begin::Info-->
                                         <div class="d-flex flex-wrap fw-bold fs-6 mb-4 pe-2">
-                                            {{-- <div class="d-flex align-items-center text-gray-400 me-5 mb-2">
+                                            <div class="d-flex align-items-center text-gray-400 me-5 mb-2">
                                                 <!--begin::Svg Icon | path: icons/duotune/communication/com006.svg-->
                                                 <span class="svg-icon svg-icon-4 me-1">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -88,8 +89,8 @@
                                                             fill="currentColor" />
                                                     </svg>
                                                 </span>
-                                                <!--end::Svg Icon-->{{ $client_info->manager_director }}
-                                            </div> --}}
+                                                <!--end::Svg Icon-->{{ $client_info->first_name . ' ' . $client_info->last_name }}
+                                            </div>
                                             <div class="d-flex align-items-center text-gray-400 me-5 mb-2">
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen018.svg-->
                                                 <span class="svg-icon svg-icon-4 me-1">
@@ -103,9 +104,9 @@
                                                             fill="currentColor" />
                                                     </svg>
                                                 </span>
-                                                <!--end::Svg Icon-->{{ $client_info->house_number }}
-                                                {{ $client_info->street }} {{ $client_info->plz }}
-                                                {{ $client_info->state }}
+                                                <!--end::Svg Icon-->{{ $client_info->street }}
+                                                {{ $client_info->house_number }} , {{ $client_info->plz }}
+                                                {{ $client_info->state }} {{ $client_info->country }}
                                             </div>
                                             <div class="d-flex align-items-center text-gray-400 mb-2">
                                                 <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
@@ -153,7 +154,7 @@
                                                     </span>
                                                     <!--end::Svg Icon-->
                                                     @if ($client_info->name == 'shipment')
-                                                        <div class="fs-2 fw-bolder" data-kt-countup="true"
+                                                        <div class="fs-2 fw-bolder" data-kt-countup="false"
                                                             data-kt-countup-value="0" data-kt-countup-suffix="€">
                                                             N/A
                                                         </div>
@@ -227,15 +228,20 @@
                                                         </svg>
                                                     </span>
                                                     <!--end::Svg Icon-->
-                                                    <div class="fs-2 fw-bolder" data-kt-countup="true"
+                                                    @if ($client_info->name == 'shipment')
+                                                        <div class="fs-2 fw-bolder" >N/A
+                                                        </div>
+                                                    @else
+                                                        <div class="fs-2 fw-bolder" data-kt-countup="true"
                                                         data-kt-countup-value="{{ $referred_clients_count }}">
                                                         {{ $referred_clients_count }}
                                                     </div>
+                                                    @endif
                                                 </div>
                                                 <!--end::Number-->
                                                 <!--begin::Label-->
                                                 <div class="fw-bold fs-6 text-gray-400">
-                                                    {{ trans('message.Total Clients') }}</div>
+                                                    {{ trans('message.total customers') }}</div>
                                                 <!--end::Label-->
                                             </div>
                                             <!--end::Stat-->
@@ -270,11 +276,21 @@
                             </li>
                             <!--end::Nav item-->
                             <!--begin::Nav item-->
+                            @if (session('package_name') != 'shipment')
+                                <li class="nav-item mt-2">
+                                    <a class="nav-link text-active-primary ms-0 me-10 py-5 "
+                                        href="{{ Route('client.api') }}">{{ trans('message.apis/integration') }}</a>
+                                </li>
+                            @endif
+                            <!--end::Nav item-->
                             <li class="nav-item mt-2">
                                 <a class="nav-link text-active-primary ms-0 me-10 py-5 "
-                                    href="{{ Route('client.api') }}">{{ trans('message.apis/integration') }}</a>
+                                    href="{{ Route('client.profile', session('client_id')) }}">{{ trans('message.security') }}</a>
                             </li>
-                            <!--end::Nav item-->
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5 "
+                                    href="{{ Route('client.package.shipment') }}">{{ trans('message.package_shipment') }}</a>
+                            </li>
                         </ul>
                         <!--begin::Navs-->
                     </div>
@@ -309,7 +325,7 @@
                                         class="fs-4 fw-bold text-primary pb-1 px-2">{{ trans('message.referred clients') }}</span>
                                     <span class="fs-lg-2tx fw-bolder d-flex justify-content-center">
                                         <span data-kt-countup="true"
-                                            data-kt-countup-value="{{ $referred_clients }}">{{ $referred_clients }}</span></span>
+                                            data-kt-countup-value="{{ $referred_clients_count }}">{{ $referred_clients_count }}</span></span>
                                 </div>
                             </div>
                             <!--end::Col-->
@@ -320,72 +336,81 @@
                 </div>
                 <!--end::Referral program-->
                 <div class="card card-flush pt-3 mb-5 mb-xl-10">
-                            <!--begin::Card header-->
-                            <div class="card-header pt-7">
-                                <!--begin::Title-->
-                                <h3 class="card-title align-items-start flex-column mb-5">
-                                    <span
-                                        class="card-label fw-bolder text-dark">{{ trans('message.Referral Clients') }}</span>
-                                </h3>
-                                <!--end::Title-->
-                                <!--begin::Actions-->
-                                <!--end::Actions-->
-                            </div>
-                            <!--end::Card header-->
-                            <!--begin::Card body-->
-                            <div class="card-body pt-2">
-                                <!--begin::Table-->
-                                <table class="table align-middle table-row-dashed fs-6 gy-3" id="kt_table_widget_5_table">
-                                    <!--begin::Table head-->
-                                    <thead>
-                                        <!--begin::Table row-->
-                                        <tr class="text-center text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                            <th class="text-center pe-3 min-w-25px">{{ trans('message.id') }}</th>
-                                            <th class="text-center pe-3 min-w-50px">{{ trans('message.Company Name') }}
-                                            </th>
-                                            {{-- <th class="text-center pe-3 min-w-150px">{{trans('message.Status')}}</th> --}}
-                                            <th class="text-center pe-3 min-w-50px">
-                                                {{ trans('message.Registered At') }}
-                                            </th>
-                                            <th class="text-center pe-3 min-w-50px">
-                                                {{ trans('message.Advertised By') }}
-                                            </th>
+                    <!--begin::Card header-->
+                    <div class="card-header pt-7">
+                        <!--begin::Title-->
+                        <h3 class="card-title align-items-start flex-column mb-5">
+                            <span class="card-label fw-bolder text-dark">{{ trans('message.Referral Clients') }}</span>
+                        </h3>
+                        <!--end::Title-->
+                        <!--begin::Actions-->
+                        <!--end::Actions-->
+                    </div>
+                    <!--end::Card header-->
+                    <!--begin::Card body-->
+                    <div class="card-body pt-2">
+                        <!--begin::Table-->
+                        <table class="table align-middle table-row-dashed fs-6 gy-3" id="kt_table_widget_5_table">
+                            <!--begin::Table head-->
+                            <thead>
+                                <!--begin::Table row-->
+                                <tr class="text-center text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                    <th class="text-center pe-3 min-w-25px">{{ trans('message.id') }}</th>
+                                    <th class="text-center pe-3 min-w-50px">{{ trans('message.Company Name') }}
+                                    </th>
 
-                                        </tr>
-                                        <!--end::Table row-->
-                                    </thead>
-                                    <!--end::Table head-->
-                                    <!--begin::Table body-->
-                                    <tbody class="fw-bolder text-gray-600">
-                                        @foreach ($affiliated_at as $affiliated)
-                                            <tr>
-                                                <!--begin::Shipment ID-->
-                                                <td class="text-center">{{ $affiliated->id }}</td>
-                                                <!--end::Shipment ID-->
-                                                <!--begin::Transport-->
-                                                <td class="text-center">{{ $affiliated->company_name }}</td>
-                                                <!--end::Transport-->
-                                                <!--begin::Type-->
-                                                {{-- <td class="text-center">{{$affiliated->status}}</td> --}}
-                                                <!--end::Type-->
-                                                <!--begin::Weight-->
-                                                <td class="text-center">
-                                                    {{ date('d-m-Y', strtotime($affiliated->created_at)) }}</td>
-                                                <!--end::Weight-->
-                                                <!--begin::Size-->
-                                                <td class="text-center">
-                                                    {{ $affiliated->first_name . ' ' . $affiliated->last_name }}</td>
-                                                <!--end::price-->
+                                    <th class="text-center pe-3 min-w-50px">
+                                        {{ trans('message.Registered At') }}
+                                    </th>
+                                    <th class="text-center pe-3 min-w-50px">
+                                        {{ trans('message.Advertised By') }}
+                                    </th>
+                                    <th class="text-center pe-3 min-w-150px">{{trans('message.Status')}}</th>
 
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                    <!--end::Table body-->
-                                </table>
-                                <!--end::Table-->
-                            </div>
-                            <!--end::Card body-->
-                        </div>
+                                </tr>
+                                <!--end::Table row-->
+                            </thead>
+                            <!--end::Table head-->
+                            <!--begin::Table body-->
+                            <tbody class="fw-bolder text-gray-600">
+                                @foreach ($affiliated_at as $affiliated)
+                                    <tr>
+                                        <!--begin::Shipment ID-->
+                                        <td class="text-center">{{ $affiliated->id }}</td>
+                                        <!--end::Shipment ID-->
+                                        <!--begin::Transport-->
+                                        <td class="text-center">{{ $affiliated->company_name }}</td>
+                                        <!--end::Transport-->
+                                        <!--begin::Type-->
+
+                                        <!--end::Type-->
+                                        <!--begin::Weight-->
+                                        <td class="text-center">
+                                            {{ date('d-m-Y', strtotime($affiliated->created_at)) }}</td>
+                                        <!--end::Weight-->
+                                        <!--begin::Size-->
+                                        <td class="text-center">
+                                            {{ session('name') }}</td>
+                                        <!--end::price-->
+                                        <td class="text-center">
+                                            @if ($affiliated->stripe_status == 'active')
+                                                    <span
+                                                        class="badge badge-light-success">{{ $affiliated->stripe_status }}</span>
+                                                @else
+                                                    <span
+                                                        class="badge badge-light-danger">{{ $affiliated->stripe_status }}</span>
+                                                @endif
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            <!--end::Table body-->
+                        </table>
+                        <!--end::Table-->
+                    </div>
+                    <!--end::Card body-->
+                </div>
             </div>
             <!--end::Container-->
         </div>

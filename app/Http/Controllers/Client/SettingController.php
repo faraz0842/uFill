@@ -8,7 +8,10 @@ use App\Models\AdminCompany;
 use App\Models\AffiliateLink;
 use App\Models\ApiIntegration;
 use App\Models\Client;
+use App\Models\ShipmentpackageFee;
+use App\Models\ShippingDetail;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,39 +22,49 @@ class SettingController extends Controller
     {
         //$referred_clients = AffiliateLink::where('affiliate_from_admin',session('id'))->pluck('affiliate_to');
         // $total_revenue = Transaction::select(DB::raw('sum(amount - discount_price) as total'))->whereIn('client_id', $referred_clients)->first();
-        $total_revenue = Transaction::select(DB::raw('sum(amount - discount_price) as total'))->where('client_id',session('client_id'))->first();
+        $total_revenue = Transaction::select(DB::raw('sum(amount - discount_price) as total'))->where('client_id', session('client_id'))->first();
 
         //return response()->json($total_revenue);
-        $referred_clients_count = AffiliateLink::where('affiliate_from',session('client_id'))->count();
+        $referred_clients_count = AffiliateLink::where('affiliate_from', session('client_id'))->count();
 
         $total_clients = Client::count();
 
         $admin_user = Admin::count();
 
         $setting = Admin::all();
-        $client_info = Client::where('id',session('client_id'))->join('variants','variants.variant_id','clients.account_type')->first();
-        return view('client.settings.settings')->with('setting',$setting)->with('client_info',$client_info)
-                                              ->with('total_revenue',$total_revenue)->with('referred_clients_count',$referred_clients_count)
-                                              ->with('total_clients',$total_clients)->with('admin_user',$admin_user);
+        $client_info = Client::where('id', session('client_id'))->join('variants', 'variants.variant_id', 'clients.account_type')->first();
+        return view('client.settings.settings')->with('setting', $setting)->with('client_info', $client_info)
+            ->with('total_revenue', $total_revenue)->with('referred_clients_count', $referred_clients_count)
+            ->with('total_clients', $total_clients)->with('admin_user', $admin_user);
     }
 
     public function updateInfo(Request $request)
     {
 
 
-        try {
-             $image = $request->file('profile_picture');
-                if (isset($image)) {
-                    $image_name = $image->getClientOriginalName();
-                    $image_name = str_replace(" ", "_", time() . $image_name);
-                    $image_path = 'upload/CompanyProfile/';
-                    $image->move($image_path, $image_name);
-                    $profile_picture = $image_path.$image_name;
-                } else {
-                    $profile_picture = $request->previous_profile;
-                }
 
-            Client::where('id',session('client_id'))->update([
+
+        try {
+
+            //return $request->previous_profile;
+            $image = $request->file('profile_picture');
+            if (isset($image)) {
+                $image_name = $image->getClientOriginalName();
+                $image_name = str_replace(" ", "_", time() . $image_name);
+                $image_path = 'upload/CompanyProfile/';
+                $image->move($image_path, $image_name);
+                $profile_picture = $image_path . $image_name;
+            } else if ($request->previous_profile == 1) {
+                $profile_picture = null;
+            } else {
+                $profile_picture = $request->previous_profile;
+            }
+
+
+            //return $profile_picture;
+            Client::where('id', session('client_id'))->update([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
                 'profile_picture' => $profile_picture,
                 'company_name' => $request->company_name,
                 'house_number' => $request->house_number,
@@ -60,51 +73,80 @@ class SettingController extends Controller
                 'state' => $request->state,
                 'country' => $request->country,
                 'email' => $request->email,
+                'language' => $request->language,
                 'mobile_number' => $request->mobile_number,
                 'telephone' => $request->telephone,
                 'website' => $request->website,
                 'vat_id' => $request->vat,
                 'registration_number' => $request->registration_number,
+                'referral_link' => 'ufill.devatease.com/client/register/' . $request->company_name . '-' . session('client_id'),
             ]);
+
+
+
+            session([
+                'profile_picture' => $profile_picture,
+                'company_name' => $request->company_name,
+            ]);
+
+            $client = Client::where('id', session('client_id'))->first();
+            //updating customer in stripe
+            $stripe = new \Stripe\StripeClient(
+                'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
+            );
+            $stripe->customers->update(
+                $client->stripe_id,
+                [
+                    'address' => [
+                        'country' => $request->country,
+                        'line1' => $request->street,
+                        'line2' => $request->house_number,
+                        'postal_code' => $request->zip_code,
+                        'state' => $request->state,
+                        'city' => $request->state
+                    ],
+                    'email' => $request->email,
+                    'name' => $request->first_name . ' ' . $request->last_name,
+                    'phone' => $request->telephone,
+                ]
+            );
 
             return redirect()->Route('client.overview');
         } catch (Exception $th) {
             return back()->withError($th->getMessage())->withInput();
         }
-
-
     }
 
     public function overview()
     {
         //$referred_clients = AffiliateLink::where('affiliate_from_admin',session('id'))->pluck('affiliate_to');
         // $total_revenue = Transaction::select(DB::raw('sum(amount - discount_price) as total'))->whereIn('client_id', $referred_clients)->first();
-        $total_revenue = Transaction::select(DB::raw('sum(amount - discount_price) as total'))->where('client_id',session('client_id'))->first();
+        $total_revenue = Transaction::select(DB::raw('sum(amount - discount_price) as total'))->where('client_id', session('client_id'))->first();
 
         //return response()->json($total_revenue);
-        $referred_clients_count = AffiliateLink::where('affiliate_from',session('client_id'))->count();
+        $referred_clients_count = AffiliateLink::where('affiliate_from', session('client_id'))->count();
 
         $total_clients = Client::count();
         $admin_user = Admin::count();
 
-        $client_info = Client::where('id',session('client_id'))->join('variants','variants.variant_id','clients.account_type')
-                             ->join('variants_plan','variants_plan.variant_id','clients.account_type')->first();
+        $client_info = Client::where('id', session('client_id'))->join('variants', 'variants.variant_id', 'clients.account_type')
+            ->join('variants_plan', 'variants_plan.variant_id', 'clients.account_type')->first();
 
-        return view('client.settings.overview')->with('client_info',$client_info)
-                                              ->with('total_revenue',$total_revenue)
-                                              ->with('referred_clients_count',$referred_clients_count)
-                                              ->with('total_clients',$total_clients)
-                                              ->with('admin_user',$admin_user);
+        return view('client.settings.overview')->with('client_info', $client_info)
+            ->with('total_revenue', $total_revenue)
+            ->with('referred_clients_count', $referred_clients_count)
+            ->with('total_clients', $total_clients)
+            ->with('admin_user', $admin_user);
     }
 
     public function api()
     {
-        $referred_clients = AffiliateLink::where('affiliate_from_admin',session('id'))->pluck('affiliate_to');
+        $referred_clients = AffiliateLink::where('affiliate_from_admin', session('id'))->pluck('affiliate_to');
         // $total_revenue = Transaction::select(DB::raw('sum(amount - discount_price) as total'))->whereIn('client_id', $referred_clients)->first();
         $total_revenue = Transaction::select(DB::raw('sum(amount - discount_price) as total'))->first();
 
         //return response()->json($total_revenue);
-        $referred_clients_count = AffiliateLink::where('affiliate_from',session('client_id'))->count();
+        $referred_clients_count = AffiliateLink::where('affiliate_from', session('client_id'))->count();
 
         $total_clients = Client::count();
 
@@ -112,41 +154,88 @@ class SettingController extends Controller
 
         $api_integration = ApiIntegration::all();
 
-        $dhl_count = ApiIntegration::where('platform','dhl')->count();
-        $dpd_count = ApiIntegration::where('platform','dpd')->count();
-        $ups_count = ApiIntegration::where('platform','ups')->count();
-        $amazon_count = ApiIntegration::where('platform','amazon')->count();
-        $ebay_count = ApiIntegration::where('platform','ebay')->count();
-        $shopify_count = ApiIntegration::where('platform','shopify')->count();
+        $dhl_count = ApiIntegration::where('platform', 'dhl')->count();
+        $dpd_count = ApiIntegration::where('platform', 'dpd')->count();
+        $ups_count = ApiIntegration::where('platform', 'ups')->count();
+        $amazon_count = ApiIntegration::where('platform', 'amazon')->count();
+        $ebay_count = ApiIntegration::where('platform', 'ebay')->count();
+        $shopify_count = ApiIntegration::where('platform', 'shopify')->count();
 
 
-        $client_info = Client::where('id',session('client_id'))->join('variants','variants.variant_id','clients.account_type')->first();
-        return view('client.settings.api')->with('client_info',$client_info)->with('api_integration',$api_integration)
-                                         ->with('dhl_count',$dhl_count)->with('dpd_count',$dpd_count)
-                                         ->with('total_revenue',$total_revenue)->with('referred_clients_count',$referred_clients_count)
-                                         ->with('total_clients',$total_clients)->with('ups_count',$ups_count)
-                                         ->with('amazon_count',$amazon_count)->with('ebay_count',$ebay_count)
-                                         ->with('shopify_count',$shopify_count)->with('admin_user',$admin_user);
+        $client_info = Client::where('id', session('client_id'))->join('variants', 'variants.variant_id', 'clients.account_type')->first();
+        return view('client.settings.api')->with('client_info', $client_info)->with('api_integration', $api_integration)
+            ->with('dhl_count', $dhl_count)->with('dpd_count', $dpd_count)
+            ->with('total_revenue', $total_revenue)->with('referred_clients_count', $referred_clients_count)
+            ->with('total_clients', $total_clients)->with('ups_count', $ups_count)
+            ->with('amazon_count', $amazon_count)->with('ebay_count', $ebay_count)
+            ->with('shopify_count', $shopify_count)->with('admin_user', $admin_user);
     }
 
     public function referral()
     {
-        $referred_clients = AffiliateLink::where('affiliate_from',session('client_id'))->pluck('affiliate_to');
-        $total_revenue = Transaction::select(DB::raw('sum(amount - discount_price) as total'))->where('client_id',session('client_id'))->first();
+        $referred_clients = AffiliateLink::where('affiliate_from', session('client_id'))->pluck('affiliate_to');
+        $total_revenue = Transaction::select(DB::raw('sum(amount - discount_price) as total'))->where('client_id', session('client_id'))->first();
 
         //return response()->json($total_revenue);
-        $referred_clients_count = AffiliateLink::where('affiliate_from',session('client_id'))->count();
+        $referred_clients_count = AffiliateLink::where('affiliate_from', session('client_id'))->count();
 
         $total_clients = Client::count();
 
-        $client_info = Client::where('id',session('client_id'))->join('variants','variants.variant_id','clients.account_type')->first();
+        $client_info = Client::where('id', session('client_id'))->join('variants', 'variants.variant_id', 'clients.account_type')->first();
 
-        $affiliated_at = AffiliateLink::where('affiliate_from',session('client_id'))->join('clients','clients.id','affiliate_link.affiliate_from')->get();
+        $affiliated_at = AffiliateLink::where('affiliate_from', session('client_id'))
+            ->join('clients', 'clients.id', 'affiliate_link.affiliate_to')
+            ->join('subscriptions', 'subscriptions.client_id', 'affiliate_link.affiliate_to')->get();
 
+        //return response()->json($affiliated_at);
         $total_clients = Client::count();
-        return view('client.settings.referral')->with('client_info',$client_info)
-                                               ->with('referred_clients',$referred_clients)->with('affiliated_at',$affiliated_at)
-                                               ->with('total_revenue',$total_revenue)->with('referred_clients_count',$referred_clients_count)
-                                               ->with('total_clients',$total_clients);
+        return view('client.settings.referral')->with('client_info', $client_info)
+            ->with('referred_clients', $referred_clients)->with('affiliated_at', $affiliated_at)
+            ->with('total_revenue', $total_revenue)->with('referred_clients_count', $referred_clients_count)
+            ->with('total_clients', $total_clients);
+    }
+
+
+    public function packageShipment()
+    {
+        $referred_clients = AffiliateLink::where('affiliate_from', session('client_id'))->pluck('affiliate_to');
+        $total_revenue = Transaction::select(DB::raw('sum(amount - discount_price) as total'))->where('client_id', session('client_id'))->first();
+        //return response()->json($total_revenue);
+        $referred_clients_count = AffiliateLink::where('affiliate_from', session('client_id'))->count();
+        $total_clients = Client::count();
+        $client_info = Client::where('id', session('client_id'))->join('variants', 'variants.variant_id', 'clients.account_type')->first();
+        $shipping_details = ShippingDetail::all();
+        $shipment_package_fee = ShipmentpackageFee::where('package', $client_info->shipping_quantity)->first();
+        $affiliated_at = AffiliateLink::where('affiliate_from', session('client_id'))->join('clients', 'clients.id', 'affiliate_link.affiliate_from')->get();
+        $total_clients = Client::count();
+
+        //shipment query by filter
+        $today_shipments = ShippingDetail::whereDate('created_at', Carbon::today())->get();
+        $this_week_shipments = ShippingDetail::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
+        $last_week_shipments = ShippingDetail::whereBetween('created_at', [Carbon::now()->subWeek()->startOfWeek(), Carbon::now()->subWeek()->endOfWeek()])->get();
+        $this_month_shipments = ShippingDetail::whereMonth('created_at', Carbon::now()->month)->get();
+        $last_month_shipments = ShippingDetail::whereBetween('created_at', [Carbon::now()->subMonth()->startOfMonth(), Carbon::now()->subMonth()->endOfMonth()])->get();
+        $this_year_shipments = ShippingDetail::whereYear('created_at', date('Y'))->get();
+        $last_year_shipments = ShippingDetail::whereMonth('created_at', Carbon::now()->month)->get();
+
+        return view('client.settings.package_shipment')->with('client_info', $client_info)->with('referred_clients', $referred_clients)
+            ->with('shipping_details', $shipping_details)->with('affiliated_at', $affiliated_at)
+            ->with('total_revenue', $total_revenue)->with('referred_clients_count', $referred_clients_count)
+            ->with('total_clients', $total_clients)->with('shipment_package_fee', $shipment_package_fee)
+            ->with('this_week_shipments', $this_week_shipments)->with('last_week_shipments', $last_week_shipments)
+            ->with('this_month_shipments', $this_month_shipments)->with('today_shipments', $today_shipments)
+            ->with('last_month_shipments', $last_month_shipments)->with('this_year_shipments', $this_year_shipments)
+            ->with('last_year_shipments', $last_year_shipments);
+    }
+
+    public function updateShippingQuantity(Request $request, $id)
+    {
+        Client::where('id', $id)->update([
+
+            'shipping_quantity' => $request->shipping_quantity
+
+        ]);
+
+        return back()->with('message', 'Shipping Quantity have been updated');
     }
 }

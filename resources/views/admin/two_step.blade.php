@@ -32,6 +32,17 @@
     <!--begin::Main-->
     <!--begin::Root-->
     <div class="d-flex flex-column flex-root">
+        <div class="card-header " >
+            <a href="{{ url('lang/en') }}" class="menu-link d-flex m-2" style="float:right;">
+                <span class="symbol symbol-20px me-4">
+                    <img class="rounded-1" src="{{ asset('assets/media/flags/united-states.svg') }}" alt="" />
+                </span></a>
+
+            <a href="{{ url('lang/de') }}" class="menu-link d-flex m-2" style="float:right">
+                <span class="symbol symbol-20px me-4">
+                    <img class="rounded-1" src="{{ asset('assets/media/flags/germany.svg') }}" alt="" />
+                </span></a>
+        </div>
         <!--begin::Authentication - Two-stes -->
         <div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed" style="background-image: url()">
             <!--begin::Content-->
@@ -105,9 +116,9 @@
                     <!--begin::Notice-->
                     <div class="text-center fw-bold fs-5">
                         <span class="text-muted me-1">{{ trans('message.You have not received an e-mail? Resend or contact customer support.') }}</span>
-                        <a href="#" class="link-primary fw-bolder fs-5 me-1">Erneut senden</a>
-                        <span class="text-muted me-1">oder</span>
-                        <a href="#" class="link-primary fw-bolder fs-5">Kundensupport kontaktieren</a>.
+                        <a href="{{Route('admin.login')}}" class="link-primary fw-bolder fs-5 me-1">{{ trans('message.resend_code') }}</a>
+                        <span class="text-muted me-1">{{trans('message.or')}}</span>
+                        <a href="https://ufill.de/help" target="_blank" class="link-primary fw-bolder fs-5">{{trans('message.contact customer support')}}</</a>.
                     </div>
                     <!--end::Notice-->
                 </div>

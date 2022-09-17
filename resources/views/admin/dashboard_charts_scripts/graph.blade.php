@@ -5,6 +5,7 @@
     init: function () {
         !(function () {
             var e = document.getElementById("total_evenue_chart");
+            var client_months = @json($client_month);
             if (e) {
                 var t = parseInt(KTUtil.css(e, "height")),
                     a =
@@ -19,7 +20,7 @@
                                 //     35, 25, 45, 15, 60, 50, 57, 35, 70, 40, 45,
                                 //     25, 45, 30, 70,
                                 // ],
-                                data : @json($amount),
+                                data : @json($t_revenue),
                             },
 
                         ],
@@ -65,8 +66,9 @@
                         tooltip: {
                             style: { fontSize: "12px" },
                             x: {
-                                formatter: function (e) {
-                                    return "month " + e;
+                                formatter: function (e,client_months) {
+                                    console.log(client_months[1]);
+                                    return "month " + client_months;
                                 },
                             },
                             y: {
@@ -162,12 +164,15 @@
                             style: { fontSize: "12px" },
                             x: {
                                 formatter: function (e) {
-                                    return " ";
+                                    @json($client_month).forEach(element => {
+                                        return "Month" ;
+                                    });
+
                                 },
                             },
                             y: {
                                 formatter: function (e) {
-                                    return @json($clients->count()) +  '(' + e + ')'  + '(' + 0 + ')';
+                                    return @json($clients->count()) +  '(' + @json($active_client_count) + ')'  + '(' + @json($cancelled_clients) + ')' + '(' + 'xxx' + ')';
                                 },
                             },
                         },

@@ -1,4 +1,4 @@
-@extends('admin.master')
+@extends('client.master')
 
 @section('content')
     <!--begin::Content-->
@@ -13,7 +13,7 @@
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                     <!--begin::Description-->
-                    <small class="text-muted fs-7 fw-bold my-1 ms-1">{{ trans('message.administrator') }} >
+                    <small class="text-muted fs-7 fw-bold my-1 ms-1">
                         {{ trans('message.clients') }} > {{ trans('message.invoice') }} >
                         #{{ $invoice->number }}</small>
                     <!--end::Description-->
@@ -114,7 +114,6 @@
                                                     <br />{{ $company_detail->country }}
                                                     <br />{{ $company_detail->email }}
                                                     <br />{{ $company_detail->phone }}
-
                                                 </div>
                                                 <!--end::Description-->
                                             </div>
@@ -156,7 +155,7 @@
                                                             <th class="min-w-80px text-center pb-2">
                                                                 {{ trans('message.Price') }}</th>
                                                             <th class="min-w-100px text-center pb-2">
-                                                                {{ trans('message.In total') }} ({{ trans('message.excl. taxes') }})</th>
+                                                                {{ trans('message.In total') }}</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -236,7 +235,7 @@
                                                                 </div>
                                                             @else
                                                             <div class="text-end fw-bolder fs-6 text-gray-800">
-                                                                    {{ $invoice->discount->coupon->percent_off}}%
+                                                                    {{ Helper::money_format('EUR', 'de_DE', $invoice->discount->coupon->percent_off)}}%
                                                                 </div>
 
                                                             @endif
@@ -272,12 +271,12 @@
                                                             {{ trans('message.Taxes 19') }}</div>
                                                         <!--end::Accountname-->
                                                         <!--begin::Label-->
-                                                        {{-- @php
+                                                        @php
                                                             $tax = $invoice->total - ($invoice->total / 1.19);
-                                                        @endphp --}}
-                                                        {{-- <div class="text-end fw-bolder fs-6 text-gray-800">
-                                                            {{ Helper::money_format('EUR', 'de_DE', round($tax)) }}€</div> --}}
-                                                        <div class="text-end fw-bolder fs-6 text-gray-800">{{ Helper::money_format('EUR', 'de_DE', round($invoice->tax))}}€</div>
+                                                        @endphp
+                                                        <div class="text-end fw-bolder fs-6 text-gray-800">
+                                                            {{ Helper::money_format('EUR', 'de_DE', round($tax)) }}€</div>
+                                                        {{-- <div class="text-end fw-bolder fs-6 text-gray-800">{{$tax}}€</div> --}}
                                                         <!--end::Label-->
                                                     </div>
                                                     <!--end::Item-->
@@ -289,14 +288,13 @@
                                                         <!--end::Code-->
                                                         <!--begin::Label-->
                                                         <div class="text-end fw-bolder fs-6 text-gray-800">
-                                                            {{ Helper::money_format('EUR', 'de_DE', $invoice->total) }}€</div>
+                                                            {{ Helper::money_format('EUR', 'de_DE', round($invoice->total)) }}€</div>
                                                         <!--end::Label-->
                                                     </div>
                                                     <!--end::Item-->
                                                 </div>
                                                 <!--end::Section-->
                                             </div>
-                                            <br><br>
                                             <!--end::Container-->
                                             <div class="row d-flex justify-content-center">
                                                 @if ($client->location == "Germany")

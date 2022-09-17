@@ -34,6 +34,106 @@ class DashboardController extends Controller
 
     public function dashboard()
     {
+
+        // $myRestApiPostURL = curl_init('https://cloud-stage.dpd.com/api/v1/setOrder');
+
+        // /* Order Settings */
+        // $OrderAction = 'startOrder';
+        // $ShipDate = '2022-09-01';
+        // $LabelSize = 'PDF_A4';
+        // $LabelStartPosition = 'UpperLeft';
+
+        // /* Ship address */
+        // $Company = utf8_encode('Mustermann AG');
+        // $Gender = utf8_encode('male');
+        // $Salutation = utf8_encode('Mr.');
+        // $FirstName = utf8_encode('Max');
+        // $LastName = utf8_encode('Mustermann');
+        // $Name = utf8_encode('Max Mustermann');
+        // $Street = utf8_encode('Wailandtstr.');
+        // $HouseNo = utf8_encode('1');
+        // $ZipCode = utf8_encode('63741');
+        // $City = utf8_encode('Aschaffenburg');
+        // $Country = utf8_encode('DEU');
+        // $State = utf8_encode('');
+        // $Phone = utf8_encode('+49 6021 123 456');
+        // $Mail = utf8_encode('m.mustermann@mustermann.com');
+
+        // /* Parcel data */
+        // $YourInternalID = utf8_encode('123');
+        // $Content = utf8_encode('Smartphone');
+        // $Weight = utf8_encode('13.5');
+        // $Reference1 = utf8_encode('Customer email');
+        // $Reference2 = utf8_encode('Order number');
+        // $ShipService = utf8_encode('Classic');
+
+        // $mySetOrderJSONString = '{"OrderAction":"' . $OrderAction . '","OrderSettings":{"ShipDate":"' . $ShipDate . '","LabelSize":"' . $LabelSize . '", "LabelStartPosition":"' . $LabelStartPosition . '"},"OrderDataList":[{"ShipAddress":{"Company":"' . $Company . '","Gender":"' . $Gender . '","Salutation":"' . $Salutation . '","FirstName":"' . $FirstName . '","LastName":"' . $LastName . '","Name":"' . $Name . '","Street":"' . $Street . '","HouseNo":"' . $HouseNo . '","ZipCode":"' . $ZipCode . '","City":"' . $City . '","Country":"' . $Country . '", "State":"' . $State . '", "Phone":"' . $Phone . '", "Mail":"' . $Mail . '"},"ParcelData":{"YourInternalID":"' . $YourInternalID . '","Content":"' . $Content . '","Weight":"' . $Weight . '","Reference1":"' . $Reference1 . '","Reference2":"' . $Reference2 . '", "ShipService":"' . $ShipService . '"}}]}';
+
+        // curl_setopt_array(
+        //     $myRestApiPostURL,
+        //     array(
+
+        //         CURLOPT_POST => TRUE,
+        //         CURLOPT_RETURNTRANSFER => TRUE,
+        //         CURLOPT_ENCODING => "UTF-8",
+        //         CURLOPT_HTTPHEADER => array(
+        //             'Content-Type: application/json',
+        //             'Version : ' . '100',
+        //             'Language : ' . 'de_DE',
+        //             'PartnerCredentials-Name : ' . 'DPD Sandbox',
+        //             'PartnerCredentials-Token : ' . '06445364853584D75564',
+        //             'UserCredentials-cloudUserID : ' . '2782661',
+        //             'UserCredentials-Token : ' . '36664271507431674845'
+        //         ),
+        //         CURLOPT_POSTFIELDS => $mySetOrderJSONString,
+        //         CURLOPT_SSL_VERIFYHOST => false,
+        //         CURLOPT_SSL_VERIFYPEER => false
+        //     )
+
+        // );
+
+        // $setOrderResponse = curl_exec($myRestApiPostURL);
+        // return $setOrderResponse;
+
+
+        // $myRestApiGetURL = 'https://cloud-stage.dpd.com/api/v1/getOrderStatus/MPS0998112233010020161027/63741';
+
+        // $httpHeader = array(
+        //     'Version : ' . '100',
+        //     'Language : ' . 'de_DE',
+        //     'PartnerCredentials-Name : ' . 'DPD Sandbox',
+        //     'PartnerCredentials-Token : ' . '06445364853584D75564',
+        //     'UserCredentials-cloudUserID : ' . '2782661',
+        //     'UserCredentials-Token : ' . '36664271507431674845'
+        // );
+
+        // $myRestApiGetCall = curl_init();
+
+        // curl_setopt($myRestApiGetCall, CURLOPT_URL, $myRestApiGetURL);
+        // curl_setopt($myRestApiGetCall, CURLOPT_RETURNTRANSFER, true);
+        // curl_setopt($myRestApiGetCall, CURLOPT_SSL_VERIFYHOST, false);
+        // curl_setopt($myRestApiGetCall, CURLOPT_SSL_VERIFYPEER, false);
+        // curl_setopt($myRestApiGetCall,
+        //     CURLOPT_HTTPGET,
+        //     TRUE
+        // );
+        // curl_setopt($myRestApiGetCall, CURLOPT_HTTPHEADER, $httpHeader);
+
+        // $getOrderStatusResponse = curl_exec($myRestApiGetCall);
+        // return  $getOrderStatusResponse;
+
+
+
+
+
+        // $stripe = new \Stripe\StripeClient(
+        //     'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
+        // );
+        // $stripe->invoices->delete(
+        //     'in_1LawtRLRABgW92OX0oLVpg08',
+        //     []
+        // );
+
         // $time = Carbon::now()->subHours(1)->toDateTimeString();
         // $admin_users = Log::whereNotNull('admin_id')->where('created_at' ,'<=' , Carbon::now()->subHours(1)->toDateTimeString())->groupBy('admin_id')->pluck('admin_id');
 
@@ -64,6 +164,9 @@ class DashboardController extends Controller
         //     }
         // }
 
+        $active_client_count = Client::join('subscriptions', 'subscriptions.client_id', 'clients.id')->where('stripe_status', 'active')->count();
+
+
         $affiliated_clients_images = AffiliateLink::join('clients','clients.id','affiliate_link.affiliate_to')->distinct()->take(5)->get();
 
         //return response()->json($affiliated_clients_images);
@@ -73,7 +176,9 @@ class DashboardController extends Controller
                            ->select('clients.*','subscriptions.id as subscription_id','subscriptions.client_id','subscriptions.name as subscription_name','subscriptions.stripe_status',
                             'variants.variant_id','variants.name as variant_name','variants.variant_id','variants.name as variant_name')->get();
 
+        $cancelled_clients = Client::join('subscriptions','subscriptions.client_id','clients.id')->where('stripe_status','Cancelled')->count();
 
+        //return response()->json($cancelled_clients);
         $total_amount = Transaction::sum('amount');
         $total_discount = Transaction::sum('discount_price');
 
@@ -83,9 +188,11 @@ class DashboardController extends Controller
 
         // +++++++++++   Dashboard Calculations ++++++++++++++
         $last_30_days = Carbon::now()->subDays(30);
-        $last_30_days_clients = Client::where('created_at', '>=', $last_30_days)->get();
+        $last_30_days_clients = Client::join('subscriptions', 'subscriptions.client_id', 'clients.id')
+                                ->where('clients.created_at', '>=', $last_30_days)->where('stripe_status','active')
+                                ->orderBy('clients.id','DESC')->get();
 
-        $client_pictures = $last_30_days_clients->take(5);
+        $client_pictures = $last_30_days_clients;
         //return $client_pictures;
 
        $last_30_days_revenue = Transaction::select(DB::raw('sum(amount - discount_price) as total'))->where('created_at', '>=' , $last_30_days)->first();
@@ -110,7 +217,58 @@ class DashboardController extends Controller
             'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
         );
 
-        $invoices =  $stripe->invoices->all();
+         $invoices =  $stripe->invoices->all();
+        // //return $invoices->data;
+
+        if ($invoices->data != null) {
+
+            //storing invoice amount in transaction table
+            foreach ($invoices->data as $key => $value) {
+
+                $client = Client::where('stripe_id',$value->customer)->first();
+                $package = VariantPlan::where('variant_id', $value['lines']->data[0]->plan->product)->where('plan', $value['lines']->data[0]->plan->interval)->first();
+                $check_invoice = Transaction::where('invoice_id', $value->id)->first();
+
+                // $discount_amount = 0;
+                // if($value->discount){
+                //     if ($value->discount->coupon->amount_off) {
+                //         $discount_amount =  $value->discount->coupon->amount_off;
+                //      } elseif ($value->discount->coupon->percent_off) {
+                //         $discount_amount =  $value->discount->coupon->percent_off;
+                //      }
+                // }
+                if($check_invoice){
+
+                    $tranasction = Transaction::where('invoice_id', $value->id)->first();
+                    $tranasction->client_id = $client->id;
+                    $tranasction->package_id = $package->plan_id;
+                    $tranasction->invoice_id = $value->id;
+                    $tranasction->invoice_number = $value->number;
+                    $tranasction->amount = $package->price;
+                    $tranasction->discount_price = $value->subtotal - $value->total;
+                    $tranasction->subtotal = $value->subtotal;
+                    $tranasction->total_amount = $value->total;
+                    $tranasction->save();
+
+                }else{
+
+                    $tranasction = new Transaction();
+                    $tranasction->client_id = $client->id;
+                    $tranasction->package_id = $package->plan_id;
+                    $tranasction->invoice_number = $value->number;
+                    $tranasction->invoice_id = $value->id;
+                    $tranasction->amount = $package->price;
+                    $tranasction->discount_price = $value->subtotal - $value->total;
+                    $tranasction->subtotal = $value->subtotal;
+                    $tranasction->total_amount = $value->total;
+                    $tranasction->type = 'basic transaction';
+                    $tranasction->save();
+
+                }
+
+            }
+        }
+
 
 
 
@@ -124,22 +282,29 @@ class DashboardController extends Controller
         ]);
 
 
-        $amount_paid = 0;
-        $total_amount = 0;
+        $t_revenue = array();
+        $amount_paid = array();
+        $total_amount = array();
         $open_invoice_amount = 0;
+        $amount_remaining = array();
         foreach ($search_invoice->data as $key => $value) {
-            if($value->status == 'unpaid'){
-                $open_invoice_amount += $value->amount_remaining;
-            }elseif($value->status == 'paid') {
-                $amount_paid += $value->amount_paid;
-            }
-            $total_amount += $value->total;
+            // if($value->status == 'unpaid'){
+            //     $open_invoice_amount += $value->amount_remaining;
+            // }elseif($value->status == 'paid') {
+            //     $amount_paid += $value->amount_paid;
+            // }
+
+            $t_revenue[] = $value->amount_paid;
+            $total_amount[] = $value->total;
+            $amount_paid[] = $value->amount_paid;
+            $amount_remaining[] = $value->amount_remaining;
         }
 
-        // $amount_paid_sum = array_sum($amount_paid);
-        // $total_amount_sum = array_sum($total_amount);
+        $amount_paid_sum = array_sum($amount_paid);
+        $total_amount_sum = array_sum($total_amount);
+        $remaining_amount_sum = array_sum($amount_remaining);
 
-       // return response()->json($total_amount);
+        //return response()->json($amount_paid);
         $unpaid_invoices = 0;
         $paid_invoices = 0;
         $unpaid_invoices_count = 0;
@@ -165,8 +330,8 @@ class DashboardController extends Controller
         //return $current_month_count;
 
         if($clients && $current_month_count ){
-            //$check_client_progress = ( $current_month_count / $clients->count())  * 100 ;
-            $check_client_progress = ( $current_month_count / 1)  * 100 ;
+            $check_client_progress = ( $current_month_count / $clients->count())  * 100 ;
+            //$check_client_progress = ( $current_month_count / 1)  * 100 ;
         }else{
             $check_client_progress = 0 ;
         }
@@ -184,7 +349,8 @@ class DashboardController extends Controller
         $affiliated_programs = AffiliateProgram::all();
 
         $discount_codes = DiscountCode::orderby('id','DESC')->get();
-        $logs = Log::join('clients','clients.id','logs.client_id')->get();
+
+        $logs = Log::join('clients','clients.id','logs.client_id')->orderby('id', 'DESC')->get();
 
 
         $client_countries = CLient::groupBy('country')->selectraw("country")->get();
@@ -227,9 +393,9 @@ class DashboardController extends Controller
 
 
         }
-        //return $total_clients;
+        //return $amount;
 
-        //return response()->json($countries);
+       // return response()->json($client_month);
 
         return view('admin.dashboard')->with('clients',$clients)->with('costs_overview',$costs_overview)
                                       ->with('discount_codes',$discount_codes)->with('logs',$logs)
@@ -248,7 +414,10 @@ class DashboardController extends Controller
                                       ->with('open_invoice_amount',$open_invoice_amount)
                                       ->with('countries',$countries)->with('months',$months)->with('amount',$amount)
                                       ->with('year',$year)->with('client_month',$client_month)->with('total_clients',$total_clients)
-                                      ->with('client_year',$client_year);
+                                      ->with('client_year',$client_year)->with('active_client_count', $active_client_count)
+                                      ->with('cancelled_clients',$cancelled_clients)->with('t_revenue', $t_revenue)
+                                      ->with('amount_paid_sum', $amount_paid_sum)->with('total_amount_sum', $total_amount_sum)
+                                      ->with('remaining_amount_sum', $remaining_amount_sum);
     }
 
     /*******************
@@ -270,9 +439,9 @@ class DashboardController extends Controller
 
             foreach ($products->data as $key => $prod) {
 
-                $is_product_exists = Variant::where('variant_id',$prod->id)->where('name',$prod->name)->where('description',$prod->description)->first();
+                $is_product_exists = Variant::where('variant_id',$prod->id)->where('name',$prod->name)->first();
 
-                //return response()->json($prod->description);
+                //return response()->json($is_product_exists);
 
                 if(!$is_product_exists){
 
@@ -302,7 +471,7 @@ class DashboardController extends Controller
 
 
 
-            //return response()->json($product_price->data[0]);
+            //return response()->json($product_price->data[1]);
 
             foreach ($product_price->data as $key => $prod_price) {
 
@@ -610,57 +779,65 @@ class DashboardController extends Controller
                     ]);
                 }
 
-                // $coupon = $stripe->coupons->create([
-                //     'id' => $request->code,
-                //     'percent_off' => $request->percentage,
-                //     'currency' => 'eur',
-                //     //'amount_off' => $request->price,
-                //     'duration' => $request->duration,
-                //     'redeem_by' => strtotime($request->available_until),
-                //     'max_redemptions' => $request->code_redemption,
-                //     'name' => $request->name,
-                // ]);
             } else {
 
                 if ($request->price) {
                     $price = $request->price * 100;
+                    if ($request->available_until == null) {
+                        $coupon = $stripe->coupons->create([
+                            'id' => $request->code,
+                            'currency' => 'eur',
+                            'amount_off' => $price,
+                            'duration' => $request->duration,
+                            //'redeem_by' => strtotime($request->available_until),
+                            'max_redemptions' => $request->code_redemption,
+                            'name' => $request->name,
+                        ]);
+                    } else {
+                        $coupon = $stripe->coupons->create([
+                            'id' => $request->code,
+                            'currency' => 'eur',
+                            'amount_off' => $price,
+                            'duration' => $request->duration,
+                            'redeem_by' => strtotime($request->available_until),
+                            'max_redemptions' => $request->code_redemption,
+                            'name' => $request->name,
+                        ]);
+                    }
 
-                    $coupon = $stripe->coupons->create([
-                        'id' => $request->code,
-                        //'percent_off' => $request->percentage,
-                        'currency' => 'eur',
-                        'amount_off' => $price,
-                        'duration' => $request->duration,
-                        'redeem_by' => strtotime($request->available_until),
-                        'max_redemptions' => $request->code_redemption,
-                        'name' => $request->name,
-                    ]);
+
+
                 } else {
-                   $coupon = $stripe->coupons->create([
-                        'id' => $request->code,
-                        'percent_off' => $request->percentage,
-                        'currency' => 'eur',
-                        //'amount_off' => $request->price,
-                        'duration' => $request->duration,
-                        'redeem_by' => strtotime($request->available_until),
-                        'max_redemptions' => $request->code_redemption,
-                        'name' => $request->name,
-                    ]);
+                    if ($request->available_until == null) {
+                        $coupon = $stripe->coupons->create([
+                            'id' => $request->code,
+                            'percent_off' => $request->percentage,
+                            'currency' => 'eur',
+                            'duration' => $request->duration,
+                            //'redeem_by' => strtotime($request->available_until),
+                            'max_redemptions' => $request->code_redemption,
+                            'name' => $request->name,
+                        ]);
+                    } else {
+                        $coupon = $stripe->coupons->create([
+                            'id' => $request->code,
+                            'percent_off' => $request->percentage,
+                            'currency' => 'eur',
+                            'duration' => $request->duration,
+                            'redeem_by' => strtotime($request->available_until),
+                            'max_redemptions' => $request->code_redemption,
+                            'name' => $request->name,
+                        ]);
+                    }
+
+
                 }
 
-                // $coupon = $stripe->coupons->create([
-                //     'id' => $request->code,
-                //     'percent_off' => $request->percentage,
-                //     'currency' => 'eur',
-                //     //'amount_off' => $request->price,
-                //     //'duration' => $request->duration,
-                //     'redeem_by' => strtotime($request->available_until),
-                //     'max_redemptions' => $request->code_redemption,
-                //     'name' => $request->name,
-                // ]);
             }
 
-           //return response()->json($coupon);
+            //return response()->json($coupon);
+
+
 
             $discount_code = new DiscountCode();
             $discount_code->code = $request->code;
@@ -669,11 +846,16 @@ class DashboardController extends Controller
             $discount_code->available_until = $request->available_until;
             $discount_code->max_redemption =  $request->code_redemption;
             $discount_code->code_used =  0;
-            $discount_code->price = $request->price;
             $discount_code->discount_type = $request->duration;
-            $discount_code->percent = $request->percentage;
-            $discount_code->save();
+            if($request->price){
+                $discount_code->price = $request->price * 100;
+                $discount_code->percent = null;
+            }else{
+                $discount_code->price = null;
+                $discount_code->percent = $request->percentage;
+            }
 
+            $discount_code->save();
 
             return redirect()->Route('admin.dashboard')->with('message','coupon added successfully');
 

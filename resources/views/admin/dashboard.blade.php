@@ -48,7 +48,7 @@
                                             <div class="d-flex align-items-center mb-2">
                                                 <!--begin::Value-->
                                                 <span
-                                                    class="fs-2hx fw-bolder text-gray-800 lh-1">{{ $total_revenue }}</span>
+                                                    class="fs-2hx fw-bolder text-gray-800 lh-1">{{ Helper::money_format('EUR','de_DE',Helper::clients_total_revenue()) }}</span>
 
                                                 <!--end::Value-->
                                                 <!--begin::Currency-->
@@ -143,7 +143,7 @@
                                             <!--begin::Info-->
                                             <div class="d-flex align-items-center">
                                                 <!--begin::Amount-->
-                                                <span class="fs-2hx fw-bolder text-dark lh-1">{{ $open_invoice_amount }}</span>
+                                                <span class="fs-2hx fw-bolder text-dark lh-1">{{ Helper::invoice_open_cost() }}</span>
                                                 <!--end::Amount-->
                                                 <!--begin::Currency-->
                                                 <span
@@ -168,27 +168,32 @@
                                                     if ($paid_invoices_count == 0 && $unpaid_invoices_count == 0) {
                                                         $progress = 0;
                                                     } else {
-                                                        $progress = ($amount_paid / ($total_amount)) * 100;
+                                                        $progress = ($amount_paid_sum / ($total_amount_sum)) * 100;
                                                     }
                                                 @endphp
-                                                <span class="fw-boldest fs-6 text-dark">{{ $amount_paid }}€ von
-                                                    {{ $total_amount }}€</span>
-                                                <span class="fw-bolder fs-6 text-gray-400">{{ $progress }}%</span>
+                                                <span class="fw-boldest fs-6 text-dark">{{ Helper::money_format('EUR','de_DE',$amount_paid_sum - $remaining_amount_sum) }}€ von
+                                                    {{ Helper::money_format('EUR','de_DE',$total_amount_sum) }}€</span>
+                                                    @if ($progress == 100)
+                                                        <span class="fw-bolder fs-6 text-gray-400">{{ $progress  }}%</span>
+                                                    @else
+                                                        <span class="fw-bolder fs-6 text-gray-400">{{ number_format($progress,2)  }}%</span>
+                                                    @endif
+
                                             </div>
                                             <div class="h-8px mx-3 w-100 bg-light-success rounded">
                                                 @if ($progress <= 25)
                                                     <div class="bg-danger rounded h-8px" role="progressbar"
-                                                        style="width: {{ $progress }}%;" aria-valuenow="50"
+                                                        style="width: {{ number_format($progress,2) }}%;" aria-valuenow="50"
                                                         aria-valuemin="0" aria-valuemax="100">
                                                     </div>
                                                 @elseif($progress <= 50)
                                                     <div class="bg-warning rounded h-8px" role="progressbar"
-                                                        style="width: {{ $progress }}%;" aria-valuenow="50"
+                                                        style="width: {{ number_format($progress,2) }}%;" aria-valuenow="50"
                                                         aria-valuemin="0" aria-valuemax="100">
                                                     </div>
                                                 @else
                                                     <div class="bg-success rounded h-8px" role="progressbar"
-                                                        style="width: {{ $progress }}%;" aria-valuenow="50"
+                                                        style="width: {{ number_format($progress,2) }}%;" aria-valuenow="50"
                                                         aria-valuemin="0" aria-valuemax="100">
                                                     </div>
                                                 @endif
@@ -212,7 +217,7 @@
                                             <div class="d-flex align-items-center mb-2">
                                                 <!--begin::Value-->
                                                 <span
-                                                    class="fs-2hx fw-bolder text-gray-800 lh-1">{{ $clients->count() }}</span>
+                                                    class="fs-2hx fw-bolder text-gray-800 lh-1">{{ $active_client_count }}</span>
                                                 <!--end::Value-->
                                                 <!--begin::Currency-->
                                                 <span
@@ -583,8 +588,8 @@
                                                 {{ trans('message.Number of clients with this package') }}
                                             </th>
                                             <th class="text-center pe-3 min-w-100px">{{ trans('message.runtime') }}</th>
-                                            <th class="text-center pe-3 min-w-50px">{{ trans('message.price') }}</th>
-                                            <th class="text-center pe-3 min-w-50px">{{ trans('message.Money saved') }}<i
+                                            <th class="text-center pe-3 min-w-50px">{{ trans('message.price')  }}({{ trans('message.excl. taxes') }})</th>
+                                            <th class="text-center pe-3 min-w-50px">{{ trans('message.Money saved') }}({{ trans('message.excl. taxes') }})<i
                                                     class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
                                                     title="Clients save these costs if they choose a longer runtime."></i>
                                             </th>
@@ -623,19 +628,23 @@
                                                             ->count();
 
                                                     $client_discounts = App\Models\Transaction::where('package_id',$cost_overview->plan_id)->sum('discount_price');
-
-
                                                     $fmt = numfmt_create( 'de_DE', NumberFormatter::CURRENCY );
                                                     $monthly_price = App\Models\VariantPlan::where('variant_id',$cost_overview->variant_id)->where('plan','month')->pluck('price')->first();
                                                     $yearly_price = App\Models\VariantPlan::where('variant_id',$cost_overview->variant_id)->where('plan','year')->pluck('price')->first();
 
                                                     $amount_of_discount = (($monthly_price * 12) - $yearly_price);
+                                                    $amount_of_discount = $amount_of_discount != null ? $amount_of_discount : 0;
+
                                                     $amount_of_discount_in_percent = (((($monthly_price * 12) - $yearly_price) * 100) / ($monthly_price * 12));
+                                                    $amount_of_discount_in_percent = $amount_of_discount_in_percent != null ? $amount_of_discount_in_percent : 0;
 
                                                     if ($cost_overview->plan == 'month') {
                                                         $total_revenue = (($total_number_of_client * $cost_overview->price) - $client_discounts );
+                                                        $client_discount = $client_discounts;
                                                     } elseif($cost_overview->plan == 'year') {
                                                         $total_revenue = (($total_number_of_client * $cost_overview->price) - $client_discounts ) / 12;
+                                                        $client_discount = round($client_discounts / 12);
+                                                        $total_revenue = round($total_revenue);
                                                     }
 
 
@@ -651,18 +660,21 @@
                                                 <!--begin::price-->
 
                                                 @if ($cost_overview->plan == 'year')
-                                                    <td class="text-center">{{number_format($amount_of_discount_in_percent,2)}} % / {{ numfmt_format_currency($fmt, Helper::money_format('EUR','de_DE',$amount_of_discount), "EUR") }}</td>
+                                                    {{-- <td class="text-center">{{number_format($amount_of_discount_in_percent,2)}} % / {{ numfmt_format_currency($fmt, Helper::money_format('EUR','de_DE',$amount_of_discount), "EUR") }}</td> --}}
+                                                    <td class="text-center">{{number_format($amount_of_discount_in_percent,2)}} % / {{ Helper::money_format('EUR','de_DE',$amount_of_discount)}}</td>
                                                 @else
                                                     <td class="text-center">xxx</td>
                                                 @endif
 
                                                 <!--end::price-->
                                                 <!--begin::price-->
-                                                <td class="text-center">{{ Helper::money_format('EUR','de_DE',$client_discounts) }}€</td>
+                                                <td class="text-center">{{ Helper::money_format('EUR','de_DE',$client_discount) }}€</td>
+                                                {{-- <td class="text-center">{{ $client_discounts }}€</td> --}}
                                                 <!--end::price-->
                                                 <!--begin::price-->
                                                 {{-- <td class="text-center">{{ numfmt_format_currency($fmt, Helper::money_format('EUR','de_DE',$total_revenue), "EUR") }}€</td> --}}
                                                 <td class="text-center">{{ Helper::money_format('EUR','de_DE',$total_revenue)}}€</td>
+                                                {{-- <td class="text-center">{{$total_revenue}}€</td> --}}
                                                 <!--end::price-->
                                             </tr>
 
@@ -765,6 +777,10 @@
                                                                         class="required fs-6 fw-bold form-label mb-2">{{ trans('message.price') }}</label>
                                                                     <!--end::Label-->
                                                                     <!--begin::Input-->
+                                                                    {{-- <div class="input-group mb-3">
+                                                                        <input type="text" class="form-control" placeholder="e.g . 500 cent" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                                                        <span class="input-group-text" id="basic-addon2">cent</span>
+                                                                    </div> --}}
                                                                     <input type="text"
                                                                         class="form-control form-control-solid"
                                                                         name="price"
@@ -834,7 +850,7 @@
                             <!--begin::Card body-->
                             <div class="card-body">
                                 <!--begin::Table-->
-                                <table class="kt_datatable_example_1 table table-row-bordered gy-5">
+                                <table class="table kt_datatable_example_1  table-row-bordered gy-5">
                                     <!--begin::Table head-->
                                     <thead>
                                         <!--begin::Table row-->
@@ -865,7 +881,7 @@
                                                 <td class="text-center">{{ $log->client_id }}</td>
                                                 <!--end::Client-->
                                                 <!--begin::Client-->
-                                                <td class="text-center">{{ $log->first_name . $log->last_name }}</td>
+                                                <td class="text-center">{{ $log->first_name . ' ' . $log->last_name }}</td>
                                                 <!--end::Client-->
                                                 <!--begin::Client-->
                                                 <td class="text-center">{{ $log->company_name }}</td>
@@ -1099,8 +1115,12 @@
                                                         <label class=" fs-6 fw-bold form-label mb-2">Price</label>
                                                         <!--end::Label-->
                                                         <!--begin::Input-->
-                                                        <input type="text" class="form-control form-control-solid"
-                                                            name="price" value="" />
+                                                        <div class="input-group mb-3">
+                                                                        <input type="text" class="form-control" placeholder="e.g . 500 euro" name="price">
+                                                                        <span class="input-group-text" id="basic-addon2">euro</span>
+                                                                    </div>
+                                                        {{-- <input type="text" class="form-control form-control-solid"
+                                                            name="price" value="" /> --}}
                                                         <!--end::Input-->
                                                         @if ($errors->has('price'))
                                                             <div class="text-danger">{{ $errors->first('price') }}
@@ -1180,7 +1200,7 @@
                                                 <!--end::Available until-->
                                                 <!--begin::price-->
                                                 @if ($discount_code->price)
-                                                    <td class="text-center">{{ $discount_code->price }}€</td>
+                                                    <td class="text-center">{{ Helper::money_format('EUR','de_DE',$discount_code->price) }}€</td>
                                                 @elseif($discount_code->percent)
                                                     <td class="text-center">{{ $discount_code->percent }}% </td>
                                                 @endif
@@ -1596,13 +1616,16 @@
                                         <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
                                             title="{{ $affiliated_clients_image->first_name . ' ' . $affiliated_clients_image->last_name }}">
                                             @if ($affiliated_clients_image->profile_picture)
-                                            <a href="{{Route('admin.client.view',[$affiliated_clients_image->id,$affiliated_clients_image->stripe_id])}}"><img alt="Pic"
-                                                    src="{{ URL::asset($affiliated_clients_image->profile_picture) }}" /></a>
+                                            <img alt="Pic"
+                                                    src="{{ URL::asset($affiliated_clients_image->profile_picture) }}" height="50px" width="50px" class="img-rounded"/>
+                                            {{-- <a href="{{Route('admin.client.view',[$affiliated_clients_image->id,$affiliated_clients_image->stripe_id])}}"><img alt="Pic"
+                                                    src="{{ URL::asset($affiliated_clients_image->profile_picture) }}" height="50px" width="50px" class="img-rounded"/></a> --}}
 
                                             @else
-                                            <a href="{{Route('admin.client.view',[$affiliated_clients_image->id,$affiliated_clients_image->stripe_id])}}">
-                                                <img alt="Pic" src="{{ asset('assets/media/svg/avatars/blank.svg') }}" />
-                                            </a>
+                                            <img alt="Pic" src="{{ asset('assets/media/svg/avatars/blank.svg') }}"  height="50px" width="50px"/>
+                                            {{-- <a href="{{Route('admin.client.view',[$affiliated_clients_image->id,$affiliated_clients_image->stripe_id])}}">
+                                                <img alt="Pic" src="{{ asset('assets/media/svg/avatars/blank.svg') }}"  height="50px" width="50px"/>
+                                            </a> --}}
 
                                             @endif
 
@@ -1633,93 +1656,6 @@
                                         class="card-label fw-bolder text-dark">{{ trans('message.uFill Clients') }}</span>
                                 </h3>
                                 <!--end::Title-->
-                                <!--begin::Actions-->
-                                {{-- <div class="card-toolbar">
-                                <!--begin::Filters-->
-                                <div class="d-flex flex-stack flex-wrap gap-4">
-                                    <!--begin::Destination-->
-                                    <div class="d-flex align-items-center fw-bolder">
-                                        <!--begin::Label-->
-                                        <div class="text-muted fs-7 me-2">{{trans('message.Show')}}</div>
-                                        <!--end::Label-->
-                                        <!--begin::Select-->
-                                        <select
-                                            class="form-select form-select-transparent text-dark fs-7 lh-1 fw-bolder py-0 ps-3 w-auto"
-                                            data-control="select2" data-hide-search="true"
-                                            data-dropdown-css-class="w-150px" data-placeholder="Select an option">
-                                            <option></option>
-                                            <option value="1" selected="selected">{{trans('message.All Clients')}}</option>
-                                            <option value="2">10</option>
-                                            <option value="3">50</option>
-                                            <option value="4">100</option>
-                                        </select>
-                                        <!--end::Select-->
-                                    </div>
-                                    <!--end::Destination-->
-                                    <!--begin::Status-->
-                                    <div class="d-flex align-items-center fw-bolder">
-                                        <!--begin::Label-->
-                                        <div class="text-muted fs-7 me-2">{{trans('message.Status')}}</div>
-                                        <!--end::Label-->
-                                        <!--begin::Select-->
-                                        <select
-                                            class="form-select form-select-transparent text-dark fs-7 lh-1 fw-bolder py-0 ps-3 w-auto"
-                                            data-control="select2" data-hide-search="true"
-                                            data-dropdown-css-class="w-150px" data-placeholder="Select an option"
-                                            data-kt-table-widget-5="filter_status">
-                                            <option></option>
-                                            <option value="Show All" selected="selected">{{trans('message.All Status')}}
-                                            </option>
-                                            <option value="active">{{trans('message.Active')}}</option>
-                                            <option value="cancelled">{{trans('message.Cancelled')}}</option>
-                                            <option value="locked">{{trans('message.Locked')}}</option>
-                                        </select>
-                                        <!--end::Select-->
-                                    </div>
-                                    <!--end::Status-->
-                                    <!--begin::Status-->
-                                    <div class="d-flex align-items-center fw-bolder">
-                                        <!--begin::Label-->
-                                        <div class="text-muted fs-7 me-2">{{trans('message.Payment')}}</div>
-                                        <!--end::Label-->
-                                        <!--begin::Select-->
-                                        <select
-                                            class="form-select form-select-transparent text-dark fs-7 lh-1 fw-bolder py-0 ps-3 w-auto"
-                                            data-control="select2" data-hide-search="true"
-                                            data-dropdown-css-class="w-150px" data-placeholder="Select an option"
-                                            data-kt-table-widget-5="filter_status">
-                                            <option></option>
-                                            <option value="Show All" selected="selected">{{trans('message.All')}}</option>
-                                            <option value="not payed">{{trans('message.Open costs')}}</option>
-                                            <option value="payed">{{trans('message.All payed')}}</option>
-                                            <option value="error">{{trans('message.Error')}}</option>
-                                        </select>
-                                        <!--end::Select-->
-                                    </div>
-                                    <!--end::Status-->
-                                    <!--begin::Search-->
-                                    <div class="d-flex align-items-center position-relative my-1">
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
-                                        <span class="svg-icon svg-icon-1 position-absolute ms-6">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none">
-                                                <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2"
-                                                    rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
-                                                <path
-                                                    d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
-                                                    fill="currentColor" />
-                                            </svg>
-                                        </span>
-                                        <!--end::Svg Icon-->
-                                        <input type="text" data-kt-user-table-filter="search"
-                                            class="form-control form-control-solid w-250px ps-14"
-                                            placeholder="Suchen..." />
-                                    </div>
-                                    <!--end::Search-->
-                                </div>
-                                <!--begin::Filters-->
-                            </div> --}}
-                                <!--end::Actions-->
                             </div>
                             <!--end::Card header-->
                             <!--begin::Card body-->
@@ -1756,9 +1692,8 @@
                                     <tbody class="fw-bolder text-gray-600">
                                         @foreach ($clients as $client)
                                             @php
-                                                $total_client_revenue = App\Models\Transaction::select(DB::raw('sum(amount - discount_price) as total'))
-                                                    ->where('client_id', $client->id)
-                                                    ->first();
+                                                $total_client_revenue = Helper::client_total_revenue($client->stripe_id);
+                                                $total_open_cost = Helper::client_open_cost($client->stripe_id);
                                             @endphp
                                             <tr>
                                                 <!--begin::Client ID-->
@@ -1782,14 +1717,11 @@
                                                     {{ date('d-m-Y ', strtotime($client->client_until)) }}</td>
                                                 <!--end::Client until-->
                                                 <!--begin::Total revenue-->
-                                                <td class="text-center">
-                                                    {{ $total_client_revenue->total != null ? $total_client_revenue->total : 0 }}€
-                                                </td>
+                                                <td class="text-center">{{ Helper::money_format('EUR','de_DE',$total_client_revenue != null ? $total_client_revenue : 0)}}€</td>
                                                 <!--end::Total revenue-->
                                                 <!--begin::Open costs-->
                                                 <td class="text-center">
-                                                    <span
-                                                        class="badge py-3 px-4 fs-7 badge-light-danger">{{ $client->open_costs }}</span>
+                                                    <span class="badge py-3 px-4 fs-7 badge-light-danger">{{Helper::money_format('EUR','de_DE',$total_open_cost != null ? $total_open_cost : 0)}}€</span>
                                                 </td>
                                                 <!--end::Open costs-->
                                                 <!--begin::Choosen Variant-->
@@ -1997,9 +1929,13 @@
                                                                 class="required fs-6 fw-bold form-label mb-2">{{ trans('message.COST') }}</label>
                                                             <!--end::Label-->
                                                             <!--begin::Input-->
-                                                            <input type="text" class="form-control form-control-solid"
-                                                                name="cost" value="" />
+                                                            <div class="input-group mb-3">
+                                                                        <input type="text" class="form-control" placeholder="e.g . 500 cent" name="cost" aria-label="Recipient's username" aria-describedby="basic-addon2" >
+                                                                        <span class="input-group-text" id="basic-addon2">cent</span>
+                                                                    </div>
                                                             <!--end::Input-->
+                                                                    <!--begin::Input-->
+
                                                             @if ($errors->has('cost'))
                                                                 <div class="text-danger">
                                                                     {{ $errors->first('cost') }}</div>
@@ -2099,7 +2035,7 @@
                                                 <td class="text-center">{{ $shipping_detail->max_length }}</td>
                                                 <!--end::Size-->
                                                 <!--begin::price-->
-                                                <td class="text-center">{{ $shipping_detail->cost }}</td>
+                                                <td class="text-center">{{ Helper::money_format('EUR','de_DE',$shipping_detail->cost) }}€</td>
                                                 <!--end::price-->
                                                 {{-- <td class="text-center">{{$shipping_detail->fees}}</td> --}}
 
@@ -2285,9 +2221,13 @@
                                                                         class="required fs-6 fw-bold form-label mb-2">{{ trans('message.COST') }}</label>
                                                                     <!--end::Label-->
                                                                     <!--begin::Input-->
-                                                                    <input type="text"
+                                                                    <div class="input-group mb-3">
+                                                                        <input type="text" class="form-control" placeholder="e.g . 500 cent" aria-label="Recipient's username" name="cost" aria-describedby="basic-addon2" value="{{ $shipping_detail->cost }}">
+                                                                        <span class="input-group-text" id="basic-addon2">cent</span>
+                                                                    </div>
+                                                                    {{-- <input type="text"
                                                                         class="form-control form-control-solid" name="cost"
-                                                                        value="{{ $shipping_detail->cost }}" />
+                                                                        value="{{ $shipping_detail->cost }}" /> --}}
                                                                     <!--end::Input-->
                                                                     @if ($errors->has('cost'))
                                                                         <div class="text-danger">
@@ -2392,9 +2332,9 @@
                                                 <td class="text-center">{{ $shipping_package->package }}</td>
                                                 <!--end::Transport-->
                                                 <!--begin::Type-->
-                                                <td class="text-center">{{ $shipping_package->package_fee }}€</td>
+                                                <td class="text-center">{{Helper::money_format('EUR','de_DE',$shipping_package->package_fee)}}€</td>
                                                 <!--end::Type-->
-
+                                                {{-- {{ Helper::money_format('EUR','de_DE',$shipping_package->package_fee) }} --}}
                                                 <td class="text-center">
                                                     <a data-bs-toggle="modal"
                                                         data-bs-target="#editpackagefee{{ $shipping_package->fee_id }}"
@@ -2478,9 +2418,13 @@
                                                                         class="required fs-6 fw-bold form-label mb-2">{{ trans('message.Fee') }}</label>
                                                                     <!--end::Label-->
                                                                     <!--begin::Input-->
-                                                                    <input type="text"
+                                                                    <div class="input-group mb-3">
+                                                                        <input type="text" class="form-control" placeholder="e.g . 500 cent" name="fee" aria-label="Recipient's username" aria-describedby="basic-addon2" value="{{ $shipping_package->package_fee }}">
+                                                                        <span class="input-group-text" id="basic-addon2">cent</span>
+                                                                    </div>
+                                                                    {{-- <input type="text"
                                                                         class="form-control form-control-solid" name="fee"
-                                                                        value="{{ $shipping_package->package_fee }}" />
+                                                                        value="{{ $shipping_package->package_fee }}" /> --}}
                                                                     <!--end::Input-->
                                                                     @if ($errors->has('fee'))
                                                                         <div class="text-danger">

@@ -116,7 +116,14 @@
                                                                     </svg>
                                                                 </span>
                                                                 <!--end::Svg Icon-->
-                                                                <div class="fs-2 fw-bolder" data-kt-countup="true" data-kt-countup-value="{{$total_revenue->total != null ? $total_revenue->total : 0}}" data-kt-countup-suffix="€">{{$total_revenue->total != null ? $total_revenue->total : 0}}</div>
+                                                                {{-- <div class="fs-2 fw-bolder" data-kt-countup="true"
+                                                                    data-kt-countup-value="{{ Helper::clients_total_revenue() != null ? Helper::clients_total_revenue() : 0 }}"
+                                                                    data-kt-countup-suffix="€">
+                                                                    {{ Helper::clients_total_revenue() != null ? Helper::clients_total_revenue() : 0 }}
+                                                                </div> --}}
+                                                                <div class="fs-2 fw-bolder">
+                                                                    {{ Helper::clients_total_revenue() != null ? Helper::money_format('EUR','de_DE',Helper::clients_total_revenue()) : 0 }}
+                                                                </div>
                                                             </div>
                                                             <!--end::Number-->
                                                             <!--begin::Label-->
@@ -233,6 +240,82 @@
                                 <!--end::Body-->
                             </div>
                             <!--end::Referral program-->
+                            <div class="card card-flush pt-3 mb-5 mb-xl-10">
+                    <!--begin::Card header-->
+                    <div class="card-header pt-7">
+                        <!--begin::Title-->
+                        <h3 class="card-title align-items-start flex-column mb-5">
+                            <span class="card-label fw-bolder text-dark">{{ trans('message.Referral Clients') }}</span>
+                        </h3>
+                        <!--end::Title-->
+                        <!--begin::Actions-->
+                        <!--end::Actions-->
+                    </div>
+                    <!--end::Card header-->
+                    <!--begin::Card body-->
+                    <div class="card-body pt-2">
+                        <!--begin::Table-->
+                        <table class="table align-middle table-row-dashed fs-6 gy-3" id="kt_table_widget_5_table">
+                            <!--begin::Table head-->
+                            <thead>
+                                <!--begin::Table row-->
+                                <tr class="text-center text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                    <th class="text-center pe-3 min-w-25px">{{ trans('message.id') }}</th>
+                                    <th class="text-center pe-3 min-w-50px">{{ trans('message.Company Name') }}
+                                    </th>
+
+                                    <th class="text-center pe-3 min-w-50px">
+                                        {{ trans('message.Registered At') }}
+                                    </th>
+                                    <th class="text-center pe-3 min-w-50px">
+                                        {{ trans('message.Advertised By') }}
+                                    </th>
+                                    <th class="text-center pe-3 min-w-150px">{{trans('message.Status')}}</th>
+
+                                </tr>
+                                <!--end::Table row-->
+                            </thead>
+                            <!--end::Table head-->
+                            <!--begin::Table body-->
+                            <tbody class="fw-bolder text-gray-600">
+                                @foreach ($affiliated_at as $affiliated)
+                                    <tr>
+                                        <!--begin::Shipment ID-->
+                                        <td class="text-center">{{ $affiliated->id }}</td>
+                                        <!--end::Shipment ID-->
+                                        <!--begin::Transport-->
+                                        <td class="text-center">{{ $affiliated->company_name }}</td>
+                                        <!--end::Transport-->
+                                        <!--begin::Type-->
+
+                                        <!--end::Type-->
+                                        <!--begin::Weight-->
+                                        <td class="text-center">
+                                            {{ date('d-m-Y', strtotime($affiliated->created_at)) }}</td>
+                                        <!--end::Weight-->
+                                        <!--begin::Size-->
+                                        <td class="text-center">
+                                            {{ session('name') }}</td>
+                                        <!--end::price-->
+                                        <td class="text-center">
+                                            @if ($affiliated->stripe_status == 'active')
+                                                    <span
+                                                        class="badge badge-light-success">{{ $affiliated->stripe_status }}</span>
+                                                @else
+                                                    <span
+                                                        class="badge badge-light-danger">{{ $affiliated->stripe_status }}</span>
+                                                @endif
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            <!--end::Table body-->
+                        </table>
+                        <!--end::Table-->
+                    </div>
+                    <!--end::Card body-->
+                </div>
                         </div>
                         <!--end::Container-->
                     </div>
@@ -246,21 +329,49 @@
 
 <script>
     function myFunction() {
-    /* Get the text field */
-    var copyText = document.getElementById("kt_referral_link_input");
+        /* Get the text field */
+        var copyText = document.getElementById("kt_referral_link_input");
 
-    $( "#kt_referral_program_link_copy_btn" ).removeClass('btn-light btn-active-light-primary');
-    // $('#kt_referral_program_link_copy_btn').addClass('btn-active-light-success');
-    $('#kt_referral_program_link_copy_btn').css({'color': 'white' , 'background-color' : '#90EE90'});
+        //console.log(copyText);
+        $( "#kt_referral_program_link_copy_btn" ).removeClass('btn-light btn-active-light-primary');
+        // $('#kt_referral_program_link_copy_btn').addClass('btn-active-light-success');
+        $('#kt_referral_program_link_copy_btn').css({'color': 'white' , 'background-color' : '#90EE90'});
 
-    /* Select the text field */
-    copyText.select();
-    copyText.setSelectionRange(0, 99999); /* For mobile devices */
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
 
-    /* Copy the text inside the text field */
-    navigator.clipboard.writeText(copyText.value);
+        /* Copy the text inside the text field */
+        navigator.clipboard.writeText(copyText.value);
 
     }
+
+    // function myFunction() {
+
+    //     var range, selection, worked , element;
+
+    //     element = document.getElementById("kt_referral_link_input").value;
+
+    //     if (document.body.createTextRange) {
+    //         range = document.body.createTextRange();
+    //         range.moveToElementText(element);
+    //         range.select();
+    //     } else if (window.getSelection) {
+    //         selection = window.getSelection();
+    //         range = document.createRange();
+    //         range.selectNodeContents(element);
+    //         selection.removeAllRanges();
+    //         selection.addRange(range);
+    //     }
+
+    //     try {
+    //         document.execCommand('copy');
+    //         alert('text copied');
+    //     }
+    //     catch (err) {
+    //         alert('unable to copy text');
+    //     }
+    // }
 </script>
 
 @endsection
