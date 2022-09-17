@@ -27,6 +27,7 @@ class RegisterController extends Controller
     public function register($is_affiliate = null)
     {
 
+        //return request()->ip();
 
         //$date = Carbon::now();
         //return $date->addYear();
@@ -55,12 +56,16 @@ class RegisterController extends Controller
     public function registerClient(Request $request)
     {
 
+        //return $request->location;
         $request->validate([
-            'first_name' => 'required|unique:clients,first_name',
-            'last_name' => 'required|unique:clients,last_name',
+            'first_name' => 'required',
+            'last_name' => 'required',
             'email' => 'required|unique:clients,email',
             'company_name' => 'required|unique:clients,company_name',
             'telephone' => 'required|unique:clients,telephone',
+            // 'registration_number' => 'unique:clients,registration_number',
+            //'vat_id' => 'unique:clients,vat_id',
+            'vat_id' => 'required'
         ]);
 
         try {
@@ -119,7 +124,7 @@ class RegisterController extends Controller
             }
 
 
-            $variant_plan = VariantPlan::where('variant_id', $request->account_type)->where('plan', $request->account_plan)->first();
+            $variant_plan = VariantPlan::where('variants_plan.variant_id', $request->account_type)->where('plan', $request->account_plan)->join('variants','variants.variant_id', 'variants_plan.variant_id')->first();
 
 
             $client = new Client();
@@ -135,9 +140,11 @@ class RegisterController extends Controller
             $client->plz  = $request->plz;
             $client->state  = $request->state;
             $client->country  = $request->country;
+            $client->language  = $request->language;
             $client->telephone  = $request->telephone;
             $client->mobile_number  = $request->mobile_number;
             $client->email  = $request->email;
+            $client->location  = $request->location;
             $client->uu_id = $uuid;
             $client->vat_id  = $request->vat_id;
             $client->registration_number  = $request->registration_number;
@@ -147,6 +154,7 @@ class RegisterController extends Controller
             $client->hear_about_us  = $request->hear_about_us;
             $client->profile_picture  = $logo;
             $client->package_price = $variant_plan->price;
+            $client->ip_address = request()->ip();
             if($request->account_plan == 'year'){
 
                 $client->client_until  = Carbon::now()->addYear();
@@ -159,17 +167,6 @@ class RegisterController extends Controller
             }
             if ($client->save()) {
 
-                Client::where('id', $client->id)->update([
-                    'referral_link' => 'ufill.devatease.com/client/register/' . $client->company_name . '-' . $client->id,
-                ]);
-
-                /**********************************************************
-                ||  storing client id in session
-                 ***********************************************************/
-                session([
-                    'client_id' => $client->id,
-                    'package_name' => $variant_plan->name,
-                ]);
 
                 /******************************************
                 ||  storing card details if not in database
@@ -189,44 +186,6 @@ class RegisterController extends Controller
                     $card->save();
                 }
 
-                /******************************************
-                ||  creating customer in stripe
-                 *******************************************/
-                // $stripe = new \Stripe\StripeClient(
-                //     'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
-                // );
-
-                // $creating_customer = $stripe->customers->create([
-                //     'email' => $request->email,
-                //     'name' => $request->first_name . ' ' . $request->last_name,
-                //     'phone' => $request->mobile_number,
-                //     'source' => $result["id"],
-                //     'address' => [
-                //         'country' => $request->country,
-                //         'line1' => $request->street,
-                //         'line2' => $request->house_number,
-                //         'postal_code' => $request->plz,
-                //         'state' => $request->state,
-                //         'city' => $request->state
-                //     ],
-                //     'invoice_settings' => [
-                //         'default_payment_method' => $card_id,
-                //     ],
-                //     // 'tax_id_data' => [
-                //     //     'type' => 'is_vat',
-                //     //     'value' => $request->vat_id,
-                //     // ]
-
-
-                // ]);
-
-                /**********************************************************
-                ||  updating data in client table
-                 ***********************************************************/
-                // Client::where('id', $client->id)->update([
-                //     'referral_link' => 'ufill.devatease.com/client/register/' . $client->company_name . '-' . $client->id,
-                //     'stripe_id' => $creating_customer->id,
-                // ]);
 
                 /******************************************
                 ||  creating subscription in stripe
@@ -240,7 +199,7 @@ class RegisterController extends Controller
                 $options = ([
                     'email' => $request->email,
                     'name' => $request->first_name . ' ' . $request->last_name,
-                    'phone' => $request->mobile_number,
+                    'phone' => $request->telephone,
                     //'source' => $result["id"],
                     'address' => [
                         'country' => $request->country,
@@ -291,6 +250,29 @@ class RegisterController extends Controller
                             ],
 
                         );
+
+                        DiscountCode::where('id',$discount->id)->update([
+                            'code_used' => 1
+                        ]);
+
+
+                    // if($discount->percent != null){
+                    //     $discount_amount =  ((float) $package->price/100) * $discount->percent;
+                    //     $discount_amount = round($discount_amount);
+                    //     //return $discount_amount;
+                    //  } elseif ($discount->price != null) {
+                    //     $discount_amount =  ((float) $package->price -  $discount->price) ;
+                    //  }
+
+
+                    // $transaction = new Transaction();
+                    // $transaction->client_id = $client->id;
+                    // $transaction->package_id = $package->plan_id;
+                    // $transaction->amount = $package->price;
+                    // $transaction->discount_price = $discount_amount;
+                    // $transaction->save();
+
+
                 } else {
 
                     //return 0 ;
@@ -304,64 +286,45 @@ class RegisterController extends Controller
                             ],
 
                         );
+
+                    // $transaction = new Transaction();
+                    // $transaction->client_id = $client->id;
+                    // $transaction->package_id = $package->plan_id;
+                    // $transaction->amount = $package->price;
+                    // $transaction->discount_price = 0;
+                    // $transaction->save();
                 }
 
 
-                // $date = Carbon::now();
-                // if($request->account_plan == 'year'){
-
-                //     Client::where('id', $client->id)->update([
-                //         'client_until' => $date->addYear(),
-                //         'next_payment' => $date->addYear(),
-                //     ]);
-
-                // }else{
-
-                //     Client::where('id', $client->id)->update([
-                //         'client_until' => $date->addMonth(),
-                //         'next_payment' => $date->addMonth(),
-                //     ]);
-
-                // }
-
-                // Client::where('id', $client->id)->update([
-                //     'client_until' => Carbon::parse($stripe_subscription_response->current_period_end),
-                //     'next_payment' => Carbon::parse($stripe_subscription_response->current_period_end),
-                // ]);
 
 
-
-
-                // $discount_price = 0;
-                // if ($request->is_affiliate != null) {
-
-                //     $discount = DiscountCode::where('name',$request->discount_code)->first();
-                //     $discount_code = $discount->code;
-
-                // } else {
-                //     $discount_code = null;
-                // }
-
-                // if($discount_code){
-                //     $discount_amount =  ((float) $package->price/100) * $discount->percent;
-                //     //return $discount_amount;
-                //  }else{
-                //      $discount_amount =  0;
-                //  }
-
-
-                //  if($discount){
-                //     $discount_amount =  ((float) $package->price/100) * $discount->percent;
-                //  }
-
-
-                $transaction = new Transaction();
-                $transaction->client_id = $client->id;
-                $transaction->package_id = $package->plan_id;
-                $transaction->amount = $package->price;
-                $transaction->discount_price = 0;
-                $transaction->save();
             }
+
+            /**********************************************************
+                ||  storing client id in session
+             ***********************************************************/
+
+            $client_info = Client::where('id', $client->id)->first();
+            $client_info->referral_link = 'ufill.devatease.com/client/register/' . $client->company_name . '-' . $client->id;
+            $client_info->save();
+
+            // session([
+            //     'client_id' => $client->id,
+            //     'package_name' => $variant_plan->name,
+            //     'stripe_id' => $client_info->stripe_id,
+            // ]);
+
+            session([
+                'client_id' => $client->id,
+                'email' => $client->email,
+                'name' => $client->first_name . ' ' . $client->last_name,
+                'profile_picture' => $client_info->profile_picture,
+                'locale' => $request->language,
+                'status' => 'online',
+                'package_name' => $variant_plan->name,
+                'company_name' => $client_info->company_name,
+                'stripe_id' => $client_info->stripe_id
+            ]);
 
             // Sending Mail Code
             $name =  $request->first_name . ' ' . $request->last_name;
@@ -396,6 +359,59 @@ class RegisterController extends Controller
                     $affiliate_link->affiliate_from = $is_affiliate_exist->id;
                     $affiliate_link->affiliate_to = $client->id;
                     $affiliate_link->save();
+
+                    $affiliated_client_counts = AffiliateLink::where('affiliate_from', $is_affiliate_exist->id)->count();
+
+                    //$affiliated_client_counts = $is_affiliate_exist->count();
+                    if ($affiliated_client_counts <= 9) {
+
+                        $stripe = new \Stripe\StripeClient(
+                            'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
+                        );
+                        $stripe->customers->update(
+                            $is_affiliate_exist->stripe_id,
+                            [
+                                'coupon' => 'Referral3',
+                            ]
+                        );
+                    }else if($affiliated_client_counts <= 49){
+
+                        $stripe = new \Stripe\StripeClient(
+                            'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
+                        );
+                        $stripe->customers->update(
+                            $is_affiliate_exist->stripe_id,
+                            [
+                                'coupon' => 'Referral5',
+                            ]
+                        );
+
+                    }else if($affiliated_client_counts <= 99){
+
+                        $stripe = new \Stripe\StripeClient(
+                            'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
+                        );
+                        $stripe->customers->update(
+                            $is_affiliate_exist->stripe_id,
+                            [
+                                'coupon' => 'Referral10',
+                            ]
+                        );
+
+
+                    } else if ($affiliated_client_counts >= 100 ) {
+
+                        $stripe = new \Stripe\StripeClient(
+                            'sk_test_51KmBUpLRABgW92OXYrVXhuF7OaInPaaaZt3xn3DZdnxPhc1V0ET4uCPD8M1wI3Dhods0DdBmBPIXsp9y8OebyAh500vQUnk7hF'
+                        );
+                        $stripe->customers->update(
+                            $is_affiliate_exist->stripe_id,
+                            [
+                                'coupon' => 'Referral15',
+                            ]
+                        );
+                    }
+
                 }
                 if ($is_affiate_from_admin) {
 
@@ -407,7 +423,11 @@ class RegisterController extends Controller
             }
 
 
-            return redirect()->Route('client.dashboard');
+            if ($variant_plan->name == 'shipment') {
+                return redirect()->Route('client.shipment.delivery');
+            } else {
+                return redirect()->Route('client.dashboard');
+            }
         } catch (\Exception $th) {
             return back()->withError($th->getMessage())->withInput();
         }
@@ -445,6 +465,28 @@ class RegisterController extends Controller
     public function checkDiscountCode(Request $request)
     {
         $check_discount = DiscountCode::where('code', $request->value)->where('available_until','>=', Carbon::now())->first();
-        return $check_discount;
+
+        if($check_discount){
+
+            if ($check_discount->price) {
+
+                $price = Helper::money_format('EUR', 'de_DE', $check_discount->price);
+
+                return response()->json(['price' => $price]);
+            } elseif ($check_discount->percent) {
+
+                $percent = $check_discount->percent;
+
+                return response()->json(['percent' => $percent]);
+            }
+
+        } else {
+            return response()->json($check_discount == null);
+        }
+
+
+
+
+
     }
 }

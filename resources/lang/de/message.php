@@ -958,13 +958,13 @@ return [
     'company data' => 'Unternehmensdaten',
     'payment details' => 'Zahlungsdetails',
     'Quantity' => 'Menge',
-    'In total' => 'Gesamt (inkl. MwSt)',
+    'In total' => 'Gesamt',
     'Price' => 'Preis (inkl. MwSt)',
-    'Sum of open client invoices in the current month.' => 'Summe der offenen Kundenrechnungen im laufenden Monat.',
+    'Sum of open client invoices in the current month.' => 'Summe alle unbezahlten Kundenrechnungen.',
     'Subtotal' => 'Zwischensumme',
     'Discount' => 'Rabatt',
     'Shipping' => 'Versandkosten',
-    'Taxes 19' => 'MwSt 19%',
+    'Taxes 19' => 'MwSt',
     'Total' => 'Gesamt',
     'Bank Name' => 'Bankname',
     'Account Holder' => 'Kontoinhaber',
@@ -1124,11 +1124,11 @@ return [
 
     "Monthly Package" => "Monatspaket",
 
-    "Your account will be charged monthly with €9,99." => "Ihr Konto wird monatlich mit €9,99 belastet.",
+    "Your account will be charged monthly with €9,99." => "Ihr Konto wird monatlich mit €9,99 belastet. (inkl. MwSt)",
 
     "Yearly Package" => "Jahrespaket",
 
-    "Your account will be charged yearly with €95,88." => "Ihr Konto wird jährlich mit €95,88 belastet.",
+    "Your account will be charged yearly with €95,88." => "Ihr Konto wird jährlich mit €95,88 belastet. (inkl. MwSt)",
 
     "Discount Code" => "Rabattcode",
 
@@ -1177,9 +1177,11 @@ return [
 
     "E-Mail" => "E-Mail",
 
-    "VAT ID no." => "Ust-IdNr.",
+    "VAT ID no." => "Steuer-Code.",
 
     "Registration number" => "Registernummer",
+
+    "ip address" => "IP Adresse",
 
     "Website" => "Webseite",
 
@@ -1416,4 +1418,40 @@ return [
     'Delivered' => 'Zugestellt',
     'Receiver' => 'Empfänger',
     'Location' => 'Ortsangabe',
+
+
+    //client master menus
+    'menu' => 'Menu',
+    'dashboards' => 'Dashboards',
+    'ecommerce' => 'eCommerce',
+    'create shipment' => 'Sendung erstellen',
+    'shipments' => 'Sendungen',
+    'status check' => 'Statusprüfer',
+    'settings' => 'Einstellungen',
+    'Billing' => 'Abrechnung',
+    'Overview' => 'Übersicht',
+    'Affiliate Program' => 'Partnerprogramm',
+    'Security' => 'Sicherheit',
+    'Shipment Configuration' => 'Versandkonfiguration',
+    'news' => 'Neuigkeiten',
+    'changelog' => 'Updateverlauf',
+    'delivery' => 'Lieferung',
+
+
+    'excl. taxes' => 'exkl. MwSt',
+    'incl. taxes' => 'inkl. MwSt',
+    '*all prices excl. taxes' => 'alle preise zzgl. Steuern',
+    '*all prices incl. taxes' => 'alle preise inkl. Steuern',
+    'This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us.' => 'Diese Rechnung wurde automatisch erstellt. Wir danken Ihnen für Ihre Nutzung von uFill und das uns entgegengebrachte Vertrauen.',
+    'Please note the applicable requirements of the "reverse charge" regulation within the EU. This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us' => 'Bitte beachten Sie die geltenden Anforderungen der „Reverse Charge“-Verordnung innerhalb der EU. Diese Rechnung wurde automatisch erstellt. Wir danken Ihnen für Ihre Nutzung von uFill und das uns entgegengebrachte Vertrauen',
+    'Please note the tax regulations applicable in your country. This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us.' => 'Bitte beachten Sie die in Ihrem Land geltenden Steuervorschriften. Diese Rechnung wurde automatisch erstellt. Wir danken Ihnen für Ihre Nutzung von uFill und das uns entgegengebrachte Vertrauen.',
+    'Location' => 'Ort',
+    'Where is your company located?' => 'Wo befindet sich Ihr Unternehmen?',
+    'Please choose where the main location of  company is located.' => 'Bitte wählen Sie aus, wo sich der Hauptstandort Ihres Unternehmens befindet.',
+
+    'Important!' => 'Wichtig!',
+    'This information has an impact on your VAT and invoices. Please make sure that your information is correct.' => 'Diese Informationen wirken sich auf Ihre Mehrwertsteuer und Rechnungen aus. Bitte stellen Sie sicher, dass Ihre Angaben korrekt sind.',
+    'Your headquarter is located in Germany.' => 'Ihr Hauptsitz befindet sich in Deutschland.',
+    'Your headquarter is located in Europe for exemple in France.' => 'Ihr Hauptsitz befindet sich in Europa zum Beispiel in Frankreich.',
+    'Your headquarter is located outside of Europe for exemple in the USA.' => 'Ihr Hauptsitz befindet sich außerhalb Europas beispielsweise in den USA.',
 ];

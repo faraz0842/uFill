@@ -57,7 +57,7 @@
                                 <!--begin::Card body-->
                                 <div class="card-body py-4 overflow-auto">
                                     <!--begin::Table-->
-                                    <table class=" kt_datatable_example_1 table align-middle table-row-dashed fs-6 gy-5">
+                                    <table class="kt_datatable_example_1 table align-middle table-row-dashed fs-6 gy-5">
                                         <!--begin::Table head-->
                                         <thead>
                                             <!--begin::Table row-->
@@ -88,8 +88,8 @@
                                             <!--begin::Table row-->
                                             @foreach ($clients as $client)
                                             @php
-
-                                                $total_client_revenue = App\Models\Transaction::select(DB::raw('sum(amount - discount_price) as total'))->where('client_id',$client->id)->first();
+                                                $total_client_revenue = Helper::client_total_revenue($client->stripe_id);
+                                                $total_open_cost = Helper::client_open_cost($client->stripe_id);
                                              @endphp
                                             <tr>
                                                 <!--begin::Checkbox-->
@@ -134,11 +134,11 @@
                                                 <td class="text-center">{{date('d-m-Y ', strtotime($client->client_until))}}</td>
                                                 <!--end::Client until-->
                                                 <!--begin::Total revenue-->
-                                                <td class="text-center">{{ Helper::money_format('EUR','de_DE',$total_client_revenue->total != null ? $total_client_revenue->total : 0)}}€</td>
+                                                <td class="text-center">{{ Helper::money_format('EUR','de_DE',$total_client_revenue != null ? $total_client_revenue : 0)}}€</td>
                                                 <!--end::Total revenue-->
                                                 <!--begin::Open costs-->
                                                 <td class="text-center">
-                                                    <span class="badge py-3 px-4 fs-7 badge-light-danger">{{$client->open_costs}}</span>
+                                                    <span class="badge py-3 px-4 fs-7 badge-light-danger">{{Helper::money_format('EUR','de_DE',$total_open_cost != null ? $total_open_cost : 0)}}€</span>
                                                 </td>
                                                 <!--end::Open costs-->
                                                 <!--begin::Choosen Variant-->
@@ -200,12 +200,12 @@
 
 @section('custom_scripts')
 
-<script>
+{{-- <script>
     var table = $('.kt_datatable_example_1').DataTable();
         $('#search').on('keyup', function() {
             table.search(this.value).draw();
         });
 
-</script>
+</script> --}}
 
 @endsection

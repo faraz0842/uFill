@@ -13,7 +13,7 @@
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                     <!--begin::Description-->
-                    <small class="text-muted fs-7 fw-bold my-1 ms-1">{{ trans('message.administrator') }} >
+                    <small class="text-muted fs-7 fw-bold my-1 ms-1">
                         {{ trans('message.clients') }} > {{ trans('message.invoice') }} >
                         #{{ $invoice->number }}</small>
                     <!--end::Description-->
@@ -133,7 +133,8 @@
                                                     <br />{{ $client->plz }} {{ $client->state }}
                                                     <br />{{ $client->country }}
                                                     <br />{{ $client->email }}
-                                                    <br />{{ $client->mobile_number }}
+                                                    <br />{{ $client->telephone }}
+                                                    <br />{{ $client->vat_id }}
                                                 </div>
                                                 <!--end::Description-->
                                             </div>
@@ -216,7 +217,7 @@
                                                         <!--end::Accountname-->
                                                         <!--begin::Label-->
                                                         <div class="text-end fw-bolder fs-6 text-gray-800">
-                                                            {{ Helper::money_format('EUR', 'de_DE', $subtotal) }}€</div>
+                                                            {{ Helper::money_format('EUR', 'de_DE', $invoice->subtotal) }}€</div>
                                                         <!--end::Label-->
                                                     </div>
                                                     <!--end::Item-->
@@ -227,14 +228,33 @@
                                                             {{ trans('message.Discount') }}</div>
                                                         <!--end::Accountname-->
                                                         <!--begin::Label-->
-                                                        <div class="text-end fw-bolder fs-6 text-gray-800">
-                                                            {{ Helper::money_format('EUR', 'de_DE', $invoice->discount) }}€ /
-                                                            0%</div>
+                                                        @if ($invoice->discount != null)
+                                                            @if ($invoice->discount->coupon->amount_off)
+                                                                <div class="text-end fw-bolder fs-6 text-gray-800">
+                                                                    {{ Helper::money_format('EUR', 'de_DE', $invoice->discount->coupon->amount_off) }}€
+                                                                </div>
+                                                            @else
+                                                            <div class="text-end fw-bolder fs-6 text-gray-800">
+                                                                    {{ Helper::money_format('EUR', 'de_DE', $invoice->discount->coupon->percent_off)}}%
+                                                                </div>
+
+                                                            @endif
+
+                                                        @else
+
+                                                            {{-- <div class="text-end fw-bolder fs-6 text-gray-800">
+                                                                {{ Helper::money_format('EUR', 'de_DE', $invoice->discount->coupon->amount_off) }}€ / {{$invoice->discount->coupon->percent_off}}%
+                                                            </div> --}}
+                                                            <div class="text-end fw-bolder fs-6 text-gray-800">
+                                                                {{-- 0€ /0% --}}0
+                                                            </div>
+                                                        @endif
+
                                                         <!--end::Label-->
                                                     </div>
                                                     <!--end::Item-->
                                                     <!--begin::Item-->
-                                                    <div class="d-flex flex-stack mb-3">
+                                                    {{-- <div class="d-flex flex-stack mb-3">
                                                         <!--begin::Accountname-->
                                                         <div class="fw-bold pe-10 text-gray-600 fs-7">
                                                             {{ trans('Shipping') }}</div>
@@ -242,7 +262,7 @@
                                                         <!--begin::Label-->
                                                         <div class="text-end fw-bolder fs-6 text-gray-800">0€</div>
                                                         <!--end::Label-->
-                                                    </div>
+                                                    </div> --}}
                                                     <!--end::Item-->
                                                     <!--begin::Item-->
                                                     <div class="d-flex flex-stack mb-3">
@@ -252,9 +272,7 @@
                                                         <!--end::Accountname-->
                                                         <!--begin::Label-->
                                                         @php
-                                                            $tax = $invoice->total - $invoice->total / 1.19;
-
-                                                            $total = $subtotal - $invoice->discount + 0;
+                                                            $tax = $invoice->total - ($invoice->total / 1.19);
                                                         @endphp
                                                         <div class="text-end fw-bolder fs-6 text-gray-800">
                                                             {{ Helper::money_format('EUR', 'de_DE', round($tax)) }}€</div>
@@ -270,7 +288,7 @@
                                                         <!--end::Code-->
                                                         <!--begin::Label-->
                                                         <div class="text-end fw-bolder fs-6 text-gray-800">
-                                                            {{ Helper::money_format('EUR', 'de_DE', round($total)) }}€</div>
+                                                            {{ Helper::money_format('EUR', 'de_DE', round($invoice->total)) }}€</div>
                                                         <!--end::Label-->
                                                     </div>
                                                     <!--end::Item-->
@@ -278,6 +296,31 @@
                                                 <!--end::Section-->
                                             </div>
                                             <!--end::Container-->
+                                            <div class="row d-flex justify-content-center">
+                                                @if ($client->location == "Germany")
+                                                    <!--end::Col-->
+                                                    <div class="col-md-12">
+                                                        <!--end::Text-->
+                                                        <h4 class="fw-bold fs-7 text-gray-600">{{ trans('message.This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us.') }}</h4>
+                                                    </div>
+                                                    <!--end::Col-->
+                                                @elseif($client->location == "Europe")
+                                                    <!--end::Col-->
+                                                    <div class="col-md-12">
+                                                        <!--end::Text-->
+                                                        <h4 class="fw-bold fs-7 text-gray-600">{{ trans('message.Please note the applicable requirements of the "reverse charge" regulation within the EU. This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us.') }}</h4>
+                                                    </div>
+                                                    <!--end::Col-->
+                                                @else()
+                                                    <!--end::Col-->
+                                                    <div class="col-md-12">
+                                                        <!--end::Text-->
+                                                        <h4 class="fw-bold fs-7 text-gray-600">{{ trans('message.Please note the tax regulations applicable in your country. This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us.') }}</h4>
+                                                    </div>
+                                                    <!--end::Col-->
+                                                @endif
+
+                                            </div>
                                             <!--begin::Separator-->
                                             <div class="separator separator-dashed mb-8 mt-8"></div>
                                             <!--end::Separator-->

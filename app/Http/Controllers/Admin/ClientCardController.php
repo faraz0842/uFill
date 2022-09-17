@@ -7,6 +7,7 @@ use App\Models\Client;
 use App\Models\ClientCardDetail;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class ClientCardController extends Controller
 {
@@ -85,10 +86,10 @@ class ClientCardController extends Controller
                 $card->card_id = $store_payment_method->id;
                 $card->client_id = $id;
                 $card->card_name = $request->card_name;
-                $card->card_number = $request->card_number;
+                $card->card_number = Crypt::encryptString($request->card_number);
                 $card->expiry_month = $request->card_expiry_month;
                 $card->expiry_year = $request->card_expiry_year;
-                $card->cvv = $request->card_cvv;
+                $card->cvv = Crypt::encryptString($request->card_cvv);
                 $card->type = 'default';
                 $card->save();
 
@@ -110,10 +111,10 @@ class ClientCardController extends Controller
                 $card->card_id = $store_payment_method->id;
                 $card->client_id = $id;
                 $card->card_name = $request->card_name;
-                $card->card_number = $request->card_number;
+                $card->card_number = Crypt::encryptString($request->card_number);
                 $card->expiry_month = $request->card_expiry_month;
                 $card->expiry_year = $request->card_expiry_year;
-                $card->cvv = $request->card_cvv;
+                $card->cvv = Crypt::encryptString($request->card_cvv);
                 $card->type = null;
                 $card->save();
             }
@@ -200,7 +201,7 @@ class ClientCardController extends Controller
             $card = ClientCardDetail::where('card_id',$id)->first();
             $card->client_id = $client_id;
             $card->card_name = $request->card_name;
-            $card->card_number = $request->card_number;
+            $card->card_number = Crypt::encryptString($request->card_number);
             $card->expiry_month = $request->card_expiry_month;
             $card->expiry_year = $request->card_expiry_year;
             $card->cvv = $request->card_cvv;
@@ -224,7 +225,7 @@ class ClientCardController extends Controller
             $card = ClientCardDetail::where('card_id',$id)->first();
             $card->client_id = $client_id;
             $card->card_name = $request->card_name;
-            $card->card_number = $request->card_number;
+            $card->card_number = Crypt::encryptString($request->card_number);
             $card->expiry_month = $request->card_expiry_month;
             $card->expiry_year = $request->card_expiry_year;
             $card->cvv = $request->card_cvv;

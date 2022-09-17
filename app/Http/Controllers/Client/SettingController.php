@@ -73,6 +73,7 @@ class SettingController extends Controller
                 'state' => $request->state,
                 'country' => $request->country,
                 'email' => $request->email,
+                'language' => $request->language,
                 'mobile_number' => $request->mobile_number,
                 'telephone' => $request->telephone,
                 'website' => $request->website,
@@ -106,7 +107,7 @@ class SettingController extends Controller
                     ],
                     'email' => $request->email,
                     'name' => $request->first_name . ' ' . $request->last_name,
-                    'phone' => $request->mobile_number,
+                    'phone' => $request->telephone,
                 ]
             );
 

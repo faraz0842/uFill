@@ -1647,7 +1647,13 @@
         // $("#kt_datatable_example_1").DataTable();
         $(document).ready(function() {
             // Datatables
-            var table = $('.kt_datatable_example_1').DataTable();
+            var table = $('.kt_datatable_example_1').DataTable(
+                {
+                    "order": [
+                        [0, "desc"]
+                    ]
+                }
+            );
             $('#search').on('keyup', function() {
                 table.search(this.value).draw();
             });

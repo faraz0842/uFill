@@ -89,7 +89,7 @@ class CreateAdminController extends Controller
             $admin->save();
 
             Admin::where('admin_id',$admin->admin_id)->update([
-                'referral_link' => 'ufill.swamenterprises.com/client/register/ufill-'.$admin->admin_id,
+                'referral_link' => request()->getHost().'/client/register/ufill-'.$admin->admin_id,
             ]);
 
 

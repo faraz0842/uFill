@@ -291,6 +291,11 @@
                                                     <td class="text-gray-800">{{ $client->registration_number }}</td>
                                                 </tr>
                                                 <!--end::Row-->
+                                                <tr>
+                                                    <td class="text-gray-400">
+                                                        {{ trans('message.Location') }}:</td>
+                                                    <td class="text-gray-800">{{ $client->location }}</td>
+                                                </tr>
                                             </table>
                                             <!--end::Details-->
                                         </div>
@@ -351,6 +356,10 @@
                                                     <td class="text-gray-800">{{ $client->website }}</td>
                                                 </tr>
                                                 <!--begin::Row-->
+                                                <tr>
+                                                    <td class="text-gray-400">{{ trans('message.ip address') }}.:</td>
+                                                    <td class="text-gray-800">{{ $client->ip_address }}</td>
+                                                </tr>
 
                                                 <!--end::Row-->
                                             </table>
@@ -395,7 +404,12 @@
                                                     <th class="min-w-125px">{{ trans('message.Number') }}</th>
                                                     <th class="min-w-125px">{{ trans('message.billing cycle') }}</th>
                                                     <th class="min-w-125px">{{ trans('message.debit') }}</th>
-                                                    <th class="min-w-125px">{{ trans('In total') }}</th>
+                                                    @if ($client->country == 'DE')
+                                                        <th class="min-w-125px">{{ trans('In total') }} ({{ trans('message.incl. taxes') }})</th>
+                                                    @else
+                                                        <th class="min-w-125px">{{ trans('In total') }} ({{ trans('message.excl. taxes') }})</th>
+                                                    @endif
+
                                                 </tr>
                                                 <!--end::Table row-->
                                             </thead>
@@ -444,9 +458,16 @@
                                                         }
 
                                                     @endphp
-                                                    <td class="text-centre text-danger">
-                                                        € {{ Helper::money_format('EUR', 'de_DE', $next_payment->price) }}
-                                                    </td>
+                                                    @if ($client->country == 'DE')
+                                                        <td class="text-centre text-danger">
+                                                            € {{ Helper::money_format('EUR', 'de_DE', round($next_payment->price * 1.19)) }}
+                                                        </td>
+                                                    @else
+                                                        <td class="text-centre text-danger">
+                                                            € {{ Helper::money_format('EUR', 'de_DE', $next_payment->price) }}
+                                                        </td>
+                                                    @endif
+
                                                 </tr>
 
                                                 <tr>
@@ -555,7 +576,7 @@
                                                 class="table align-middle table-row-dashed fs-6 fw-bolder gs-0 gy-4 p-0 m-0">
                                                 <!--begin::Thead-->
                                                 <thead class="border-bottom border-gray-200 fs-7 text-uppercase fw-bolder">
-                                                    <tr class=" text-gray-400">
+                                                    <tr class="text-center text-gray-400">
                                                         <th class="min-w-100px text-start">{{ trans('message.id') }}</th>
                                                         <th class="min-w-100px">{{ trans('message.total') }}</th>
                                                         <th class="min-w-100px">{{ trans('message.Status') }}</th>
@@ -567,8 +588,8 @@
                                                 <!--begin::Tbody-->
                                                 <tbody class="fs-6 fw-bold text-gray-600">
                                                     @foreach ($invoices as $invoice)
-                                                        <tr>
-                                                            <td>
+                                                        <tr class="text-center">
+                                                            <td class="text-start">
                                                                 <a href="{{ Route('client.view.invoice', $invoice->id) }}"
                                                                     class="text-gray-600 text-hover-primary">{{ $invoice->id }}</a>
                                                             </td>
@@ -781,321 +802,332 @@
                                                 <td class="text-center pe-3 min-w-50px">{{ $card_detail->card_name }}
                                                     @if ($card_detail->type == 'default')
                                                         <span class="badge badge-success"> Default</span>
-                                                        @endif
+                                                    @endif
                                                 </td>
 
                                                 @php
                                                     $card_number = Crypt::decryptString($card_detail->card_number);
+                                                    $card_cvv = Crypt::decryptString($card_detail->cvv);
                                                 @endphp
 
-                                        <!--end::Transport-->
-                                        {{-- {{substr($card_number, -4) }} --}}
-                                        <!--begin::Type-->
-                                        <td class="text-center pe-3 min-w-50px">************{{substr($card_number, -4) }}
-                                        </td>
-                                        <!--end::Type-->
-                                        <!--begin::Weight-->
-                                        <td class="text-center pe-3 min-w-50px">{{ $card_detail->expiry_month }}</td>
-                                        <!--end::Weight-->
-                                        <!--begin::Size-->
-                                        <td class="text-center pe-3 min-w-50px">{{ $card_detail->expiry_year }}</td>
-                                        <!--end::Size-->
-                                        <!--begin::Size-->
-                                        <td class="text-center pe-3 min-w-50px">
-                                            {{-- {{ $card_detail->cvv }} --}} ***
-                                        </td>
-                                        <!--end::Size-->
-                                        <td class="text-center pe-3 min-w-50px">
-                                            <a data-bs-toggle="modal"
-                                                data-bs-target="#editrcard_detail{{ $card_detail->card_id }}"
-                                                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-                                                <i class="fa fa-pencil-alt"></i>
-                                            </a>
-                                            @if ($card_detail->type == null)
-                                                <a href="{{ Route('admin.card-detail.delete', $card_detail->card_id) }}"
-                                                    class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
-                                            @endif
+                                                <!--end::Transport-->
+                                                {{-- {{substr($card_number, -4) }} --}}
+                                                <!--begin::Type-->
+                                                <td class="text-center pe-3 min-w-50px">
+                                                    ************{{ substr($card_number, -4) }}
+                                                </td>
+                                                <!--end::Type-->
+                                                <!--begin::Weight-->
+                                                <td class="text-center pe-3 min-w-50px">{{ $card_detail->expiry_month }}
+                                                </td>
+                                                <!--end::Weight-->
+                                                <!--begin::Size-->
+                                                <td class="text-center pe-3 min-w-50px">{{ $card_detail->expiry_year }}
+                                                </td>
+                                                <!--end::Size-->
+                                                <!--begin::Size-->
+                                                <td class="text-center pe-3 min-w-50px">
+                                                    {{-- {{ $card_detail->cvv }} --}} ***
+                                                </td>
+                                                <!--end::Size-->
+                                                <td class="text-center pe-3 min-w-50px">
+                                                    <a data-bs-toggle="modal"
+                                                        data-bs-target="#editrcard_detail{{ $card_detail->card_id }}"
+                                                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                        <i class="fa fa-pencil-alt"></i>
+                                                    </a>
+                                                    @if ($card_detail->type == null)
+                                                        <a href="{{ Route('admin.card-detail.delete', $card_detail->card_id) }}"
+                                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
+                                                    @endif
 
-                                        </td>
-                                        <!--end::Size-->
+                                                </td>
+                                                <!--end::Size-->
 
-                                        <!--begin::Modal - New Card-->
-                                        <div class="modal fade" id="editrcard_detail{{ $card_detail->card_id }}"
-                                            tabindex="-1" aria-hidden="true">
-                                            <!--begin::Modal dialog-->
-                                            <div class="modal-dialog modal-dialog-centered mw-650px">
-                                                <!--begin::Modal content-->
-                                                <div class="modal-content">
-                                                    <!--begin::Modal header-->
-                                                    <div class="modal-header">
-                                                        <!--begin::Modal title-->
-                                                        <h2>{{ trans('message.Edit card') }}</h2>
-                                                        <!--end::Modal title-->
-                                                        <!--begin::Close-->
-                                                        <div class="btn btn-sm btn-icon btn-active-color-primary"
-                                                            data-bs-dismiss="modal">
-                                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                                                            <span class="svg-icon svg-icon-1">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                    height="24" viewBox="0 0 24 24" fill="none">
-                                                                    <rect opacity="0.5" x="6" y="17.3137"
-                                                                        width="16" height="2" rx="1"
-                                                                        transform="rotate(-45 6 17.3137)"
-                                                                        fill="currentColor" />
-                                                                    <rect x="7.41422" y="6" width="16"
-                                                                        height="2" rx="1"
-                                                                        transform="rotate(45 7.41422 6)"
-                                                                        fill="currentColor" />
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon-->
-                                                        </div>
-                                                        <!--end::Close-->
-                                                    </div>
-                                                    <!--end::Modal header-->
-                                                    <!--begin::Modal body-->
-                                                    <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
-                                                        <!--begin::Form-->
-                                                        <form method="post" class="form"
-                                                            action="{{ Route('admin.card-detail.update', [$card_detail->card_id, $card_detail->client_id]) }}">
-                                                            @csrf
-                                                            <!--begin::Input group-->
-                                                            <div class="d-flex flex-column mb-7 fv-row">
-                                                                <!--begin::Label-->
-                                                                <label
-                                                                    class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                                    <span
-                                                                        class="required">{{ trans('message.Cardholders') }}</span>
-                                                                    <i class="fas fa-exclamation-circle ms-2 fs-7"
-                                                                        data-bs-toggle="tooltip"
-                                                                        title="Geben Sie den Namen auf der Karte an."></i>
-                                                                </label>
-                                                                <!--end::Label-->
-                                                                <input type="text"
-                                                                    class="form-control form-control-solid" placeholder=""
-                                                                    name="card_name"
-                                                                    value="{{ $card_detail->card_name }}" required />
-                                                            </div>
-                                                            <!--end::Input group-->
-                                                            <!--begin::Input group-->
-                                                            <div class="d-flex flex-column mb-7 fv-row">
-                                                                <!--begin::Label-->
-                                                                <label
-                                                                    class="required fs-6 fw-bold form-label mb-2">{{ trans('message.Card Number') }}</label>
-                                                                <!--end::Label-->
-                                                                <!--begin::Input wrapper-->
-                                                                <div class="position-relative">
-                                                                    <!--begin::Input-->
-                                                                    <input type="text"
-                                                                        class="form-control form-control-solid"
-                                                                        placeholder="Enter card number" name="card_number"
-                                                                        value="{{ $card_detail->card_number }}"
-                                                                        required />
-                                                                    <!--end::Input-->
-                                                                    <!--begin::Card logos-->
-                                                                    <div
-                                                                        class="position-absolute translate-middle-y top-50 end-0 me-5">
-                                                                        <img src="{{ asset('assets/media/svg/card-logos/visa.svg') }}"
-                                                                            alt="" class="h-25px" />
-                                                                        <img src="{{ asset('assets/media/svg/card-logos/mastercard.svg') }}"
-                                                                            alt="" class="h-25px" />
-                                                                        <img src="{{ asset('assets/media/svg/card-logos/american-express.svg') }}"
-                                                                            alt="" class="h-25px" />
-                                                                    </div>
-                                                                    <!--end::Card logos-->
+                                                <!--begin::Modal - New Card-->
+                                                <div class="modal fade" id="editrcard_detail{{ $card_detail->card_id }}"
+                                                    tabindex="-1" aria-hidden="true">
+                                                    <!--begin::Modal dialog-->
+                                                    <div class="modal-dialog modal-dialog-centered mw-650px">
+                                                        <!--begin::Modal content-->
+                                                        <div class="modal-content">
+                                                            <!--begin::Modal header-->
+                                                            <div class="modal-header">
+                                                                <!--begin::Modal title-->
+                                                                <h2>{{ trans('message.Edit card') }}</h2>
+                                                                <!--end::Modal title-->
+                                                                <!--begin::Close-->
+                                                                <div class="btn btn-sm btn-icon btn-active-color-primary"
+                                                                    data-bs-dismiss="modal">
+                                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                                                                    <span class="svg-icon svg-icon-1">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                            width="24" height="24"
+                                                                            viewBox="0 0 24 24" fill="none">
+                                                                            <rect opacity="0.5" x="6"
+                                                                                y="17.3137" width="16"
+                                                                                height="2" rx="1"
+                                                                                transform="rotate(-45 6 17.3137)"
+                                                                                fill="currentColor" />
+                                                                            <rect x="7.41422" y="6"
+                                                                                width="16" height="2"
+                                                                                rx="1"
+                                                                                transform="rotate(45 7.41422 6)"
+                                                                                fill="currentColor" />
+                                                                        </svg>
+                                                                    </span>
+                                                                    <!--end::Svg Icon-->
                                                                 </div>
-                                                                <!--end::Input wrapper-->
+                                                                <!--end::Close-->
                                                             </div>
-                                                            <!--end::Input group-->
-                                                            <!--begin::Input group-->
-                                                            <div class="row mb-10">
-                                                                <!--begin::Col-->
-                                                                <div class="col-md-8 fv-row">
-                                                                    <!--begin::Label-->
-                                                                    <label
-                                                                        class="required fs-6 fw-bold form-label mb-2">{{ trans('message.Expiry Month') }}</label>
-                                                                    <!--end::Label-->
-                                                                    <!--begin::Row-->
-                                                                    <div class="row fv-row">
-                                                                        <!--begin::Col-->
-                                                                        <div class="col-6">
-                                                                            <select name="card_expiry_month"
-                                                                                class="form-select form-select-solid"
-                                                                                data-control="select2"
-                                                                                data-hide-search="true"
-                                                                                data-placeholder="Month" required>
-                                                                                <option></option>
-                                                                                <option value="1"
-                                                                                    {{ $card_detail->expiry_month == 1 ? 'selected' : '' }}>
-                                                                                    1</option>
-                                                                                <option value="2"
-                                                                                    {{ $card_detail->expiry_month == 2 ? 'selected' : '' }}>
-                                                                                    2</option>
-                                                                                <option value="3"
-                                                                                    {{ $card_detail->expiry_month == 3 ? 'selected' : '' }}>
-                                                                                    3</option>
-                                                                                <option value="4"
-                                                                                    {{ $card_detail->expiry_month == 4 ? 'selected' : '' }}>
-                                                                                    4</option>
-                                                                                <option value="5"
-                                                                                    {{ $card_detail->expiry_month == 5 ? 'selected' : '' }}>
-                                                                                    5</option>
-                                                                                <option value="6"
-                                                                                    {{ $card_detail->expiry_month == 6 ? 'selected' : '' }}>
-                                                                                    6</option>
-                                                                                <option value="7"
-                                                                                    {{ $card_detail->expiry_month == 7 ? 'selected' : '' }}>
-                                                                                    7</option>
-                                                                                <option value="8"
-                                                                                    {{ $card_detail->expiry_month == 8 ? 'selected' : '' }}>
-                                                                                    8</option>
-                                                                                <option value="9"
-                                                                                    {{ $card_detail->expiry_month == 9 ? 'selected' : '' }}>
-                                                                                    9</option>
-                                                                                <option value="10"
-                                                                                    {{ $card_detail->expiry_month == 10 ? 'selected' : '' }}>
-                                                                                    10</option>
-                                                                                <option value="11"
-                                                                                    {{ $card_detail->expiry_month == 11 ? 'selected' : '' }}>
-                                                                                    11</option>
-                                                                                <option
-                                                                                    value="12"{{ $card_detail->expiry_month == 12 ? 'selected' : '' }}>
-                                                                                    12</option>
-                                                                            </select>
-                                                                        </div>
-                                                                        <!--end::Col-->
-                                                                        <!--begin::Col-->
-                                                                        <div class="col-6">
-                                                                            <select name="card_expiry_year"
-                                                                                class="form-select form-select-solid"
-                                                                                data-control="select2"
-                                                                                data-hide-search="true"
-                                                                                data-placeholder="Year">
-                                                                                <option></option>
-                                                                                <option value="2021"
-                                                                                    {{ $card_detail->expiry_year == '2021' ? 'selected' : '' }}>
-                                                                                    2021</option>
-                                                                                <option value="2022"
-                                                                                    {{ $card_detail->expiry_year == '2022' ? 'selected' : '' }}>
-                                                                                    2022</option>
-                                                                                <option value="2023"
-                                                                                    {{ $card_detail->expiry_year == '2023' ? 'selected' : '' }}>
-                                                                                    2023</option>
-                                                                                <option value="2024"
-                                                                                    {{ $card_detail->expiry_year == '2024' ? 'selected' : '' }}>
-                                                                                    2024</option>
-                                                                                <option value="2025"
-                                                                                    {{ $card_detail->expiry_year == '2025' ? 'selected' : '' }}>
-                                                                                    2025</option>
-                                                                                <option value="2026"
-                                                                                    {{ $card_detail->expiry_year == '2026' ? 'selected' : '' }}>
-                                                                                    2026</option>
-                                                                                <option value="2027"
-                                                                                    {{ $card_detail->expiry_year == '2027' ? 'selected' : '' }}>
-                                                                                    2027</option>
-                                                                                <option value="2028"
-                                                                                    {{ $card_detail->expiry_year == '2028' ? 'selected' : '' }}>
-                                                                                    2028</option>
-                                                                                <option value="2029"
-                                                                                    {{ $card_detail->expiry_year == '2029' ? 'selected' : '' }}>
-                                                                                    2029</option>
-                                                                                <option value="2030"
-                                                                                    {{ $card_detail->expiry_year == '2030' ? 'selected' : '' }}>
-                                                                                    2030</option>
-                                                                                <option
-                                                                                    value="2031"{{ $card_detail->expiry_year == '2031' ? 'selected' : '' }}>
-                                                                                    2031</option>
-                                                                            </select>
-                                                                        </div>
-                                                                        <!--end::Col-->
-                                                                    </div>
-                                                                    <!--end::Row-->
-                                                                </div>
-                                                                <!--end::Col-->
-                                                                <!--begin::Col-->
-                                                                <div class="col-md-4 fv-row">
-                                                                    <!--begin::Label-->
-                                                                    <label
-                                                                        class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                                        <span class="required">CVV</span>
-                                                                        <i class="fas fa-exclamation-circle ms-2 fs-7"
-                                                                            data-bs-toggle="tooltip"
-                                                                            title="CVV Prüfcode eingeben..."></i>
-                                                                    </label>
-                                                                    <!--end::Label-->
-                                                                    <!--begin::Input wrapper-->
-                                                                    <div class="position-relative">
-                                                                        <!--begin::Input-->
+                                                            <!--end::Modal header-->
+                                                            <!--begin::Modal body-->
+                                                            <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                                                                <!--begin::Form-->
+                                                                <form method="post" class="form"
+                                                                    action="{{ Route('admin.card-detail.update', [$card_detail->card_id, $card_detail->client_id]) }}">
+                                                                    @csrf
+                                                                    <!--begin::Input group-->
+                                                                    <div class="d-flex flex-column mb-7 fv-row">
+                                                                        <!--begin::Label-->
+                                                                        <label
+                                                                            class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
+                                                                            <span
+                                                                                class="required">{{ trans('message.Cardholders') }}</span>
+                                                                            <i class="fas fa-exclamation-circle ms-2 fs-7"
+                                                                                data-bs-toggle="tooltip"
+                                                                                title="Geben Sie den Namen auf der Karte an."></i>
+                                                                        </label>
+                                                                        <!--end::Label-->
                                                                         <input type="text"
                                                                             class="form-control form-control-solid"
-                                                                            minlength="3" maxlength="4"
-                                                                            placeholder="CVV" name="card_cvv"
-                                                                            value="{{ $card_detail->cvv }}" />
-                                                                        <!--end::Input-->
-                                                                        <!--begin::CVV icon-->
-                                                                        <div
-                                                                            class="position-absolute translate-middle-y top-50 end-0 me-3">
-                                                                            <!--begin::Svg Icon | path: icons/duotune/finance/fin002.svg-->
-                                                                            <span class="svg-icon svg-icon-2hx">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                    width="24" height="24"
-                                                                                    viewBox="0 0 24 24" fill="none">
-                                                                                    <path d="M22 7H2V11H22V7Z"
-                                                                                        fill="currentColor" />
-                                                                                    <path opacity="0.3"
-                                                                                        d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19ZM14 14C14 13.4 13.6 13 13 13H5C4.4 13 4 13.4 4 14C4 14.6 4.4 15 5 15H13C13.6 15 14 14.6 14 14ZM16 15.5C16 16.3 16.7 17 17.5 17H18.5C19.3 17 20 16.3 20 15.5C20 14.7 19.3 14 18.5 14H17.5C16.7 14 16 14.7 16 15.5Z"
-                                                                                        fill="currentColor" />
-                                                                                </svg>
-                                                                            </span>
-                                                                            <!--end::Svg Icon-->
-                                                                        </div>
-                                                                        <!--end::CVV icon-->
+                                                                            placeholder="" name="card_name"
+                                                                            value="{{ $card_detail->card_name }}"
+                                                                            required />
                                                                     </div>
-                                                                    <!--end::Input wrapper-->
-                                                                </div>
-                                                                <!--end::Col-->
-                                                            </div>
-                                                            <div class="d-flex flex-stack">
-                                                                <!--begin::Switch-->
-                                                                <label
-                                                                    class="form-check form-check-custom form-check-solid">
-                                                                    <input class="form-check-input" name="type"
-                                                                        type="checkbox"
-                                                                        {{ $card_detail->type == null ? '' : 'checked' }} />
-                                                                    <span
-                                                                        class="form-check-label fw-bold text-muted">{{ trans('message.set as default') }}</span>
-                                                                </label>
+                                                                    <!--end::Input group-->
+                                                                    <!--begin::Input group-->
+                                                                    <div class="d-flex flex-column mb-7 fv-row">
+                                                                        <!--begin::Label-->
+                                                                        <label
+                                                                            class="required fs-6 fw-bold form-label mb-2">{{ trans('message.Card Number') }}</label>
+                                                                        <!--end::Label-->
+                                                                        <!--begin::Input wrapper-->
+                                                                        <div class="position-relative">
+                                                                            <!--begin::Input-->
+                                                                            <input type="text"
+                                                                                class="form-control form-control-solid"
+                                                                                placeholder="Enter card number"
+                                                                                name="card_number"
+                                                                                value="************{{ substr($card_number, -4) }} "
+                                                                                required />
+                                                                            <!--end::Input-->
+                                                                            <!--begin::Card logos-->
+                                                                            <div
+                                                                                class="position-absolute translate-middle-y top-50 end-0 me-5">
+                                                                                <img src="{{ asset('assets/media/svg/card-logos/visa.svg') }}"
+                                                                                    alt="" class="h-25px" />
+                                                                                <img src="{{ asset('assets/media/svg/card-logos/mastercard.svg') }}"
+                                                                                    alt="" class="h-25px" />
+                                                                                <img src="{{ asset('assets/media/svg/card-logos/american-express.svg') }}"
+                                                                                    alt="" class="h-25px" />
+                                                                            </div>
+                                                                            <!--end::Card logos-->
+                                                                        </div>
+                                                                        <!--end::Input wrapper-->
+                                                                    </div>
+                                                                    <!--end::Input group-->
+                                                                    <!--begin::Input group-->
+                                                                    <div class="row mb-10">
+                                                                        <!--begin::Col-->
+                                                                        <div class="col-md-8 fv-row">
+                                                                            <!--begin::Label-->
+                                                                            <label
+                                                                                class="required fs-6 fw-bold form-label mb-2">{{ trans('message.Expiry Month') }}</label>
+                                                                            <!--end::Label-->
+                                                                            <!--begin::Row-->
+                                                                            <div class="row fv-row">
+                                                                                <!--begin::Col-->
+                                                                                <div class="col-6">
+                                                                                    <select name="card_expiry_month"
+                                                                                        class="form-select form-select-solid"
+                                                                                        data-control="select2"
+                                                                                        data-hide-search="true"
+                                                                                        data-placeholder="Month" required>
+                                                                                        <option></option>
+                                                                                        <option value="1"
+                                                                                            {{ $card_detail->expiry_month == 1 ? 'selected' : '' }}>
+                                                                                            1</option>
+                                                                                        <option value="2"
+                                                                                            {{ $card_detail->expiry_month == 2 ? 'selected' : '' }}>
+                                                                                            2</option>
+                                                                                        <option value="3"
+                                                                                            {{ $card_detail->expiry_month == 3 ? 'selected' : '' }}>
+                                                                                            3</option>
+                                                                                        <option value="4"
+                                                                                            {{ $card_detail->expiry_month == 4 ? 'selected' : '' }}>
+                                                                                            4</option>
+                                                                                        <option value="5"
+                                                                                            {{ $card_detail->expiry_month == 5 ? 'selected' : '' }}>
+                                                                                            5</option>
+                                                                                        <option value="6"
+                                                                                            {{ $card_detail->expiry_month == 6 ? 'selected' : '' }}>
+                                                                                            6</option>
+                                                                                        <option value="7"
+                                                                                            {{ $card_detail->expiry_month == 7 ? 'selected' : '' }}>
+                                                                                            7</option>
+                                                                                        <option value="8"
+                                                                                            {{ $card_detail->expiry_month == 8 ? 'selected' : '' }}>
+                                                                                            8</option>
+                                                                                        <option value="9"
+                                                                                            {{ $card_detail->expiry_month == 9 ? 'selected' : '' }}>
+                                                                                            9</option>
+                                                                                        <option value="10"
+                                                                                            {{ $card_detail->expiry_month == 10 ? 'selected' : '' }}>
+                                                                                            10</option>
+                                                                                        <option value="11"
+                                                                                            {{ $card_detail->expiry_month == 11 ? 'selected' : '' }}>
+                                                                                            11</option>
+                                                                                        <option
+                                                                                            value="12"{{ $card_detail->expiry_month == 12 ? 'selected' : '' }}>
+                                                                                            12</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <!--end::Col-->
+                                                                                <!--begin::Col-->
+                                                                                <div class="col-6">
+                                                                                    <select name="card_expiry_year"
+                                                                                        class="form-select form-select-solid"
+                                                                                        data-control="select2"
+                                                                                        data-hide-search="true"
+                                                                                        data-placeholder="Year">
+                                                                                        <option></option>
+                                                                                        <option value="2021"
+                                                                                            {{ $card_detail->expiry_year == '2021' ? 'selected' : '' }}>
+                                                                                            2021</option>
+                                                                                        <option value="2022"
+                                                                                            {{ $card_detail->expiry_year == '2022' ? 'selected' : '' }}>
+                                                                                            2022</option>
+                                                                                        <option value="2023"
+                                                                                            {{ $card_detail->expiry_year == '2023' ? 'selected' : '' }}>
+                                                                                            2023</option>
+                                                                                        <option value="2024"
+                                                                                            {{ $card_detail->expiry_year == '2024' ? 'selected' : '' }}>
+                                                                                            2024</option>
+                                                                                        <option value="2025"
+                                                                                            {{ $card_detail->expiry_year == '2025' ? 'selected' : '' }}>
+                                                                                            2025</option>
+                                                                                        <option value="2026"
+                                                                                            {{ $card_detail->expiry_year == '2026' ? 'selected' : '' }}>
+                                                                                            2026</option>
+                                                                                        <option value="2027"
+                                                                                            {{ $card_detail->expiry_year == '2027' ? 'selected' : '' }}>
+                                                                                            2027</option>
+                                                                                        <option value="2028"
+                                                                                            {{ $card_detail->expiry_year == '2028' ? 'selected' : '' }}>
+                                                                                            2028</option>
+                                                                                        <option value="2029"
+                                                                                            {{ $card_detail->expiry_year == '2029' ? 'selected' : '' }}>
+                                                                                            2029</option>
+                                                                                        <option value="2030"
+                                                                                            {{ $card_detail->expiry_year == '2030' ? 'selected' : '' }}>
+                                                                                            2030</option>
+                                                                                        <option
+                                                                                            value="2031"{{ $card_detail->expiry_year == '2031' ? 'selected' : '' }}>
+                                                                                            2031</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <!--end::Col-->
+                                                                            </div>
+                                                                            <!--end::Row-->
+                                                                        </div>
+                                                                        <!--end::Col-->
+                                                                        <!--begin::Col-->
+                                                                        <div class="col-md-4 fv-row">
+                                                                            <!--begin::Label-->
+                                                                            <label
+                                                                                class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
+                                                                                <span class="required">CVV</span>
+                                                                                <i class="fas fa-exclamation-circle ms-2 fs-7"
+                                                                                    data-bs-toggle="tooltip"
+                                                                                    title="CVV Prüfcode eingeben..."></i>
+                                                                            </label>
+                                                                            <!--end::Label-->
+                                                                            <!--begin::Input wrapper-->
+                                                                            <div class="position-relative">
+                                                                                <!--begin::Input-->
+                                                                                <input type="password"
+                                                                                    class="form-control form-control-solid"
+                                                                                    minlength="3" maxlength="4"
+                                                                                    placeholder="CVV" name="card_cvv"
+                                                                                    value="***" />
+                                                                                <!--end::Input-->
+                                                                                <!--begin::CVV icon-->
+                                                                                <div
+                                                                                    class="position-absolute translate-middle-y top-50 end-0 me-3">
+                                                                                    <!--begin::Svg Icon | path: icons/duotune/finance/fin002.svg-->
+                                                                                    <span class="svg-icon svg-icon-2hx">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                            width="24" height="24"
+                                                                                            viewBox="0 0 24 24"
+                                                                                            fill="none">
+                                                                                            <path d="M22 7H2V11H22V7Z"
+                                                                                                fill="currentColor" />
+                                                                                            <path opacity="0.3"
+                                                                                                d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19ZM14 14C14 13.4 13.6 13 13 13H5C4.4 13 4 13.4 4 14C4 14.6 4.4 15 5 15H13C13.6 15 14 14.6 14 14ZM16 15.5C16 16.3 16.7 17 17.5 17H18.5C19.3 17 20 16.3 20 15.5C20 14.7 19.3 14 18.5 14H17.5C16.7 14 16 14.7 16 15.5Z"
+                                                                                                fill="currentColor" />
+                                                                                        </svg>
+                                                                                    </span>
+                                                                                    <!--end::Svg Icon-->
+                                                                                </div>
+                                                                                <!--end::CVV icon-->
+                                                                            </div>
+                                                                            <!--end::Input wrapper-->
+                                                                        </div>
+                                                                        <!--end::Col-->
+                                                                    </div>
+                                                                    <div class="d-flex flex-stack">
+                                                                        <!--begin::Switch-->
+                                                                        <label
+                                                                            class="form-check form-check-custom form-check-solid">
+                                                                            <input class="form-check-input" name="type"
+                                                                                type="checkbox"
+                                                                                {{ $card_detail->type == null ? '' : 'checked' }} />
+                                                                            <span
+                                                                                class="form-check-label fw-bold text-muted">{{ trans('message.set as default') }}</span>
+                                                                        </label>
 
-                                                                <!--end::Switch-->
+                                                                        <!--end::Switch-->
+                                                                    </div>
+                                                                    <div class="text-center pt-15">
+                                                                        <button type="reset"
+                                                                            id="kt_modal_new_card_cancel"
+                                                                            class="btn btn-light me-3"
+                                                                            data-bs-dismiss="modal">{{ trans('message.cancel') }}</button>
+                                                                        <button type="submit" class="btn btn-primary">
+                                                                            <span
+                                                                                class="indicator-label">{{ trans('message.save') }}</span>
+                                                                            <span
+                                                                                class="indicator-progress">{{ trans('message.Please Wait') }}...
+                                                                                <span
+                                                                                    class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <!--end::Actions-->
+                                                                </form>
+                                                                <!--end::Form-->
                                                             </div>
-                                                            <div class="text-center pt-15">
-                                                                <button type="reset" id="kt_modal_new_card_cancel"
-                                                                    class="btn btn-light me-3"
-                                                                    data-bs-dismiss="modal">{{ trans('message.cancel') }}</button>
-                                                                <button type="submit" class="btn btn-primary">
-                                                                    <span
-                                                                        class="indicator-label">{{ trans('message.save') }}</span>
-                                                                    <span
-                                                                        class="indicator-progress">{{ trans('message.Please Wait') }}...
-                                                                        <span
-                                                                            class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                                                </button>
-                                                            </div>
-                                                            <!--end::Actions-->
-                                                        </form>
-                                                        <!--end::Form-->
+                                                            <!--end::Modal body-->
+                                                        </div>
+                                                        <!--end::Modal content-->
                                                     </div>
-                                                    <!--end::Modal body-->
+                                                    <!--end::Modal dialog-->
                                                 </div>
-                                                <!--end::Modal content-->
-                                            </div>
-                                            <!--end::Modal dialog-->
-                                        </div>
-                                        <!--end::Modal - New Card-->
+                                                <!--end::Modal - New Card-->
 
-                                        </tr>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                     <!--end::Table body-->
@@ -2309,7 +2341,7 @@
                                                                 class="form-check form-check-custom form-check-solid form-check-success me-6">
                                                                 <input class="form-check-input" type="radio"
                                                                     name="account_type" checked="checked"
-                                                                    value="prod_Li75wNdJaBLoHK" />
+                                                                    value="prod_MLpP33EIDdVvMC" />
                                                             </div>
                                                             <!--end::Radio-->
                                                             <!--begin::Info-->
@@ -2326,10 +2358,14 @@
                                                         <!--begin::Price-->
                                                         <div class="ms-5">
                                                             {{-- <span class="mb-2">€</span> --}}
-                                                            <span class="fs-3x fw-bolder" data-kt-plan-price-month="9,99€"
+                                                            @if ($client->country == 'DE')
+                                                                <span class="fs-3x fw-bolder" data-kt-plan-price-month="9,99€"
                                                                 data-kt-plan-price-annual="95,88€">9,99€</span>
-                                                            {{-- <span class="fs-7 opacity-50">/
-                                                <span data-kt-element="period"></span></span> --}}
+                                                            @else
+                                                                <span class="fs-3x fw-bolder" data-kt-plan-price-month="8,39€"
+                                                                data-kt-plan-price-annual="80,57€">8,39€</span>
+                                                            @endif
+
                                                         </div>
                                                         <!--end::Price-->
                                                     </div>
@@ -2343,7 +2379,7 @@
                                                             <div
                                                                 class="form-check form-check-custom form-check-solid form-check-success me-6">
                                                                 <input class="form-check-input" type="radio"
-                                                                    name="account_type" value="prod_Li6z4ugvCzTVZ9" />
+                                                                    name="account_type" value="prod_MLpNo8izLk9Csj" />
                                                             </div>
                                                             <!--end::Radio-->
                                                             <!--begin::Info-->
@@ -2360,11 +2396,16 @@
                                                         <!--begin::Price-->
                                                         <div class="ms-5">
                                                             {{-- <span class="mb-2">$</span> --}}
-                                                            <span class="fs-3x fw-bolder"
+                                                            @if ($client->country == 'DE')
+                                                                <span class="fs-3x fw-bolder"
                                                                 data-kt-plan-price-month="44,99€"
                                                                 data-kt-plan-price-annual="359,88€">44,99€</span>
-                                                            {{-- <span class="fs-7 opacity-50">/
-                                                <span data-kt-element="period">Mon</span></span> --}}
+                                                            @else
+                                                                <span class="fs-3x fw-bolder"
+                                                                data-kt-plan-price-month="37,81€"
+                                                                data-kt-plan-price-annual="302,42€">37,81€</span>
+                                                            @endif
+
                                                         </div>
                                                         <!--end::Price-->
                                                     </div>
@@ -2379,7 +2420,7 @@
                                                             <div
                                                                 class="form-check form-check-custom form-check-solid form-check-success me-6">
                                                                 <input class="form-check-input" type="radio"
-                                                                    name="account_type" value="prod_Li775knelqM7PZ" />
+                                                                    name="account_type" value="prod_MLpPnFwnmwJUuo" />
                                                             </div>
                                                             <!--end::Radio-->
                                                             <!--begin::Info-->
@@ -2396,11 +2437,16 @@
                                                         <!--begin::Price-->
                                                         <div class="ms-5">
                                                             {{-- <span class="mb-2">$</span> --}}
-                                                            <span class="fs-3x fw-bolder"
+                                                            @if ($client->country == 'DE')
+                                                                <span class="fs-3x fw-bolder"
                                                                 data-kt-plan-price-month="49,99€"
                                                                 data-kt-plan-price-annual="419,88€">49,99€</span>
-                                                            {{-- <span class="fs-7 opacity-50">/
-                                                    <span data-kt-element="period">Mon</span></span> --}}
+                                                            @else
+                                                                <span class="fs-3x fw-bolder"
+                                                                data-kt-plan-price-month="42,01€"
+                                                                data-kt-plan-price-annual="352,84€">42,01€</span>
+                                                            @endif
+
                                                         </div>
                                                         <!--end::Price-->
                                                     </div>
@@ -2409,473 +2455,20 @@
                                                 <!--end::Tabs-->
                                             </div>
                                             <!--end::Col-->
-                                            <!--begin::Col-->
-                                            {{-- <div class="col-lg-6">
-                                <!--begin::Tab content-->
-                                <div class="tab-content rounded h-100 bg-light p-10">
-                                    <!--begin::Tab Pane-->
-                                    <div class="tab-pane fade show active" id="kt_upgrade_plan_startup">
-                                        <!--begin::Heading-->
-                                        <div class="pb-5">
-                                            <h2 class="fw-bolder text-dark">What’s in Startup Plan?</h2>
-                                            <div class="text-muted fw-bold">Optimal for 10+ team size and new startup
-                                            </div>
-                                        </div>
-                                        <!--end::Heading-->
-                                        <!--begin::Body-->
-                                        <div class="pt-1">
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Up to 10 Active
-                                                    Users</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Up to 30 Project
-                                                    Integrations</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Analytics
-                                                    Module</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-muted flex-grow-1">Finance Module</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen040.svg-->
-                                                <span class="svg-icon svg-icon-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <rect x="7" y="15.3137" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(-45 7 15.3137)" fill="black" />
-                                                        <rect x="8.41422" y="7" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(45 8.41422 7)" fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-muted flex-grow-1">Accounting Module</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen040.svg-->
-                                                <span class="svg-icon svg-icon-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <rect x="7" y="15.3137" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(-45 7 15.3137)" fill="black" />
-                                                        <rect x="8.41422" y="7" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(45 8.41422 7)" fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-muted flex-grow-1">Network Platform</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen040.svg-->
-                                                <span class="svg-icon svg-icon-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <rect x="7" y="15.3137" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(-45 7 15.3137)" fill="black" />
-                                                        <rect x="8.41422" y="7" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(45 8.41422 7)" fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center">
-                                                <span class="fw-bold fs-5 text-muted flex-grow-1">Unlimited Cloud
-                                                    Space</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen040.svg-->
-                                                <span class="svg-icon svg-icon-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <rect x="7" y="15.3137" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(-45 7 15.3137)" fill="black" />
-                                                        <rect x="8.41422" y="7" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(45 8.41422 7)" fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                        </div>
-                                        <!--end::Body-->
-                                    </div>
-                                    <!--end::Tab Pane-->
-                                    <!--begin::Tab Pane-->
-                                    <div class="tab-pane fade" id="kt_upgrade_plan_advanced">
-                                        <!--begin::Heading-->
-                                        <div class="pb-5">
-                                            <h2 class="fw-bolder text-dark">What’s in Startup Plan?</h2>
-                                            <div class="text-muted fw-bold">Optimal for 100+ team size and grown company
-                                            </div>
-                                        </div>
-                                        <!--end::Heading-->
-                                        <!--begin::Body-->
-                                        <div class="pt-1">
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Up to 10 Active
-                                                    Users</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Up to 30 Project
-                                                    Integrations</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Analytics
-                                                    Module</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Finance Module</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Accounting
-                                                    Module</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-muted flex-grow-1">Network Platform</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen040.svg-->
-                                                <span class="svg-icon svg-icon-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <rect x="7" y="15.3137" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(-45 7 15.3137)" fill="black" />
-                                                        <rect x="8.41422" y="7" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(45 8.41422 7)" fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center">
-                                                <span class="fw-bold fs-5 text-muted flex-grow-1">Unlimited Cloud
-                                                    Space</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen040.svg-->
-                                                <span class="svg-icon svg-icon-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <rect x="7" y="15.3137" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(-45 7 15.3137)" fill="black" />
-                                                        <rect x="8.41422" y="7" width="12"
-                                                            height="2" rx="1"
-                                                            transform="rotate(45 8.41422 7)" fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                        </div>
-                                        <!--end::Body-->
-                                    </div>
-                                    <!--end::Tab Pane-->
-                                    <!--begin::Tab Pane-->
-                                    <div class="tab-pane fade" id="kt_upgrade_plan_enterprise">
-                                        <!--begin::Heading-->
-                                        <div class="pb-5">
-                                            <h2 class="fw-bolder text-dark">What’s in Startup Plan?</h2>
-                                            <div class="text-muted fw-bold">Optimal for 1000+ team and enterpise</div>
-                                        </div>
-                                        <!--end::Heading-->
-                                        <!--begin::Body-->
-                                        <div class="pt-1">
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Up to 10 Active
-                                                    Users</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Up to 30 Project
-                                                    Integrations</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Analytics
-                                                    Module</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Finance Module</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Accounting
-                                                    Module</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center mb-7">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Network
-                                                    Platform</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex align-items-center">
-                                                <span class="fw-bold fs-5 text-gray-700 flex-grow-1">Unlimited Cloud
-                                                    Space</span>
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                <span class="svg-icon svg-icon-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.3" x="2" y="2"
-                                                            width="20" height="20" rx="10"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Item-->
-                                        </div>
-                                        <!--end::Body-->
-                                    </div>
-                                    <!--end::Tab Pane-->
-                                </div>
-                                <!--end::Tab content-->
-                            </div> --}}
-                                            <!--end::Col-->
                                         </div>
                                         <!--end::Row-->
                                     </div>
                                     <!--end::Plans-->
+                                    @if ($client->country == 'DE')
+                                        <div class="d-flex flex-center flex-row-fluid pt-12">
+                                            <h3 class="text-danger">{{ trans('message.*all prices incl. taxes') }}</h3>
+                                        </div>
+                                    @else
+                                        <div class="d-flex flex-center flex-row-fluid pt-12">
+                                            <h3 class="text-danger">{{ trans('message.*all prices excl. taxes') }}</h3>
+                                        </div>
+                                    @endif
+
                                     <!--begin::Actions-->
                                     <div class="d-flex flex-center flex-row-fluid pt-12">
                                         <button type="reset" class="btn btn-light me-3"
@@ -3036,7 +2629,7 @@
                                             <!--begin::Input wrapper-->
                                             <div class="position-relative">
                                                 <!--begin::Input-->
-                                                <input type="text" class="form-control form-control-solid"
+                                                <input type="password" class="form-control form-control-solid"
                                                     minlength="3" maxlength="4" placeholder="CVV"
                                                     name="card_cvv" />
                                                 <!--end::Input-->
@@ -3335,11 +2928,9 @@
                                             </label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <select name="country" aria-label="Select..." data-control="select2"
-                                                data-placeholder="Select..."
-                                                data-dropdown-parent="#kt_modal_edit_billig_info"
+                                            <select name="country"
                                                 class="form-select form-select-solid">
-                                                <option value="">Bitte wählen...</option>
+                                                <option value="">{{ trans('message.Please choose…') }}</option>
                                                 <option value="AF" {{ $client->country == 'AF' ? 'selected' : '' }}>
                                                     Afghanistan
                                                 </option>
@@ -3861,6 +3452,23 @@
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Row-->
+                                        <div class="fv-row mb-10">
+                                            <!--begin::Label-->
+                                            <label class="fs-6 fw-bold mb-2 ">
+                                                <span>{{ trans('message.language') }}</span>
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <select name="language" class="form-select form-select-solid">
+                                                <option value="">{{ trans('message.Please choose…') }}</option>
+                                                <option value="en" {{ $client->language == 'en' ? 'selected' : ' ' }}>English</option>
+                                                <option value="de" {{ $client->language == 'de' ? 'selected' : ' ' }}>German</option>
+                                            </select>
+                                            @if ($errors->has('country'))
+                                                <div class="text-danger">{{ $errors->first('country') }}</div>
+                                            @endif
+                                            <!--end::Input-->
+                                        </div>
                                         <!--begin::Row-->
                                         <div class="fv-row mb-10">
                                             <div class="row fv-row">
@@ -3934,6 +3542,7 @@
                                                     <!--end::Input-->
                                                 </div>
                                                 <!--end::Col-->
+
                                             </div>
                                         </div>
                                         <!--end::Row-->

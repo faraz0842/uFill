@@ -116,7 +116,14 @@
                                                                     </svg>
                                                                 </span>
                                                                 <!--end::Svg Icon-->
-                                                                <div class="fs-2 fw-bolder" data-kt-countup="true" data-kt-countup-value="{{$total_revenue->total != null ? $total_revenue->total : 0}}" data-kt-countup-suffix="€">{{$total_revenue->total != null ? $total_revenue->total : 0}}</div>
+                                                                {{-- <div class="fs-2 fw-bolder" data-kt-countup="true"
+                                                                    data-kt-countup-value="{{ Helper::clients_total_revenue() != null ? Helper::clients_total_revenue() : 0 }}"
+                                                                    data-kt-countup-suffix="€">
+                                                                    {{ Helper::clients_total_revenue() != null ? Helper::clients_total_revenue() : 0 }}
+                                                                </div> --}}
+                                                                <div class="fs-2 fw-bolder">
+                                                                    {{ Helper::clients_total_revenue() != null ? Helper::money_format('EUR','de_DE',Helper::clients_total_revenue()) : 0 }}
+                                                                </div>
                                                             </div>
                                                             <!--end::Number-->
                                                             <!--begin::Label-->

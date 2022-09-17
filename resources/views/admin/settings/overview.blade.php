@@ -152,10 +152,13 @@
                                                         </svg>
                                                     </span>
                                                     <!--end::Svg Icon-->
-                                                    <div class="fs-2 fw-bolder" data-kt-countup="true"
-                                                        data-kt-countup-value="{{ $total_revenue->total != null ? $total_revenue->total : 0 }}"
-                                                        data-kt-countup-suffix="€">
-                                                        {{ $total_revenue->total != null ? $total_revenue->total : 0 }}
+                                                    {{-- <div class="fs-2 fw-bolder" data-kt-countup="true"
+                                                                    data-kt-countup-value="{{ Helper::clients_total_revenue() != null ? Helper::money_format('EUR','de_DE',Helper::clients_total_revenue()) : 0 }}"
+                                                                    data-kt-countup-suffix="€">
+                                                                    {{ Helper::clients_total_revenue() != null ? Helper::money_format('EUR','de_DE',Helper::clients_total_revenue()) : 0 }}
+                                                                </div> --}}
+                                                    <div class="fs-2 fw-bolder">
+                                                        {{ Helper::clients_total_revenue() != null ? Helper::money_format('EUR', 'de_DE', Helper::clients_total_revenue()) : 0 }}
                                                     </div>
                                                 </div>
                                                 <!--end::Number-->
@@ -385,8 +388,7 @@
                         <!--begin::Input group-->
                         <div class="row mb-7">
                             <!--begin::Label-->
-                            <label
-                                class="col-lg-4 fw-bold text-muted">{{ trans('message.Registration number') }}</label>
+                            <label class="col-lg-4 fw-bold text-muted">{{ trans('message.Registration number') }}</label>
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8">

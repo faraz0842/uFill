@@ -401,13 +401,13 @@ return [
     'company data' => 'Company Data',
     'payment details' => 'Payment Details',
     'Quantity' => 'Quantity',
-    'In total' => 'In total (incl. tax)',
+    'In total' => 'In total',
     'Price' => 'Price (incl. tax)',
     'Sum of open client invoices in the current month.' => 'Sum of open client invoices in the current month.',
     'Subtotal' => 'Subtotal',
     'Discount' => 'Discount',
     'Shipping' => 'Shipping',
-    'Taxes 19' => 'Taxes 19%',
+    'Taxes 19' => 'Taxes',
     'Total' => 'Total',
     'Bank Name' => 'Bank Name',
     'Account Holder' => 'Account Holder',
@@ -562,11 +562,11 @@ return [
 
     "Monthly Package" => "Monthly Package",
 
-    "Your account will be charged monthly with €9,99." => "Your account will be charged monthly with €9,99.",
+    "Your account will be charged monthly with €9,99." => "Your account will be charged monthly with €9,99. (incl. taxes)",
 
     "Yearly Package" => "Yearly Package",
 
-    "Your account will be charged yearly with €95,88." => "Your account will be charged yearly with €95,88.",
+    "Your account will be charged yearly with €95,88." => "Your account will be charged yearly with €95,88. (incl. taxes)",
 
     "Discount Code" => "Discount Code",
 
@@ -616,7 +616,9 @@ return [
 
     "E-Mail" => "EMail",
 
-    "VAT ID no." => "VAT ID no.",
+    "VAT ID no." => "Tax code",
+
+    "ip address" => "IP Address",
 
     "Registration number" => "Registration number",
 
@@ -853,6 +855,41 @@ return [
     'Delivered' => 'Delivered',
     'Receiver' => 'Receiver',
     'Location' => 'Location',
+
+
+    //client master menus
+    'menu' => 'Menu',
+    'dashboards' => 'Dashboards',
+    'ecommerce' => 'eCommerce',
+    'create shipment' => 'Create shipment',
+    'shipments' => 'Shipments',
+    'status check' => 'Status check',
+    'settings' => 'Settings',
+    'Billing' => 'Billing',
+    'Overview' => 'Overview',
+    'Affiliate Program' => 'Affiliate Program',
+    'Security' => 'Security',
+    'Shipment Configuration' => 'Shipment Configuration',
+    'news' => 'News',
+    'changelog' => 'Changelog',
+    'delivery' => 'Delivery',
+
+    'excl. taxes' => 'excl. taxes',
+    'incl. taxes' => 'incl. taxes',
+    '*all prices excl. taxes' => '*all prices excl. taxes',
+    '*all prices incl. taxes' => '*all prices incl. taxes',
+    'This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us.' => 'This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us.',
+    'Location' => 'Location',
+    'Please note the applicable requirements of the "reverse charge" regulation within the EU. This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us' => 'Please note the applicable requirements of the "reverse charge" regulation within the EU. This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us',
+    'Please note the tax regulations applicable in your country. This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us.' => 'Please note the tax regulations applicable in your country. This invoice was generated automatically. We thank you for your use of uFill and the trust you have placed in us.',
+    'Where is your company located?' => ' Where is your company located?',
+    'Please choose where the main location of  company is located.' => 'Please choose where the main location of your company is located.',
+
+    'Important!' => 'Important!',
+    'This information has an impact on your VAT and invoices. Please make sure that your information is correct.' => 'This information has an impact on your VAT and invoices. Please make sure that your information is correct.',
+    'Your headquarter is located in Germany.' => 'Your headquarter is located in Germany.',
+    'Your headquarter is located in Europe for exemple in France.' => 'Your headquarter is located in Europe for exemple in France.',
+    'Your headquarter is located outside of Europe for exemple in the USA.' => 'Your headquarter is located outside of Europe for exemple in the USA.',
 
 
 ];

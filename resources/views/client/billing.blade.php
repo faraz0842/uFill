@@ -291,6 +291,11 @@
                                                     <td class="text-gray-800">{{ $client->registration_number }}</td>
                                                 </tr>
                                                 <!--end::Row-->
+                                                <tr>
+                                                    <td class="text-gray-400">
+                                                        {{ trans('message.Location') }}:</td>
+                                                    <td class="text-gray-800">{{ $client->location }}</td>
+                                                </tr>
                                             </table>
                                             <!--end::Details-->
                                         </div>
@@ -395,7 +400,7 @@
                                                     <th class="min-w-125px">{{ trans('message.Number') }}</th>
                                                     <th class="min-w-125px">{{ trans('message.billing cycle') }}</th>
                                                     <th class="min-w-125px">{{ trans('message.debit') }}</th>
-                                                    <th class="min-w-125px">{{ trans('In total') }}</th>
+                                                    <th class="min-w-125px">{{ trans('In total') }} ({{ trans('message.excl. taxes') }})</th>
                                                 </tr>
                                                 <!--end::Table row-->
                                             </thead>
@@ -555,20 +560,20 @@
                                                 class="table align-middle table-row-dashed fs-6 fw-bolder gs-0 gy-4 p-0 m-0">
                                                 <!--begin::Thead-->
                                                 <thead class="border-bottom border-gray-200 fs-7 text-uppercase fw-bolder">
-                                                    <tr class=" text-gray-400">
+                                                    <tr class="text-center text-gray-400">
                                                         <th class="min-w-100px text-start">{{ trans('message.id') }}</th>
                                                         <th class="min-w-100px">{{ trans('message.total') }}</th>
                                                         <th class="min-w-100px">{{ trans('message.Status') }}</th>
                                                         <th class="min-w-100px">{{ trans('message.date') }}</th>
-                                                        <th class="min-w-100px">{{ trans('message.invoice') }}</th>
+                                                        <th class="min-w-100px text-center">{{ trans('message.invoice') }}</th>
                                                     </tr>
                                                 </thead>
                                                 <!--end::Thead-->
                                                 <!--begin::Tbody-->
                                                 <tbody class="fs-6 fw-bold text-gray-600">
                                                     @foreach ($invoices as $invoice)
-                                                        <tr>
-                                                            <td>
+                                                        <tr class="text-center">
+                                                            <td class="text-start">
                                                                 <a href="{{ Route('view.invoice', $invoice->id) }}"
                                                                     class="text-gray-600 text-hover-primary">{{ $invoice->id }}</a>
                                                             </td>
@@ -785,15 +790,22 @@
                                                 </td>
 
 
+                                                @php
+                                                    $card_number = Crypt::decryptString($card_detail->card_number);
+                                                    $card_cvv = Crypt::decryptString($card_detail->cvv);
+                                                @endphp
                                                 <!--end::Transport-->
                                                 <!--begin::Type-->
-                                                <td class="text-center pe-3 min-w-150px">***********{{substr($card_detail->card_number, -4)}}</td>
+                                                <td class="text-center pe-3 min-w-150px">
+                                                    ***********{{ substr($card_number, -4) }}</td>
                                                 <!--end::Type-->
                                                 <!--begin::Weight-->
-                                                <td class="text-center pe-3 min-w-50px">{{ $card_detail->expiry_month }}</td>
+                                                <td class="text-center pe-3 min-w-50px">{{ $card_detail->expiry_month }}
+                                                </td>
                                                 <!--end::Weight-->
                                                 <!--begin::Size-->
-                                                <td class="text-center pe-3 min-w-50px">{{ $card_detail->expiry_year }}</td>
+                                                <td class="text-center pe-3 min-w-50px">{{ $card_detail->expiry_year }}
+                                                </td>
                                                 <!--end::Size-->
                                                 <!--begin::Size-->
                                                 <td class="text-center pe-3 min-w-50px">
@@ -892,7 +904,7 @@
                                                                                 class="form-control form-control-solid"
                                                                                 placeholder="Enter card number"
                                                                                 name="card_number"
-                                                                                value="{{ $card_detail->card_number }}"
+                                                                                value="***********{{ substr($card_number, -4) }} "
                                                                                 required />
                                                                             <!--end::Input-->
                                                                             <!--begin::Card logos-->
@@ -1029,11 +1041,11 @@
                                                                             <!--begin::Input wrapper-->
                                                                             <div class="position-relative">
                                                                                 <!--begin::Input-->
-                                                                                <input type="text"
+                                                                                <input type="password"
                                                                                     class="form-control form-control-solid"
                                                                                     minlength="3" maxlength="4"
                                                                                     placeholder="CVV" name="card_cvv"
-                                                                                    value="{{ $card_detail->cvv }}" />
+                                                                                    value="***" />
                                                                                 <!--end::Input-->
                                                                                 <!--begin::CVV icon-->
                                                                                 <div
@@ -2268,7 +2280,7 @@
                                                                 class="form-check form-check-custom form-check-solid form-check-success me-6">
                                                                 <input class="form-check-input" type="radio"
                                                                     name="account_type" checked="checked"
-                                                                    value="prod_Li75wNdJaBLoHK" />
+                                                                    value="prod_MLpP33EIDdVvMC" />
                                                             </div>
                                                             <!--end::Radio-->
                                                             <!--begin::Info-->
@@ -2285,10 +2297,14 @@
                                                         <!--begin::Price-->
                                                         <div class="ms-5">
                                                             {{-- <span class="mb-2">€</span> --}}
-                                                            <span class="fs-3x fw-bolder" data-kt-plan-price-month="9,99€"
+                                                            @if ($client->country == 'DE')
+                                                                <span class="fs-3x fw-bolder" data-kt-plan-price-month="9,99€"
                                                                 data-kt-plan-price-annual="95,88€">9,99€</span>
-                                                            {{-- <span class="fs-7 opacity-50">/
-                                                <span data-kt-element="period"></span></span> --}}
+                                                            @else
+                                                                <span class="fs-3x fw-bolder" data-kt-plan-price-month="8,39€"
+                                                                data-kt-plan-price-annual="80,57€">8,39€</span>
+                                                            @endif
+
                                                         </div>
                                                         <!--end::Price-->
                                                     </div>
@@ -2302,7 +2318,7 @@
                                                             <div
                                                                 class="form-check form-check-custom form-check-solid form-check-success me-6">
                                                                 <input class="form-check-input" type="radio"
-                                                                    name="account_type" value="prod_Li6z4ugvCzTVZ9" />
+                                                                    name="account_type" value="prod_MLpNo8izLk9Csj" />
                                                             </div>
                                                             <!--end::Radio-->
                                                             <!--begin::Info-->
@@ -2319,25 +2335,31 @@
                                                         <!--begin::Price-->
                                                         <div class="ms-5">
                                                             {{-- <span class="mb-2">$</span> --}}
-                                                            <span class="fs-3x fw-bolder"
+                                                            @if ($client->country == 'DE')
+                                                                <span class="fs-3x fw-bolder"
                                                                 data-kt-plan-price-month="44,99€"
                                                                 data-kt-plan-price-annual="359,88€">44,99€</span>
-                                                            {{-- <span class="fs-7 opacity-50">/
-                                                <span data-kt-element="period">Mon</span></span> --}}
+                                                            @else
+                                                                <span class="fs-3x fw-bolder"
+                                                                data-kt-plan-price-month="37,81€"
+                                                                data-kt-plan-price-annual="302,42€">37,81€</span>
+                                                            @endif
+
                                                         </div>
                                                         <!--end::Price-->
                                                     </div>
                                                     <!--end::Tab link-->
 
                                                     <div class="nav-link btn btn-outline btn-outline-dashed btn-color-dark btn-active btn-active-primary d-flex flex-stack text-start p-6 mb-6"
-                                                        data-bs-toggle="tab" data-bs-target="#kt_upgrade_plan_enterprise">
+                                                        data-bs-toggle="tab"
+                                                        data-bs-target="#kt_upgrade_plan_enterprise">
                                                         <!--end::Description-->
                                                         <div class="d-flex align-items-center me-2">
                                                             <!--begin::Radio-->
                                                             <div
                                                                 class="form-check form-check-custom form-check-solid form-check-success me-6">
                                                                 <input class="form-check-input" type="radio"
-                                                                    name="account_type" value="prod_Li775knelqM7PZ" />
+                                                                    name="account_type" value="prod_MLpPnFwnmwJUuo" />
                                                             </div>
                                                             <!--end::Radio-->
                                                             <!--begin::Info-->
@@ -2354,11 +2376,16 @@
                                                         <!--begin::Price-->
                                                         <div class="ms-5">
                                                             {{-- <span class="mb-2">$</span> --}}
-                                                            <span class="fs-3x fw-bolder"
+                                                            @if ($client->country == 'DE')
+                                                                <span class="fs-3x fw-bolder"
                                                                 data-kt-plan-price-month="49,99€"
                                                                 data-kt-plan-price-annual="419,88€">49,99€</span>
-                                                            {{-- <span class="fs-7 opacity-50">/
-                                                    <span data-kt-element="period">Mon</span></span> --}}
+                                                            @else
+                                                                <span class="fs-3x fw-bolder"
+                                                                data-kt-plan-price-month="42,01€"
+                                                                data-kt-plan-price-annual="352,84€">42,01€</span>
+                                                            @endif
+
                                                         </div>
                                                         <!--end::Price-->
                                                     </div>
@@ -2367,13 +2394,20 @@
                                                 <!--end::Tabs-->
                                             </div>
                                             <!--end::Col-->
-                                            <!--begin::Col-->
-
-                                            <!--end::Col-->
                                         </div>
                                         <!--end::Row-->
                                     </div>
                                     <!--end::Plans-->
+                                    @if ($client->country == 'DE')
+                                        <div class="d-flex flex-center flex-row-fluid pt-12">
+                                            <h3 class="text-danger">{{ trans('message.*all prices incl. taxes') }}</h3>
+                                        </div>
+                                    @else
+                                        <div class="d-flex flex-center flex-row-fluid pt-12">
+                                            <h3 class="text-danger">{{ trans('message.*all prices excl. taxes') }}</h3>
+                                        </div>
+                                    @endif
+
                                     <!--begin::Actions-->
                                     <div class="d-flex flex-center flex-row-fluid pt-12">
                                         <button type="reset" class="btn btn-light me-3"
@@ -2534,7 +2568,7 @@
                                             <!--begin::Input wrapper-->
                                             <div class="position-relative">
                                                 <!--begin::Input-->
-                                                <input type="text" class="form-control form-control-solid"
+                                                <input type="password" class="form-control form-control-solid"
                                                     minlength="3" maxlength="4" placeholder="CVV" name="card_cvv" />
                                                 <!--end::Input-->
                                                 <!--begin::CVV icon-->
@@ -3355,6 +3389,25 @@
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Row-->
+                                        <div class="fv-row mb-10">
+                                            <!--begin::Label-->
+                                            <label class="fs-6 fw-bold mb-2 ">
+                                                <span>{{ trans('message.language') }}</span>
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <select name="language"  class="form-select form-select-solid">
+                                                <option value="">{{ trans('message.Please choose…') }}</option>
+                                                <option value="en"
+                                                    {{ $client->language == 'en' ? 'selected' : ' ' }}>English</option>
+                                                <option value="de"
+                                                    {{ $client->language == 'de' ? 'selected' : ' ' }}>German</option>
+                                            </select>
+                                            @if ($errors->has('country'))
+                                                <div class="text-danger">{{ $errors->first('country') }}</div>
+                                            @endif
+                                            <!--end::Input-->
+                                        </div>
                                         <!--begin::Row-->
                                         <div class="fv-row mb-10">
                                             <div class="row fv-row">

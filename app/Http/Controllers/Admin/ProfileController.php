@@ -67,6 +67,7 @@ class ProfileController extends Controller
             $admin->country = $request->country;
             $admin->language = $request->language;
             $admin->profile_picture = $profile;
+            $admin->referral_link = request()->getHost() . '/client/register/ufill-' . $admin->admin_id;
             $admin->save();
 
             if(session('id') == $id){
